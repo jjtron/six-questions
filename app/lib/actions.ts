@@ -1,7 +1,5 @@
 import * as https from 'https';
 import z, { number } from "zod";
-import { mutateData } from './database';
-import { v4 as uuidv4 } from 'uuid';
 
 const genericExample = z.object({
   el: z.string()

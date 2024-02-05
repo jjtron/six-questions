@@ -1,8 +1,9 @@
 "use server"
 import { getRecords } from "@/app/lib/actions";
+import { Button } from "@/app/ui/button"
 
 export default async function Page() {
-    
+    const showdatalink: string = "/records/create";
     const records: any = await getRecords();
  
     return (
@@ -31,6 +32,9 @@ export default async function Page() {
                 ))}
             </tbody>
         </table>
+        <div className="flex min-h-screen flex-col items-center justify-between p-24">
+            <Button className="mt-4 w-full" buttontext={'Create'} showdatalink={showdatalink}></Button>
+        </div>
         </>
     );
 }
