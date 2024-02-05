@@ -5,12 +5,24 @@ import { redirect } from 'next/navigation';
 export type State = {
   errors?: {
     id?: string[];
+    who?: Object;
+    what?: string[];
+    where?: Object;
+    when?: Object;
+    why?: string[];
+    how?: string[];
   }; 
   message?: string | null;
 };
 
 const FormSchema = z.object({
-  id: z.string(),
+  id: z.string().uuid(),
+  who: z.object({}),
+  what: z.string(),
+  where: z.object({}),
+  when: z.object({}),
+  why: z.string(),
+  how: z.string(),
 });
 
 export async function createRecord(prevState: State, formData: FormData) {
