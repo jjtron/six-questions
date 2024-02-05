@@ -1,5 +1,34 @@
 import * as https from 'https';
-import z, { number } from "zod";
+import z, { number } from "zod"; 
+import { redirect } from 'next/navigation';
+
+export type State = {
+  errors?: {
+    id?: string[];
+  }; 
+  message?: string | null;
+};
+
+const FormSchema = z.object({
+  id: z.string(),
+});
+
+export async function createRecord(prevState: State, formData: FormData) {
+  const validatedFields = FormSchema.safeParse({
+    id: formData.get('customerId'),
+  });
+  
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    console.log(validatedFields.error.flatten().fieldErrors);
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Record.',
+    };
+  }
+
+  redirect('/record/create');
+}
 
 const genericExample = z.object({
   el: z.string()
