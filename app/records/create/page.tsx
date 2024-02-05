@@ -1,6 +1,7 @@
 "use server"
 
 import Breadcrumbs from '@/app/ui/records/breadcrumbs';
+import Form from '@/app/ui/records/create-form';
 export default async function Page() {
 
 
@@ -16,12 +17,7 @@ export default async function Page() {
               },
             ]}
           />
-          create
-          {/*
-          <Button className="mt-4 w-full" showdatalink={showdatalink}></Button>
-          
-          <Form customers={customers} />
-          */}
+          <Form ></Form>
         </main>
       );
 }

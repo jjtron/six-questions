@@ -16,7 +16,7 @@ export type State = {
 };
 
 const FormSchema = z.object({
-  id: z.string().uuid(),
+  id: z.string(),
   who: z.object({}),
   what: z.string(),
   where: z.object({}),
@@ -26,13 +26,20 @@ const FormSchema = z.object({
 });
 
 export async function createRecord(prevState: State, formData: FormData) {
+  console.log('hello crete');
   const validatedFields = FormSchema.safeParse({
-    id: formData.get('customerId'),
+    id: formData.get('id'),
+    who: formData.get('who'),
+    what: formData.get('what'),
+    where: formData.get('where'),
+    when: formData.get('when'),
+    why: formData.get('why'),
+    how: formData.get('how'),
   });
   
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
-    console.log(validatedFields.error.flatten().fieldErrors);
+    console.log('Error:', validatedFields.error.flatten().fieldErrors);
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: 'Missing Fields. Failed to Create Record.',
