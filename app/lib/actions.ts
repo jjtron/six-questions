@@ -1,3 +1,4 @@
+'use server';
 import * as https from 'https';
 import z, { number } from "zod"; 
 import { redirect } from 'next/navigation';
@@ -17,7 +18,7 @@ export type State = {
 
 const FormSchema = z.object({
   id: z.string(),
-  who: z.object({}),
+  who: z.string(),
   what: z.string(),
   where: z.object({}),
   when: z.object({}),
@@ -26,7 +27,7 @@ const FormSchema = z.object({
 });
 
 export async function createRecord(prevState: State, formData: FormData) {
-  console.log('hello crete');
+  console.log(formData.getAll('who'));
   const validatedFields = FormSchema.safeParse({
     id: formData.get('id'),
     who: formData.get('who'),
@@ -46,7 +47,7 @@ export async function createRecord(prevState: State, formData: FormData) {
     };
   }
 
-  redirect('/record/create');
+  //redirect('/record/create');
 }
 
 const genericExample = z.object({
