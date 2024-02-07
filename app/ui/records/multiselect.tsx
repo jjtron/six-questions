@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function MultiSelect() {
-    const [selectedValues, setVal] = useState(['0']);
+    const [selectedValues, setVal] = useState(['']);
     function handleChange(event: any) {
         const collection = event.target.selectedOptions;
         let newValue: string[] = [];
@@ -13,7 +13,7 @@ export default function MultiSelect() {
     return (
         <select
             id="whoid" multiple onChange={handleChange}
-            name="who" defaultValue={[]} value={selectedValues}
+            name="who" value={selectedValues}
             style={{
                 color: 'white',
                 backgroundColor: 'black',
