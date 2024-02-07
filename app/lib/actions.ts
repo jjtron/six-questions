@@ -47,7 +47,7 @@ export async function createRecord(prevState: State, formData: FormData) {
     };
   }
 
-  //redirect('/record/create');
+  redirect('/records/create');
 }
 
 const genericExample = z.object({

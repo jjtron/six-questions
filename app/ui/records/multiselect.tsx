@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
 export default function MultiSelect() {
-    const [selectedValues, setVal] = useState("[0]");
+    const [selectedValues, setVal] = useState(['0']);
     function handleChange(event: any) {
         const collection = event.target.selectedOptions;
-        let newValue: number[] = [];
+        let newValue: string[] = [];
         for (let i = 0; i < collection.length; i++) {
             newValue.push(collection[i].value);
         }
-        setVal(JSON.stringify(newValue));
+        setVal(newValue);
     }
     return (
         <select
