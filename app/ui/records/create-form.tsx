@@ -2,7 +2,7 @@
 import { createRecord } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
-//import { MySelect } from '@/app/ui/multi-select';
+import MultiSelect from '@/app/ui/records/multiselect';
 
 export default function Form() {
   const initialState = { message: null, errors: {} };
@@ -21,18 +21,7 @@ export default function Form() {
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="id-error"
               />
-            <select
-              id="whoid" multiple
-              name="who" defaultValue={["who2"]}
-              style={{
-                color: 'blue',
-                backgroundColor: 'lightgray',
-              }}
-            >
-                <option value="who1" >Me</option>
-                <option value="who2" >My self</option>
-                <option value="who3">and I</option>
-            </select>
+      <MultiSelect></MultiSelect>
       <input
                 id="what"
                 name="what"
