@@ -1,11 +1,10 @@
-import { useState } from 'react';
-
-interface Options {[key: number]: string}
+import { SelectOptions } from '@/app/lib/interfaces';
+import { SelectProps } from '@/app/lib/interfaces';
 
 export default function MultiSelect(
     {options} : {options: [
-        {id: string; name: string, multi: string},
-        Options
+        SelectProps,
+        SelectOptions
     ]}
 ) {
     /*  THIS CAN BE DEVELOPED LATER TO MAKE IT SO THAT A CLICK WITHOUT 
@@ -22,15 +21,15 @@ export default function MultiSelect(
     }
     */
     let optionsList = [];
-    const m = (options[0].multi === 'yes') ? {multiple: true} : {multiple: false};
+    const multi = (options[0].multi === 'yes') ? {multiple: true} : {multiple: false};
     for (const [key, val] of Object.entries(options[1])) {
         optionsList.push(<option key={key} value={key} >{val}</option>);
     }
     return (
         <select
             id={options[0].id}
-            name={options[0].name} 
-            {...m}
+            name={options[0].name}
+            {...multi}
             /*  THIS CAN BE DEVELOPED LATER TO MAKE IT SO THAT A CLICK WITHOUT 
                 A COMMAND KEY CAN MULTI SELECT, BUT RATHER TOGGLE THE OPTIONS
                 THAT ARE SELECTED

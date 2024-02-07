@@ -3,8 +3,9 @@ import { createRecord } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
+import { Options } from '@/app/lib/interfaces';
 
-export default function Form({options} : {options: object}) {
+export default function Form() {
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createRecord, initialState);
   
@@ -23,7 +24,7 @@ export default function Form({options} : {options: object}) {
                 style={{color: 'white', backgroundColor: 'black'}}
               />
       <MultiSelect options={[
-          {id: 'who', name: 'who', multi: 'yes'},
+          {id: 'where', name: 'where', multi: 'yes'},
           {0: 'Me', 1: 'Myself', 2: 'I'}
         ]}>
       </MultiSelect>
