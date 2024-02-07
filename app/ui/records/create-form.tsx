@@ -4,7 +4,7 @@ import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
 
-export default function Form() {
+export default function Form({options} : {options: object}) {
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createRecord, initialState);
   
@@ -20,8 +20,12 @@ export default function Form() {
                 placeholder="9491d710-3185-4e06-bea0-6a2f275345e0"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="id-error"
+                style={{color: 'white', backgroundColor: 'black'}}
               />
-      <MultiSelect></MultiSelect>
+      <MultiSelect options={[
+        {id: 'who', name: 'who'},
+        {0: 'Me', 1: 'Myself', 2: 'I'}
+        ]}></MultiSelect>
       <input
                 id="what"
                 name="what"
@@ -30,6 +34,7 @@ export default function Form() {
                 placeholder="what"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="what-error"
+                style={{color: 'white', backgroundColor: 'black'}}
               />
       <input
                 id="where"
@@ -39,6 +44,7 @@ export default function Form() {
                 placeholder="where"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="where-error"
+                style={{color: 'white', backgroundColor: 'black'}}
               />
       <input
                 id="when"
@@ -48,6 +54,7 @@ export default function Form() {
                 placeholder="when"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="when-error"
+                style={{color: 'white', backgroundColor: 'black'}}
               />
       <input
                 id="why"
@@ -57,6 +64,7 @@ export default function Form() {
                 placeholder="why"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="why-error"
+                style={{color: 'white', backgroundColor: 'black'}}
               />
       <input
                 id="how"
@@ -66,6 +74,7 @@ export default function Form() {
                 placeholder="how"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="how-error"
+                style={{color: 'white', backgroundColor: 'black'}}
               />
       <div className="flex min-h-screen flex-col items-center justify-between p-24">
         <Button type="submit">Create Record</Button>

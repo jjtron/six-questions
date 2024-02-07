@@ -1,6 +1,16 @@
 import { useState } from 'react';
 
-export default function MultiSelect() {
+interface Options {[key: number]: string}
+
+export default function MultiSelect(
+    {options} : {options: [
+        {id: string; name: string},
+        Options
+    ]}
+) {
+    /*  THIS CAN BE DEVELOPED LATER TO MAKE IT SO THAT A CLICK WITHOUT 
+        A COMMAND KEY CAN MULTI SELECT, BUT RATHER TOGGLE THE OPTIONS
+        THAT ARE SELECTED
     const [selectedValues, setVal] = useState(['']);
     function handleChange(event: any) {
         const collection = event.target.selectedOptions;
@@ -10,18 +20,26 @@ export default function MultiSelect() {
         }
         setVal(newValue);
     }
+    */
+    let optionsList = [];
+    for (const [key, val] of Object.entries(options[1])) {
+        optionsList.push(<option key={key} value={key} >{val}</option>);
+    }
     return (
         <select
-            id="whoid" multiple onChange={handleChange}
-            name="who" value={selectedValues}
-            style={{
-                color: 'white',
-                backgroundColor: 'black',
-            }}
+            id={options[0].id}
+            name={options[0].name} 
+            multiple
+            /*  THIS CAN BE DEVELOPED LATER TO MAKE IT SO THAT A CLICK WITHOUT 
+                A COMMAND KEY CAN MULTI SELECT, BUT RATHER TOGGLE THE OPTIONS
+                THAT ARE SELECTED
+            onChange={handleChange}
+            value={selectedValues}
+            */
+            defaultValue={[]}
+            style={{color: 'white', backgroundColor: 'black',}}
             >
-            <option value="0" >Me</option>
-            <option value="1" >My self</option>
-            <option value="2">and I</option>
+            {optionsList}
         </select>
     );
 }
