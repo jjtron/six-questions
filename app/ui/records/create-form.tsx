@@ -23,9 +23,10 @@ export default function Form({options} : {options: object}) {
                 style={{color: 'white', backgroundColor: 'black'}}
               />
       <MultiSelect options={[
-        {id: 'who', name: 'who'},
-        {0: 'Me', 1: 'Myself', 2: 'I'}
-        ]}></MultiSelect>
+          {id: 'who', name: 'who'},
+          {0: 'Me', 1: 'Myself', 2: 'I'}
+        ]}>
+      </MultiSelect>
       <input
                 id="what"
                 name="what"
