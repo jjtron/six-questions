@@ -4,7 +4,7 @@ interface Options {[key: number]: string}
 
 export default function MultiSelect(
     {options} : {options: [
-        {id: string; name: string},
+        {id: string; name: string, multi: string},
         Options
     ]}
 ) {
@@ -22,6 +22,7 @@ export default function MultiSelect(
     }
     */
     let optionsList = [];
+    const m = (options[0].multi === 'yes') ? {multiple: true} : {multiple: false};
     for (const [key, val] of Object.entries(options[1])) {
         optionsList.push(<option key={key} value={key} >{val}</option>);
     }
@@ -29,7 +30,7 @@ export default function MultiSelect(
         <select
             id={options[0].id}
             name={options[0].name} 
-            multiple
+            {...m}
             /*  THIS CAN BE DEVELOPED LATER TO MAKE IT SO THAT A CLICK WITHOUT 
                 A COMMAND KEY CAN MULTI SELECT, BUT RATHER TOGGLE THE OPTIONS
                 THAT ARE SELECTED

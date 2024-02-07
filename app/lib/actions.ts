@@ -20,7 +20,7 @@ const FormSchema = z.object({
   id: z.string(),
   who: z.string(),
   what: z.string(),
-  where: z.object({}),
+  where: z.string(),
   when: z.object({}),
   why: z.string(),
   how: z.string(),
@@ -28,6 +28,7 @@ const FormSchema = z.object({
 
 export async function createRecord(prevState: State, formData: FormData) {
   console.log(formData.getAll('who'));
+  console.log(formData.getAll('where'));
   const validatedFields = FormSchema.safeParse({
     id: formData.get('id'),
     who: formData.get('who'),

@@ -23,7 +23,7 @@ export default function Form({options} : {options: object}) {
                 style={{color: 'white', backgroundColor: 'black'}}
               />
       <MultiSelect options={[
-          {id: 'who', name: 'who'},
+          {id: 'who', name: 'who', multi: 'yes'},
           {0: 'Me', 1: 'Myself', 2: 'I'}
         ]}>
       </MultiSelect>
@@ -37,16 +37,11 @@ export default function Form({options} : {options: object}) {
                 aria-describedby="what-error"
                 style={{color: 'white', backgroundColor: 'black'}}
               />
-      <input
-                id="where"
-                name="where"
-                type="text"
-                step="0.01"
-                placeholder="where"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                aria-describedby="where-error"
-                style={{color: 'white', backgroundColor: 'black'}}
-              />
+      <MultiSelect options={[
+          {id: 'where', name: 'where', multi: 'no'},
+          {0: 'Me', 1: 'Myself', 2: 'I'}
+        ]}>
+      </MultiSelect>
       <input
                 id="when"
                 name="when"
