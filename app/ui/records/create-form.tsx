@@ -3,7 +3,6 @@ import { createRecord } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
-import { Options } from '@/app/lib/interfaces';
 
 export default function Form() {
   const initialState = { message: null, errors: {} };
