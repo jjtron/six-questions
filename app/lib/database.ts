@@ -3,7 +3,7 @@ import { Client } from 'pg';
 const client = new Client({
     user: 'postgres',
     host: 'localhost',
-    database: 'moongov',
+    database: 'questions',
     password: '',
     port: 5432,
   });
@@ -12,6 +12,7 @@ const client = new Client({
   export async function mutateData(q: any) {
     try {
       const result: any = await client.query(q);
+      console.log('results', result);
       return {success: true, details: result};
     } catch(error: any) {
       return {succes: false, details: error};

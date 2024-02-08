@@ -2,8 +2,10 @@
 
 import Breadcrumbs from '@/app/ui/records/breadcrumbs';
 import Form from '@/app/ui/records/create-form';
-export default async function Page() {
+import { mutateData } from '@/app/lib/database';
 
+export default async function Page() {
+    mutateData('SELECT * FROM six_questions');
 
     return (
         <main>
