@@ -21,7 +21,8 @@ export default function MultiSelect(
     }
     */
     let optionsList = [];
-    const multi = (options[0].multi === 'yes') ? {multiple: true} : {multiple: false};
+    const multi = (options[0].multi === 'yes') ? true : false;
+    const dv = (options[0].multi === 'yes') ? [] : '';
     for (const [key, val] of Object.entries(options[1])) {
         optionsList.push(<option key={key} value={key} >{val}</option>);
     }
@@ -29,14 +30,14 @@ export default function MultiSelect(
         <select
             id={options[0].id}
             name={options[0].name}
-            {...multi}
+            multiple={multi}
             /*  THIS CAN BE DEVELOPED LATER TO MAKE IT SO THAT A CLICK WITHOUT 
                 A COMMAND KEY CAN MULTI SELECT, BUT RATHER TOGGLE THE OPTIONS
                 THAT ARE SELECTED
             onChange={handleChange}
             value={selectedValues}
             */
-            defaultValue={[]}
+            defaultValue={dv}
             style={{color: 'white', backgroundColor: 'black',}}
             >
             {optionsList}

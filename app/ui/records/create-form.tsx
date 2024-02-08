@@ -24,7 +24,7 @@ export default function Form() {
                 style={{color: 'white', backgroundColor: 'black'}}
               />
       <MultiSelect options={[
-          {id: 'where', name: 'where', multi: 'yes'},
+          {id: 'who', name: 'who', multi: 'yes'},
           {0: 'Me', 1: 'Myself', 2: 'I'}
         ]}>
       </MultiSelect>
