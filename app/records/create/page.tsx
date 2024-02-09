@@ -6,7 +6,9 @@ import { getDbData } from '@/app/lib/database';
 import { revalidatePath } from 'next/cache';
 
 export default async function Page() {
-    const dbResults = await getDbData('SELECT * FROM wheres');
+    const getWhereData = await getDbData('SELECT * FROM wheres');
+    const getWhoData = await getDbData('SELECT * FROM whos');
+    console.log(getWhoData.details.rows);
     revalidatePath('/records/create');
     return (
         <main>
@@ -20,7 +22,7 @@ export default async function Page() {
               },
             ]}
           />
-          <Form whereOptions={dbResults.details.rows}></Form>
+          <Form whereOptions={getWhereData.details.rows} whoOptions={getWhoData.details.rows}></Form>
         </main>
     );
     

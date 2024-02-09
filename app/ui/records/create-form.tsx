@@ -3,9 +3,9 @@ import { createRecord } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
-import MultiRadio from '@/app/ui/records/multiradio';
+import WhereRadio from '@/app/ui/records/whereradio';
 
-export default function Form({whereOptions}: any) {
+export default function Form({whereOptions, whoOptions}: any) {
   
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createRecord, initialState);
@@ -39,11 +39,11 @@ export default function Form({whereOptions}: any) {
                 aria-describedby="what-error"
                 style={{color: 'white', backgroundColor: 'black'}}
               />
-      <MultiRadio whereOptions={[
+      <WhereRadio whereOptions={[
           {id: 'where', name: 'where', multi: 'no'},
           {list: whereOptions}
         ]}>
-      </MultiRadio>
+      </WhereRadio>
       <input
                 id="when"
                 name="when"

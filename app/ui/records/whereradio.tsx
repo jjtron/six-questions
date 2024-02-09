@@ -1,6 +1,6 @@
 import { SelectProps, RadioOptions } from '@/app/lib/interfaces';
 
-export default function MultiRadio(
+export default function WhereRadio(
     {whereOptions} : {whereOptions: [
         SelectProps,
         RadioOptions
