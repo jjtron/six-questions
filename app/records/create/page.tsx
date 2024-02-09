@@ -6,8 +6,7 @@ import { getDbData } from '@/app/lib/database';
 import { revalidatePath } from 'next/cache';
 
 export default async function Page() {
-    const db = await getDbData('SELECT * FROM wheres');
-    const where = {where: JSON.stringify(db.details.rows)};
+    const dbResults = await getDbData('SELECT * FROM wheres');
     revalidatePath('/records/create');
     return (
         <main>
@@ -21,7 +20,7 @@ export default async function Page() {
               },
             ]}
           />
-          <Form options={{where: JSON.stringify(db.details.rows)}}></Form>
+          <Form options={dbResults.details.rows}></Form>
         </main>
     );
     

@@ -1,2 +1,2 @@
-export interface SelectOptions {[key: number]: string};
-export interface SelectProps {[key: string]: string};
+export type SelectOptions = {[key: number]: string};
+export type SelectProps = {[key: string]: string};

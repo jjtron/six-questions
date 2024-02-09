@@ -3,12 +3,13 @@ import { createRecord } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
+import MultiRadio from '@/app/ui/records/multiradio';
 
 export default function Form({options}: any) {
   
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createRecord, initialState);
-  console.log('WHERE OPTIONS', JSON.parse(options.where));
+
   return (
     <form action={dispatch}>
       <p>Createform</p>
@@ -38,11 +39,11 @@ export default function Form({options}: any) {
                 aria-describedby="what-error"
                 style={{color: 'white', backgroundColor: 'black'}}
               />
-      <MultiSelect options={[
+      <MultiRadio options={[
           {id: 'where', name: 'where', multi: 'no'},
-          {0: 'Me', 1: 'Myself', 2: 'I'}
+          {0: options[0].name, 1: options[1].name}
         ]}>
-      </MultiSelect>
+      </MultiRadio>
       <input
                 id="when"
                 name="when"
