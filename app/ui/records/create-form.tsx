@@ -4,10 +4,11 @@ import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
 
-export default function Form() {
+export default function Form({options}: any) {
+  
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createRecord, initialState);
-  
+  console.log('WHERE OPTIONS', JSON.parse(options.where));
   return (
     <form action={dispatch}>
       <p>Createform</p>

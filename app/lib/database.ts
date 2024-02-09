@@ -9,15 +9,31 @@ const client = new Client({
   });
   client.connect();
 
-  export async function mutateData(q: any) {
+  export async function getDbData(q: any) {
     try {
       const result: any = await client.query(q);
-      console.log('results', result);
       return {success: true, details: result};
     } catch(error: any) {
       return {succes: false, details: error};
     }
   };
+  export async function fetchCustomers() {
+    try {
+      const data = await client.query(`
+        SELECT
+          id,
+          name
+        FROM customers
+        ORDER BY name ASC
+      `);
+  
+      const customers = data.rows;
+      return customers;
+    } catch (err) {
+      console.error('Database Error:', err);
+      throw new Error('Failed to fetch all customers.');
+    }
+  }
 
 /* SCRIPT TO CREATE TABLE "six_questions"
     DROP TABLE IF EXISTS public.six_questions;

@@ -2,6 +2,7 @@
 import * as https from 'https';
 import z, { number } from "zod"; 
 import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 
 export type State = {
   errors?: {
@@ -38,6 +39,7 @@ export async function createRecord(prevState: State, formData: FormData) {
     why: formData.get('why'),
     how: formData.get('how'),
   });
+  //revalidatePath('/records/create');
   
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
@@ -47,7 +49,7 @@ export async function createRecord(prevState: State, formData: FormData) {
       message: 'Missing Fields. Failed to Create Record.',
     };
   }
-
+  
   redirect('/records/create');
 }
 

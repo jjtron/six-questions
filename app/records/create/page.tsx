@@ -2,11 +2,13 @@
 
 import Breadcrumbs from '@/app/ui/records/breadcrumbs';
 import Form from '@/app/ui/records/create-form';
-import { mutateData } from '@/app/lib/database';
+import { getDbData } from '@/app/lib/database';
+import { revalidatePath } from 'next/cache';
 
 export default async function Page() {
-    mutateData('SELECT * FROM six_questions');
-
+    const db = await getDbData('SELECT * FROM wheres');
+    const where = {where: JSON.stringify(db.details.rows)};
+    revalidatePath('/records/create');
     return (
         <main>
           <Breadcrumbs
@@ -19,7 +21,8 @@ export default async function Page() {
               },
             ]}
           />
-          <Form ></Form>
+          <Form options={{where: JSON.stringify(db.details.rows)}}></Form>
         </main>
-      );
+    );
+    
 }
