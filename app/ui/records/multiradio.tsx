@@ -1,6 +1,4 @@
 import { SelectProps, RadioOptions } from '@/app/lib/interfaces';
-import { SelectOptions } from '@/app/lib/interfaces';
-import { ReactNode } from 'react';
 
 export default function MultiRadio(
     {whereOptions} : {whereOptions: [
