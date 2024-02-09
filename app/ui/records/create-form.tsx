@@ -9,7 +9,7 @@ export default function Form({options}: any) {
   
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createRecord, initialState);
-
+  console.log(options);
   return (
     <form action={dispatch}>
       <p>Createform</p>
