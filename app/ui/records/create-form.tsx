@@ -5,11 +5,11 @@ import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
 import MultiRadio from '@/app/ui/records/multiradio';
 
-export default function Form({options}: any) {
+export default function Form({whereOptions}: any) {
   
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createRecord, initialState);
-  console.log(options);
+
   return (
     <form action={dispatch}>
       <p>Createform</p>
@@ -39,9 +39,9 @@ export default function Form({options}: any) {
                 aria-describedby="what-error"
                 style={{color: 'white', backgroundColor: 'black'}}
               />
-      <MultiRadio options={[
+      <MultiRadio whereOptions={[
           {id: 'where', name: 'where', multi: 'no'},
-          {0: options[0].name, 1: options[1].name}
+          {list: whereOptions}
         ]}>
       </MultiRadio>
       <input

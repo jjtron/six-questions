@@ -1,22 +1,28 @@
+import { SelectProps, RadioOptions } from '@/app/lib/interfaces';
 import { SelectOptions } from '@/app/lib/interfaces';
-import { SelectProps } from '@/app/lib/interfaces';
+import { ReactNode } from 'react';
 
 export default function MultiRadio(
-    {options} : {options: [
+    {whereOptions} : {whereOptions: [
         SelectProps,
-        SelectOptions
+        RadioOptions
     ]}
 ) {
-    let optionsList = [];
-    const multi = (options[0].multi === 'yes') ? true : false;
-    const dv = (options[0].multi === 'yes') ? [] : '';
-    for (const [key, val] of Object.entries(options[1])) {
+    
+    const multi = (whereOptions[0].multi === 'yes') ? true : false;
+    const dv = (whereOptions[0].multi === 'yes') ? [] : '';
+
+    let optionsList: any[] = [];
+    whereOptions[1].list.map((el, i) => {
         optionsList.push(
-            <label key={key}>
-                <input type="radio" name="where" value={val} />{val}
+            <label key={i}>
+                <input type="radio" name="where" value={el.name} />{el.name}
+                <div>{el.details.address}</div>
+                <div>{el.details.city}</div>
             </label>
         );
-    }
+    });
+
     return (
         <div style={{color: 'white', backgroundColor: 'black',}}>
             {optionsList}

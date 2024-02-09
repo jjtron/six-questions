@@ -20,7 +20,7 @@ export default async function Page() {
               },
             ]}
           />
-          <Form options={dbResults.details.rows}></Form>
+          <Form whereOptions={dbResults.details.rows}></Form>
         </main>
     );
     
