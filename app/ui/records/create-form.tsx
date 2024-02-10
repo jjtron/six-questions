@@ -4,11 +4,18 @@ import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
 import WhereRadio from '@/app/ui/records/whereradio';
+import { SelectOptions, WhoOptions } from '@/app/lib/interfaces';
 
-export default function Form({whereOptions, whoOptions}: any) {
+export default function Form({whereOptions, whoOptions} : 
+  { whereOptions: any, whoOptions: WhoOptions[]}) {
   
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createRecord, initialState);
+
+  let whoList: SelectOptions = {};
+  whoOptions.map((el: WhoOptions) => {
+    whoList[el.index] = el.name;
+  });
 
   return (
     <form action={dispatch}>
@@ -25,8 +32,7 @@ export default function Form({whereOptions, whoOptions}: any) {
                 style={{color: 'white', backgroundColor: 'black'}}
               />
       <MultiSelect options={[
-          {id: 'who', name: 'who', multi: 'yes'},
-          {0: 'Me', 1: 'Myself', 2: 'I'}
+          {id: 'who', name: 'who', multi: 'yes'}, whoList
         ]}>
       </MultiSelect>
       <input

@@ -8,7 +8,6 @@ import { revalidatePath } from 'next/cache';
 export default async function Page() {
     const getWhereData = await getDbData('SELECT * FROM wheres');
     const getWhoData = await getDbData('SELECT * FROM whos');
-    console.log(getWhoData.details.rows);
     revalidatePath('/records/create');
     return (
         <main>
