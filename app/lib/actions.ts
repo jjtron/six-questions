@@ -10,7 +10,7 @@ export type State = {
     who?: Object;
     what?: string[];
     where?: Object;
-    when?: Object;
+    when?: string[];
     why?: string[];
     how?: string[];
   }; 
@@ -22,12 +22,13 @@ const FormSchema = z.object({
   who: z.string(),
   what: z.string(),
   where: z.string(),
-  when: z.object({}),
+  when: z.string(),
   why: z.string(),
   how: z.string(),
 });
 
 export async function createRecord(prevState: State, formData: FormData) {
+  console.log(formData);
   const validatedFields = FormSchema.safeParse({
     id: formData.get('id'),
     who: formData.get('who'),
@@ -37,7 +38,6 @@ export async function createRecord(prevState: State, formData: FormData) {
     why: formData.get('why'),
     how: formData.get('how'),
   });
-  //revalidatePath('/records/create');
   
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
@@ -47,8 +47,9 @@ export async function createRecord(prevState: State, formData: FormData) {
       message: 'Missing Fields. Failed to Create Record.',
     };
   }
-  
-  redirect('/records/create');
+
+  revalidatePath('/records/create');
+  redirect('/records');
 }
 
 const genericExample = z.object({

@@ -6,6 +6,7 @@ import MultiSelect from '@/app/ui/records/multiselect';
 import WhereRadio from '@/app/ui/records/whereradio';
 import { SelectOptions, WhoOptions } from '@/app/lib/interfaces';
 import DatePickerComponent from '@/app/ui/records/datepicker';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Form({whereOptions, whoOptions} : 
   { whereOptions: any, whoOptions: WhoOptions[]}) {
@@ -25,11 +26,11 @@ export default function Form({whereOptions, whoOptions} :
       <input
                 id="id"
                 name="id"
+                readOnly
                 type="text"
                 step="0.01"
-                placeholder="9491d710-3185-4e06-bea0-6a2f275345e0"
+                value={uuidv4()}
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                aria-describedby="id-error"
                 style={{color: 'white', backgroundColor: 'black'}}
               />
       <MultiSelect options={[
