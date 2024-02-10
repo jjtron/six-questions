@@ -3,15 +3,15 @@ import { DatePicker } from 'date-picker-nextjs';
 import { useState } from 'react';
 
 export default function Page() {
-  const [modalDateIsOpen, setModalDateIsOpen] = useState(false)
-  const [clickedInput, setClickedInput] = useState(null)
+  const [modalDateIsOpen, setModalDateIsOpen] = useState(false);
+  const [clickedInput, setClickedInput] = useState(null);
 
   const handleDatePicker = (e: any) => {
     setClickedInput(e.target.id)
     setModalDateIsOpen(true)
   }
 
-  const submit = (e) => {
+  const submit = (e: any) => {
     e.preventDefault()
     // your logic
   }
@@ -38,5 +38,5 @@ export default function Page() {
         />
       )}
     </>
-  )
+  );
 }
