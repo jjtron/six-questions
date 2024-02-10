@@ -1,6 +1,20 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## My Notes
+
+Clone a fresh copy from github
+
+Replace the modified Datepicker.js, in this location, . . .
+    /node_module/date-picker-nextjs/dist/components/Datepicker.js
+
+with the one found in this location, . . .
+    /documents/Datepicker.js
+
+immediately after npm install, before first time compile,
+so that its modifications get cached, or else it is unalterable 
+afterward.
+
+## Getting Started notes that come with app creation
 
 First, run the development server:
 
