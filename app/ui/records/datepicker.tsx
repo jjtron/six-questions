@@ -1,8 +1,9 @@
 "use client"
+
 import { DatePicker } from 'date-picker-nextjs';
 import { useState } from 'react';
 
-export default function Page() {
+export default function DatePickerComponent() {
   const [modalDateIsOpen, setModalDateIsOpen] = useState(false);
   const [clickedInput, setClickedInput] = useState(null);
 
@@ -18,19 +19,15 @@ export default function Page() {
 
   return (
     <>
-      <form className="test" onSubmit={submit}>
-        <label style={{color: 'white', backgroundColor: 'black'}} htmlFor="birthdate">Birthdate</label>
-        <input
-          style={{color: 'white', backgroundColor: 'black'}}
-          className="input-field outline-none"
-          type="text"
-          id="dateOfBirth"
-          placeholder="Date of birth"
-          onClick={handleDatePicker}
-        />
-
-        <input type="submit" value="Submit" />
-      </form>
+      <input
+        style={{color: 'white', backgroundColor: 'black'}}
+        className="input-field outline-none"
+        type="text"
+        id="when"
+        name="when"
+        placeholder="When"
+        onClick={handleDatePicker}
+      />
       {modalDateIsOpen && (
         <DatePicker
           setModalDateIsOpen={setModalDateIsOpen}

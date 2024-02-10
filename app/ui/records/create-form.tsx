@@ -5,6 +5,7 @@ import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
 import WhereRadio from '@/app/ui/records/whereradio';
 import { SelectOptions, WhoOptions } from '@/app/lib/interfaces';
+import DatePickerComponent from '@/app/ui/records/datepicker';
 
 export default function Form({whereOptions, whoOptions} : 
   { whereOptions: any, whoOptions: WhoOptions[]}) {
@@ -50,16 +51,7 @@ export default function Form({whereOptions, whoOptions} :
           {list: whereOptions}
         ]}>
       </WhereRadio>
-      <input
-                id="when"
-                name="when"
-                type="text"
-                step="0.01"
-                placeholder="when"
-                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-                aria-describedby="when-error"
-                style={{color: 'white', backgroundColor: 'black'}}
-              />
+      <DatePickerComponent />
       <input
                 id="why"
                 name="why"
