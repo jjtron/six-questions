@@ -28,8 +28,6 @@ const FormSchema = z.object({
 });
 
 export async function createRecord(prevState: State, formData: FormData) {
-  console.log(formData.getAll('who'));
-  console.log(formData.getAll('where'));
   const validatedFields = FormSchema.safeParse({
     id: formData.get('id'),
     who: formData.get('who'),
