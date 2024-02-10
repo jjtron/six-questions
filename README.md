@@ -2,10 +2,10 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## My Notes
 
-Clone a fresh copy from github
+Clone a fresh copy from github.
 
 Replace the modified Datepicker.js, in this location, . . .
-    /node_module/date-picker-nextjs/dist/components/Datepicker.js
+    /node_modules/date-picker-nextjs/dist/components/Datepicker.js
 
 with the one found in this location, . . .
     /documents/Datepicker.js
@@ -13,6 +13,13 @@ with the one found in this location, . . .
 immediately after npm install, before first time compile,
 so that its modifications get cached, or else it is unalterable 
 afterward.
+
+Then, create a /node_modules/@types/date-picker-nextjs/index.d.ts file.
+Use the terminal.
+The contents of the file should be as follows . . .
+    declare module 'date-picker-nextjs';
+
+
 
 ## Getting Started notes that come with app creation
 
