@@ -5,7 +5,7 @@ import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
 import WhereRadio from '@/app/ui/records/whereradio';
 import { SelectOptions, WhoOptions } from '@/app/lib/interfaces';
-import DatePickerComponent from '@/app/ui/records/datepicker';
+import DateTimePicker from '@/app/ui/records/datepicker';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Form({whereOptions, whoOptions} : 
@@ -52,7 +52,7 @@ export default function Form({whereOptions, whoOptions} :
           {list: whereOptions}
         ]}>
       </WhereRadio>
-      <DatePickerComponent />
+      <DateTimePicker />
       <input
                 id="why"
                 name="why"
