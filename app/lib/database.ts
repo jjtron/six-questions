@@ -18,7 +18,7 @@ const client = new Client({
     }
   };
 
-  export async function insertRecord(data: FormData) {
+  export async function insertAnswerRecord(data: FormData) {
     // prepare the whos for insert
     let persons: number[] = [];
     data.getAll("who").map((person: any) => {
@@ -27,7 +27,6 @@ const client = new Client({
     // prepare the whens for insert
     let timestamp: {date?: string; time?: string;} = {};
     data.getAll("when").map((property: any) => {
-      console.log(property);
       const re = new RegExp(/\d{2}\/\d{2}\/\d{4}/);
       re.test(property) ? (timestamp.date = property) : (timestamp.time = property);
     });
@@ -36,9 +35,7 @@ const client = new Client({
     data.getAll("where").map((place: any) => {
       places.push(Number(place));
     });
-    console.log(places);
     
-
     const result: any = await client.query(`
     INSERT INTO public.six_questions(
       id, who, what, "where", "when", why, how)
@@ -52,8 +49,11 @@ const client = new Client({
         '${data.get("how")}'
       );`
     );
-    console.log('RESULT', result);
   };
+
+  export async function insertPlaceRecord(data: FormData) {
+    console.log('HELLO');
+  }
 
 /* SCRIPT TO CREATE TABLE "six_questions"
     DROP TABLE IF EXISTS public.six_questions;

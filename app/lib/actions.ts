@@ -3,7 +3,7 @@ import * as https from 'https';
 import z, { number } from "zod"; 
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { insertRecord } from './database';
+import { insertAnswerRecord, insertPlaceRecord } from './database';
 
 export type State = {
   errors?: {
@@ -29,7 +29,6 @@ const FormSchema = z.object({
 });
 
 export async function createRecord(prevState: State, formData: FormData) {
-  console.log(formData);
   const validatedFields = FormSchema.safeParse({
     id: formData.get('id'),
     who: formData.get('who'),
@@ -49,11 +48,51 @@ export async function createRecord(prevState: State, formData: FormData) {
     };
   }
 
-  insertRecord(formData);
+  insertAnswerRecord(formData);
 
   revalidatePath('/records/create');
   redirect('/records');
 }
+
+export type PlaceState = {
+  errors?: {
+    id?: string[];
+    placename?: string[];
+    city?: string[];
+    street?: string[];
+  }; 
+  message?: string | null;
+};
+const PlaceFormSchema = z.object({
+  id: z.string(),
+  placename: z.string(),
+  city: z.string(),
+  street: z.string(),
+});
+export async function createPlace(prevState: PlaceState, formData: FormData) {
+  console.log(formData);
+  const validatedFields = PlaceFormSchema.safeParse({
+    id: formData.get('id'),
+    placename: formData.get('placename'),
+    city: formData.get('city'),
+    street: formData.get('street'),
+  });
+  
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    console.log('Error:', validatedFields.error.flatten().fieldErrors);
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Record.',
+    };
+  }
+
+  insertPlaceRecord(formData);
+
+  revalidatePath('/records/create');
+  redirect('/records');
+}
+
 export async function getRecords() {
   return [[0,1,2,3,4,5,6]];
 }

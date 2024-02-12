@@ -1,11 +1,10 @@
 "use server"
 
 import Breadcrumbs from '@/app/ui/records/breadcrumbs';
-import Form from '@/app/ui/records/create-form';
+import Form from '@/app/ui/records/answer/create-form';
 import { getDbData } from '@/app/lib/database';
-import { revalidatePath } from 'next/cache';
 
-export default async function Page() {
+export default async function Page({rectype} : {rectype: any}) {
     const whereData = await getDbData('SELECT * FROM wheres');
     const whoData = await getDbData('SELECT * FROM whos');
     

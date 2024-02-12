@@ -3,7 +3,8 @@ import { getRecords } from "@/app/lib/actions";
 import { Button } from "@/app/ui/button"
 
 export default async function Page() {
-    const showdatalink: string = "/records/create";
+    const answer_route: string = "/records/create/answer";
+    const place_route: string = "/records/create/place";
     const records: any = await getRecords();
  
     return (
@@ -33,7 +34,10 @@ export default async function Page() {
             </tbody>
         </table>
         <div className="flex min-h-screen flex-col items-center justify-between p-24">
-            <Button className="mt-4 w-full" buttontext={'Create'} showdatalink={showdatalink}></Button>
+            <Button className="mt-4 w-full" buttontext={'Create Six Questions Record'} showdatalink={answer_route}></Button>
+            <Button className="mt-4 w-full" buttontext={'Create a Person (Who)'} showdatalink={answer_route}></Button>
+            <Button className="mt-4 w-full" buttontext={'Create a Date/Time (When)'} showdatalink={answer_route}></Button>
+            <Button className="mt-4 w-full" buttontext={'Create a Place (When)'} showdatalink={place_route}></Button>
         </div>
         </>
     );
