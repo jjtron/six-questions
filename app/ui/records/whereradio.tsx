@@ -14,8 +14,8 @@ export default function WhereRadio(
     whereOptions[1].list.map((el, i) => {
         optionsList.push(
             <label key={i}>
-                <input type="radio" name="where" value={el.name} />{el.name}
-                <div>{el.details.address}</div>
+                <input type="radio" name="where" value={el.id} />{el.name}
+                <div>{el.details.street}</div>
                 <div>{el.details.city}</div>
             </label>
         );

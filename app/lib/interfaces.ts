@@ -3,12 +3,12 @@ export type SelectOptions = {[key: number]: string};
 export type WhoOptions = {index: number, name: string};
 
 export type RadioOptions = {
-    list: [
-        {name: string;
-            details: {
-                city: string;
-                address: string
-            }
-        }
-    ]
+    list: [{   
+              id: string;
+              name: string;
+              details: {
+                  city: string;
+                  street: string
+              }
+           }]
 };
