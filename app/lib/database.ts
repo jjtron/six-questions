@@ -17,23 +17,20 @@ const client = new Client({
       return {succes: false, details: error};
     }
   };
-  export async function fetchCustomers() {
-    try {
-      const data = await client.query(`
-        SELECT
-          id,
-          name
-        FROM customers
-        ORDER BY name ASC
-      `);
-  
-      const customers = data.rows;
-      return customers;
-    } catch (err) {
-      console.error('Database Error:', err);
-      throw new Error('Failed to fetch all customers.');
-    }
-  }
+
+  export async function insertRecord(data: FormData) {
+    let persons: number[] = [];
+    data.getAll("who").map((person: any) => {
+      persons.push(Number(person));
+    });
+    const result: any = await client.query(`
+    INSERT INTO public.six_questions(
+      id, who, what, "where", "when", why, how)
+      VALUES ('${data.get("id")}',
+      '${JSON.stringify(persons)}', 'x', '{"a": 0}', '{"b": 0}', 'x', 'x');
+    `);
+      console.log('RESULT', result);
+  };
 
 /* SCRIPT TO CREATE TABLE "six_questions"
     DROP TABLE IF EXISTS public.six_questions;
