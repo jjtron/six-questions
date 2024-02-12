@@ -24,14 +24,19 @@ const client = new Client({
     data.getAll("who").map((person: any) => {
       persons.push(Number(person));
     });
-
+    // prepare the whens for insert
     let timestamp: {date?: string; time?: string;} = {};
     data.getAll("when").map((property: any) => {
       console.log(property);
       const re = new RegExp(/\d{2}\/\d{2}\/\d{4}/);
       re.test(property) ? (timestamp.date = property) : (timestamp.time = property);
     });
-    console.log(timestamp);
+    // prepare the wheres for insert
+    let places: number[] = [];
+    data.getAll("where").map((place: any) => {
+      places.push(Number(place));
+    });
+    console.log(places);
     
 
     const result: any = await client.query(`
@@ -40,9 +45,14 @@ const client = new Client({
       VALUES (
         '${data.get("id")}',
         '${JSON.stringify(persons)}',
-        'x', '{"a": 0}', '${JSON.stringify(timestamp)}', 'x', 'x');
-    `);
-      console.log('RESULT', result);
+        '${data.get("what")}',
+        '${JSON.stringify(places)}',
+        '${JSON.stringify(timestamp)}',
+        '${data.get("why")}',
+        '${data.get("how")}'
+      );`
+    );
+    console.log('RESULT', result);
   };
 
 /* SCRIPT TO CREATE TABLE "six_questions"
