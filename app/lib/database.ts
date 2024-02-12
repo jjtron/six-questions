@@ -19,15 +19,28 @@ const client = new Client({
   };
 
   export async function insertRecord(data: FormData) {
+    // prepare the whos for insert
     let persons: number[] = [];
     data.getAll("who").map((person: any) => {
       persons.push(Number(person));
     });
+
+    let timestamp: {date?: string; time?: string;} = {};
+    data.getAll("when").map((property: any) => {
+      console.log(property);
+      const re = new RegExp(/\d{2}\/\d{2}\/\d{4}/);
+      re.test(property) ? (timestamp.date = property) : (timestamp.time = property);
+    });
+    console.log(timestamp);
+    
+
     const result: any = await client.query(`
     INSERT INTO public.six_questions(
       id, who, what, "where", "when", why, how)
-      VALUES ('${data.get("id")}',
-      '${JSON.stringify(persons)}', 'x', '{"a": 0}', '{"b": 0}', 'x', 'x');
+      VALUES (
+        '${data.get("id")}',
+        '${JSON.stringify(persons)}',
+        'x', '{"a": 0}', '${JSON.stringify(timestamp)}', 'x', 'x');
     `);
       console.log('RESULT', result);
   };
