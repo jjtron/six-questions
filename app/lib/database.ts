@@ -65,7 +65,8 @@ const client = new Client({
     );
   }
 
-/* SCRIPT TO CREATE TABLE "six_questions"
+/* 
+SCRIPT TO CREATE TABLE "six_questions"
 
     DROP TABLE IF EXISTS public.six_questions;
     CREATE TABLE IF NOT EXISTS public.six_questions
@@ -79,9 +80,37 @@ const client = new Client({
         how character varying(1000) COLLATE pg_catalog."default" NOT NULL,
         CONSTRAINT six_questions_pkey PRIMARY KEY (id)
     )
-
     TABLESPACE pg_default;
-
     ALTER TABLE IF EXISTS public.six_questions
+        OWNER to postgres;
+
+/////////////////////////////////////////////////////////////////////////
+SCRIPT TO CREATE TABLE "wheres"
+
+    DROP TABLE IF EXISTS public.wheres;
+    CREATE TABLE IF NOT EXISTS public.wheres
+    (
+        id integer NOT NULL DEFAULT nextval('wheres_id_seq'::regclass),
+        name character varying(50) COLLATE pg_catalog."default" NOT NULL,
+        details json NOT NULL,
+        CONSTRAINT wheres_pkey PRIMARY KEY (id)
+    )
+    TABLESPACE pg_default;
+    ALTER TABLE IF EXISTS public.wheres
+        OWNER to postgres;
+
+
+/////////////////////////////////////////////////////////////////////////
+SCRIPT TO CREATE TABLE "whos"
+
+    DROP TABLE IF EXISTS public.whos;
+    CREATE TABLE IF NOT EXISTS public.whos
+    (
+        index integer NOT NULL,
+        name character varying(80) COLLATE pg_catalog."default" NOT NULL,
+        CONSTRAINT whos_pkey PRIMARY KEY (index)
+    )
+    TABLESPACE pg_default;
+    ALTER TABLE IF EXISTS public.whos
         OWNER to postgres;
 */
