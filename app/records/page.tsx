@@ -9,30 +9,28 @@ export default async function Page() {
  
     return (
         <>
-        <table>
-            <tbody>
-                <tr>
-                    <th>Id</th>
-                    <th>Who</th>
-                    <th>what</th>
-                    <th>where</th>
-                    <th>when</th>
-                    <th>why</th>
-                    <th>how</th>
-                </tr>
-                {records?.map((record: Array<any>, i: any) => (
-                <tr key={i} >
-                    <td>{record[0]}</td>
-                    <td>{record[1]}</td>
-                    <td>{record[2]}</td>
-                    <td>{record[3]}</td>
-                    <td>{record[4]}</td>
-                    <td>{record[5]}</td>
-                    <td>{record[6]}</td>
-                </tr>
-                ))}
-            </tbody>
-        </table>
+        {records?.map((record: Array<any>, i: any) => (
+            <div key={i} className="flex m-10">
+                <div className="flex-1 bg-teal-400">Id</div>
+                <div className="flex-1 bg-teal-400">Who</div>
+                <div className="flex-1 bg-teal-400">what</div>
+                <div className="flex-1 bg-teal-400">where</div>
+                <div className="flex-1 bg-teal-400">when</div>
+                <div className="flex-1 bg-teal-400">why</div>
+                <div className="flex-1 bg-teal-400">how</div>
+            </div>
+        ))}
+        {records?.map((record: Array<any>, i: any) => (
+                <div key={i} className="flex m-10">
+                    <div className="flex-1 bg-teal-400">{record[0]}</div>
+                    <div className="flex-1 bg-teal-400">{record[1]}</div>
+                    <div className="flex-1 bg-teal-400">{record[2]}</div>
+                    <div className="flex-1 bg-teal-400">{record[3]}</div>
+                    <div className="flex-1 bg-teal-400">{record[4]}</div>
+                    <div className="flex-1 bg-teal-400">{record[5]}</div>
+                    <div className="flex-1 bg-teal-400">{record[6]}</div>
+                </div>
+        ))}
         <div className="flex min-h-screen flex-col items-center justify-between p-24">
             <Button className="mt-4 w-full" buttontext={'Create Six Questions Record'} showdatalink={answer_route}></Button>
             <Button className="mt-4 w-full" buttontext={'Create a Person (Who)'} showdatalink={answer_route}></Button>
