@@ -60,6 +60,7 @@ export type PlaceState = {
     placename?: string[];
     city?: string[];
     street?: string[];
+    state?: string[];
   }; 
   message?: string | null;
 };
@@ -68,6 +69,7 @@ const PlaceFormSchema = z.object({
   placename: z.string(),
   city: z.string(),
   street: z.string(),
+  state: z.string(),
 });
 export async function createPlace(prevState: PlaceState, formData: FormData) {
   console.log(formData);
@@ -76,6 +78,7 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
     placename: formData.get('placename'),
     city: formData.get('city'),
     street: formData.get('street'),
+    state: formData.get('state'),
   });
   
   // If form validation fails, return errors early. Otherwise, continue.

@@ -43,7 +43,7 @@ const client = new Client({
         '${data.get("id")}',
         '${JSON.stringify(persons)}',
         '${data.get("what")}',
-        '${JSON.stringify(places)}',
+        '${data.get("where")}',
         '${JSON.stringify(timestamp)}',
         '${data.get("why")}',
         '${data.get("how")}'
@@ -52,7 +52,15 @@ const client = new Client({
   };
 
   export async function insertPlaceRecord(data: FormData) {
-    console.log('HELLO');
+    let details: {} = { 
+      city: data.get("city"),
+      street: data.get("street"),
+      state: data.get("state")
+    }
+    const result: any = await client.query(`
+      INSERT INTO public.wheres ( name, details )
+      VALUES ('${data.get("placename")}', '${JSON.stringify(details)}');`
+    );
   }
 
 /* SCRIPT TO CREATE TABLE "six_questions"

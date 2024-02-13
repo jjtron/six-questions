@@ -37,7 +37,7 @@ export default async function Page() {
             <Button className="mt-4 w-full" buttontext={'Create Six Questions Record'} showdatalink={answer_route}></Button>
             <Button className="mt-4 w-full" buttontext={'Create a Person (Who)'} showdatalink={answer_route}></Button>
             <Button className="mt-4 w-full" buttontext={'Create a Date/Time (When)'} showdatalink={answer_route}></Button>
-            <Button className="mt-4 w-full" buttontext={'Create a Place (When)'} showdatalink={place_route}></Button>
+            <Button className="mt-4 w-full" buttontext={'Create a Place (Where)'} showdatalink={place_route}></Button>
         </div>
         </>
     );

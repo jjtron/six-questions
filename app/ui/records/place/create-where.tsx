@@ -53,6 +53,16 @@ export default function Form() {
                 aria-describedby="street-error"
                 style={{color: 'white', backgroundColor: 'black'}}
               />
+      <input
+                id="state"
+                name="state"
+                type="text"
+                step="0.01"
+                placeholder='state'
+                className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
+                aria-describedby="street-error"
+                style={{color: 'white', backgroundColor: 'black'}}
+              />
       <div className="flex min-h-screen flex-col items-center justify-between p-24">
         <Button type="submit">Create Place</Button>
       </div>
