@@ -52,14 +52,16 @@ const client = new Client({
   };
 
   export async function insertPlaceRecord(data: FormData) {
-    let details: {} = { 
-      city: data.get("city"),
-      street: data.get("street"),
-      state: data.get("state")
-    }
     const result: any = await client.query(`
       INSERT INTO public.wheres ( name, details )
-      VALUES ('${data.get("placename")}', '${JSON.stringify(details)}');`
+      VALUES (
+        '${data.get("placename")}',
+        '${JSON.stringify({ 
+          city: data.get("city"),
+          street: data.get("street"),
+          state: data.get("state")
+        })}'
+      );`
     );
   }
 

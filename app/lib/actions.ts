@@ -72,7 +72,6 @@ const PlaceFormSchema = z.object({
   state: z.string(),
 });
 export async function createPlace(prevState: PlaceState, formData: FormData) {
-  console.log(formData);
   const validatedFields = PlaceFormSchema.safeParse({
     id: formData.get('id'),
     placename: formData.get('placename'),
