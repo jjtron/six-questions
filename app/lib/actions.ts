@@ -50,7 +50,7 @@ export async function createRecord(prevState: State, formData: FormData) {
 
   insertAnswerRecord(formData);
 
-  revalidatePath('/records/create');
+  revalidatePath('/records');
   redirect('/records');
 }
 
@@ -91,7 +91,7 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
 
   insertPlaceRecord(formData);
 
-  revalidatePath('/records/create');
+  revalidatePath('/records');
   redirect('/records');
 }
 
