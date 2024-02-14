@@ -53,23 +53,19 @@ export default async function Page() {
                         })
                     }</div>
                     <div className="flex-row flex-1">
-                        <div className="flex flex-1">
-                            <div className="basis-1/5">Title:</div>
-                            <div className="basis-5/6">{placeDetailsFunc(record.where, 'name', null)}</div> 
-                        </div>
-                        <div className="flex flex-1">
-                            <div className="basis-1/5">Street:</div>
-                            <div className="basis-5/6">{placeDetailsFunc(record.where, 'details', 'street')}</div> 
-                        </div>
-                        <div className="flex flex-1">
-                            <div className="basis-1/5">City:</div>
-                            <div className="basis-5/6">{placeDetailsFunc(record.where, 'details', 'city')}</div> 
-                        </div>
-
-                        <div className="flex flex-1">
-                            <div className="basis-1/5">State:</div>
-                            <div className="basis-5/6">{placeDetailsFunc(record.where, 'details', 'state')}</div> 
-                        </div>
+                        {([
+                            {title: "Title:", level: 'name', sublevel: null},
+                            {title: "Street:", level: 'details', sublevel: 'street'},
+                            {title: "City:", level: 'details', sublevel: 'city'},
+                            {title: "State:", level: 'details', sublevel: 'state'}
+                          ]).map((el, i) => {
+                                return (
+                                    <div key={i} className="flex flex-1">
+                                        <div className="basis-1/5">{el.title}</div>
+                                        <div className="basis-5/6">{placeDetailsFunc(record.where, el.level, el.sublevel)}</div> 
+                                    </div>
+                                )
+                        })}
                     </div>
                     <div className="flex-1">
                         <div>{record.when.date}</div>
