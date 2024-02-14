@@ -21,12 +21,14 @@ export default async function Page() {
     return (
         <>
         <div className="flex mx-10 my-2 border-1 border-black">
-            <div className="flex-1 bg-teal-400">Who</div>
+            <div className="flex-none w-44 h-14 ...">Who</div>
+            <div className="flex-1">Where</div>
+            <div className="flex-1">When</div>
+            {/*
             <div className="flex-1 bg-teal-400">What</div>
-            <div className="flex-1 bg-teal-400">Where</div>
-            <div className="flex-1 bg-teal-400">When</div>
             <div className="flex-1 bg-teal-400">Why</div>
             <div className="flex-1 bg-teal-400">How</div>
+            */}
         </div>
 
         <div className="border-rbl-1 border-black mx-10">
@@ -37,7 +39,7 @@ export default async function Page() {
                 how: string[];
             }, i: any) => (
                 <div key={i} className="flex mx-0 border-t-1 border-black even:bg-slate-100 odd:bg-slate-300">
-                    <div className="flex-1">{
+                    <div className="flex-none w-44 h-14 ...">{
                         record.who.map((whoIndex: number, n: number) => {
                             const name = whoList.map((row: {index: number; name: string;}) => {
                                 if (row.index === whoIndex) {
@@ -50,19 +52,34 @@ export default async function Page() {
                             return name;
                         })
                     }</div>
-                    <div className="flex-1">{record.what}</div>
-                    <div className="flex-1">
-                        <p>{placeDetailsFunc(record.where, 'name', null)}</p>
-                        <p>{placeDetailsFunc(record.where, 'details', 'street')}</p>
-                        <p>{placeDetailsFunc(record.where, 'details', 'city')}</p>
-                        <p>{placeDetailsFunc(record.where, 'details', 'state')}</p>
+                    <div className="flex-row flex-1">
+                        <div className="flex flex-1">
+                            <div className="basis-1/5">Title:</div>
+                            <div className="basis-5/6">{placeDetailsFunc(record.where, 'name', null)}</div> 
+                        </div>
+                        <div className="flex flex-1">
+                            <div className="basis-1/5">Street:</div>
+                            <div className="basis-5/6">{placeDetailsFunc(record.where, 'details', 'street')}</div> 
+                        </div>
+                        <div className="flex flex-1">
+                            <div className="basis-1/5">City:</div>
+                            <div className="basis-5/6">{placeDetailsFunc(record.where, 'details', 'city')}</div> 
+                        </div>
+
+                        <div className="flex flex-1">
+                            <div className="basis-1/5">State:</div>
+                            <div className="basis-5/6">{placeDetailsFunc(record.where, 'details', 'state')}</div> 
+                        </div>
                     </div>
                     <div className="flex-1">
                         <div>{record.when.date}</div>
                         <div>{record.when.time}</div>
                     </div>
+                    {/*
+                    <div className="flex-1">{record.what}</div>
                     <div className="flex-1">{record.why}</div>
                     <div className="flex-1">{record.how}</div>
+                    */}
                 </div>
        
                 ))}
