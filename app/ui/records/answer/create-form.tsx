@@ -42,7 +42,6 @@ export default function Form({whereOptions, whoOptions} :
                 name="what"
                 type="text"
                 step="0.01"
-                value="what"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="what-error"
                 style={{color: 'white', backgroundColor: 'black'}}
@@ -58,7 +57,6 @@ export default function Form({whereOptions, whoOptions} :
                 name="why"
                 type="text"
                 step="0.01"
-                value="why"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="why-error"
                 style={{color: 'white', backgroundColor: 'black'}}
@@ -68,7 +66,6 @@ export default function Form({whereOptions, whoOptions} :
                 name="how"
                 type="text"
                 step="0.01"
-                value="how"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="how-error"
                 style={{color: 'white', backgroundColor: 'black'}}

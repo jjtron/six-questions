@@ -1,6 +1,7 @@
 "use server"
 import { getDbData } from "@/app/lib/database";
-import { Button } from "@/app/ui/button"
+import { Button } from "@/app/ui/button";
+import { revalidatePath } from 'next/cache';
 
 export default async function Page() {
     const answer_route: string = "/records/create/answer";
@@ -8,10 +9,11 @@ export default async function Page() {
     const records: any = await getDbData(`
         SELECT * FROM six_questions;
     `);
-    
+    //revalidatePath('/records');
+
     return (
         <>
-        <div className="flex m-10">
+        <div className="flex mx-10 my-2 border-1 border-black">
             <div className="flex-1 bg-teal-400">Who</div>
             <div className="flex-1 bg-teal-400">What</div>
             <div className="flex-1 bg-teal-400">Where</div>
@@ -20,26 +22,29 @@ export default async function Page() {
             <div className="flex-1 bg-teal-400">How</div>
         </div>
 
+        <div className="border-rbl-1 border-black mx-10">
         {records.details.rows?.map((record: 
             {
                 id: string[]; who: Array<any>; what: string[];
                 where: number; when: {date: string[]; time: string[]}; why: string[];
                 how: string[];
             }, i: any) => (
-                <div key={i} className="flex m-10 my-0 border-y-2 border-y-black border-t-0">
-                    <div className="flex-1 bg-slate-100">{record.who[0]}, {record.who[1]}</div>
-                    <div className="flex-1 bg-slate-100">{record.what}</div>
-                    <div className="flex-1 bg-slate-100">{record.where}</div>
-                    <div className="flex-1 bg-slate-100">
+                <div key={i} className="flex mx-0 border-t-1 border-black even:bg-slate-100 odd:bg-slate-300">
+                    <div className="flex-1">{record.who[0]}, {record.who[1]}</div>
+                    <div className="flex-1">{record.what}</div>
+                    <div className="flex-1">{record.where}</div>
+                    <div className="flex-1">
                         <div>{record.when.date}</div>
                         <div>{record.when.time}</div>
                     </div>
-                    <div className="flex-1 bg-slate-100">{record.why}</div>
-                    <div className="flex-1 bg-slate-100">{record.how}</div>
+                    <div className="flex-1">{record.why}</div>
+                    <div className="flex-1">{record.how}</div>
                 </div>
+       
         ))}
+        </div>
         
-        <div className="flex min-h-screen flex-row justify-between p-24">
+        <div className="flex min-h-screen flex-row justify-between p-24 space-x-2">
             <Button className="mt-4 w-full" buttontext={'Create Six Questions Record'} showdatalink={answer_route}></Button>
             <Button className="mt-4 w-full" buttontext={'Create a Person (Who)'} showdatalink={answer_route}></Button>
             <Button className="mt-4 w-full" buttontext={'Create a Date/Time (When)'} showdatalink={answer_route}></Button>
@@ -47,4 +52,5 @@ export default async function Page() {
         </div>
         </>
     );
+    
 }
