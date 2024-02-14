@@ -8,7 +8,15 @@ export default async function Page() {
     const place_route: string = "/records/create/place";
     const records: any = (await getDbData(` SELECT * FROM six_questions; `)).details.rows;
     const whoList: any = (await getDbData(`SELECT * FROM whos;`)).details.rows;
+    const whereDefs: any = (await getDbData(`SELECT * FROM wheres;`)).details.rows;
+
+    const placeDetailsFunc = (whereId: any) => {
+        const place = whereDefs.find((def: any) => (def.id === whereId));
+        return place.name + " " + place.details.street + " " + place.details.city + " " + place.details.state;
+    }
     
+    //dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(thisIsMyCopy)}}
+    https://stackoverflow.com/questions/23616226/insert-html-with-react-variable-statements-jsx
     return (
         <>
         <div className="flex mx-10 my-2 border-1 border-black">
@@ -42,7 +50,7 @@ export default async function Page() {
                         })
                     }</div>
                     <div className="flex-1">{record.what}</div>
-                    <div className="flex-1">{record.where}</div>
+                    <div className="flex-1">{ placeDetailsFunc(record.where) }</div>
                     <div className="flex-1">
                         <div>{record.when.date}</div>
                         <div>{record.when.time}</div>
@@ -51,7 +59,7 @@ export default async function Page() {
                     <div className="flex-1">{record.how}</div>
                 </div>
        
-        ))}
+                ))}
         </div>
         
         <div className="flex min-h-screen flex-row justify-between p-24 space-x-2">
