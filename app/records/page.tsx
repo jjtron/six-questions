@@ -32,7 +32,8 @@ export default async function Page() {
                     {/* TOP ROW GROUP*/}
                     <div className="flex mx-0">
                         {/* col 1 */}
-                        <div className="flex-1 bg-slate-200 pl-2 border-1 border-slate-400 rounded-md">
+                        <div className={clsx("flex-1 pl-2 border-1 border-slate-400 rounded-md",
+                                            {"bg-slate-200": ( i & 1 ), "bg-stone-300": !( i & 1 )})}>
                             <p className="font-bold">WHO</p>{
                             record.who.map((whoIndex: number, n: number) => {
                                 const name = whoList.map((row: {index: number; name: string;}) => {
@@ -47,7 +48,8 @@ export default async function Page() {
                             })
                         }</div>
                         {/* col 2 */}
-                        <div className="flex-row flex-1 bg-slate-250 pl-2 ml-px border-1 border-slate-400 rounded-md">
+                        <div className={clsx("flex-row flex-1 pl-2 ml-px border-1 border-slate-400 rounded-md",
+                                            {"bg-slate-250": ( i & 1 ), "bg-stone-250": !( i & 1 )})}>
                         {
                             ([
                                 {title: "WHERE", level: 'name', sublevel: null},
@@ -64,7 +66,9 @@ export default async function Page() {
                             })
                         }</div>
                         {/* col 3 */}
-                        <div className="flex-1 bg-slate-200 pl-2 ml-px border-1 border-slate-400 rounded-md">
+                        
+                        <div className={clsx("flex-1 pl-2 border-1 border-slate-400 rounded-md",
+                                            {"bg-slate-200": ( i & 1 ), "bg-stone-300": !( i & 1 )})}>
                             <p className="font-bold">WHEN</p>
                             <div>{record.when.date}</div>
                             <div>{record.when.time}</div>
@@ -75,12 +79,14 @@ export default async function Page() {
                         {([{label: 'WHAT'},
                            {label: 'HOW'},
                            {label: 'WHY'}])
-                           .map((vars, i) => {
+                           .map((vars, j) => {
                             let data;
-                            (i === 0) ? data = record.what : 
-                            (i === 1) ? data = record.how : 
-                            (i === 2) ? data = record.why : data = null;
-                            return  <div key={i} className="flex-1 rounded-md mt-px border-1 border-slate-400 pl-2 even:bg-slate-250 odd:bg-slate-300">
+                            (j === 0) ? data = record.what : 
+                            (j === 1) ? data = record.how : 
+                            (j === 2) ? data = record.why : data = null;
+                            return  <div key={j} className={clsx("flex-1 rounded-md mt-px border-1 border-slate-400 pl-2", 
+                                                                {"even:bg-slate-250 odd:bg-slate-300": ( i & 1 ),
+                                                                 "even:bg-stone-250 odd:bg-stone-300": !( i & 1 )})}>
                                         <p className="font-bold">{vars.label}</p>
                                         <p>{data}</p>
                                     </div>
