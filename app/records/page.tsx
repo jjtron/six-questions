@@ -30,9 +30,9 @@ export default async function Page() {
             }, i: any) => {
                 return <div key={i} className="flex-row">
                     {/* TOP ROW GROUP*/}
-                    <div className="flex mx-0 border-rtl-1 border-black even:bg-slate-100 odd:bg-slate-300">
+                    <div className="flex mx-0 border-rtl-1 border-slate-400">
                         {/* col 1 */}
-                        <div className="flex-none w-44 bg-slate-200 pl-2">
+                        <div className="flex-1 bg-slate-200 pl-2 border-r-1 border-slate-400">
                             <p className="font-bold">WHO</p>{
                             record.who.map((whoIndex: number, n: number) => {
                                 const name = whoList.map((row: {index: number; name: string;}) => {
@@ -47,7 +47,7 @@ export default async function Page() {
                             })
                         }</div>
                         {/* col 2 */}
-                        <div className="flex-row flex-1 bg-slate-300 pl-2">
+                        <div className="flex-row flex-1 bg-slate-250 pl-2 border-r-1 border-slate-400">
                         {
                             ([
                                 {title: "WHERE", level: 'name', sublevel: null},
@@ -71,8 +71,7 @@ export default async function Page() {
                         </div>
                     </div>
                     {/* BOTTOM ROW GROUP*/}
-                    <div className="flex-row flex-1 border-rtl-1 border-black">
-                        
+                    <div className="flex-row flex-1 border-rtl-1 border-slate-400">
                         {([{label: 'WHAT'},
                            {label: 'HOW'},
                            {label: 'WHY'}])
@@ -81,7 +80,7 @@ export default async function Page() {
                             (i === 0) ? data = record.what : 
                             (i === 1) ? data = record.how : 
                             (i === 2) ? data = record.why : data = null;
-                            return  <div key={i} className="flex-1 border-b-1 border-black pl-2 even:bg-slate-200 odd:bg-slate-300">
+                            return  <div key={i} className="flex-1 border-b-1 border-slate-400 pl-2 even:bg-slate-250 odd:bg-slate-300">
                                         <p className="font-bold">{vars.label}</p>
                                         <p>{data}</p>
                                     </div>
