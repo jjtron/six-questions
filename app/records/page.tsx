@@ -1,7 +1,7 @@
 "use server"
 import { getDbData } from "@/app/lib/database";
 import { Button } from "@/app/ui/button";
-import { revalidatePath } from 'next/cache';
+import clsx from 'clsx';
 
 export default async function Page() {
     const answer_route: string = "/records/create/answer";
@@ -20,24 +20,20 @@ export default async function Page() {
     
     return (
         <>
-        <div className="flex mx-10 my-2 border-1 border-black">
-            <div className="flex-none w-44 h-14 ...">Who</div>
-            <div className="flex-1">Where</div>
-            <div className="flex-1">When</div>
-        </div>
-
-        <div className="border-rbl-1 border-black mx-10">
+        <div>&nbsp;</div>
+        <div className="mx-6">
         {records.map((record: 
             {
                 id: string[]; who: Array<any>; what: string[];
                 where: number; when: {date: string[]; time: string[]}; why: string[];
                 how: string[];
-            }, i: any) => (
-                <div key={i} className="flex-row">
+            }, i: any) => {
+                return <div key={i} className="flex-row">
                     {/* TOP ROW GROUP*/}
-                    <div className="flex mx-0 border-t-1 border-black even:bg-slate-100 odd:bg-slate-300">
+                    <div className="flex mx-0 border-rtl-1 border-black even:bg-slate-100 odd:bg-slate-300">
                         {/* col 1 */}
-                        <div className="flex-none w-44 h-14 ...">{
+                        <div className="flex-none w-44 bg-slate-200 pl-2">
+                            <p className="font-bold">WHO</p>{
                             record.who.map((whoIndex: number, n: number) => {
                                 const name = whoList.map((row: {index: number; name: string;}) => {
                                     if (row.index === whoIndex) {
@@ -51,36 +47,41 @@ export default async function Page() {
                             })
                         }</div>
                         {/* col 2 */}
-                        <div className="flex-row flex-1">
-                            {([
-                                {title: "Title:", level: 'name', sublevel: null},
-                                {title: "Street:", level: 'details', sublevel: 'street'},
-                                {title: "City:", level: 'details', sublevel: 'city'},
-                                {title: "State:", level: 'details', sublevel: 'state'}
-                            ]).map((el: any, i: number) => (
-                                    <div key={i} className="flex flex-1">
-                                        <div className="basis-1/5">{el.title}</div>
-                                        <div className="basis-5/6">{placeDetailsFunc(record.where, el.level, el.sublevel)}</div> 
+                        <div className="flex-row flex-1 bg-slate-300 pl-2">
+                        {
+                            ([
+                                {title: "WHERE", level: 'name', sublevel: null},
+                                {title: "Street: ", level: 'details', sublevel: 'street'},
+                                {title: "City: ", level: 'details', sublevel: 'city'},
+                                {title: "State: ", level: 'details', sublevel: 'state'}
+                            ]).map((el: any, i: number) => {
+                             return <div key={i} className="flex flex-1">
+                                        <div className={clsx("basis-1/5 mr-2", { "font-bold": i === 0, "text-right": i > 0 })}>{el.title}</div>
+                                        <div className={clsx("basis-5/5", { "font-medium": i === 0})}> {placeDetailsFunc(record.where, el.level, el.sublevel)}</div>
+                                        
                                     </div>
-                            ))}
-                        </div>
+                                    
+                            })
+                        }</div>
                         {/* col 3 */}
-                        <div className="flex-1">
+                        <div className="flex-1 bg-slate-200 pl-2">
+                            <p className="font-bold">WHEN</p>
                             <div>{record.when.date}</div>
                             <div>{record.when.time}</div>
                         </div>
                     </div>
                     {/* BOTTOM ROW GROUP*/}
-                    <div className="flex-row flex-1">
-                        {/* SECTION WHAT*/}
-                        <div className="flex-1 border-t-1 border-black">{record.what}</div>
-                        {/* SECTION WHY*/}
-                        <div className="flex-1 border-t-1 border-black">{record.why}</div>
-                        {/* SECTION WHEN*/}
-                        <div className="flex-1 border-t-1 border-black">{record.how}</div>
+                    <div className="flex-row flex-1 border-rtl-1 border-black">
+                        {/* SECTION WHAT*/}<p className="font-bold pl-2">WHAT</p>
+                        <div className="flex-1 border-b-1 border-black pl-2">{record.what}</div>
+                        {/* SECTION WHY*/}<p className="font-bold pl-2">WHY</p>
+                        <div className="flex-1 border-b-1 border-black pl-2">{record.why}</div>
+                        {/* SECTION WHEN*/}<p className="font-bold pl-2">WHEN</p>
+                        <div className="flex-1 border-b-1 border-black pl-2">{record.how}</div>
                     </div>
+                    <div className="bg-inherit">&nbsp;</div>
                 </div>
-                ))}
+                })}
         </div>
         
         <div className="flex min-h-screen flex-row justify-between p-24 space-x-2">
