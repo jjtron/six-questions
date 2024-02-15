@@ -72,12 +72,20 @@ export default async function Page() {
                     </div>
                     {/* BOTTOM ROW GROUP*/}
                     <div className="flex-row flex-1 border-rtl-1 border-black">
-                        {/* SECTION WHAT*/}<p className="font-bold pl-2">WHAT</p>
-                        <div className="flex-1 border-b-1 border-black pl-2">{record.what}</div>
-                        {/* SECTION WHY*/}<p className="font-bold pl-2">WHY</p>
-                        <div className="flex-1 border-b-1 border-black pl-2">{record.why}</div>
-                        {/* SECTION WHEN*/}<p className="font-bold pl-2">WHEN</p>
-                        <div className="flex-1 border-b-1 border-black pl-2">{record.how}</div>
+                        
+                        {([{label: 'WHAT'},
+                           {label: 'HOW'},
+                           {label: 'WHY'}])
+                           .map((vars, i) => {
+                            let data;
+                            (i === 0) ? data = record.what : 
+                            (i === 1) ? data = record.how : 
+                            (i === 2) ? data = record.why : data = null;
+                            return  <div key={i} className="flex-1 border-b-1 border-black pl-2 even:bg-slate-200 odd:bg-slate-300">
+                                        <p className="font-bold">{vars.label}</p>
+                                        <p>{data}</p>
+                                    </div>
+                        })}
                     </div>
                     <div className="bg-inherit">&nbsp;</div>
                 </div>
