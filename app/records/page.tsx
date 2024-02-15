@@ -73,11 +73,11 @@ export default async function Page() {
                     {/* BOTTOM ROW GROUP*/}
                     <div className="flex-row flex-1">
                         {/* SECTION WHAT*/}
-                        <div className="flex-1">{record.what}</div>
+                        <div className="flex-1 border-t-1 border-black">{record.what}</div>
                         {/* SECTION WHY*/}
-                        <div className="flex-1">{record.why}</div>
+                        <div className="flex-1 border-t-1 border-black">{record.why}</div>
                         {/* SECTION WHEN*/}
-                        <div className="flex-1">{record.how}</div>
+                        <div className="flex-1 border-t-1 border-black">{record.how}</div>
                     </div>
                 </div>
                 ))}
