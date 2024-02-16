@@ -1,6 +1,5 @@
 "use client"
 
-import { Button } from "@/app/ui/button"
 import { lusitana } from '@/app/ui/fonts';
 import Image from 'next/image';
 
@@ -25,7 +24,6 @@ export default function Home() {
           className="hidden md:block" // must be above screen width 640px, to "display: block" (otherwise, "display: hidden")
           alt="Eye"
       />
-      <Button className="mt-4 w-full" buttontext={'CallAPI'} showdatalink={showdatalink}></Button>
     </main>
   );
 }
