@@ -15,14 +15,14 @@ export default function Home() {
           src="/artists-eye.png"
           width={100}
           height={100}
-          className="block md:hidden"
+          className="block md:hidden" // must be above screen width 640px, to "display: hidden" (otherwise, "display: block")
           alt="Eye"
       />
       <Image
           src="/human-eye.png"
           width={500}
           height={500}
-          className="hidden md:block"
+          className="hidden md:block" // must be above screen width 640px, to "display: block" (otherwise, "display: hidden")
           alt="Eye"
       />
       <Button className="mt-4 w-full" buttontext={'CallAPI'} showdatalink={showdatalink}></Button>
