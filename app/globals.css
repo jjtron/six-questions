@@ -39,4 +39,5 @@ body {
   .border-rtl-1 {border-width: 1px 1px 0px 1px;}
   .bg-slate-250 {background-color: rgb(215 221 232);}
   .bg-stone-250 {background-color: rgb(240, 232, 232);}
+  .bg-sky-250 {background-color: rgb(155, 221, 252);}
 }

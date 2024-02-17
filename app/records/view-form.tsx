@@ -28,11 +28,13 @@ export default async function Form() {
                 how: string[];
             }, i: any) => {
                 return <div key={i} className="flex-row">
+
                     {/* TOP ROW GROUP*/}
                     <div className="flex mx-0">
+
                         {/* col 1 */}
                         <div className={clsx("flex-1 pl-2 border-1 border-slate-400 rounded-md",
-                                            {"bg-slate-200": ( i & 1 ), "bg-stone-300": !( i & 1 )})}>
+                                            {"bg-slate-200": ( i & 1 ), "bg-sky-300": !( i & 1 )})}>
                             <p className="font-bold">WHO</p>{
                             record.who.map((whoIndex: number, n: number) => {
                                 const name = whoList.map((row: {index: number; name: string;}) => {
@@ -46,9 +48,18 @@ export default async function Form() {
                                 return name;
                             })
                         }</div>
+
                         {/* col 2 */}
                         <div className={clsx("flex-row flex-1 pl-2 ml-px border-1 border-slate-400 rounded-md",
-                                            {"bg-slate-250": ( i & 1 ), "bg-stone-250": !( i & 1 )})}>
+                                            {"bg-slate-250": ( i & 1 ), "bg-sky-250": !( i & 1 )})}>
+                            <p className="font-bold">WHEN</p>
+                            <div>{record.when.date}</div>
+                            <div>{record.when.time}</div>
+                        </div>
+
+                        {/* col 3 */}
+                        <div className={clsx("flex-1 pl-2 border-1 border-slate-400 rounded-md",
+                                            {"bg-slate-200": ( i & 1 ), "bg-sky-300": !( i & 1 )})}>
                         {
                             ([
                                 {title: "WHERE", level: 'name', sublevel: null},
@@ -62,15 +73,8 @@ export default async function Form() {
                                     </div>
                             })
                         }</div>
-                        {/* col 3 */}
-                        
-                        <div className={clsx("flex-1 pl-2 border-1 border-slate-400 rounded-md",
-                                            {"bg-slate-200": ( i & 1 ), "bg-stone-300": !( i & 1 )})}>
-                            <p className="font-bold">WHEN</p>
-                            <div>{record.when.date}</div>
-                            <div>{record.when.time}</div>
-                        </div>
                     </div>
+
                     {/* BOTTOM ROW GROUP*/}
                     <div className="flex-row flex-1">
                         {([{label: 'WHAT'},
@@ -83,7 +87,7 @@ export default async function Form() {
                             (j === 2) ? data = record.why : data = null;
                             return  <div key={j} className={clsx("flex-1 rounded-md mt-px border-1 border-slate-400 pl-2", 
                                                                 {"even:bg-slate-250 odd:bg-slate-300": ( i & 1 ),
-                                                                 "even:bg-stone-250 odd:bg-stone-300": !( i & 1 )})}>
+                                                                 "even:bg-sky-250 odd:bg-sky-300": !( i & 1 )})}>
                                         <p className="font-bold">{vars.label}</p>
                                         <p>{data}</p>
                                     </div>
