@@ -28,7 +28,7 @@ export default function NavLinks() {
 
   return (
     <>
-      {links.map((link, i) => {
+      {links.map((link) => {
         const LinkIcon = link.icon;
         return (
           <Link
@@ -38,14 +38,14 @@ export default function NavLinks() {
               'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3',
               {
                 'bg-sky-100 text-blue-600': pathname === link.href,
-                'md:min-h-20': i === 2,
+                'md:min-h-20': link.href ==='/records/create/answer',
               },
             )}
           >
-          
-            <LinkIcon className={clsx({'w-6': i < 2}, {'w-6 md:w-12': i === 2})} />
+            <LinkIcon className={clsx(
+                {'w-6': link.href !='/records/create/answer'},
+                {'w-6 md:w-12': link.href ==='/records/create/answer'})} />
             <p className="hidden md:block">{link.name}</p>
-
           </Link>
         );
       })}
