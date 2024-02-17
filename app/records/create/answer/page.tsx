@@ -14,8 +14,8 @@ export default async function Page({rectype} : {rectype: any}) {
             breadcrumbs={[
               { label: 'Records', href: '/records' },
               {
-                label: 'Create Record',
-                href: '/records/create',
+                label: 'Create 6-answers Record',
+                href: '/records/create/answer',
                 active: true,
               },
             ]}

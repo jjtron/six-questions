@@ -18,7 +18,7 @@ const links = [
     href: '/records',
     icon: DocumentDuplicateIcon,
   },
-  { name: 'Create Record', href: '/records/create/answer', icon: UserGroupIcon },
+  { name: 'Create 6-answers Record', href: '/records/create/answer', icon: UserGroupIcon },
 ];
 
 export default function NavLinks() {

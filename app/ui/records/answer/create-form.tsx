@@ -21,7 +21,6 @@ export default function Form({whereOptions, whoOptions} :
 
   return (
     <form action={dispatch}>
-      <p>Createform</p>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
       <input
                 id="id"
