@@ -19,11 +19,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
         <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-        <div className="w-full mt-8 flex-none md:w-64">
-          <SideNav />
+          <div className="w-full mt-8 flex-none md:w-64"><SideNav /></div>
+          <div className="flex-grow p-6 md:overflow-y-auto md:p-4">{children}</div>
         </div>
-        <div className="flex-grow p-6 md:overflow-y-auto md:p-4">{children}</div>
-      </div>
       </body>
     </html>
   );
