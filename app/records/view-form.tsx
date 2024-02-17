@@ -27,13 +27,13 @@ export default async function Form() {
                 where: number; when: {date: string[]; time: string[]}; why: string[];
                 how: string[];
             }, i: any) => {
-                return <div key={i} className="flex-row">
+                return <div key={i} className="flex flex-col">
 
                     {/* TOP ROW GROUP*/}
-                    <div className="flex mx-0">
+                    <div className="flex md:flex-row flex-col">
 
                         {/* col 1 */}
-                        <div className={clsx("flex-1 pl-2 border-1 border-slate-400 rounded-md",
+                        <div className={clsx("basis-1/4 pl-2 border-1 border-slate-400 rounded-md",
                                             {"bg-slate-200": ( i & 1 ), "bg-sky-300": !( i & 1 )})}>
                             <p className="font-bold">WHO</p>{
                             record.who.map((whoIndex: number, n: number) => {
@@ -50,7 +50,7 @@ export default async function Form() {
                         }</div>
 
                         {/* col 2 */}
-                        <div className={clsx("flex-row flex-1 pl-2 ml-px border-1 border-slate-400 rounded-md",
+                        <div className={clsx("basis-1/4 flex flex-col pl-2 ml-px border-1 border-slate-400 rounded-md",
                                             {"bg-slate-250": ( i & 1 ), "bg-sky-250": !( i & 1 )})}>
                             <p className="font-bold">WHEN</p>
                             <div>{record.when.date}</div>
@@ -58,18 +58,18 @@ export default async function Form() {
                         </div>
 
                         {/* col 3 */}
-                        <div className={clsx("flex-1 pl-2 border-1 border-slate-400 rounded-md",
+                        <div className={clsx("basis-1/2 flex-1 pl-2 border-1 border-slate-400 rounded-md",
                                             {"bg-slate-200": ( i & 1 ), "bg-sky-300": !( i & 1 )})}>
                         {
                             ([
-                                {title: "WHERE", level: 'name', sublevel: null},
+                                {title: "WHERE:", level: 'name', sublevel: null},
                                 {title: "Street: ", level: 'details', sublevel: 'street'},
                                 {title: "City: ", level: 'details', sublevel: 'city'},
                                 {title: "State: ", level: 'details', sublevel: 'state'}
                             ]).map((el: any, n: number) => {
                              return <div key={n} className="flex flex-1">
-                                        <div className={clsx("basis-1/5 mr-2", { "font-bold": n === 0, "text-right": n > 0 })}>{el.title}</div>
-                                        <div className={clsx("basis-5/5", { "font-medium": n === 0})}> {placeDetailsFunc(record.where, el.level, el.sublevel)}</div>
+                                        <div className={clsx("basis-1/5 text-right mr-2", { "font-bold": n === 0})}>{el.title}</div>
+                                        <div className={clsx("basis-5/5 text-right", { "font-medium": n === 0})}> {placeDetailsFunc(record.where, el.level, el.sublevel)}</div>
                                     </div>
                             })
                         }</div>

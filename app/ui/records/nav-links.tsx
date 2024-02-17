@@ -27,6 +27,17 @@ export default function NavLinks() {
   let mypath: any = [];
 
   return (
+    /*
+    <> 
+    {
+      ([1,2]).map((el, i) => {
+        return <div key={i}>hello</div>
+      })
+    }
+    </>
+    */
+
+    
     <>
       {links.map((link) => {
         const LinkIcon = link.icon;
@@ -47,5 +58,6 @@ export default function NavLinks() {
         );
       })}
     </>
+    
   );
 }
