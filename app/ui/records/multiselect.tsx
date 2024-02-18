@@ -27,7 +27,7 @@ export default function MultiSelect(
         optionsList.push(<option key={key} value={key} >{val}</option>);
     }
     return (
-        <select
+        <select className="w-40"
             id={options[0].id}
             name={options[0].name}
             multiple={multi}

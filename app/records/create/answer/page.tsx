@@ -1,7 +1,7 @@
 "use server"
 
 import Breadcrumbs from '@/app/ui/records/breadcrumbs';
-import Form from '@/app/ui/records/answer/create-form';
+import Form from '@/app/ui/records/create/answer/create-form';
 import { getDbData } from '@/app/lib/database';
 
 export default async function Page({rectype} : {rectype: any}) {
