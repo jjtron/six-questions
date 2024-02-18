@@ -1,7 +1,7 @@
 "use server"
 
 import Breadcrumbs from '@/app/ui/records/breadcrumbs';
-import Form from '@/app/records/view-form';
+import Form from '@/app/ui/records/view-form';
 
 export default async function Page() {
     
