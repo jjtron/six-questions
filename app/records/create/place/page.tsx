@@ -1,7 +1,7 @@
 "use server"
 
 import Breadcrumbs from '@/app/ui/records/breadcrumbs';
-import Form from '@/app/ui/records/place/create-where';
+import Form from '@/app/ui/records/create/place/create-where';
 import { getDbData } from '@/app/lib/database';
 
 export default async function Page() {
