@@ -44,8 +44,8 @@ export default function NavLinks() {
                 },
               )}
             >
-              <div className="flex self-center grow">
-                <LinkIcon className="flex-row place-content-center basis-6 md:shrink-0 md:inline"/>
+              <div className="flex place-content-center md:self-center grow">
+                <LinkIcon className="flex-row basis-6 md:shrink-0 md:inline"/>
                 <p className="flex-row grow mr-6 hidden md:inline md:text-center">{link.name}</p>
               </div>
             </Link>
