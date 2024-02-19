@@ -18,7 +18,7 @@ const links = [
     href: '/records',
     icon: DocumentDuplicateIcon,
   },
-  { name: 'Create 6-answers record', href: '/records/create/answer', icon: UserGroupIcon },
+  { name: 'Create a 6-answers record', href: '/records/create/answer', icon: UserGroupIcon },
   { name: 'Create a place record', href: '/records/create/place', icon: UserGroupIcon },
 ];
 
@@ -32,25 +32,26 @@ export default function NavLinks() {
       {links.map((link) => {
         const LinkIcon = link.icon;
         return (
-          <Link
-            key={link.name}
-            href={link.href}
-            className={clsx(
-              'flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3',
-              {
-                'bg-sky-100 text-blue-600': pathname === link.href,
-                'md:min-h-20': link.href ==='/records/create/answer',
-              },
-            )}
-          >
-            <LinkIcon className={clsx(
-                {'w-6': link.href !='/records/create/answer'},
-                {'w-6 md:w-12': link.href ==='/records/create/answer'})} />
-            <p className="hidden md:block">{link.name}</p>
-          </Link>
+          
+            <Link
+              key={link.name}
+              href={link.href}
+              className={clsx('border-1 md:basis-12 basis-48 ' +
+                              'items-center justify-center rounded-md ' +
+                              'hover:bg-sky-50 bg-gray-50',
+                {
+                  'bg-sky-200 text-blue-600': pathname === link.href
+                },
+              )}
+            >
+              <div className="flex">
+                <LinkIcon className="flex-row basis-6 shrink-0 md:inline"/>
+                <p className="flex-row grow mr-6 hidden md:inline md:text-center">{link.name}</p>
+              </div>
+            </Link>
+          
         );
       })}
     </>
-    
   );
 }

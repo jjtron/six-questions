@@ -19,8 +19,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
         <div className="flex md:flex-row flex-col m-2">
+          <div className="flex-row md:flex-col md:basis-48 border-1 shrink-0"><SideNav /></div>
+          <div className="flex border-1 w-full">box 2</div>
+          {/*
           <div className="flex md:basis-40 shrink-0 md:flex-row flex-col"><SideNav /></div>
           <div className="flex-col">{children}</div>
+          */}
         </div>
       </body>
     </html>
