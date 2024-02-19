@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import SideNav from '@/app/ui/records/sidenav';
+import NavLinks from '@/app/ui/records/nav-links';
+import clsx from 'clsx';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
         <div className="flex md:flex-row flex-col m-2">
-          <div className="flex-row md:flex-col md:basis-48 border-1 shrink-0"><SideNav /></div>
+          <div className={clsx("flex flex-row md:flex-col md:basis-48 border-1 " +
+                               "shrink-0 space-x-2 p-4 md:space-x-0 md:space-y-4")}><NavLinks /></div>
           <div className="flex border-1 w-full">box 2</div>
           {/*
           <div className="flex md:basis-40 shrink-0 md:flex-row flex-col"><SideNav /></div>
