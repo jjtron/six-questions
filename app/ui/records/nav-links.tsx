@@ -36,7 +36,7 @@ export default function NavLinks() {
             <Link
               key={link.name}
               href={link.href}
-              className={clsx('border-1 md:basis-12 basis-48 ' +
+              className={clsx('flex border-1 md:basis-12 basis-48 ' +
                               'items-center justify-center rounded-md ' +
                               'hover:bg-sky-50 bg-gray-50',
                 {
@@ -44,8 +44,8 @@ export default function NavLinks() {
                 },
               )}
             >
-              <div className="flex">
-                <LinkIcon className="flex-row basis-6 shrink-0 md:inline"/>
+              <div className="flex self-center grow">
+                <LinkIcon className="flex-row place-content-center basis-6 md:shrink-0 md:inline"/>
                 <p className="flex-row grow mr-6 hidden md:inline md:text-center">{link.name}</p>
               </div>
             </Link>
