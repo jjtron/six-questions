@@ -88,12 +88,14 @@ export default async function Form() {
                                 (j === 0) ? data = record.what : 
                                 (j === 1) ? data = record.how : 
                                 (j === 2) ? data = record.why : data = null;
-                                return <div key={j} className={clsx("flex rounded-md mt-px border-1 border-slate-400 pl-2", 
-                                            {"even:bg-slate-250 odd:bg-slate-300": ( i & 1 ),
-                                            "even:bg-sky-250 odd:bg-sky-300": !( i & 1 )})}>
-                                            <div className="flex-row font-bold">{vars.label}</div>
-                                            <div className="flex-row text-wrap">{data}</div>
-                                        </div>
+                                return (
+                                    <div key={j} className={clsx("flex flex-col rounded-md mt-px border-1 border-slate-400 pl-2", 
+                                        {"even:bg-slate-250 odd:bg-slate-300": ( i & 1 ),
+                                        "even:bg-sky-250 odd:bg-sky-300": !( i & 1 )})}>
+                                        <p className="font-bold">{vars.label}</p>
+                                        <p className="break-all">{data}</p>
+                                    </div>
+                                )
                             })
                         }
                     </div>
