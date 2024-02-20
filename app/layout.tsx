@@ -22,7 +22,7 @@ export default function RootLayout({
         <div className="flex md:flex-row flex-col m-2">
           <div className={clsx("flex flex-row md:flex-col md:basis-48 border-1 " +
                                "shrink-0 space-x-2 p-4 md:space-x-0 md:space-y-4")}><NavLinks /></div>
-          <div className="flex border-1 w-full">box 2</div>
+          <div className="flex-col border-1 w-full">{children}</div>
           {/*
           <div className="flex md:basis-40 shrink-0 md:flex-row flex-col"><SideNav /></div>
           <div className="flex-col">{children}</div>
