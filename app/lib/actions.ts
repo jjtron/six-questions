@@ -95,10 +95,6 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
   redirect('/records');
 }
 
-export async function getRecords() {
-  return [[0,1,2,3,4,5,6]];
-}
-
 
 /* THE FOLLOWING IS LEGACY CODE SAVED FOR REFERENCE
 const genericExample = z.object({

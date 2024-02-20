@@ -24,15 +24,11 @@ const links = [
 
 export default function NavLinks() {
   const pathname = usePathname();
-  let pathexp = "null";
-  let mypath: any = [];
-
   return (
     <>
       {links.map((link) => {
         const LinkIcon = link.icon;
         return (
-          
             <Link
               key={link.name}
               href={link.href}
@@ -48,7 +44,6 @@ export default function NavLinks() {
                 <p className="flex-row grow mr-6 hidden md:inline md:text-center">{link.name}</p>
               </div>
             </Link>
-          
         );
       })}
     </>
