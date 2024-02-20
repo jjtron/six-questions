@@ -19,7 +19,7 @@ const links = [
     icon: DocumentDuplicateIcon,
   },
   { name: 'Create a 6-answers record', href: '/records/create/answer', icon: UserGroupIcon },
-  { name: 'Create a place record', href: '/records/create/place', icon: UserGroupIcon },
+  { name: 'Create a place record (where)', href: '/records/create/place', icon: UserGroupIcon },
 ];
 
 export default function NavLinks() {
