@@ -22,9 +22,7 @@ export default function Form({whereOptions, whoOptions} :
   return (
     <form action={dispatch} className="flex flex-col md:pl-2 bg-inherit">
       
-          <input
-              id="id" name="id" type="hidden" value={uuidv4()}
-          />
+          <input id="id" name="id" type="hidden" value={uuidv4()} />
 
           <div className="flex-col w-40 bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
             <p className="font-bold">WHO</p>
