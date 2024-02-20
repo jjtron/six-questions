@@ -11,9 +11,16 @@ export default function DateTimePicker() {
   };
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePicker slotProps={customIdWhenProps} />
-      <TimePicker label="Basic time picker" slotProps={customIdWhenProps}/>
-      
+      <div className="flex flex-row place-content-center pb-2">
+        <div className="flex flex-row px-1">
+          <p className="font-semibold px-1">Date</p>
+          <DatePicker slotProps={customIdWhenProps} />
+        </div>
+        <div className="flex flex-row px-1">
+          <p className="font-semibold px-1">Time</p>
+          <TimePicker label="" slotProps={customIdWhenProps}/>
+        </div>
+      </div>
     </LocalizationProvider>
   );
 }
