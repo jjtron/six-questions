@@ -5,25 +5,22 @@ export default function WhereRadio(
         SelectProps,
         RadioOptions
     ]}
-) {
-    
-    const multi = (whereOptions[0].multi === 'yes') ? true : false;
-    const dv = (whereOptions[0].multi === 'yes') ? [] : '';
-
-    let optionsList: any[] = [];
-    whereOptions[1].list.map((el, i) => {
-        optionsList.push(
-            <label key={i}>
-                <input type="radio" name="where" value={el.id} />{el.name}
-                <div>{el.details.street}</div>
-                <div>{el.details.city}</div>
-            </label>
-        );
-    });
-
+    ) {
     return (
-        <div style={{color: 'white', backgroundColor: 'black',}}>
-            {optionsList}
+        <div className="flex flex-col space-y-1 pb-2" >
+            { whereOptions[1].list.map((el, i) => {
+                return (
+                    <div key={i} className="flex flex-row border-1 border-slate-400 rounded-md px-2">
+                        <input type="radio" name="where" value={el.id} />
+                        <div className="flex flex-col">
+                            <div>{el.name}</div>
+                            <div>{el.details.street}</div>
+                            <div>{el.details.city}</div>
+                        </div>
+                    </div>
+                )
+                })
+            }
         </div>
     );
 }

@@ -27,7 +27,7 @@ export default async function Form() {
                 where: number; when: {date: string[]; time: string[]}; why: string[];
                 how: string[];
             }, i: any) => {
-                return (<div key={i} className="flex flex-col bg-inherit">
+                return (<div key={i} className="flex flex-col bg-inherit md:pl-2">
                     {/* TOP ROW GROUP*/}
                     <div className="flex md:flex-row flex-col">
                         {/* col 1 */}

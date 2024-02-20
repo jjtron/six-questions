@@ -27,7 +27,7 @@ export default function MultiSelect(
         optionsList.push(<option key={key} value={key} >{val}</option>);
     }
     return (
-        <select className="w-40"
+        <select className="w-full"
             id={options[0].id}
             name={options[0].name}
             multiple={multi}
@@ -38,7 +38,6 @@ export default function MultiSelect(
             value={selectedValues}
             */
             defaultValue={dv}
-            style={{color: 'white', backgroundColor: 'black',}}
             >
             {optionsList}
         </select>
