@@ -8,7 +8,8 @@ export type RadioOptions = {
               name: string;
               details: {
                   city: string;
-                  street: string
+                  street: string;
+                  state: string;
               }
            }]
 };
