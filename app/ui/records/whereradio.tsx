@@ -11,8 +11,8 @@ export default function WhereRadio(
             { whereOptions[1].list.map((el, i) => {
                 return (
                     <div key={i} className="flex flex-row border-1 border-slate-400 rounded-md px-2">
-                        <input type="radio" name="where" value={el.id} />
-                        <div className="flex flex-col">
+                        <input className="h-[24px]" type="radio" name="where" value={el.id} />
+                        <div className="flex flex-col ml-2">
                             <div>{el.name}</div>
                             <div>{el.details.street}</div>
                             <div>{el.details.city}</div>
