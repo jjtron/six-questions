@@ -23,10 +23,6 @@ export default function RootLayout({
           <div className={clsx("flex flex-row md:flex-col md:basis-48 mt-6 " +
                                "shrink-0 space-x-2 py-2 md:space-x-0 md:space-y-4")}><NavLinks /></div>
           <div className="flex-col w-full">{children}</div>
-          {/*
-          <div className="flex md:basis-40 shrink-0 md:flex-row flex-col"><SideNav /></div>
-          <div className="flex-col">{children}</div>
-          */}
         </div>
       </body>
     </html>
