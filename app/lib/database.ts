@@ -10,6 +10,11 @@ const client = new Client({
   client.connect();
 
   export async function getDbData(q: any) {
+
+  console.log('waiting 1 seconds');
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  console.log('done waiting 1 seconds');
+
     try {
       const result: any = await client.query(q);
       return {success: true, details: result};

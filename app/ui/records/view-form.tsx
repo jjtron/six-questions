@@ -32,7 +32,7 @@ export default async function Form() {
                     <div className="flex md:flex-row flex-col">
                         {/* col 1 */}
                         <div className={clsx("basis-1/4 pl-2 border-1 border-slate-400 rounded-md",
-                                            {"bg-slate-200": ( i & 1 ), "bg-sky-300": !( i & 1 )})}>
+                                            {"bg-slate-200": ( i & 1 ), "bg-sky-250": !( i & 1 )})}>
                             <p className="font-bold">WHO</p>{
                             record.who.map((whoIndex: number, n: number) => {
                                 const name = whoList.map((row: {index: number; name: string;}) => {
@@ -49,14 +49,14 @@ export default async function Form() {
                         </div>
                         {/* col 2 */}
                         <div className={clsx("basis-1/4 pl-2 border-1 border-slate-400 rounded-md",
-                                            {"bg-slate-200": ( i & 1 ), "bg-sky-300": !( i & 1 )})}>
+                                            {"bg-slate-250": ( i & 1 ), "bg-sky-300": !( i & 1 )})}>
                             <p className="font-bold">WHEN</p>
                             <div>{record.when.date}</div>
                             <div>{record.when.time}</div>
                         </div>
                         {/* col 3 */}
                         <div className={clsx("basis-1/2 pl-2 border-1 border-slate-400 rounded-md",
-                                            {"bg-slate-200": ( i & 1 ), "bg-sky-300": !( i & 1 )})}>
+                                            {"bg-slate-200": ( i & 1 ), "bg-sky-250": !( i & 1 )})}>
                             {([
                                 {title: "WHERE:", level: 'name', sublevel: null},
                                 {title: "Street: ", level: 'details', sublevel: 'street'},
