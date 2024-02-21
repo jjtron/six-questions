@@ -11,9 +11,10 @@ const client = new Client({
 
   export async function getDbData(q: any) {
 
-  console.log('waiting 1 seconds');
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  console.log('done waiting 1 seconds');
+  // SIMULATE A LONG WAIT FOR DATA
+  if (q.startsWith('SELECT * FROM wheres')) {
+    await new Promise((resolve) => setTimeout(resolve, 4000));
+  }
 
     try {
       const result: any = await client.query(q);
