@@ -4,7 +4,7 @@ const shimmer =
 
 export default function SixAnswersSkeleton() {
   return (
-	<div className="basis-1/2 pl-2 border-1 border-slate-400 rounded-md bg-gray-100">
+	<div className="basis-1/2 pl-2 border-1 border-slate-400 rounded-md bg-gray-300 animate-pulse">
 		<div className="flex flex-row">
 			<div className="basis-16 text-right shrink-0 mr-2 font-light text-base">WHERE:</div>
 			<div className="text-left font-light text-base">loading . . .</div>
