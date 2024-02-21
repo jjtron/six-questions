@@ -1,4 +1,5 @@
 import { Client } from 'pg';
+import { unstable_noStore as noStore } from 'next/cache';
 
 const client = new Client({
     user: 'postgres',
@@ -11,10 +12,12 @@ const client = new Client({
 
   export async function getDbData(q: any) {
 
+  /*
   // SIMULATE A LONG WAIT FOR DATA
   if (q.startsWith('SELECT * FROM wheres')) {
     await new Promise((resolve) => setTimeout(resolve, 4000));
   }
+  */
 
     try {
       const result: any = await client.query(q);
@@ -69,6 +72,30 @@ const client = new Client({
         })}'
       );`
     );
+  }
+
+  const ITEMS_PER_PAGE = 6;
+  export async function fetchFilteredInvoices(
+    query: string,
+    currentPage: number,
+  ) {
+    noStore();
+    const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+  
+    try {
+      const answers = await client.query(
+        `SELECT id, who, what, "where", "when", why, how
+        FROM public.six_questions
+        WHERE what ILIKE '%${query}%' OR
+            why ILIKE '%${query}%' OR
+            how ILIKE '%${query}%';`
+        );
+
+      return answers.rows;
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch invoices.');
+    }
   }
 
 /* 

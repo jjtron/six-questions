@@ -2,12 +2,32 @@
 import { getDbData } from "@/app/lib/database";
 import { Button } from "@/app/ui/button";
 import clsx from 'clsx';
+import { fetchFilteredInvoices } from '@/app/lib/database';
+
+/* for demo only
 import { Suspense } from 'react';
 import SixAnswersSkeleton from '@/app/ui/skeletons';
+*/
 
-export default async function Form() {
-    const records: any = (await getDbData(` SELECT * FROM six_questions; `)).details.rows;
+export default async function Form({
+    query,
+    currentPage,
+  }: {
+    query: string;
+    currentPage: number;
+  }) {
+    //const records: any = (await getDbData(` SELECT * FROM six_questions; `)).details.rows;
     const whoList: any = (await getDbData(`SELECT * FROM whos;`)).details.rows;
+    const whereDefs: any = (await getDbData(`SELECT * FROM wheres`)).details.rows;
+    const records = await fetchFilteredInvoices(query, currentPage);
+
+    const placeDetailsFunc = (recordWhereId: number, shallowEl: string, detailEl: string | null) => {
+        const place = whereDefs.find((whereDef: {id: number}) => (whereDef.id === recordWhereId));
+        if (detailEl !== null) {
+            return place[shallowEl][detailEl];
+        }
+        return place[shallowEl];
+    }
     
     return (
         <>
@@ -46,9 +66,37 @@ export default async function Form() {
                             <div>{record.when.time}</div>
                         </div>
                         {/* col 3 */}
+                        
+                        {/* COMMENTED OUT SUSPENSE; IT'S ONLY FOR DEMO 
+                            The simulate delay is in app/lib/database.ts, the getDbData() function 
                         <Suspense fallback={<SixAnswersSkeleton />}>
-                            <GetWhereData record={record} i={i} />
-                        </Suspense>
+                            <GetWhereData record={record} i={i} /> This component is below, 
+                                                                   at the end of this file
+                        </Suspense> */}
+                        
+                        <div className={clsx("basis-1/2 pl-2 border-1 border-slate-400 rounded-md",
+                                            {"bg-slate-200": ( i & 1 ), "bg-sky-250": !( i & 1 )})}>
+                            {([
+                            {title: "WHERE:", level: 'name', sublevel: null},
+                            {title: "Street: ", level: 'details', sublevel: 'street'},
+                            {title: "City: ", level: 'details', sublevel: 'city'},
+                            {title: "State: ", level: 'details', sublevel: 'state'}
+                            ]).map((el: any, n: number) => {
+                            return <div key={n} className="flex flex-row">
+                            {/* left column */}
+                            <div className={clsx("basis-16 text-right shrink-0 mr-2",
+                                { "font-bold text-base": n === 0, "md:text-base text-sm": n > 0}
+                                )}>{el.title}
+                            </div>
+                            {/* right column */}
+                            <div className={clsx("text-left",
+                                { "font-semibold text-base": n === 0, "md:text-base text-sm": n > 0}
+                                )}> {placeDetailsFunc(record.where, el.level, el.sublevel)}
+                            </div>
+                            </div>
+                            })}
+                        </div>
+
                     </div>
                     {/* BOTTOM ROW GROUP*/}
                     <div className="flex-col">
@@ -79,6 +127,7 @@ export default async function Form() {
     
 }
 
+// The following is not currently used; it is used for the Suspense demo
 export async function GetWhereData({record, i} : {record: any, i: number}) {
 
     const whereDefs: any = (await getDbData(`SELECT * FROM wheres WHERE id = ${record.where};`)).details.rows;

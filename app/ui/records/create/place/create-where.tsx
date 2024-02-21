@@ -10,10 +10,9 @@ export default function Form() {
   const [state, dispatch] = useFormState(createPlace, initialState);
 
   return (
-    <form action={dispatch}>
-      <p>Create A Place</p>
+    <form action={dispatch} className="flex flex-col rounded-md bg-gray-50 p-4 md:p-6 md:ml-2">
 
-      <div className="flex flex-col rounded-md bg-gray-50 p-4 md:p-6">
+      
         
       <input id="id" name="id" type="hidden" value={uuidv4()} />
 
@@ -56,7 +55,7 @@ export default function Form() {
       <div className="flex min-h-screen flex-col items-center justify-between p-24">
         <Button type="submit">Create Place</Button>
       </div>
-      </div>
+
     </form>
   );
 }
