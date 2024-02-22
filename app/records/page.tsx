@@ -3,6 +3,8 @@
 import Breadcrumbs from '@/app/ui/records/breadcrumbs';
 import Form from '@/app/ui/records/view-form';
 import Search from '@/app/ui/records/search';
+import { fetchInvoicesPages } from '@/app/lib/database';
+import Pagination from '@/app/ui/records/pagination';
 
 export default async function Page({
   searchParams,
@@ -14,6 +16,7 @@ export default async function Page({
 }) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
+  const totalPages = await fetchInvoicesPages(query);
     
     return (
       <>
@@ -29,7 +32,10 @@ export default async function Page({
         />
         </div>
         <Search placeholder="search" />
-        <Form query={query} currentPage={1}></Form>
+        <Form query={query} currentPage={currentPage}></Form>
+        <div className="mt-5 flex w-full justify-center">
+          <Pagination totalPages={totalPages} />
+        </div>
       </>
     );
 }

@@ -74,7 +74,7 @@ const client = new Client({
     );
   }
 
-  const ITEMS_PER_PAGE = 6;
+  const ITEMS_PER_PAGE = 1;
   export async function fetchFilteredInvoices(
     query: string,
     currentPage: number,
@@ -88,13 +88,33 @@ const client = new Client({
         FROM public.six_questions
         WHERE what ILIKE '%${query}%' OR
             why ILIKE '%${query}%' OR
-            how ILIKE '%${query}%';`
+            how ILIKE '%${query}%'
+            LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset};`
         );
 
       return answers.rows;
     } catch (error) {
       console.error('Database Error:', error);
-      throw new Error('Failed to fetch invoices.');
+      throw new Error('Failed to fetch answers.');
+    }
+  }
+
+  export async function fetchInvoicesPages(query: string) {
+    noStore();
+    try {
+      const count = await client.query(
+       `SELECT COUNT(*)
+        FROM public.six_questions
+        WHERE what ILIKE '%${query}%' OR
+            why ILIKE '%${query}%' OR
+            how ILIKE '%${query}%';
+    `);
+  
+      const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+      return totalPages;
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch total number of answers.');
     }
   }
 
