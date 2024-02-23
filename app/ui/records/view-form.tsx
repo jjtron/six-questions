@@ -2,7 +2,7 @@
 import { getDbData } from "@/app/lib/database";
 import { Button } from "@/app/ui/button";
 import clsx from 'clsx';
-import { fetchFilteredInvoices } from '@/app/lib/database';
+import { fetchFilteredRecords } from '@/app/lib/database';
 
 /* for demo only
 import { Suspense } from 'react';
@@ -19,7 +19,7 @@ export default async function Form({
     //const records: any = (await getDbData(` SELECT * FROM six_questions; `)).details.rows;
     const whoList: any = (await getDbData(`SELECT * FROM whos;`)).details.rows;
     const whereDefs: any = (await getDbData(`SELECT * FROM wheres`)).details.rows;
-    const records = await fetchFilteredInvoices(query, currentPage);
+    const records = await fetchFilteredRecords(query, currentPage);
 
     const placeDetailsFunc = (recordWhereId: number, shallowEl: string, detailEl: string | null) => {
         const place = whereDefs.find((whereDef: {id: number}) => (whereDef.id === recordWhereId));

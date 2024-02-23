@@ -75,7 +75,7 @@ const client = new Client({
   }
 
   const ITEMS_PER_PAGE = 1;
-  export async function fetchFilteredInvoices(
+  export async function fetchFilteredRecords(
     query: string,
     currentPage: number,
   ) {
@@ -99,7 +99,7 @@ const client = new Client({
     }
   }
 
-  export async function fetchInvoicesPages(query: string) {
+  export async function fetchRecordsPages(query: string) {
     noStore();
     try {
       const count = await client.query(

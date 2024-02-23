@@ -3,7 +3,7 @@
 import Breadcrumbs from '@/app/ui/records/breadcrumbs';
 import Form from '@/app/ui/records/view-form';
 import Search from '@/app/ui/records/search';
-import { fetchInvoicesPages } from '@/app/lib/database';
+import { fetchRecordsPages } from '@/app/lib/database';
 import Pagination from '@/app/ui/records/pagination';
 
 export default async function Page({
@@ -16,7 +16,7 @@ export default async function Page({
 }) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = await fetchInvoicesPages(query);
+  const totalPages = await fetchRecordsPages(query);
     
     return (
       <>
