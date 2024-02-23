@@ -40,7 +40,8 @@ export default function Form({whereOptions, whoOptions, record} :
             <p className="flex-col font-bold">WHERE</p>
             <WhereRadio whereOptions={[
                     {id: 'where', name: 'where', multi: 'no'},
-                    {list: whereOptions}
+                    {list: whereOptions},
+                    record[0].where
                 ]}>
             </WhereRadio>
         </div>

@@ -27,7 +27,7 @@ export default function Form({whereOptions, whoOptions} :
           <div className="flex-col w-40 bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
             <p className="font-bold">WHO</p>
             <MultiSelect options={[
-                {id: 'who', name: 'who', multi: 'yes'}, whoList
+                {id: 'who', name: 'who', multi: 'yes'}, whoList, null
               ]}>
             </MultiSelect>
           </div>
@@ -47,7 +47,8 @@ export default function Form({whereOptions, whoOptions} :
             <p className="flex-col font-bold">WHERE</p>
             <WhereRadio whereOptions={[
                 {id: 'where', name: 'where', multi: 'no'},
-                {list: whereOptions}
+                {list: whereOptions},
+                null
               ]}>
             </WhereRadio>
           </div>
