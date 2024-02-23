@@ -4,7 +4,8 @@ import { SelectProps } from '@/app/lib/interfaces';
 export default function MultiSelect(
     {options} : {options: [
         SelectProps,
-        SelectOptions
+        SelectOptions,
+        number | null
     ]}
 ) {
     /*  THIS CAN BE DEVELOPED LATER TO MAKE IT SO THAT A CLICK WITHOUT 
@@ -20,9 +21,17 @@ export default function MultiSelect(
         setVal(newValue);
     }
     */
+
     let optionsList = [];
     const multi = (options[0].multi === 'yes') ? true : false;
-    const dv = (options[0].multi === 'yes') ? [] : '';
+
+    let dv: any;
+    if (options[0].multi === 'yes') {
+        dv = (options[2] === null) ? [] : options[2];
+    } else {
+        dv = '';
+    }
+    
     for (const [key, val] of Object.entries(options[1])) {
         optionsList.push(<option key={key} value={key} >{val}</option>);
     }

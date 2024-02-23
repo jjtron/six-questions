@@ -15,12 +15,12 @@ export default function Form({whereOptions, whoOptions, record} :
 
   return (
     <form className="flex flex-col md:pl-2 bg-inherit">
-        <input id="id" name="id" type="hidden" value={record} />
+        <input id="id" name="id" type="hidden" value={record[0].id} />
 
         <div className="flex-col w-40 bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
             <p className="font-bold">WHO</p>
             <MultiSelect options={[
-                    {id: 'who', name: 'who', multi: 'yes'}, whoList
+                    {id: 'who', name: 'who', multi: 'yes'}, whoList, record[0].who
                 ]}>
             </MultiSelect>
         </div>
