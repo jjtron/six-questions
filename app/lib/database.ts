@@ -118,6 +118,9 @@ const client = new Client({
     }
   }
 
+  export async function fetchRecordById(id: string[]) {
+
+  }
 /* 
 SCRIPT TO CREATE TABLE "six_questions"
 

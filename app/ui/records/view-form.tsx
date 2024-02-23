@@ -99,7 +99,7 @@ export default async function Form({
 
                     </div>
                     {/* BOTTOM ROW GROUP*/}
-                    <div className="flex-col">
+                    <div>
                         {([{label: 'WHAT'},
                         {label: 'HOW'},
                         {label: 'WHY'}])
@@ -119,9 +119,12 @@ export default async function Form({
                             })
                         }
                     </div>
+                    <Button cName={"w-24"} showdatalink={`/records/${record.id}/edit`} buttontext={"Edit"} />
                 </div>);
             })
+            
         }
+        
         </>
     );
     
