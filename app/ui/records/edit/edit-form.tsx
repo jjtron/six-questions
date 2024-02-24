@@ -31,8 +31,10 @@ export default function Form({whereOptions, whoOptions, record} :
             id="what"
             name="what"
             rows={4}
+            value={record[0].what}
             className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
             aria-describedby="what-error"
+            onChange={() => {}}
         />
         </div>
 
@@ -45,10 +47,10 @@ export default function Form({whereOptions, whoOptions, record} :
                 ]}>
             </WhereRadio>
         </div>
-
+                
         <div className="flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
-        <p className="flex-col font-bold">WHEN</p>
-        <DateTimePicker />
+            <p className="flex-col font-bold">WHEN</p>
+            <DateTimePicker date_time={record[0].when} />
         </div>
 
         <div className="flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
@@ -57,8 +59,10 @@ export default function Form({whereOptions, whoOptions, record} :
             id="why"
             name="why"
             rows={4}
+            value={record[0].why}
             className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
             aria-describedby="why-error"
+            onChange={() => {}}
         />
         </div>
 
@@ -68,8 +72,10 @@ export default function Form({whereOptions, whoOptions, record} :
             id="how"
             name="how"
             rows={4}
+            value={record[0].how}
             className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
             aria-describedby="how-error"
+            onChange={() => {}}
         />
         </div>
 
