@@ -4,9 +4,14 @@ import MultiSelect from '@/app/ui/records/multiselect';
 import WhereRadio from '@/app/ui/records/whereradio';
 import { SelectOptions, WhoOptions } from '@/app/lib/interfaces';
 import DateTimePicker from '@/app/ui/records/datepicker';
+import { useFormState } from 'react-dom';
+import { createRecord } from '@/app/lib/actions';
 
 export default function Form({whereOptions, whoOptions, record} : 
     { whereOptions: any, whoOptions: WhoOptions[], record: any}) {
+
+    const initialState = { message: null, errors: {} };
+    const [state, dispatch] = useFormState(createRecord, initialState);
 
     let whoList: SelectOptions = {};
     whoOptions.map((el: WhoOptions) => {
@@ -14,7 +19,7 @@ export default function Form({whereOptions, whoOptions, record} :
     });
 
   return (
-    <form className="flex flex-col md:pl-2 bg-inherit">
+    <form action={dispatch} className="flex flex-col md:pl-2 bg-inherit">
         <input id="id" name="id" type="hidden" value={record[0].id} />
 
         <div className="flex-col w-40 bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >

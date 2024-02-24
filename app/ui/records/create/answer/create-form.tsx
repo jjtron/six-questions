@@ -55,7 +55,7 @@ export default function Form({whereOptions, whoOptions} :
 
           <div className="flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
           <p className="flex-col font-bold">WHEN</p>
-            <DateTimePicker />
+            <DateTimePicker date_time={{date: '01/01/1900', time: '12:00 AM'}}/>
           </div>
 
           <div className="flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >

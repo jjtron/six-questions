@@ -16,29 +16,37 @@ export default function DateTimePicker({date_time} : {date_time: any}) {
   const customIdWhenProps = {
       textField: { id: "when", name: "when" }
   };
-  function setValue(newValue: any) {
-    return dayjs(newValue);
-  }
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="flex flex-row place-content-center pb-2">
         <div className="flex flex-row px-1">
-          <p className="font-semibold px-1">Date</p>
-          <DatePicker slotProps={customIdWhenProps} 
-            value={dayjs(date_time.date)}
-            onChange={(e) => {
-              setValue(e);
-            }}
-          />
+          {
+            (() => {
+              if (converted_datetime !== '1900-01-0T12:00') {
+                return (<DatePicker label="Date" slotProps={customIdWhenProps} 
+                  value={dayjs(date_time.date)}
+                  onChange={((e) => {})}
+                />)
+              } else {
+                  return (<DatePicker label="Date" slotProps={customIdWhenProps} />)
+              }
+            })()
+          }
         </div>
         <div className="flex flex-row px-1">
-          <p className="font-semibold px-1">Time</p>
-          <TimePicker label="" slotProps={customIdWhenProps}
-            value={dayjs(converted_datetime)}
-            onChange={(e) => {
-              setValue(e);
-            }}
-          />
+          {
+            (() => {
+              if (converted_datetime !== '1900-01-0T12:00') {
+                return (<TimePicker label="Time" slotProps={customIdWhenProps}
+                            value={dayjs(converted_datetime)}
+                            onChange={((e) => {})}
+                />)
+              } else {
+                  return (<TimePicker label="Time" slotProps={customIdWhenProps} />)
+              }
+            })()
+          }
         </div>
       </div>
     </LocalizationProvider>
