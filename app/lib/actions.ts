@@ -3,7 +3,7 @@ import * as https from 'https';
 import z, { number } from "zod"; 
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { insertAnswerRecord, insertPlaceRecord } from './database';
+import { insertAnswerRecord, insertPlaceRecord, updateAnswerRecord } from './database';
 
 export type State = {
   errors?: {
@@ -27,6 +27,32 @@ const FormSchema = z.object({
   why: z.string(),
   how: z.string(),
 });
+
+export async function updateRecord(prevState: State, formData: FormData) {
+  const validatedFields = FormSchema.safeParse({
+    id: formData.get('id'),
+    who: formData.get('who'),
+    what: formData.get('what'),
+    where: formData.get('where'),
+    when: formData.get('when'),
+    why: formData.get('why'),
+    how: formData.get('how'),
+  });
+  
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    console.log('Error:', validatedFields.error.flatten().fieldErrors);
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Record.',
+    };
+  }
+
+  updateAnswerRecord(formData);
+
+  revalidatePath('/records');
+  redirect('/records');
+}
 
 export async function createRecord(prevState: State, formData: FormData) {
   const validatedFields = FormSchema.safeParse({
@@ -71,6 +97,7 @@ const PlaceFormSchema = z.object({
   street: z.string(),
   state: z.string(),
 });
+
 export async function createPlace(prevState: PlaceState, formData: FormData) {
   const validatedFields = PlaceFormSchema.safeParse({
     id: formData.get('id'),

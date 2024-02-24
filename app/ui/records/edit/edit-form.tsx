@@ -5,13 +5,13 @@ import WhereRadio from '@/app/ui/records/whereradio';
 import { SelectOptions, WhoOptions } from '@/app/lib/interfaces';
 import DateTimePicker from '@/app/ui/records/datepicker';
 import { useFormState } from 'react-dom';
-import { createRecord } from '@/app/lib/actions';
+import { updateRecord } from '@/app/lib/actions';
 
 export default function Form({whereOptions, whoOptions, record} : 
     { whereOptions: any, whoOptions: WhoOptions[], record: any}) {
 
     const initialState = { message: null, errors: {} };
-    const [state, dispatch] = useFormState(createRecord, initialState);
+    const [state, dispatch] = useFormState(updateRecord, initialState);
 
     let whoList: SelectOptions = {};
     whoOptions.map((el: WhoOptions) => {
@@ -36,10 +36,9 @@ export default function Form({whereOptions, whoOptions, record} :
             id="what"
             name="what"
             rows={4}
-            value={record[0].what}
+            defaultValue={record[0].what}
             className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
             aria-describedby="what-error"
-            onChange={() => {}}
         />
         </div>
 
@@ -64,10 +63,9 @@ export default function Form({whereOptions, whoOptions, record} :
             id="why"
             name="why"
             rows={4}
-            value={record[0].why}
+            defaultValue={record[0].why}
             className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
             aria-describedby="why-error"
-            onChange={() => {}}
         />
         </div>
 
@@ -77,15 +75,14 @@ export default function Form({whereOptions, whoOptions, record} :
             id="how"
             name="how"
             rows={4}
-            value={record[0].how}
+            defaultValue={record[0].how}
             className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
             aria-describedby="how-error"
-            onChange={() => {}}
         />
         </div>
 
         <div className="flex min-h-screen flex-col items-center justify-between p-24">
-        <Button type="submit">Save Changes</Button>
+            <Button type="submit">Save Changes</Button>
         </div>
 
 

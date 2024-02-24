@@ -60,6 +60,37 @@ const client = new Client({
     );
   };
 
+  export async function updateAnswerRecord(data: FormData) {
+    // prepare the whos for update
+    let persons: number[] = [];
+    data.getAll("who").map((person: any) => {
+      persons.push(Number(person));
+    });
+    // prepare the whens for update
+    let timestamp: {date?: string; time?: string;} = {};
+    data.getAll("when").map((property: any) => {
+      const re = new RegExp(/\d{2}\/\d{2}\/\d{4}/);
+      re.test(property) ? (timestamp.date = property) : (timestamp.time = property);
+    });
+    // prepare the wheres for update
+    let places: number[] = [];
+    data.getAll("where").map((place: any) => {
+      places.push(Number(place));
+    });
+
+    const result: any = await client.query(`
+    UPDATE public.six_questions
+	    SET
+      who='${JSON.stringify(persons)}',
+      what='${data.get("what")}',
+      "when"='${JSON.stringify(timestamp)}',
+      "where"='${data.get("where")}',
+      why='${data.get("why")}',
+      how='${data.get("how")}'
+	    WHERE id = '${data.get("id")}';`
+    );
+  };
+
   export async function insertPlaceRecord(data: FormData) {
     const result: any = await client.query(`
       INSERT INTO public.wheres ( name, details )
