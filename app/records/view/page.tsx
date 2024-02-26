@@ -25,7 +25,7 @@ export default async function Page({
           breadcrumbs={[
             {
               label: 'View Records',
-              href: '/records',
+              href: '/records/view',
               active: true,
             },
           ]}

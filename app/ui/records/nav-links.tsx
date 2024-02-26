@@ -16,7 +16,7 @@ const links = [
   { name: 'Home', href: '/', icon: HomeIcon },
   {
     name: 'Records',
-    href: '/records',
+    href: '/records/view',
     icon: DocumentDuplicateIcon,
   },
   { name: 'Create a 6-answers record', href: '/records/create/answer', icon: UserGroupIcon },
