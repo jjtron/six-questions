@@ -1,7 +1,7 @@
 "use server"
 
 import Breadcrumbs from '@/app/ui/records/breadcrumbs';
-import Form from '@/app/ui/records/view-form';
+import Form from '@/app/ui/records/view-answers';
 import Search from '@/app/ui/records/search';
 import { fetchRecordsPages } from '@/app/lib/database';
 import Pagination from '@/app/ui/records/pagination';
