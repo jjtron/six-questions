@@ -14,11 +14,8 @@ import Search from '@/app/ui/records/search';
 // Depending on the size of the application, this would be stored in a database.
 const links = [
   { name: 'Home', href: '/', icon: HomeIcon },
-  {
-    name: 'Records',
-    href: '/records/view',
-    icon: DocumentDuplicateIcon,
-  },
+  { name: 'Records View', href: '/records/view/answers', icon: DocumentDuplicateIcon, },
+  { name: 'Places View', href: '/records/view/places', icon: DocumentDuplicateIcon, },
   { name: 'Create a 6-answers record', href: '/records/create/answer', icon: UserGroupIcon },
   { name: 'Create a place record (where)', href: '/records/create/place', icon: UserGroupIcon },
 ];

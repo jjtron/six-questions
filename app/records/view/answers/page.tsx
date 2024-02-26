@@ -25,7 +25,7 @@ export default async function Page({
           breadcrumbs={[
             {
               label: 'View Records',
-              href: '/records/view',
+              href: '/records/view/answers',
               active: true,
             },
           ]}
