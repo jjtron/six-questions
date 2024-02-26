@@ -129,7 +129,6 @@ const client = new Client({
       throw new Error('Failed to fetch answers.');
     }
   }
-
   export async function fetchRecordsPages(query: string) {
     noStore();
     try {
@@ -149,9 +148,51 @@ const client = new Client({
     }
   }
 
-  export async function fetchRecordById(id: string[]) {
 
+  const ITEMS_PER_PAGE_OF_PLCES_TABLE = 20;
+  export async function fetchFilteredPlaces(
+    query: string,
+    currentPage: number,
+  ) {
+    noStore();
+    const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+    try {
+      const answers = await client.query(
+       `SELECT * FROM public.wheres
+        WHERE name ILIKE '%${query}%' OR
+            details->>'street' ILIKE '%${query}%' OR
+            details->>'city' ILIKE '%${query}%' OR
+            details->>'state' ILIKE '%${query}%'
+            LIMIT ${ITEMS_PER_PAGE_OF_PLCES_TABLE} OFFSET ${offset};`
+        );
+
+      return answers.rows;
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch answers.');
+    }
   }
+
+  export async function fetchRecordsPlaces(query: string) {
+    noStore();
+    try {
+      const count = await client.query(
+       `SELECT COUNT(*)
+        FROM public.wheres
+        WHERE name ILIKE '%${query}%' OR
+              details->>'street' ILIKE '%${query}%' OR
+              details->>'city' ILIKE '%${query}%' OR
+              details->>'state' ILIKE '%${query}%';
+    `);
+  
+      const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE_OF_PLCES_TABLE);
+      return totalPages;
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch total number of answers.');
+    }
+  }
+
 /* 
 SCRIPT TO CREATE TABLE "six_questions"
 
