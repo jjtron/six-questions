@@ -62,13 +62,6 @@ export default async function Form({
                         </div>
                         {/* col 3 */}
                         
-                        {/* COMMENTED OUT SUSPENSE; IT'S ONLY FOR DEMO 
-                            The simulate delay is in app/lib/database.ts, the getDbData() function 
-                        <Suspense fallback={<SixAnswersSkeleton />}>
-                            <GetWhereData record={record} i={i} /> This component is below, 
-                                                                   at the end of this file
-                        </Suspense> */}
-                        
                         <div className={clsx("basis-1/2 pl-2 border-1 border-slate-400 rounded-md",
                                             {"bg-slate-200": ( i & 1 ), "bg-sky-250": !( i & 1 )})}>
                             {([
