@@ -1,14 +1,12 @@
 "use server"
 
 import Breadcrumbs from '@/app/ui/records/breadcrumbs';
-import Form from '@/app/ui/records/edit/answers/edit-form';
+import Form from '@/app/ui/records/edit/places/edit-form';
 import { getDbData } from '@/app/lib/database';
 
 export default async function Page({ params }: { params: { id: string } }) {
     const id: any = params.id;
-    const record: any = (await getDbData(`SELECT * FROM six_questions WHERE id = '${id}';`)).details.rows;
-    const whereData = await getDbData('SELECT * FROM wheres');
-    const whoData = await getDbData('SELECT * FROM whos');
+    const whereData = await getDbData(`SELECT * FROM wheres WHERE id = '${id}';`);
 
     return (
       <>
@@ -24,7 +22,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           ]}
         />
         </div>
-        <Form record={record} whereOptions={whereData.details.rows} whoOptions={whoData.details.rows}></Form>
+        <Form record={whereData}></Form>
       </>
     );
 }
