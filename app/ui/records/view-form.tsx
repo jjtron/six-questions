@@ -4,11 +4,6 @@ import { Button } from "@/app/ui/button";
 import clsx from 'clsx';
 import { fetchFilteredRecords } from '@/app/lib/database';
 
-/* for demo only
-import { Suspense } from 'react';
-import SixAnswersSkeleton from '@/app/ui/skeletons';
-*/
-
 export default async function Form({
     query,
     currentPage,
@@ -128,43 +123,4 @@ export default async function Form({
         </>
     );
     
-}
-
-// The following is not currently used; it is used for the Suspense demo
-export async function GetWhereData({record, i} : {record: any, i: number}) {
-
-    const whereDefs: any = (await getDbData(`SELECT * FROM wheres WHERE id = ${record.where};`)).details.rows;
-
-    const placeDetailsFunc = (recordWhereId: number, shallowEl: string, detailEl: string | null) => {
-        const place = whereDefs.find((whereDef: {id: number}) => (whereDef.id === recordWhereId));
-        if (detailEl !== null) {
-            return place[shallowEl][detailEl];
-        }
-        return place[shallowEl];
-    }
-
-    return (
-        <div className={clsx("basis-1/2 pl-2 border-1 border-slate-400 rounded-md",
-                            {"bg-slate-200": ( i & 1 ), "bg-sky-250": !( i & 1 )})}>
-            {([
-            {title: "WHERE:", level: 'name', sublevel: null},
-            {title: "Street: ", level: 'details', sublevel: 'street'},
-            {title: "City: ", level: 'details', sublevel: 'city'},
-            {title: "State: ", level: 'details', sublevel: 'state'}
-            ]).map((el: any, n: number) => {
-            return <div key={n} className="flex flex-row">
-            {/* left column */}
-            <div className={clsx("basis-16 text-right shrink-0 mr-2",
-                { "font-bold text-base": n === 0, "md:text-base text-sm": n > 0}
-                )}>{el.title}
-            </div>
-            {/* right column */}
-            <div className={clsx("text-left",
-                { "font-semibold text-base": n === 0, "md:text-base text-sm": n > 0}
-                )}> {placeDetailsFunc(record.where, el.level, el.sublevel)}
-            </div>
-            </div>
-            })}
-        </div>
-    );
 }
