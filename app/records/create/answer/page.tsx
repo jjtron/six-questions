@@ -12,7 +12,7 @@ export default async function Page({rectype} : {rectype: any}) {
         <main>
           <Breadcrumbs
             breadcrumbs={[
-              { label: 'Records', href: '/records' },
+              { label: 'Records', href: '/records/view' },
               {
                 label: 'Create 6-answers Record',
                 href: '/records/create/answer',
