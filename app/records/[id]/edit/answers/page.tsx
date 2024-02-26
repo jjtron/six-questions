@@ -1,8 +1,7 @@
 "use server"
 
 import Breadcrumbs from '@/app/ui/records/breadcrumbs';
-import Form from '@/app/ui/records/edit/edit-form';
-import { fetchRecordById } from '@/app/lib/database';
+import Form from '@/app/ui/records/edit/answers/edit-form';
 import { getDbData } from '@/app/lib/database';
 
 export default async function Page({ params }: { params: { id: string } }) {
@@ -19,7 +18,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             { label: 'Records', href: '/records' },
             {
               label: 'Edit Records',
-              href: '/records/${id}/edit',
+              href: '/records/${id}/edit/answers',
               active: true,
             },
           ]}

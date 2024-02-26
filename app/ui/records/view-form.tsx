@@ -119,7 +119,7 @@ export default async function Form({
                             })
                         }
                     </div>
-                    <Button cName={"w-24"} showdatalink={`/records/${record.id}/edit`} buttontext={"Edit"} />
+                    <Button cName={"w-24"} showdatalink={`/records/${record.id}/edit/answers`} buttontext={"Edit"} />
                 </div>);
             })
             
