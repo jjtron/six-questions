@@ -15,7 +15,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <div className="md:ml-2">
         <Breadcrumbs
           breadcrumbs={[
-            { label: 'Records', href: '/records' },
+            { label: 'Records', href: '/records/view' },
             {
               label: 'Edit Records',
               href: '/records/${id}/edit/answers',

@@ -50,8 +50,8 @@ export async function updateRecord(prevState: State, formData: FormData) {
 
   updateAnswerRecord(formData);
 
-  revalidatePath('/records');
-  redirect('/records');
+  revalidatePath('/records/view');
+  redirect('/records/view');
 }
 
 export async function createRecord(prevState: State, formData: FormData) {
@@ -76,8 +76,8 @@ export async function createRecord(prevState: State, formData: FormData) {
 
   insertAnswerRecord(formData);
 
-  revalidatePath('/records');
-  redirect('/records');
+  revalidatePath('/records/view');
+  redirect('/records/view');
 }
 
 export type PlaceState = {
@@ -118,8 +118,8 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
 
   insertPlaceRecord(formData);
 
-  revalidatePath('/records');
-  redirect('/records');
+  revalidatePath('/records/view');
+  redirect('/records/view');
 }
 
 
