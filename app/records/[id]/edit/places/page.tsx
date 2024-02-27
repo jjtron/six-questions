@@ -7,7 +7,6 @@ import { getDbData } from '@/app/lib/database';
 export default async function Page({ params }: { params: { id: string } }) {
     const id: any = params.id;
     const whereData = await getDbData(`SELECT * FROM wheres WHERE id = '${id}';`);
-
     return (
       <>
         <div className="md:ml-2">
@@ -22,7 +21,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           ]}
         />
         </div>
-        <Form record={whereData}></Form>
+        <Form record={whereData.details.rows}></Form>
       </>
     );
 }

@@ -44,4 +44,6 @@ body {
   .bg-stone-250 {background-color: rgb(240, 232, 232);}
   .bg-sky-250 {background-color: rgb(155, 221, 252);}
   .h-flow {flex-flow: row wrap;}
+
+  .disabled-link { pointer-events: none; }
 }

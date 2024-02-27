@@ -2,10 +2,11 @@ import clsx from 'clsx';
 import Link from 'next/link';
 
 export function Button(
-  { cName, showdatalink, buttontext } : 
-  { cName: any, showdatalink: any, buttontext: string }) {
+  { cName, showdatalink, buttontext, isDisabled } : 
+  { cName: any, showdatalink: any, buttontext: string, isDisabled?: string }) {
+
   return (
-    <Link href={showdatalink}>
+    <Link href={showdatalink} className={isDisabled} >
       <div
         className={clsx(
           'flex flex-col h-10 justify-center rounded-lg bg-blue-500 ' + 
