@@ -4,6 +4,7 @@ import z, { number } from "zod";
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { insertAnswerRecord, insertPlaceRecord, updateAnswerRecord, updatePlaceRecord } from './database';
+import { Console } from 'console';
 
 export type State = {
   errors?: {
@@ -19,7 +20,7 @@ export type State = {
 };
 
 const FormSchema = z.object({
-  id: z.string().uuid({ message: "Invalid UUID" }),
+  id: z.string().uuid({ message: "invalid UUID" }),
   who: z.string().nullable()
     .refine((val) => { return (val !== null) },{ message: "required" }),
   what: z.string().min(1, { message: "required" }),
@@ -92,6 +93,7 @@ export async function createRecord(prevState: State, formData: FormData) {
   redirect('/records/view/answers');
 }
 
+//////////////////////PLACE FUNCTIONS/////////////////////
 export type PlaceState = {
   errors?: {
     id?: string[];
@@ -103,11 +105,11 @@ export type PlaceState = {
   message?: string | null;
 };
 const PlaceFormSchema = z.object({
-  id: z.string(),
-  placename: z.string(),
-  city: z.string(),
-  street: z.string(),
-  state: z.string(),
+  id: z.coerce.number(),
+  placename: z.string().min(1, { message: "required" }),
+  city: z.string().min(1, { message: "required" }),
+  street: z.string().min(1, { message: "required" }),
+  state: z.string().min(1, { message: "required" }),
 });
 
 export async function createPlace(prevState: PlaceState, formData: FormData) {
