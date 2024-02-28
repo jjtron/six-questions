@@ -94,7 +94,7 @@ export default function Form() {
           </div>
       </div>
 
-      <div className="flex min-h-screen flex-col items-center justify-between p-24">
+      <div className="flex flex-col items-center justify-between p-4">
         <Button type="submit">Create Place</Button>
       </div>
     </form>

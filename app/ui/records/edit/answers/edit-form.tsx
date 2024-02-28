@@ -81,7 +81,7 @@ export default function Form({whereOptions, whoOptions, record} :
         />
         </div>
 
-        <div className="flex min-h-screen flex-col items-center justify-between p-24">
+        <div className="flex min-h-screen flex-col items-center justify-between p-4">
             <Button type="submit">Save Changes</Button>
         </div>
 

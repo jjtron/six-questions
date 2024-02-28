@@ -141,7 +141,7 @@ export default function Form({whereOptions, whoOptions} :
             />
           </div>
 
-          <div className="flex min-h-screen flex-col items-center justify-between p-24">
+          <div className="flex min-h-screen flex-col items-center justify-between p-4">
             <Button type="submit">Create Record</Button>
           </div>
 
