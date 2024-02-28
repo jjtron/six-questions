@@ -21,7 +21,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           ]}
         />
         </div>
-        <Form record={whereData.details.rows}></Form>
+        <Form record={whereData.details.rows[0]}></Form>
       </>
     );
 }

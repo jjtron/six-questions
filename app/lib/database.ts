@@ -105,6 +105,19 @@ const client = new Client({
     );
   }
 
+  export async function updatePlaceRecord(data: FormData) {
+    const result: any = await client.query(`
+      UPDATE public.wheres
+      SET name='${data.get('placename')}',
+          details='${JSON.stringify({ 
+            city: data.get("city"),
+            street: data.get("street"),
+            state: data.get("state")
+          })}'
+      WHERE id = '${data.get('id')}';`
+    );
+  }
+
   const ITEMS_PER_PAGE = 1;
   export async function fetchFilteredRecords(
     query: string,

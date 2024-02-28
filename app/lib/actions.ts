@@ -3,7 +3,7 @@ import * as https from 'https';
 import z, { number } from "zod"; 
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { insertAnswerRecord, insertPlaceRecord, updateAnswerRecord } from './database';
+import { insertAnswerRecord, insertPlaceRecord, updateAnswerRecord, updatePlaceRecord } from './database';
 
 export type State = {
   errors?: {
@@ -122,7 +122,29 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
   redirect('/records/view/answers');
 }
 
+export async function updatePlace(prevState: PlaceState, formData: FormData) {
+  const validatedFields = PlaceFormSchema.safeParse({
+    id: formData.get('id'),
+    placename: formData.get('placename'),
+    city: formData.get('city'),
+    street: formData.get('street'),
+    state: formData.get('state'),
+  });
+  
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    console.log('Error:', validatedFields.error.flatten().fieldErrors);
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Record.',
+    };
+  }
 
+  updatePlaceRecord(formData);
+
+  revalidatePath('/records/view/places');
+  redirect('/records/view/places');
+}
 /* THE FOLLOWING IS LEGACY CODE SAVED FOR REFERENCE
 const genericExample = z.object({
   el: z.string()

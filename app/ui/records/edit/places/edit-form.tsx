@@ -1,22 +1,22 @@
 'use client';
 import { Button } from '@/app/ui/button1';
 import { useFormState } from 'react-dom';
-import { updateRecord } from '@/app/lib/actions';
+import { updatePlace } from '@/app/lib/actions';
 
 export default function Form({ record } : { record: any }) {
 
     const initialState = { message: null, errors: {} };
-    const [state, dispatch] = useFormState(updateRecord, initialState);
+    const [state, dispatch] = useFormState(updatePlace, initialState);
 
   return (
     <form action={dispatch} className="flex flex-col md:pl-2 bg-inherit">
-        <input id="id" name="id" type="hidden" defaultValue={record[0].id} />
+        <input id="id" name="id" type="hidden" defaultValue={record.id} />
         <input
                 id="placename"
                 name="placename"
                 type="text"
                 step="0.01"
-                defaultValue={record[0].name}
+                defaultValue={record.name}
                 placeholder='The name of the place'
                 className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                 aria-describedby="where-error"
@@ -26,7 +26,7 @@ export default function Form({ record } : { record: any }) {
                 name="city"
                 type="text"
                 step="0.01"
-                defaultValue={record[0].details.city}
+                defaultValue={record.details.city}
                 placeholder='Name of city'
                 className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                 aria-describedby="city-error"
@@ -36,7 +36,7 @@ export default function Form({ record } : { record: any }) {
                 name="street"
                 type="text"
                 step="0.01"
-                defaultValue={record[0].details.street}
+                defaultValue={record.details.street}
                 placeholder='Street address'
                 className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                 aria-describedby="street-error"
@@ -46,13 +46,13 @@ export default function Form({ record } : { record: any }) {
                 name="state"
                 type="text"
                 step="0.01"
-                defaultValue={record[0].details.state}
+                defaultValue={record.details.state}
                 placeholder='state'
                 className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                 aria-describedby="State-error"
                 />
-        <div className="flex min-h-screen flex-col items-center justify-between p-24">
-                <Button type="submit">Edit Place</Button>
+        <div className="flex min-h-screen flex-col items-center justify-between p-4">
+                <Button type="submit">Save Changes</Button>
         </div>
     </form>
   );
