@@ -20,20 +20,22 @@ export type State = {
 
 const FormSchema = z.object({
   id: z.string().uuid({ message: "Invalid UUID" }),
-  who: z.string(),
+  who: z.string().nullable()
+    .refine((val) => { return (val !== null) },{ message: "required" }),
   what: z.string().min(1, { message: "required" }),
-  where: z.string(),
-  when: z.string().array().length(2)
-    .refine(
-      (a) =>  {
-                  const dateRegexp = /^\d{2}\/\d{2}\/\d{4}/;
-                  const timeRegexp = /^\d{2}:\d{2}\s(AM|PM)/;
-                  return a[0].length > 0 && 
-                        a[1].length > 0 &&
-                        dateRegexp.test(a[0]) &&
-                        timeRegexp.test(a[1]);
-              }, 
-              { message: "Invalid date and/or time; both required"}),
+  where: z.string().nullable()
+    .refine((val) => { return (val !== null) },{ message: "required" }),
+  when: z.string().array().length(2).refine(
+      (a) => {
+              const dateRegexp = /^\d{2}\/\d{2}\/\d{4}/;
+              const timeRegexp = /^\d{2}:\d{2}\s(AM|PM)/;
+              return a[0].length > 0 && 
+                      a[1].length > 0 &&
+                      dateRegexp.test(a[0]) &&
+                      timeRegexp.test(a[1]);
+             }, 
+             { message: "Invalid date and/or time; both required" }
+    ),
   why: z.string().min(1, { message: "required" }),
   how: z.string().min(1, { message: "required" }),
 });
@@ -51,17 +53,7 @@ export async function updateRecord(prevState: State, formData: FormData) {
   
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
-    let errors = validatedFields.error.flatten().fieldErrors;
-    if (typeof errors.where !== undefined && Array.isArray(errors.where)) {
-      if (errors.where[0] === 'Expected string, received null') {
-        errors.where[0] = 'required';
-      }
-    }
-    if (typeof errors.who !== undefined && Array.isArray(errors.who)) {
-      if (errors.who[0] === 'Expected string, received null') {
-        errors.who[0] = 'required';
-      }
-    }
+    const errors = validatedFields.error.flatten().fieldErrors;
     return {
       errors: errors,
       message: 'Missing Fields. Failed to Create Record.',
@@ -87,17 +79,7 @@ export async function createRecord(prevState: State, formData: FormData) {
   
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
-    let errors = validatedFields.error.flatten().fieldErrors;
-    if (typeof errors.where !== undefined && Array.isArray(errors.where)) {
-      if (errors.where[0] === 'Expected string, received null') {
-        errors.where[0] = 'required';
-      }
-    }
-    if (typeof errors.who !== undefined && Array.isArray(errors.who)) {
-      if (errors.who[0] === 'Expected string, received null') {
-        errors.who[0] = 'required';
-      }
-    }
+    const errors = validatedFields.error.flatten().fieldErrors;
     return {
       errors: errors,
       message: 'Missing Fields. Failed to Create Record.',
