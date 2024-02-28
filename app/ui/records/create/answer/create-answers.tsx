@@ -14,6 +14,7 @@ export default function Form({whereOptions, whoOptions} :
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createRecord, initialState);
 
+  console.log(state);
   let whoList: SelectOptions = {};
   whoOptions.map((el: WhoOptions) => {
     whoList[el.index] = el.name;
@@ -24,16 +25,36 @@ export default function Form({whereOptions, whoOptions} :
       
           <input id="id" name="id" type="hidden" value={uuidv4()} />
 
-          <div className="flex-col w-40 bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
-            <p className="font-bold">WHO</p>
-            <MultiSelect options={[
-                {id: 'who', name: 'who', multi: 'yes'}, whoList, null
-              ]}>
-            </MultiSelect>
+          <div className="w-40 bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
+            <div className="flex flex-row">
+                <div className="font-bold">WHO</div>
+                <div id="who-error" aria-live="polite" aria-atomic="true">
+                    {state.errors?.who &&
+                      state.errors.who.map((error: string) => (
+                        <p className="pl-2 leading-6 text-sm text-red-500" key={error}>
+                          {error}
+                        </p>
+                    ))}
+                </div>
+              </div>
+              <MultiSelect options={[
+                  {id: 'who', name: 'who', multi: 'yes'}, whoList, null
+                ]}>
+              </MultiSelect>
           </div>
 
-          <div className="flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
-            <p className="font-bold">WHAT</p>
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
+            <div className="flex flex-row">
+              <div className="font-bold">WHAT</div>
+              <div id="what-error" aria-live="polite" aria-atomic="true">
+                  {state.errors?.what &&
+                    state.errors.what.map((error: string) => (
+                      <p className="pl-2 leading-6 text-sm text-red-500" key={error}>
+                        {error}
+                      </p>
+                  ))}
+              </div>
+            </div>
             <textarea
                 id="what"
                 name="what"
@@ -43,8 +64,18 @@ export default function Form({whereOptions, whoOptions} :
             />
           </div>
 
-          <div className="flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
-            <p className="flex-col font-bold">WHERE</p>
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
+            <div className="flex flex-row">
+              <div className="font-bold">WHERE</div>
+              <div id="where-error" aria-live="polite" aria-atomic="true">
+                  {state.errors?.where &&
+                    state.errors.where.map((error: string) => (
+                      <p className="pl-2 leading-6 text-sm text-red-500" key={error}>
+                        {error}
+                      </p>
+                  ))}
+              </div>
+            </div>
             <WhereRadio whereOptions={[
                 {id: 'where', name: 'where', multi: 'no'},
                 {list: whereOptions},
@@ -53,13 +84,33 @@ export default function Form({whereOptions, whoOptions} :
             </WhereRadio>
           </div>
 
-          <div className="flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
-          <p className="flex-col font-bold">WHEN</p>
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
+            <div className="flex flex-row">
+              <div className="font-bold">WHEN</div>
+              <div id="when-error" aria-live="polite" aria-atomic="true">
+                  {state.errors?.when &&
+                    state.errors.when.map((error: string) => (
+                      <p className="pl-2 leading-6 text-sm text-red-500" key={error}>
+                        {error}
+                      </p>
+                  ))}
+              </div>
+            </div>
             <DateTimePicker date_time={{date: '01/01/1900', time: '12:00 AM'}}/>
           </div>
 
-          <div className="flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
-            <p className="font-bold">WHY</p>
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
+            <div className="flex flex-row">
+              <div className="font-bold">WHY</div>
+              <div id="why-error" aria-live="polite" aria-atomic="true">
+                  {state.errors?.why &&
+                    state.errors.why.map((error: string) => (
+                      <p className="pl-2 leading-6 text-sm text-red-500" key={error}>
+                        {error}
+                      </p>
+                  ))}
+              </div>
+            </div>
             <textarea
                 id="why"
                 name="why"
@@ -69,8 +120,18 @@ export default function Form({whereOptions, whoOptions} :
             />
           </div>
 
-          <div className="flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
-            <p className="font-bold">HOW</p>
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
+            <div className="flex flex-row">
+              <div className="font-bold">HOW</div>
+              <div id="how-error" aria-live="polite" aria-atomic="true">
+                  {state.errors?.how &&
+                    state.errors.how.map((error: string) => (
+                      <p className="pl-2 leading-6 text-sm text-red-500" key={error}>
+                        {error}
+                      </p>
+                  ))}
+              </div>
+            </div>
             <textarea
                 id="how"
                 name="how"

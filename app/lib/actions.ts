@@ -19,13 +19,13 @@ export type State = {
 };
 
 const FormSchema = z.object({
-  id: z.string(),
+  id: z.string().uuid({ message: "Invalid UUID" }),
   who: z.string(),
-  what: z.string(),
+  what: z.string().min(1, { message: "required" }),
   where: z.string(),
-  when: z.string(),
-  why: z.string(),
-  how: z.string(),
+  when: z.string().array().min(2),
+  why: z.string().min(1, { message: "required" }),
+  how: z.string().min(1, { message: "required" }),
 });
 
 export async function updateRecord(prevState: State, formData: FormData) {
@@ -60,16 +60,26 @@ export async function createRecord(prevState: State, formData: FormData) {
     who: formData.get('who'),
     what: formData.get('what'),
     where: formData.get('where'),
-    when: formData.get('when'),
+    when: formData.getAll('when'),
     why: formData.get('why'),
     how: formData.get('how'),
   });
   
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
-    console.log('Error:', validatedFields.error.flatten().fieldErrors);
+    let errors = validatedFields.error.flatten().fieldErrors;
+    if (typeof errors.where !== undefined && Array.isArray(errors.where)) {
+      if (errors.where[0] === 'Expected string, received null') {
+        errors.where[0] = 'required';
+      }
+    }
+    if (typeof errors.who !== undefined && Array.isArray(errors.who)) {
+      if (errors.who[0] === 'Expected string, received null') {
+        errors.who[0] = 'required';
+      }
+    }
     return {
-      errors: validatedFields.error.flatten().fieldErrors,
+      errors: errors,
       message: 'Missing Fields. Failed to Create Record.',
     };
   }
