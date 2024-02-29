@@ -109,8 +109,14 @@ export type PlaceState = {
   }; 
   message?: string | null;
 };
-const PlaceFormSchema = z.object({
+const PlaceUpdateFormSchema = z.object({
   id: z.coerce.number(),
+  placename: z.string().min(1, { message: "required" }),
+  city: z.string().min(1, { message: "required" }),
+  street: z.string().min(1, { message: "required" }),
+  state: z.string().min(1, { message: "required" }),
+});
+const PlaceCreateFormSchema = z.object({
   placename: z.string().min(1, { message: "required" }),
   city: z.string().min(1, { message: "required" }),
   street: z.string().min(1, { message: "required" }),
@@ -118,7 +124,7 @@ const PlaceFormSchema = z.object({
 });
 
 export async function createPlace(prevState: PlaceState, formData: FormData) {
-  const validatedFields = PlaceFormSchema.safeParse({
+  const validatedFields = PlaceCreateFormSchema.safeParse({
     id: formData.get('id'),
     placename: formData.get('placename'),
     city: formData.get('city'),
@@ -142,7 +148,7 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
 }
 
 export async function updatePlace(prevState: PlaceState, formData: FormData) {
-  const validatedFields = PlaceFormSchema.safeParse({
+  const validatedFields = PlaceUpdateFormSchema.safeParse({
     id: formData.get('id'),
     placename: formData.get('placename'),
     city: formData.get('city'),

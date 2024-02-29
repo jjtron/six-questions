@@ -12,7 +12,7 @@ export default function Form() {
   return (
     <form action={dispatch} className="flex flex-col rounded-md bg-slate-200 p-4 md:p-6 md:ml-2">
 
-      <input id="id" name="id" type="hidden" value={uuidv4()} />
+      <input id="id" name="id" type="hidden" />
 
       <div className="flex flex-row">
           <input
@@ -33,26 +33,6 @@ export default function Form() {
             ))}
           </div>
       </div>
-      
-      <div className="flex flex-row">
-          <input
-            id="city"
-            name="city"
-            type="text"
-            step="0.01"
-            placeholder='Name of city'
-            className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
-            aria-describedby="city-error"
-          />
-          <div id="city-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.city &&
-              state.errors.city.map((error: string) => (
-                <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
-                  {error}
-                </p>
-            ))}
-          </div>
-      </div>
 
       <div className="flex flex-row">
           <input
@@ -67,6 +47,26 @@ export default function Form() {
           <div id="street-error" aria-live="polite" aria-atomic="true">
             {state.errors?.street &&
               state.errors.street.map((error: string) => (
+                <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+            ))}
+          </div>
+      </div>
+      
+      <div className="flex flex-row">
+          <input
+            id="city"
+            name="city"
+            type="text"
+            step="0.01"
+            placeholder='Name of city'
+            className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
+            aria-describedby="city-error"
+          />
+          <div id="city-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.city &&
+              state.errors.city.map((error: string) => (
                 <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
                   {error}
                 </p>

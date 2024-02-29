@@ -162,13 +162,13 @@ const client = new Client({
   }
 
 
-  const ITEMS_PER_PAGE_OF_PLCES_TABLE = 20;
+  const ITEMS_PER_PAGE_OF_PLCES_TABLE = 10;
   export async function fetchFilteredPlaces(
     query: string,
     currentPage: number,
   ) {
     noStore();
-    const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+    const offset = (currentPage - 1) * ITEMS_PER_PAGE_OF_PLCES_TABLE;
     try {
       const answers = await client.query(
        `SELECT * FROM public.wheres
