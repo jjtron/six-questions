@@ -24,7 +24,7 @@ export default function Form({whereOptions, whoOptions} :
       
           <input id="id" name="id" type="hidden" value={uuidv4()} />
 
-          <div className="w-40 bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
+          <div className="w-[15rem] bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
             <div className="flex flex-row">
                 <div className="font-bold">WHO</div>
                 <div id="who-error" aria-live="polite" aria-atomic="true">

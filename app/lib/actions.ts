@@ -1,10 +1,8 @@
 'use server';
-import * as https from 'https';
 import z, { number } from "zod"; 
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { insertAnswerRecord, insertPlaceRecord, updateAnswerRecord, updatePlaceRecord } from './database';
-import { Console } from 'console';
 
 export type State = {
   errors?: {
@@ -21,8 +19,15 @@ export type State = {
 
 const FormSchema = z.object({
   id: z.string().uuid({ message: "invalid UUID" }),
-  who: z.string().nullable()
-    .refine((val) => { return (val !== null) },{ message: "required" }),
+  who: z.string().array().refine(
+    (a) => {
+            if (a.length < 1) { return false; }
+            let r = true;
+            a.forEach((el: any) => { if (isNaN(el)) { r = false; }});
+            return r;
+           },
+           { message: "Invalid input; required" }
+  ),
   what: z.string().min(1, { message: "required" }),
   where: z.string().nullable()
     .refine((val) => { return (val !== null) },{ message: "required" }),
@@ -44,7 +49,7 @@ const FormSchema = z.object({
 export async function updateRecord(prevState: State, formData: FormData) {
   const validatedFields = FormSchema.safeParse({
     id: formData.get('id'),
-    who: formData.get('who'),
+    who: formData.getAll('who'),
     what: formData.get('what'),
     where: formData.get('where'),
     when: formData.getAll('when'),
@@ -70,7 +75,7 @@ export async function updateRecord(prevState: State, formData: FormData) {
 export async function createRecord(prevState: State, formData: FormData) {
   const validatedFields = FormSchema.safeParse({
     id: formData.get('id'),
-    who: formData.get('who'),
+    who: formData.getAll('who'),
     what: formData.get('what'),
     where: formData.get('where'),
     when: formData.getAll('when'),
