@@ -43,7 +43,7 @@ export default function Form({whereOptions, whoOptions} :
               </MultiSelect>
           </div>
 
-          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[110px] overflow-auto" >
             <div className="flex flex-row">
               <div className="font-bold">WHAT</div>
               <div id="what-error" aria-live="polite" aria-atomic="true">
@@ -64,7 +64,7 @@ export default function Form({whereOptions, whoOptions} :
             />
           </div>
 
-          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[150px] overflow-auto" >
             <div className="flex flex-row">
               <div className="font-bold">WHERE</div>
               <div id="where-error" aria-live="polite" aria-atomic="true">
@@ -84,7 +84,7 @@ export default function Form({whereOptions, whoOptions} :
             </WhereRadio>
           </div>
 
-          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[100px] overflow-auto" >
             <div className="flex flex-row">
               <div className="font-bold">WHEN</div>
               <div id="when-error" aria-live="polite" aria-atomic="true">
@@ -99,7 +99,7 @@ export default function Form({whereOptions, whoOptions} :
             <DateTimePicker date_time={{date: '01/01/1900', time: '12:00 AM'}}/>
           </div>
 
-          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[110px] overflow-auto" >
             <div className="flex flex-row">
               <div className="font-bold">WHY</div>
               <div id="why-error" aria-live="polite" aria-atomic="true">
@@ -120,7 +120,7 @@ export default function Form({whereOptions, whoOptions} :
             />
           </div>
 
-          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[110px] overflow-auto" >
             <div className="flex flex-row">
               <div className="font-bold">HOW</div>
               <div id="how-error" aria-live="polite" aria-atomic="true">

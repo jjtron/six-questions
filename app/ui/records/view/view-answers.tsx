@@ -37,7 +37,7 @@ export default async function Form({
                     {/* TOP ROW GROUP*/}
                     <div className="flex md:flex-row flex-col">
                         {/* col 1 */}
-                        <div className={clsx("basis-1/4 pl-2 border-1 border-slate-400 rounded-md",
+                        <div className={clsx("basis-1/4 pl-2 border-1 border-slate-400 rounded-md ",
                                             {"bg-slate-200": ( i & 1 ), "bg-sky-250": !( i & 1 )})}>
                             <p className="font-bold">WHO</p>{
                             record.who.map((whoIndex: number, n: number) => {
@@ -54,7 +54,7 @@ export default async function Form({
                         }
                         </div>
                         {/* col 2 */}
-                        <div className={clsx("basis-1/4 pl-2 border-1 border-slate-400 rounded-md",
+                        <div className={clsx("basis-1/4 pl-2 border-1 border-slate-400 rounded-md ",
                                             {"bg-slate-250": ( i & 1 ), "bg-sky-300": !( i & 1 )})}>
                             <p className="font-bold">WHEN</p>
                             <div>{record.when.date}</div>
@@ -62,7 +62,7 @@ export default async function Form({
                         </div>
                         {/* col 3 */}
                         
-                        <div className={clsx("basis-1/2 pl-2 border-1 border-slate-400 rounded-md",
+                        <div className={clsx("basis-1/2 pl-2 border-1 border-slate-400 rounded-md ",
                                             {"bg-slate-200": ( i & 1 ), "bg-sky-250": !( i & 1 )})}>
                             {([
                             {title: "WHERE:", level: 'name', sublevel: null},
@@ -97,11 +97,11 @@ export default async function Form({
                                 (j === 1) ? data = record.how : 
                                 (j === 2) ? data = record.why : data = null;
                                 return (
-                                    <div key={j} className={clsx("flex flex-col rounded-md mt-px border-1 border-slate-400 pl-2", 
+                                    <div key={j} className={clsx("flex flex-col rounded-md mt-px border-1 border-slate-400 pl-2 md:h-48 h-32", 
                                         {"even:bg-slate-250 odd:bg-slate-300": ( i & 1 ),
                                         "even:bg-sky-250 odd:bg-sky-300": !( i & 1 )})}>
                                         <p className="font-bold">{vars.label}</p>
-                                        <p className="break-all">{data}</p>
+                                        <p className="break-words overflow-auto">{data}</p>
                                     </div>
                                 )
                             })

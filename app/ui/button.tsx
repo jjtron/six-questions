@@ -9,7 +9,7 @@ export function Button(
     <Link href={showdatalink} className={isDisabled} >
       <div
         className={clsx(
-          'flex flex-col h-10 justify-center rounded-lg bg-blue-500 ' + 
+          'flex flex-col h-10 justify-center rounded-lg bg-blue-500 my-0.5 ' + 
           'px-4 text-sm font-medium text-white transition-colors ' + 
           'hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 ' + 
           'focus-visible:outline-offset-2 focus-visible:outline-blue-500 ' + 
