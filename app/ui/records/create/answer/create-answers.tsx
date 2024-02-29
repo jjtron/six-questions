@@ -43,7 +43,7 @@ export default function Form({whereOptions, whoOptions} :
               </MultiSelect>
           </div>
 
-          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[110px] overflow-auto" >
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
             <div className="flex flex-row">
               <div className="font-bold">WHAT</div>
               <div id="what-error" aria-live="polite" aria-atomic="true">
@@ -58,7 +58,7 @@ export default function Form({whereOptions, whoOptions} :
             <textarea
                 id="what"
                 name="what"
-                rows={4}
+                rows={3}
                 className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                 aria-describedby="what-error"
             />
@@ -66,7 +66,7 @@ export default function Form({whereOptions, whoOptions} :
 
           <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[150px] overflow-auto" >
             <div className="flex flex-row">
-              <div className="font-bold">WHERE</div>
+              <div className="font-bold">WHERE (scroll down for more choices)</div>
               <div id="where-error" aria-live="polite" aria-atomic="true">
                   {state.errors?.where &&
                     state.errors.where.map((error: string) => (
@@ -84,7 +84,7 @@ export default function Form({whereOptions, whoOptions} :
             </WhereRadio>
           </div>
 
-          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[100px] overflow-auto" >
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[100px]" >
             <div className="flex flex-row">
               <div className="font-bold">WHEN</div>
               <div id="when-error" aria-live="polite" aria-atomic="true">
@@ -99,7 +99,7 @@ export default function Form({whereOptions, whoOptions} :
             <DateTimePicker date_time={{date: '01/01/1900', time: '12:00 AM'}}/>
           </div>
 
-          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[110px] overflow-auto" >
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
             <div className="flex flex-row">
               <div className="font-bold">WHY</div>
               <div id="why-error" aria-live="polite" aria-atomic="true">
@@ -114,13 +114,13 @@ export default function Form({whereOptions, whoOptions} :
             <textarea
                 id="why"
                 name="why"
-                rows={4}
+                rows={3}
                 className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                 aria-describedby="why-error"
             />
           </div>
 
-          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[110px] overflow-auto" >
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
             <div className="flex flex-row">
               <div className="font-bold">HOW</div>
               <div id="how-error" aria-live="polite" aria-atomic="true">
@@ -135,7 +135,7 @@ export default function Form({whereOptions, whoOptions} :
             <textarea
                 id="how"
                 name="how"
-                rows={4}
+                rows={3}
                 className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                 aria-describedby="how-error"
             />
