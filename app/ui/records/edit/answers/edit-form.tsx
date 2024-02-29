@@ -42,14 +42,17 @@ export default function Form({whereOptions, whoOptions, record} :
         />
         </div>
 
-        <div className="flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
+        <div className="flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[155px] overflow-auto" >
+          <div className="flex flex-row">
             <p className="flex-col font-bold">WHERE</p>
-            <WhereRadio whereOptions={[
-                    {id: 'where', name: 'where', multi: 'no'},
-                    {list: whereOptions},
-                    record[0].where
-                ]}>
-            </WhereRadio>
+            <div className="pl-2 font-normal">(scroll down for more choices)</div>
+          </div>
+          <WhereRadio whereOptions={[
+                {id: 'where', name: 'where', multi: 'no'},
+                {list: whereOptions},
+                record[0].where
+            ]}>
+          </WhereRadio>
         </div>
                 
         <div className="flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
@@ -74,18 +77,15 @@ export default function Form({whereOptions, whoOptions, record} :
         <textarea
             id="how"
             name="how"
-            rows={4}
+            rows={3}
             defaultValue={record[0].how}
             className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
             aria-describedby="how-error"
         />
         </div>
-
         <div className="flex flex-col items-center justify-between p-4">
             <Button type="submit">Save Changes</Button>
         </div>
-
-
     </form>
   );
 }

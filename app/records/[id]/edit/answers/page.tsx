@@ -18,7 +18,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             { label: 'Records', href: '/records/view/answers' },
             {
               label: 'Edit Records',
-              href: '/records/${id}/edit/answers',
+              href: `/records/${id}/edit/answers`,
               active: true,
             },
           ]}
