@@ -95,13 +95,19 @@ export default async function Form({
                                 let data;
                                 (j === 0) ? data = record.what : 
                                 (j === 1) ? data = record.how : 
-                                (j === 2) ? data = record.why : data = null;
+                                (j === 2) ? data = record.why : data = '';
                                 return (
                                     <div key={j} className={clsx("flex flex-col rounded-md mt-px border-1 border-slate-400 pl-2 md:h-48 h-32", 
                                         {"even:bg-slate-250 odd:bg-slate-300": ( i & 1 ),
                                         "even:bg-sky-250 odd:bg-sky-300": !( i & 1 )})}>
                                         <p className="font-bold">{vars.label}</p>
-                                        <p className="break-words overflow-auto">{data}</p>
+                                        
+                                        <textarea
+                                            rows={7}
+                                            value={data}
+                                            readOnly
+                                            className="rounded-md outline-none p-2 text-sm mb-1 p-2"
+                                        />
                                     </div>
                                 )
                             })
