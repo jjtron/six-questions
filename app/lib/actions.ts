@@ -109,19 +109,17 @@ export type PlaceState = {
   }; 
   message?: string | null;
 };
-const PlaceUpdateFormSchema = z.object({
-  id: z.coerce.number(),
+
+const zodCreateObj = {
   placename: z.string().min(1, { message: "required" }),
   city: z.string().min(1, { message: "required" }),
   street: z.string().min(1, { message: "required" }),
   state: z.string().min(1, { message: "required" }),
-});
-const PlaceCreateFormSchema = z.object({
-  placename: z.string().min(1, { message: "required" }),
-  city: z.string().min(1, { message: "required" }),
-  street: z.string().min(1, { message: "required" }),
-  state: z.string().min(1, { message: "required" }),
-});
+};
+const PlaceCreateFormSchema = z.object(zodCreateObj);
+
+const zodUpdateObj = Object.assign(zodCreateObj, {id: z.coerce.number()});
+const PlaceUpdateFormSchema = z.object(zodUpdateObj);
 
 export async function createPlace(prevState: PlaceState, formData: FormData) {
   const validatedFields = PlaceCreateFormSchema.safeParse({
@@ -143,8 +141,8 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
 
   insertPlaceRecord(formData);
 
-  revalidatePath('/records/view/answers');
-  redirect('/records/view/answers');
+  revalidatePath('/records/view/places');
+  redirect('/records/view/places');
 }
 
 export async function updatePlace(prevState: PlaceState, formData: FormData) {

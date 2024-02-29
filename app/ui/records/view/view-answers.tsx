@@ -11,7 +11,6 @@ export default async function Form({
     query: string;
     currentPage: number;
   }) {
-    //const records: any = (await getDbData(` SELECT * FROM six_questions; `)).details.rows;
     const whoList: any = (await getDbData(`SELECT * FROM whos;`)).details.rows;
     const whereDefs: any = (await getDbData(`SELECT * FROM wheres`)).details.rows;
     const records = await fetchFilteredRecords(query, currentPage);
@@ -116,9 +115,7 @@ export default async function Form({
                     <Button cName={"w-24"} showdatalink={`/records/${record.id}/edit/answers`} buttontext={"Edit"} />
                 </div>);
             })
-            
         }
-        
         </>
     );
     
