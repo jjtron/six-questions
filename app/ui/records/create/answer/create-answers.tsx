@@ -63,7 +63,7 @@ export default function Form({whereOptions, whoOptions} :
             />
           </div>
 
-          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[150px] overflow-auto" >
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[175px] overflow-auto" >
             <div className="flex flex-row">
               <div className="font-bold">WHERE</div><div className="pl-2 font-normal">(scroll down for more choices)</div>
               <div id="where-error" aria-live="polite" aria-atomic="true">
