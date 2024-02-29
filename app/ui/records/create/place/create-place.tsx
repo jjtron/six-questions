@@ -10,7 +10,7 @@ export default function Form() {
   const [state, dispatch] = useFormState(createPlace, initialState);
 
   return (
-    <form action={dispatch} className="flex flex-col rounded-md bg-gray-50 p-4 md:p-6 md:ml-2">
+    <form action={dispatch} className="flex flex-col rounded-md bg-slate-200 p-4 md:p-6 md:ml-2">
 
       <input id="id" name="id" type="hidden" value={uuidv4()} />
 

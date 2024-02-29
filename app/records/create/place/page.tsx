@@ -10,6 +10,7 @@ export default async function Page() {
     
     return (
         <main>
+          <div className="md:ml-2">
           <Breadcrumbs
             breadcrumbs={[
               { label: 'Records', href: '/create' },
@@ -20,6 +21,7 @@ export default async function Page() {
               },
             ]}
           />
+          </div>
           <Form></Form>
         </main>
     );

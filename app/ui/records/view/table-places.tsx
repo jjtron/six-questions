@@ -44,7 +44,7 @@ export function PlacesTable({records} : {records : any} ) {
                     </div>)
                 })}
             </div>
-            <div className="flex min-h-screen flex-col items-center justify-between p-4">
+            <div className="flex flex-col items-center justify-between p-4">
                 <Button isDisabled={buttonDisabled}
                         cName={"w-24"}
                         showdatalink={`/records/${selectedRecordId}/edit/places`}

@@ -14,7 +14,6 @@ export default function Form({whereOptions, whoOptions} :
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createRecord, initialState);
 
-  console.log(state);
   let whoList: SelectOptions = {};
   whoOptions.map((el: WhoOptions) => {
     whoList[el.index] = el.name;
@@ -141,7 +140,7 @@ export default function Form({whereOptions, whoOptions} :
             />
           </div>
 
-          <div className="flex min-h-screen flex-col items-center justify-between p-4">
+          <div className="flex flex-col items-center justify-between p-4">
             <Button type="submit">Create Record</Button>
           </div>
 

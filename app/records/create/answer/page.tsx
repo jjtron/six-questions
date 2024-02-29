@@ -10,16 +10,18 @@ export default async function Page({rectype} : {rectype: any}) {
     
     return (
         <main>
-          <Breadcrumbs
-            breadcrumbs={[
-              { label: 'Records', href: '/records/view/answers' },
-              {
-                label: 'Create 6-answers Record',
-                href: '/records/create/answer',
-                active: true,
-              },
-            ]}
-          />
+          <div className="md:ml-2">
+            <Breadcrumbs
+              breadcrumbs={[
+                { label: 'Records', href: '/records/view/answers' },
+                {
+                  label: 'Create 6-answers Record',
+                  href: '/records/create/answer',
+                  active: true,
+                },
+              ]}
+            />
+          </div>
           <Form whereOptions={whereData.details.rows} whoOptions={whoData.details.rows}></Form>
         </main>
     );

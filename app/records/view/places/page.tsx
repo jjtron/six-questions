@@ -26,7 +26,6 @@ export default async function Page({
             {
               label: 'View Records',
               href: '/records/view/answers',
-              active: true,
             },
             {
               label: 'Places',
