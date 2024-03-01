@@ -5,7 +5,7 @@ import Form from '@/app/ui/records/create/place/create-place';
 import { getDbData } from '@/app/lib/database';
 
 export default async function Page() {
-    const whereData = await getDbData('SELECT * FROM wheres');
+    const whereData = await getDbData('SELECT * FROM places');
     
     return (
         <main>

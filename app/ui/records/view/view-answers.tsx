@@ -12,7 +12,7 @@ export default async function Form({
     currentPage: number;
   }) {
     const whoList: any = (await getDbData(`SELECT * FROM people;`)).details.rows;
-    const whereDefs: any = (await getDbData(`SELECT * FROM wheres`)).details.rows;
+    const whereDefs: any = (await getDbData(`SELECT * FROM places`)).details.rows;
     const records = await fetchFilteredRecords(query, currentPage);
 
     const placeDetailsFunc = (recordWhereId: number, shallowEl: string, detailEl: string | null) => {

@@ -5,7 +5,7 @@ import Form from '@/app/ui/records/create/answer/create-answers';
 import { getDbData } from '@/app/lib/database';
 
 export default async function Page({rectype} : {rectype: any}) {
-    const whereData = await getDbData('SELECT * FROM wheres');
+    const whereData = await getDbData('SELECT * FROM places');
     const whoData = await getDbData('SELECT * FROM people');
     
     return (

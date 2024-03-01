@@ -71,7 +71,7 @@ const client = new Client({
       const re = new RegExp(/\d{2}\/\d{2}\/\d{4}/);
       re.test(property) ? (timestamp.date = property) : (timestamp.time = property);
     });
-    // prepare the wheres for insert
+    // prepare the places for insert
     let places: number[] = [];
     data.getAll("where").map((place: any) => {
       places.push(Number(place));
@@ -104,7 +104,7 @@ const client = new Client({
       const re = new RegExp(/\d{2}\/\d{2}\/\d{4}/);
       re.test(property) ? (timestamp.date = property) : (timestamp.time = property);
     });
-    // prepare the wheres for update
+    // prepare the places for update
     let places: number[] = [];
     data.getAll("where").map((place: any) => {
       places.push(Number(place));
@@ -125,7 +125,7 @@ const client = new Client({
 
   export async function insertPlaceRecord(data: FormData) {
     const result: any = await client.query(`
-      INSERT INTO public.wheres ( name, details )
+      INSERT INTO public.places ( name, details )
       VALUES (
         '${data.get("placename")}',
         '${JSON.stringify({ 
@@ -139,7 +139,7 @@ const client = new Client({
 
   export async function updatePlaceRecord(data: FormData) {
     const result: any = await client.query(`
-      UPDATE public.wheres
+      UPDATE public.places
       SET name='${data.get('placename')}',
           details='${JSON.stringify({ 
             city: data.get("city"),
@@ -203,7 +203,7 @@ const client = new Client({
     const offset = (currentPage - 1) * PLACES_PER_PAGE;
     try {
       const answers = await client.query(
-       `SELECT * FROM public.wheres
+       `SELECT * FROM public.places
         WHERE name ILIKE '%${query}%' OR
             details->>'street' ILIKE '%${query}%' OR
             details->>'city' ILIKE '%${query}%' OR
@@ -223,7 +223,7 @@ const client = new Client({
     try {
       const count = await client.query(
        `SELECT COUNT(*)
-        FROM public.wheres
+        FROM public.places
         WHERE name ILIKE '%${query}%' OR
               details->>'street' ILIKE '%${query}%' OR
               details->>'city' ILIKE '%${query}%' OR
