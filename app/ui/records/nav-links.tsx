@@ -4,6 +4,10 @@ import {
   UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
+  UsersIcon,
+  BuildingOfficeIcon,
+  BuildingOffice2Icon,
+  DocumentTextIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -15,9 +19,10 @@ import Search from '@/app/ui/records/search';
 const links = [
   { name: 'Home', href: '/', icon: HomeIcon },
   { name: 'Records View', href: '/records/view/answers', icon: DocumentDuplicateIcon, },
-  { name: 'Places View', href: '/records/view/places', icon: DocumentDuplicateIcon, },
-  { name: 'Create a 6-answers record', href: '/records/create/answer', icon: UserGroupIcon },
-  { name: 'Create a place record (where)', href: '/records/create/place', icon: UserGroupIcon },
+  { name: 'Places View', href: '/records/view/places', icon: BuildingOffice2Icon, },
+  { name: 'People View', href: '/records/view/people', icon: UsersIcon, },
+  { name: 'Create a 6-answers record', href: '/records/create/answer', icon: DocumentTextIcon },
+  { name: 'Create a place record (where)', href: '/records/create/place', icon: BuildingOfficeIcon },
 ];
 
 export default function NavLinks() {
