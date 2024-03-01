@@ -17,7 +17,7 @@ export function PlacesTable({records} : {records : any} ) {
     }
 
     return (
-        <form className="flex flex-col md:pl-2 bg-inherit">
+        <form className="md:pl-2 bg-inherit">
             <div className="table w-full">
                 <div className="table-header-group">
                     <div className="table-row bg-sky-400">
