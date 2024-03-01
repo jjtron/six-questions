@@ -2,7 +2,41 @@
 import z, { number } from "zod"; 
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { insertAnswerRecord, insertPlaceRecord, updateAnswerRecord, updatePlaceRecord } from './database';
+import { insertAnswerRecord, insertPlaceRecord,
+         updateAnswerRecord, updatePlaceRecord,
+         insertPersonRecord } from './database';
+
+//////////////////////PERSON FUNCTIONS/////////////////////
+export type PersonState = {
+  errors?: {
+    name?: string[];
+  }; 
+  message?: string | null;
+};
+
+const PersonCreateFormSchema = z.object({
+  name: z.string().min(1, { message: "required" }),
+});
+
+export async function createPerson(prevState: PersonState, formData: FormData) {
+  const validatedFields = PersonCreateFormSchema.safeParse({
+    name: formData.get('name'),
+  });
+  
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    console.log('Error:', validatedFields.error.flatten().fieldErrors);
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Person.',
+    };
+  }
+
+  insertPersonRecord(formData);
+
+  revalidatePath('/records/view/people');
+  redirect('/records/view/people');
+}
 
 export type State = {
   errors?: {

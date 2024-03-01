@@ -36,7 +36,7 @@ export default async function Form({
                     {/* TOP ROW GROUP*/}
                     <div className="flex md:flex-row flex-col">
                         {/* col 1 */}
-                        <div className={clsx("basis-1/4 pl-2 border-1 border-slate-400 rounded-md ",
+                        <div className={clsx("basis-1/4 pl-2 border-1 border-slate-400 rounded-md h-[100px] overflow-auto",
                                             {"bg-slate-200": ( currentPage & 1 ), "bg-sky-250": !( currentPage & 1 )})}>
                             <p className="font-bold">WHO</p>{
                             record.who.map((whoIndex: number, n: number) => {

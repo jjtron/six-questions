@@ -21,8 +21,9 @@ const links = [
   { name: 'Records View', href: '/records/view/answers', icon: DocumentDuplicateIcon, },
   { name: 'Places View', href: '/records/view/places', icon: BuildingOffice2Icon, },
   { name: 'People View', href: '/records/view/people', icon: UsersIcon, },
-  { name: 'Create a 6-answers record', href: '/records/create/answer', icon: DocumentTextIcon },
-  { name: 'Create a place record (where)', href: '/records/create/place', icon: BuildingOfficeIcon },
+  { name: 'Create Report (6-Answers)', href: '/records/create/answer', icon: DocumentTextIcon },
+  { name: 'Create Place (where)', href: '/records/create/place', icon: BuildingOfficeIcon },
+  { name: 'Create Person (who)', href: '/records/create/person', icon: UsersIcon },
 ];
 
 export default function NavLinks() {

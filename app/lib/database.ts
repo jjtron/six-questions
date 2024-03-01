@@ -19,7 +19,14 @@ const client = new Client({
     }
   };
 
-  const PEOPLE_PER_PAGE = 4;
+  export async function insertPersonRecord(data: FormData) {
+    const result: any = await client.query(`
+      INSERT INTO public.people (name)
+	    VALUES ('${data.get("name")}');
+    `);
+  }
+
+  const PEOPLE_PER_PAGE = 10;
   export async function fetchFilteredPeople(
     query: string,
     currentPage: number,
