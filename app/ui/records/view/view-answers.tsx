@@ -11,7 +11,7 @@ export default async function Form({
     query: string;
     currentPage: number;
   }) {
-    const whoList: any = (await getDbData(`SELECT * FROM whos;`)).details.rows;
+    const whoList: any = (await getDbData(`SELECT * FROM people;`)).details.rows;
     const whereDefs: any = (await getDbData(`SELECT * FROM wheres`)).details.rows;
     const records = await fetchFilteredRecords(query, currentPage);
 

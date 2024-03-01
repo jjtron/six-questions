@@ -19,8 +19,48 @@ const client = new Client({
     }
   };
 
+  const PEOPLE_PER_PAGE = 4;
+  export async function fetchFilteredPeople(
+    query: string,
+    currentPage: number,
+  ) {
+    noStore();
+    const offset = (currentPage - 1) * PEOPLE_PER_PAGE;
+  
+    try {
+      const answers = await client.query(
+        `SELECT index, name
+         FROM public.people
+         WHERE name ILIKE '%${query}%'
+            LIMIT ${PEOPLE_PER_PAGE} OFFSET ${offset};`
+        );
+
+      return answers.rows;
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch answers.');
+    }
+  }
+
+  export async function fetchRecordsPeople(query: string) {
+    noStore();
+    try {
+      const count = await client.query(
+       `SELECT COUNT(*)
+        FROM public.people
+        WHERE name ILIKE '%${query}%';
+    `);
+  
+      const totalPages = Math.ceil(Number(count.rows[0].count) / PEOPLE_PER_PAGE);
+      return totalPages;
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch total number of people.');
+    }
+  }
+
   export async function insertAnswerRecord(data: FormData) {
-    // prepare the whos for insert
+    // prepare the people for insert
     let persons: number[] = [];
     data.getAll("who").map((person: any) => {
       persons.push(Number(person));
@@ -53,7 +93,7 @@ const client = new Client({
   };
 
   export async function updateAnswerRecord(data: FormData) {
-    // prepare the whos for update
+    // prepare the people for update
     let persons: number[] = [];
     data.getAll("who").map((person: any) => {
       persons.push(Number(person));
@@ -154,13 +194,13 @@ const client = new Client({
   }
 
 
-  const ITEMS_PER_PAGE_OF_PLCES_TABLE = 10;
+  const PLACES_PER_PAGE = 10;
   export async function fetchFilteredPlaces(
     query: string,
     currentPage: number,
   ) {
     noStore();
-    const offset = (currentPage - 1) * ITEMS_PER_PAGE_OF_PLCES_TABLE;
+    const offset = (currentPage - 1) * PLACES_PER_PAGE;
     try {
       const answers = await client.query(
        `SELECT * FROM public.wheres
@@ -168,7 +208,7 @@ const client = new Client({
             details->>'street' ILIKE '%${query}%' OR
             details->>'city' ILIKE '%${query}%' OR
             details->>'state' ILIKE '%${query}%'
-            LIMIT ${ITEMS_PER_PAGE_OF_PLCES_TABLE} OFFSET ${offset};`
+            LIMIT ${PLACES_PER_PAGE} OFFSET ${offset};`
         );
 
       return answers.rows;
@@ -190,10 +230,10 @@ const client = new Client({
               details->>'state' ILIKE '%${query}%';
     `);
   
-      const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE_OF_PLCES_TABLE);
+      const totalPages = Math.ceil(Number(count.rows[0].count) / PLACES_PER_PAGE);
       return totalPages;
     } catch (error) {
       console.error('Database Error:', error);
-      throw new Error('Failed to fetch total number of answers.');
+      throw new Error('Failed to fetch total number of places.');
     }
   }

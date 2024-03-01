@@ -6,7 +6,6 @@ import { getDbData } from '@/app/lib/database';
 
 export default async function Page() {
     const whereData = await getDbData('SELECT * FROM wheres');
-    const whoData = await getDbData('SELECT * FROM whos');
     
     return (
         <main>
