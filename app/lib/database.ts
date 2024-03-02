@@ -234,3 +234,51 @@ const client = new Client({
       throw new Error('Failed to fetch total number of places.');
     }
   }
+
+  ////////////////////QUERYING FOR THE PEOPLE//////////////////////
+  export async function getAllRecords(
+    query: string,
+    currentPage: number,
+  ) {
+    noStore();
+    const offset = (currentPage - 1) * 10;
+  
+    try {
+      // GET MATCHES IN THE PEOPLE TABLE
+      let queryString = `%${query}%`;
+      if (query.length === 0) {
+        queryString = 'NULL';
+      }
+      const peopleIndexes = await client.query(
+       `SELECT index
+        FROM public.people
+        WHERE name ILIKE '${queryString}';`
+      );
+      const recordIndexesOfPeople = await client.query(
+        `SELECT id, who
+         FROM public.six_questions`
+      );
+
+      let recordIdsOfPeopleFound: string[] = [];
+      recordIndexesOfPeople.rows.forEach((six_questionsRow: { id: string; who: number[]}) => {
+        if (six_questionsRow.who.find((el) => {
+          if (peopleIndexes.rows.find((peopleRow) => {
+            return peopleRow.index === el;
+          })) {
+              return true;
+          } else {
+              return false;
+          }
+        })) {
+          recordIdsOfPeopleFound.push(six_questionsRow.id)
+        }
+      });
+      
+	    console.log('peopleIndexes.ROWS', recordIdsOfPeopleFound);
+
+      return peopleIndexes.rows;
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch answers.');
+    }
+  }
