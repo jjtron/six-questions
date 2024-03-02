@@ -78,18 +78,13 @@ const client = new Client({
       const re = new RegExp(/\d{2}\/\d{2}\/\d{4}/);
       re.test(property) ? (timestamp.date = property) : (timestamp.time = property);
     });
-    // prepare the places for insert
-    let places: number[] = [];
-    data.getAll("where").map((place: any) => {
-      places.push(Number(place));
-    });
-    
+
     const result: any = await client.query(`
     INSERT INTO public.six_questions(
       id, who, what, "where", "when", why, how)
       VALUES (
         '${data.get("id")}',
-        '${JSON.stringify(persons)}',
+        '${JSON.stringify(persons).replace('[', '{').replace(']', '}')}',
         '${data.get("what")}',
         '${data.get("where")}',
         '${JSON.stringify(timestamp)}',
@@ -111,16 +106,11 @@ const client = new Client({
       const re = new RegExp(/\d{2}\/\d{2}\/\d{4}/);
       re.test(property) ? (timestamp.date = property) : (timestamp.time = property);
     });
-    // prepare the places for update
-    let places: number[] = [];
-    data.getAll("where").map((place: any) => {
-      places.push(Number(place));
-    });
 
     const result: any = await client.query(`
     UPDATE public.six_questions
 	    SET
-      who='${JSON.stringify(persons)}',
+      who='${JSON.stringify(persons).replace('[', '{').replace(']', '}')}',
       what='${data.get("what")}',
       "when"='${JSON.stringify(timestamp)}',
       "where"='${data.get("where")}',
