@@ -154,16 +154,58 @@ const client = new Client({
   ) {
     noStore();
     const offset = (currentPage - 1) * ITEMS_PER_PAGE;
-  
+
     try {
+      // GET MATCHES IN THE PEOPLE TABLE
+      let queryString = `%${query}%`;
+      if (query.length === 0) {
+        queryString = 'NULL';
+      }
+      const indexesOfPeopleFoundByQuery = await client.query(
+       `SELECT index
+        FROM public.people
+        WHERE name ILIKE '${queryString}';`
+      );
+
+      // GET THE ENTIRE whos COLUMN WITH REFERENCE TO ids OF THE RECORD
+      const listOfIndexesOfPeopleInRecords = await client.query(
+        `SELECT id, who
+         FROM public.six_questions`
+      );
+
+      // FIND WHERE THE ids FOUND IN THE whos COLUMN MATCH
+      // ANY INDEXES OF THE people TABLE, AND
+      // COLLECT ANY MATCHES IN AN ARRAY
+      let six_questionsRecordIdsOfPeopleFound: string[] = [];
+      listOfIndexesOfPeopleInRecords.rows.forEach((six_questionsRecord: { id: string; who: number[]}) => {
+        if (six_questionsRecord.who.find((el) => {
+          if (indexesOfPeopleFoundByQuery.rows.find((person) => {
+            return person.index === el;
+          }) !== undefined) {
+              return true;
+          } else {
+              return false;
+          }
+        })) {
+          six_questionsRecordIdsOfPeopleFound.push(six_questionsRecord.id)
+        }
+      });
+
+      // BUILD A SEGMENT OF SQL FOR THE NEXT QUERY TO FIND
+      // ALL MATCHES IN EVERY REMAINING COLUMN
+      let idQuerySegment: string = '';
+      six_questionsRecordIdsOfPeopleFound.forEach((uuid: string) => {
+        idQuerySegment += ` OR id = '${uuid}'`
+      });
+
       const answers = await client.query(
-        `SELECT id, who, what, "where", "when", why, how
+       `SELECT id, who, what, "where", "when", why, how
         FROM public.six_questions
         WHERE what ILIKE '%${query}%' OR
             why ILIKE '%${query}%' OR
-            how ILIKE '%${query}%'
+            how ILIKE '%${query}%'${idQuerySegment}
             LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset};`
-        );
+      );
 
       return answers.rows;
     } catch (error) {
@@ -171,6 +213,7 @@ const client = new Client({
       throw new Error('Failed to fetch answers.');
     }
   }
+
   export async function fetchRecordsPages(query: string) {
     noStore();
     try {
@@ -232,53 +275,5 @@ const client = new Client({
     } catch (error) {
       console.error('Database Error:', error);
       throw new Error('Failed to fetch total number of places.');
-    }
-  }
-
-  ////////////////////QUERYING FOR THE PEOPLE//////////////////////
-  export async function getAllRecords(
-    query: string,
-    currentPage: number,
-  ) {
-    noStore();
-    const offset = (currentPage - 1) * 10;
-  
-    try {
-      // GET MATCHES IN THE PEOPLE TABLE
-      let queryString = `%${query}%`;
-      if (query.length === 0) {
-        queryString = 'NULL';
-      }
-      const peopleIndexes = await client.query(
-       `SELECT index
-        FROM public.people
-        WHERE name ILIKE '${queryString}';`
-      );
-      const recordIndexesOfPeople = await client.query(
-        `SELECT id, who
-         FROM public.six_questions`
-      );
-
-      let recordIdsOfPeopleFound: string[] = [];
-      recordIndexesOfPeople.rows.forEach((six_questionsRow: { id: string; who: number[]}) => {
-        if (six_questionsRow.who.find((el) => {
-          if (peopleIndexes.rows.find((peopleRow) => {
-            return peopleRow.index === el;
-          })) {
-              return true;
-          } else {
-              return false;
-          }
-        })) {
-          recordIdsOfPeopleFound.push(six_questionsRow.id)
-        }
-      });
-      
-	    console.log('peopleIndexes.ROWS', recordIdsOfPeopleFound);
-
-      return peopleIndexes.rows;
-    } catch (error) {
-      console.error('Database Error:', error);
-      throw new Error('Failed to fetch answers.');
     }
   }
