@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { insertAnswerRecord, insertPlaceRecord,
          updateAnswerRecord, updatePlaceRecord,
-         insertPersonRecord } from './database';
+         insertPersonRecord, updatePersonRecord } from './database';
 
 //////////////////////PERSON FUNCTIONS/////////////////////
 export type PersonState = {
@@ -33,6 +33,38 @@ export async function createPerson(prevState: PersonState, formData: FormData) {
   }
 
   insertPersonRecord(formData);
+
+  revalidatePath('/records/view/people');
+  redirect('/records/view/people');
+}
+export type PersonUpdateState = {
+  errors?: {
+    index?: string[],
+    personname?: string[];
+  }; 
+  message?: string | null;
+};
+const PersonUpdateFormSchema = z.object({
+  index: z.coerce.number(),
+  personname: z.string().min(1, { message: "required" }),
+});
+
+export async function updatePerson(prevState: PersonUpdateState, formData: FormData) {
+  const validatedFields = PersonUpdateFormSchema.safeParse({
+    index: formData.get('index'),
+    personname: formData.get('personname'),
+  });
+  
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    console.log('Error:', validatedFields.error.flatten().fieldErrors);
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Person.',
+    };
+  }
+
+  updatePersonRecord(formData);
 
   revalidatePath('/records/view/people');
   redirect('/records/view/people');

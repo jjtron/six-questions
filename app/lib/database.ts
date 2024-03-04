@@ -26,6 +26,14 @@ const client = new Client({
     `);
   }
 
+  export async function updatePersonRecord(data: FormData) {
+    const result: any = await client.query(`
+      UPDATE public.people
+	    SET name='${data.get('personname')}'
+	    WHERE index='${data.get('index')}';
+    `);
+  }
+
   const PEOPLE_PER_PAGE = 10;
   export async function fetchFilteredPeople(
     query: string,
