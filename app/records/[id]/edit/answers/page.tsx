@@ -7,7 +7,7 @@ import { notFound } from 'next/navigation';
 
 export default async function Page({ params }: { params: { id: string } }) {
     const id: any = params.id;
-    const record: any = (await getDbData(`SELECT * FROM six_questions WHERE id = '${id}';`)).details.rows;
+    const record: any = (await getDbData(`SELECT * FROM six_answers WHERE id = '${id}';`)).details.rows;
     const whereData = await getDbData('SELECT * FROM places');
     const whoData = await getDbData('SELECT * FROM people');
 

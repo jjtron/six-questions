@@ -88,7 +88,7 @@ const client = new Client({
     });
 
     const result: any = await client.query(`
-    INSERT INTO public.six_questions(
+    INSERT INTO public.six_answers(
       id, who, what, "where", "when", why, how)
       VALUES (
         '${data.get("id")}',
@@ -116,7 +116,7 @@ const client = new Client({
     });
 
     const result: any = await client.query(`
-    UPDATE public.six_questions
+    UPDATE public.six_answers
 	    SET
       who='${JSON.stringify(persons).replace('[', '{').replace(']', '}')}',
       what='${data.get("what")}',
@@ -178,15 +178,15 @@ const client = new Client({
       // GET THE ENTIRE whos COLUMN WITH REFERENCE TO ids OF THE RECORD
       const listOfIndexesOfPeopleInRecords = await client.query(
         `SELECT id, who
-         FROM public.six_questions`
+         FROM public.six_answers`
       );
 
       // FIND WHERE THE ids FOUND IN THE whos COLUMN MATCH
       // ANY INDEXES OF THE people TABLE, AND
       // COLLECT ANY MATCHES IN AN ARRAY
-      let six_questionsRecordIdsOfPeopleFound: string[] = [];
-      listOfIndexesOfPeopleInRecords.rows.forEach((six_questionsRecord: { id: string; who: number[]}) => {
-        if (six_questionsRecord.who.find((el) => {
+      let six_answersRecordIdsOfPeopleFound: string[] = [];
+      listOfIndexesOfPeopleInRecords.rows.forEach((six_answersRecord: { id: string; who: number[]}) => {
+        if (six_answersRecord.who.find((el) => {
           if (indexesOfPeopleFoundByQuery.rows.find((person) => {
             return person.index === el;
           }) !== undefined) {
@@ -195,20 +195,20 @@ const client = new Client({
               return false;
           }
         })) {
-          six_questionsRecordIdsOfPeopleFound.push(six_questionsRecord.id)
+          six_answersRecordIdsOfPeopleFound.push(six_answersRecord.id)
         }
       });
 
       // BUILD A SEGMENT OF SQL FOR THE NEXT QUERY TO FIND
       // ALL MATCHES IN EVERY REMAINING COLUMN
       let idQuerySegment: string = '';
-      six_questionsRecordIdsOfPeopleFound.forEach((uuid: string) => {
+      six_answersRecordIdsOfPeopleFound.forEach((uuid: string) => {
         idQuerySegment += ` OR id = '${uuid}'`
       });
 
       const answers = await client.query(
        `SELECT id, who, what, "where", "when", why, how
-        FROM public.six_questions
+        FROM public.six_answers
         WHERE what ILIKE '%${query}%' OR
             why ILIKE '%${query}%' OR
             how ILIKE '%${query}%' OR
@@ -241,15 +241,15 @@ const client = new Client({
       // GET THE ENTIRE whos COLUMN WITH REFERENCE TO ids OF THE RECORD
       const listOfIndexesOfPeopleInRecords = await client.query(
         `SELECT id, who
-          FROM public.six_questions`
+          FROM public.six_answers`
       );
 
       // FIND WHERE THE ids FOUND IN THE whos COLUMN MATCH
       // ANY INDEXES OF THE people TABLE, AND
       // COLLECT ANY MATCHES IN AN ARRAY
-      let six_questionsRecordIdsOfPeopleFound: string[] = [];
-      listOfIndexesOfPeopleInRecords.rows.forEach((six_questionsRecord: { id: string; who: number[]}) => {
-        if (six_questionsRecord.who.find((el) => {
+      let six_answersRecordIdsOfPeopleFound: string[] = [];
+      listOfIndexesOfPeopleInRecords.rows.forEach((six_answersRecord: { id: string; who: number[]}) => {
+        if (six_answersRecord.who.find((el) => {
           if (indexesOfPeopleFoundByQuery.rows.find((person) => {
             return person.index === el;
           }) !== undefined) {
@@ -258,20 +258,20 @@ const client = new Client({
               return false;
           }
         })) {
-          six_questionsRecordIdsOfPeopleFound.push(six_questionsRecord.id)
+          six_answersRecordIdsOfPeopleFound.push(six_answersRecord.id)
         }
       });
 
       // BUILD A SEGMENT OF SQL FOR THE NEXT QUERY TO FIND
       // ALL MATCHES IN EVERY REMAINING COLUMN
       let idQuerySegment: string = '';
-      six_questionsRecordIdsOfPeopleFound.forEach((uuid: string) => {
+      six_answersRecordIdsOfPeopleFound.forEach((uuid: string) => {
         idQuerySegment += ` OR id = '${uuid}'`
       });
 
       const count = await client.query(
        `SELECT COUNT(*)
-        FROM public.six_questions
+        FROM public.six_answers
         WHERE what ILIKE '%${query}%' OR
             why ILIKE '%${query}%' OR
             how ILIKE '%${query}%' OR
