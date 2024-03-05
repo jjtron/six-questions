@@ -1,0 +1,6 @@
+Use the keyes . . .
+
+    Command + comma 
+
+    See ./documents/"Fix global.css at rule problem.odt" for more info and 
+    how I used it to change the settings file on 05-Mar-2024
