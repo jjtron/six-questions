@@ -206,6 +206,45 @@ const client = new Client({
         idQuerySegment += ` OR id = '${uuid}'`
       });
 
+      // GET THE ENTIRE who COLUMN OF public.six_answers WITH REFERENCE TO ids OF THE RECORD
+      const listOfIdsRefPlacesInRecords = await client.query(`
+        SELECT id, "where"
+        FROM public.six_answers;`
+      );
+
+      // GET MATCHES IN THE PLACES TABLE
+      let queryString2 = `%${query}%`;
+      if (query.length === 0) { queryString2 = 'NULL'; }
+      const indexesOfPlacesFoundByQuery = await client.query(
+       `SELECT id
+        FROM public.places
+        WHERE name ILIKE '%${queryString2}%' OR
+              details->>'street' ILIKE '%${queryString2}%' OR
+              details->>'city' ILIKE '%${queryString2}%' OR
+              details->>'state' ILIKE '%${queryString2}%'
+      `);
+
+      // FIND WHERE THE ids FOUND IN THE where COLUMN MATCH
+      // ANY INDEXES OF THE places TABLE, AND
+      // COLLECT ANY MATCHES IN AN ARRAY
+      let six_answersRecordIdsOfPlacesFound: string[] = [];
+      listOfIdsRefPlacesInRecords.rows.forEach(
+        (six_answersRecord: {
+          id: string;
+          where: number;
+        }) => {
+          if (indexesOfPlacesFoundByQuery.rows.find((row) => {
+            return row.id === six_answersRecord.where;
+          }) !== undefined) {
+            six_answersRecordIdsOfPlacesFound.push(six_answersRecord.id);
+          }
+      });
+      // ALL MATCHES IN EVERY REMAINING COLUMN
+      let idQuerySegment2: string = '';
+      six_answersRecordIdsOfPlacesFound.forEach((uuid: string) => {
+        idQuerySegment2 += ` OR id = '${uuid}'`
+      });
+
       const answers = await client.query(
        `SELECT id, who, what, "where", "when", why, how
         FROM public.six_answers
@@ -213,7 +252,7 @@ const client = new Client({
             why ILIKE '%${query}%' OR
             how ILIKE '%${query}%' OR
             "when"->>'date' ILIKE '%${query}%' OR
-		        "when"->>'time' ILIKE '%${query}%'${idQuerySegment}
+		        "when"->>'time' ILIKE '%${query}%'${idQuerySegment}${idQuerySegment2}
             LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset};`
       );
 
@@ -269,6 +308,45 @@ const client = new Client({
         idQuerySegment += ` OR id = '${uuid}'`
       });
 
+      // GET THE ENTIRE who COLUMN OF public.six_answers WITH REFERENCE TO ids OF THE RECORD
+      const listOfIdsRefPlacesInRecords = await client.query(`
+        SELECT id, "where"
+        FROM public.six_answers;`
+      );
+
+      // GET MATCHES IN THE PLACES TABLE
+      let queryString2 = `%${query}%`;
+      if (query.length === 0) { queryString2 = 'NULL'; }
+      const indexesOfPlacesFoundByQuery = await client.query(
+       `SELECT id
+        FROM public.places
+        WHERE name ILIKE '%${queryString2}%' OR
+              details->>'street' ILIKE '%${queryString2}%' OR
+              details->>'city' ILIKE '%${queryString2}%' OR
+              details->>'state' ILIKE '%${queryString2}%'
+      `);
+
+      // FIND WHERE THE ids FOUND IN THE where COLUMN MATCH
+      // ANY INDEXES OF THE places TABLE, AND
+      // COLLECT ANY MATCHES IN AN ARRAY
+      let six_answersRecordIdsOfPlacesFound: string[] = [];
+      listOfIdsRefPlacesInRecords.rows.forEach(
+        (six_answersRecord: {
+          id: string;
+          where: number;
+        }) => {
+          if (indexesOfPlacesFoundByQuery.rows.find((row) => {
+            return row.id === six_answersRecord.where;
+          }) !== undefined) {
+            six_answersRecordIdsOfPlacesFound.push(six_answersRecord.id);
+          }
+      });
+      // ALL MATCHES IN EVERY REMAINING COLUMN
+      let idQuerySegment2: string = '';
+      six_answersRecordIdsOfPlacesFound.forEach((uuid: string) => {
+        idQuerySegment2 += ` OR id = '${uuid}'`
+      });
+
       const count = await client.query(
        `SELECT COUNT(*)
         FROM public.six_answers
@@ -276,7 +354,7 @@ const client = new Client({
             why ILIKE '%${query}%' OR
             how ILIKE '%${query}%' OR
             "when"->>'date' ILIKE '%${query}%' OR
-		        "when"->>'time' ILIKE '%${query}%'${idQuerySegment}
+		        "when"->>'time' ILIKE '%${query}%'${idQuerySegment}${idQuerySegment2}
     `);
   
       const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
