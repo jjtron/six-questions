@@ -230,7 +230,11 @@ const client = new Client({
         WHERE name ILIKE '%${query}%' OR
             details->>'street' ILIKE '%${query}%' OR
             details->>'city' ILIKE '%${query}%' OR
-            details->>'state' ILIKE '%${query}%'
+            details->>'state' ILIKE '%${query}%' OR
+            details->>'country(s)' ILIKE '%${query}%' OR
+            details->>'country' ILIKE '%${query}%' OR
+            details->>'description' ILIKE '%${query}%'
+            ORDER BY sort_order ASC
             LIMIT ${PLACES_PER_PAGE} OFFSET ${offset};`
         );
 
