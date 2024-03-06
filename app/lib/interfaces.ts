@@ -13,3 +13,15 @@ export type RadioOptions = {
               }
            }]
 };
+
+export type Place = {
+    id: number;
+    name: string;
+    details: {
+        city: string;
+        street: string;
+        state: string;
+    },
+    type: string;
+    sort_order: number;
+}

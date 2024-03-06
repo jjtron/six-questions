@@ -16,6 +16,8 @@ export function PlacesTable({records} : {records : any} ) {
         setButtonDisabled("");
     }
 
+    //console.log(records);
+
     function showPlaceRecord (record: any, i: number) {
         return (
             <div className={clsx("table-row",
@@ -25,9 +27,9 @@ export function PlacesTable({records} : {records : any} ) {
                            }
                            onClick={() => handleClick(i, record.id)} >
                 <div className="table-cell pl-2 border-tbl-1 border-slate-400 rounded-l-md">{record.name}{i}</div>
-                <div className="table-cell border-y-1 border-slate-400">{record.details.street}</div>
-                <div className="table-cell border-y-1 border-slate-400">{record.details.city}</div>
-                <div className="table-cell border-trb-1 border-slate-400 rounded-r-md">{record.details.state}</div>
+                <div className="table-cell border-y-1 border-slate-400">{record.street}</div>
+                <div className="table-cell border-y-1 border-slate-400">{record.city}</div>
+                <div className="table-cell border-trb-1 border-slate-400 rounded-r-md">{record.state}</div>
             </div>
         )
     }
@@ -35,8 +37,13 @@ export function PlacesTable({records} : {records : any} ) {
     return (
         <form className="md:pl-2 bg-inherit">
             <div className="table w-full">
+                
                 { 
-                    records.map((record: any, j: number) => {
+                records.map((group: any) => {
+                    return (
+                    group.map((record: any, j: number) => {
+                    
+                    
                         if (j === 0) {
                             return (
                                 <div key={j} className="table-header-group">
@@ -56,10 +63,14 @@ export function PlacesTable({records} : {records : any} ) {
                                 </div>
                             )
                         }
-                    })
-                }
-                { 
-                    showPlaceRecord(records[records.length - 1], records.length)
+                        
+                    }
+                    
+                    )
+                    
+                    )
+
+                })
                 }
             </div>
             <div className="flex flex-col items-center justify-between p-4">
@@ -72,3 +83,5 @@ export function PlacesTable({records} : {records : any} ) {
         </form>
     );      
 }
+
+//showPlaceRecord(records[records.length - 1], records.length)

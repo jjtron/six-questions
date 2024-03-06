@@ -1,5 +1,6 @@
 import { Client } from 'pg';
 import { unstable_noStore as noStore } from 'next/cache';
+import { Place } from './interfaces'
 
 const client = new Client({
     user: 'postgres',
@@ -225,8 +226,8 @@ const client = new Client({
     noStore();
     const offset = (currentPage - 1) * PLACES_PER_PAGE;
     try {
-      const answers = await client.query(
-       `SELECT * FROM public.places
+      const places = await client.query(`
+        SELECT * FROM public.places
         WHERE name ILIKE '%${query}%' OR
             details->>'street' ILIKE '%${query}%' OR
             details->>'city' ILIKE '%${query}%' OR
@@ -238,7 +239,14 @@ const client = new Client({
             LIMIT ${PLACES_PER_PAGE} OFFSET ${offset};`
         );
 
-      return answers.rows;
+      const groups = await client.query(`SELECT Distinct type FROM public.places`);
+      let groupedPlaces: Place[][] = [];
+      groups.rows.map((group: {type: string;}) => {
+        groupedPlaces.push(places.rows.filter((place: Place) => {
+          return place.type === group.type;
+        }));
+      })
+      return groupedPlaces;
     } catch (error) {
       console.error('Database Error:', error);
       throw new Error('Failed to fetch answers.');
