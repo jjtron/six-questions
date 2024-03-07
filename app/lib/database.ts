@@ -238,8 +238,7 @@ const client = new Client({
             ORDER BY sort_order ASC
             LIMIT ${PLACES_PER_PAGE} OFFSET ${offset};`
         );
-
-      const groups = await client.query(`SELECT Distinct type FROM public.places`);
+      const groups = await client.query(`SELECT Distinct type, sort_order FROM public.places ORDER BY sort_order ASC`);
       let groupedPlaces: Place[][] = [];
       groups.rows.map((group: {type: string;}) => {
         groupedPlaces.push(places.rows.filter((place: Place) => {
