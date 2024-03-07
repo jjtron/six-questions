@@ -31,7 +31,7 @@ export function PlacesTable({records} : {records : any} ) {
                       <div className="basis-1/2 pl-2 text-left font-bold border-tbl-1 border-slate-400 rounded-l-md">Country</div>
                       <div className="basis-1/2 text-left font-bold border-trb-1 border-slate-400 rounded-r-md"></div>
                     </div>
-                    <div className={clsx("flex flex-row bg-sky-400 rounded-md", {"hidden" : (j !== 0 || record.type !== "name_street_city_state")})}>
+                    <div className={clsx("flex flex-row bg-sky-400 rounded-md", {"hidden" : (j !== 0 || record.type !== "street_city_state")})}>
                       <div className="basis-1/4 pl-2 text-left font-bold border-tbl-1 border-slate-400 rounded-l-md">Place Name</div>
                       <div className="basis-1/4 text-left font-bold border-y-1 border-slate-400">Street</div>
                       <div className="basis-1/4 text-left font-bold border-y-1 border-slate-400">City</div>
