@@ -9,7 +9,7 @@ export default function Form( {person} : {
       name: string;
     }
   }) {
-  console.log(person);
+
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(updatePerson, initialState);
 
