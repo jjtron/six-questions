@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export function Button(
   { cName, showdatalink, buttontext, isDisabled } : 
-  { cName: any, showdatalink: any, buttontext: string, isDisabled?: string }) {
+  { cName: string, showdatalink: string, buttontext: string, isDisabled?: string }) {
 
   return (
     <Link href={showdatalink} className={isDisabled} >
