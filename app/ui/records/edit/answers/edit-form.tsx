@@ -2,13 +2,13 @@
 import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
 import WhereRadio from '@/app/ui/records/whereradio';
-import { SelectOptions, WhoOptions } from '@/app/lib/interfaces';
+import { SelectOptions, WhoOptions, Place, SixAnswers } from '@/app/lib/interfaces';
 import DateTimePicker from '@/app/ui/records/datepicker';
 import { useFormState } from 'react-dom';
 import { updateRecord } from '@/app/lib/actions';
 
 export default function Form({whereOptions, whoOptions, record} : 
-    { whereOptions: any, whoOptions: WhoOptions[], record: any}) {
+    { whereOptions: Place[], whoOptions: WhoOptions[], record: SixAnswers[]}) {
 
     const initialState = { message: null, errors: {} };
     const [state, dispatch] = useFormState(updateRecord, initialState);

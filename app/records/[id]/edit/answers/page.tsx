@@ -4,16 +4,15 @@ import Breadcrumbs from '@/app/ui/records/breadcrumbs';
 import Form from '@/app/ui/records/edit/answers/edit-form';
 import { getDbData } from '@/app/lib/database';
 import { notFound } from 'next/navigation';
-import { SixAnswers } from '@/app/lib/interfaces';
-import { GetDbQueryResult } from '@/app/lib/interfaces';
+import { SixAnswers, whoOptions, Place } from '@/app/lib/interfaces';
 
 export default async function Page({ params }: { params: { id: string } }) {
     const id: string = params.id;
-    const record: GetDbQueryResult = await getDbData(`SELECT * FROM six_answers WHERE id = '${id}';`);
-    const whereData: GetDbQueryResult = await getDbData('SELECT * FROM places');
-    const whoData: GetDbQueryResult = await getDbData('SELECT * FROM people');
+    const record: SixAnswers[] = (await getDbData(`SELECT * FROM six_answers WHERE id = '${id}';`)).details.rows;
+    const whereOptions: Place[] = (await getDbData('SELECT * FROM places')).details.rows;
+    const whoOptions: whoOptions[] = (await getDbData('SELECT * FROM people')).details.rows;
 
-    if (!record || record.details.rows.length === 0) {
+    if (!record || record.length === 0) {
       notFound();
     }
 
@@ -31,9 +30,9 @@ export default async function Page({ params }: { params: { id: string } }) {
           ]}
         />
         </div>
-        <Form record={record.details.rows}
-              whereOptions={whereData.details.rows}
-              whoOptions={whoData.details.rows}>
+        <Form record={record}
+              whereOptions={whereOptions}
+              whoOptions={whoOptions}>
         </Form>
       </>
     );

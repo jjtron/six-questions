@@ -135,7 +135,7 @@ const client = new Client({
       const result: any = await client.query(`
       UPDATE public.six_answers
         SET
-        who='${JSON.stringify(persons).replace('[', '{').replace(']', '}')}',
+        who='${JSON.stringify(persons).replace('[', '{').replace(']', '}').replace("'", "\'")}',
         what='${data.get("what")}',
         "when"='${JSON.stringify(timestamp)}',
         "where"='${data.get("where")}',

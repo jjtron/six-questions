@@ -1,18 +1,7 @@
 export type SelectProps = {[key: string]: string};
 export type SelectOptions = {[key: number]: string};
 export type WhoOptions = {index: number, name: string};
-
-export type RadioOptions = {
-    list: [{   
-              id: string;
-              name: string;
-              details: {
-                  city: string;
-                  street: string;
-                  state: string;
-              }
-           }]
-};
+export type Person = {index: number, name: string};
 
 export type Place = {
     id: number;
@@ -25,6 +14,10 @@ export type Place = {
     type: string;
     sort_order: number;
 }
+
+export type RadioOptions = {
+    list: Place[];
+};
 
 export type SixAnswers = {
     id: string;
@@ -50,3 +43,9 @@ export type searchParams = {
     query?: string;
     page?: string;
 }
+
+export type whoOptions = { 
+    index: number;
+    name: string;
+}
+

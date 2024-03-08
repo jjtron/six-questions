@@ -7,7 +7,7 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import dayjs from 'dayjs';
 var convertTime = require('convert-time');
 
-export default function DateTimePicker({date_time} : {date_time: any}) {
+export default function DateTimePicker({date_time} : {date_time: {date: string; time: string;}}) {
 
   const datetime = `${date_time.date.replace(/\//g, '-')}T${convertTime(date_time.time)}`;
   const converted_datetime = datetime.substring(6, 10) + '-' + datetime.substring(0, 2) + '-' + 

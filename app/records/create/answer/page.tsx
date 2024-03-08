@@ -3,12 +3,13 @@
 import Breadcrumbs from '@/app/ui/records/breadcrumbs';
 import Form from '@/app/ui/records/create/answer/create-answers';
 import { getDbData } from '@/app/lib/database';
-import { GetDbQueryResult } from '@/app/lib/interfaces';
+import { WhoOptions, Place } from '@/app/lib/interfaces';
 
 export default async function Page() {
-    const whereData: GetDbQueryResult = await getDbData('SELECT * FROM places');
-    const whoData: GetDbQueryResult = await getDbData('SELECT * FROM people');
-    
+
+    const whereOptions: Place[] = (await getDbData('SELECT * FROM places')).details.rows;
+    const whoOptions: WhoOptions[] = (await getDbData('SELECT * FROM people')).details.rows;
+
     return (
         <main>
           <div className="md:ml-2">
@@ -23,7 +24,7 @@ export default async function Page() {
               ]}
             />
           </div>
-          <Form whereOptions={whereData.details.rows} whoOptions={whoData.details.rows}></Form>
+          <Form whoOptions={whoOptions} whereOptions={whereOptions}></Form>
         </main>
     );
     

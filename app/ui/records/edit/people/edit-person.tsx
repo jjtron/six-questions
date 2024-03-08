@@ -2,13 +2,9 @@
 import { updatePerson } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
+import { Person } from '@/app/lib/interfaces';
 
-export default function Form( {person} : {
-    person: {
-      index: number;
-      name: string;
-    }
-  }) {
+export default function Form( {person} : { person: Person }) {
 
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(updatePerson, initialState);

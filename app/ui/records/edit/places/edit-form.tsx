@@ -2,8 +2,9 @@
 import { Button } from '@/app/ui/button1';
 import { useFormState } from 'react-dom';
 import { updatePlace } from '@/app/lib/actions';
+import { Place } from '@/app/lib/interfaces';
 
-export default function Form({ record } : { record: any }) {
+export default function Form({ record } : { record: Place }) { 
 
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(updatePlace, initialState);

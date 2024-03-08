@@ -5,7 +5,7 @@ export default function MultiSelect(
     {options} : {options: [
         SelectProps,
         SelectOptions,
-        number | null
+        number[] | null
     ]}
 ) {
     /*  THIS CAN BE DEVELOPED LATER TO MAKE IT SO THAT A CLICK WITHOUT 
@@ -25,9 +25,9 @@ export default function MultiSelect(
     let optionsList = [];
     const multi = (options[0].multi === 'yes') ? true : false;
 
-    let dv: any;
+    let dv: string[] | string;
     if (options[0].multi === 'yes') {
-        dv = (options[2] === null) ? [] : options[2];
+        dv = (options[2] === null) ? [''] : options[2].map((el) => el + '')           
     } else {
         dv = '';
     }
