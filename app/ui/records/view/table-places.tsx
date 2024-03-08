@@ -4,13 +4,14 @@ import { Button } from '@/app/ui/button';
 import { useState } from 'react';
 import clsx from 'clsx';
 import { Countries } from './countries';
+import { Place } from '@/app/lib/interfaces';
 
-export function PlacesTable({records} : {records : any} ) {
+export function PlacesTable({records} : {records : Place[]} ) {
 
   const [buttonDisabled, setButtonDisabled] = useState("disabled-link");
   const [selectedRecordId, setSelectedRecordId] = useState(-1);
 
-  function handleClick(selectedRecordId: string, recordid: number) {
+  function handleClick(recordid: number) {
       setSelectedRecordId(recordid);
       setButtonDisabled("");
   }
@@ -20,7 +21,7 @@ export function PlacesTable({records} : {records : any} ) {
         
       { records.map((group: any, i: number) => {
             return (
-              group.map((record: any, j: number) => {
+              group.map((record: Place, j: number) => {
                 const lineId: string = (i + '') + (j + '');
                 return (
                   <div key={lineId} className="w-full flex flex-col">
@@ -33,10 +34,10 @@ export function PlacesTable({records} : {records : any} ) {
                     </div>
                     {/* Street, City, State records */}
                     <div className={clsx("flex flex-row rounded-md",
-                            { "bg-yellow-300" : selectedRecordId === record.id, "bg-sky-200" : selectedRecordId !== record.id },
+                            { "bg-yellow-100" : selectedRecordId === record.id, "bg-sky-200" : selectedRecordId !== record.id },
                             { "hidden" : (record.type !== "street_city_state")}
                           )}
-                        onClick={() => handleClick(lineId, record.id)} >
+                        onClick={() => handleClick(record.id)} >
                       <div className="basis-1/4 pl-2 border-tbl-1 border-slate-400 rounded-l-md">{record.name}</div>
                       <div className="basis-1/4 border-y-1 border-slate-400">{record.details.street}</div>
                       <div className="basis-1/4 border-y-1 border-slate-400">{record.details.city}</div>
@@ -51,7 +52,7 @@ export function PlacesTable({records} : {records : any} ) {
                     <div  className={clsx("flex flex-row flex-wrap",
                                         { "hidden" : (record.type !== "country" || j !== 0)}
                                     )}>
-                            <Countries group={group} selectedRecordId={selectedRecordId} clik={() => {  }} countryClick={handleClick}/>
+                            <Countries group={group} selectedRecordId={selectedRecordId} countryClick={handleClick}/>
                     </div>
 
                   </div>

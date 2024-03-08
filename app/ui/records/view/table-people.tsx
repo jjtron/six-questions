@@ -3,8 +3,9 @@
 import { Button } from '@/app/ui/button';
 import { useState } from 'react';
 import clsx from 'clsx';
+import { Person } from '@/app/lib/interfaces';
 
-export function PeopleTable({records} : {records : any} ) {
+export function PeopleTable({records} : {records : Person[]} ) {
 
     const [buttonDisabled, setButtonDisabled] = useState("disabled-link");
     const [rowIndex, setRowIndex] = useState(-1);
@@ -28,7 +29,7 @@ export function PeopleTable({records} : {records : any} ) {
                     return (
                         <div key={i} className="table-row-group">
                             <div className={clsx("table-row",
-                                    {"bg-sky-300" : i === rowIndex,
+                                    {"bg-yellow-100" : i === rowIndex,
                                         "bg-sky-200" : i !== rowIndex
                                     })}
                                 onClick={() => handleClick(i, record.index)}
