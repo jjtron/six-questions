@@ -11,7 +11,7 @@ const client = new Client({
   });
   client.connect();
 
-  export async function getDbData(q: any) {
+  export async function getDbData(q: string) {
     try {
       const result: any = await client.query(q);
       return {success: true, details: result};
@@ -21,18 +21,28 @@ const client = new Client({
   };
 
   export async function insertPersonRecord(data: FormData) {
-    const result: any = await client.query(`
-      INSERT INTO public.people (name)
-	    VALUES ('${data.get("name")}');
-    `);
+    try {
+      const result: any = await client.query(`
+        INSERT INTO public.people (name)
+        VALUES ('${data.get("name")}');
+      `);
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to insert a person record.');
+    }
   }
 
   export async function updatePersonRecord(data: FormData) {
-    const result: any = await client.query(`
-      UPDATE public.people
-	    SET name='${data.get('personname')}'
-	    WHERE index='${data.get('index')}';
-    `);
+    try {
+      const result: any = await client.query(`
+        UPDATE public.people
+        SET name='${data.get('personname')}'
+        WHERE index='${data.get('index')}';
+      `);
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to update a person record.');
+    }
   }
 
   const PEOPLE_PER_PAGE = 10;
@@ -76,84 +86,106 @@ const client = new Client({
   }
 
   export async function insertAnswerRecord(data: FormData) {
-    // prepare the people for insert
-    let persons: number[] = [];
-    data.getAll("who").map((person: any) => {
-      persons.push(Number(person));
-    });
-    // prepare the whens for insert
-    let timestamp: {date?: string; time?: string;} = {};
-    data.getAll("when").map((property: any) => {
-      const re = new RegExp(/\d{2}\/\d{2}\/\d{4}/);
-      re.test(property) ? (timestamp.date = property) : (timestamp.time = property);
-    });
+    try {
+      // prepare the people for insert
+      let persons: number[] = [];
+      data.getAll("who").map((person: any) => {
+        persons.push(Number(person));
+      });
+      // prepare the whens for insert
+      let timestamp: {date?: string; time?: string;} = {};
+      data.getAll("when").map((property: any) => {
+        const re = new RegExp(/\d{2}\/\d{2}\/\d{4}/);
+        re.test(property) ? (timestamp.date = property) : (timestamp.time = property);
+      });
 
-    const result: any = await client.query(`
-    INSERT INTO public.six_answers(
-      id, who, what, "where", "when", why, how)
-      VALUES (
-        '${data.get("id")}',
-        '${JSON.stringify(persons).replace('[', '{').replace(']', '}')}',
-        '${data.get("what")}',
-        '${data.get("where")}',
-        '${JSON.stringify(timestamp)}',
-        '${data.get("why")}',
-        '${data.get("how")}'
-      );`
-    );
+      const result: any = await client.query(`
+      INSERT INTO public.six_answers(
+        id, who, what, "where", "when", why, how)
+        VALUES (
+          '${data.get("id")}',
+          '${JSON.stringify(persons).replace('[', '{').replace(']', '}')}',
+          '${data.get("what")}',
+          '${data.get("where")}',
+          '${JSON.stringify(timestamp)}',
+          '${data.get("why")}',
+          '${data.get("how")}'
+        );`
+      );
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to insert an answers record.');
+    }
   };
 
   export async function updateAnswerRecord(data: FormData) {
-    // prepare the people for update
-    let persons: number[] = [];
-    data.getAll("who").map((person: any) => {
-      persons.push(Number(person));
-    });
-    // prepare the whens for update
-    let timestamp: {date?: string; time?: string;} = {};
-    data.getAll("when").map((property: any) => {
-      const re = new RegExp(/\d{2}\/\d{2}\/\d{4}/);
-      re.test(property) ? (timestamp.date = property) : (timestamp.time = property);
-    });
+    try {
+      // prepare the people for update
+      let persons: number[] = [];
+      data.getAll("who").map((person: any) => {
+        persons.push(Number(person));
+      });
+      // prepare the whens for update
+      let timestamp: {date?: string; time?: string;} = {};
+      data.getAll("when").map((property: any) => {
+        const re = new RegExp(/\d{2}\/\d{2}\/\d{4}/);
+        re.test(property) ? (timestamp.date = property) : (timestamp.time = property);
+      });
 
-    const result: any = await client.query(`
-    UPDATE public.six_answers
-	    SET
-      who='${JSON.stringify(persons).replace('[', '{').replace(']', '}')}',
-      what='${data.get("what")}',
-      "when"='${JSON.stringify(timestamp)}',
-      "where"='${data.get("where")}',
-      why='${data.get("why")}',
-      how='${data.get("how")}'
-	    WHERE id = '${data.get("id")}';`
-    );
+      const result: any = await client.query(`
+      UPDATE public.six_answers
+        SET
+        who='${JSON.stringify(persons).replace('[', '{').replace(']', '}')}',
+        what='${data.get("what")}',
+        "when"='${JSON.stringify(timestamp)}',
+        "where"='${data.get("where")}',
+        why='${data.get("why")}',
+        how='${data.get("how")}'
+        WHERE id = '${data.get("id")}';`
+      );
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to update an answers record.');
+    }
   };
 
   export async function insertPlaceRecord(data: FormData) {
-    const result: any = await client.query(`
-      INSERT INTO public.places ( name, details )
-      VALUES (
-        '${data.get("placename")}',
-        '${JSON.stringify({ 
-          city: data.get("city"),
-          street: data.get("street"),
-          state: data.get("state")
-        })}'
-      );`
-    );
+    try {
+      const result: any = await client.query(`
+        INSERT INTO public.places ( name, details, type, sort_order )
+        VALUES (
+          '${data.get("placename")}',
+          '${JSON.stringify({ 
+            city: data.get("city"),
+            street: data.get("street"),
+            state: data.get("state"),
+            })}',
+          'street_city_state',
+          1
+        );`
+      );
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to insert a place record.');
+    }
   }
 
   export async function updatePlaceRecord(data: FormData) {
-    const result: any = await client.query(`
-      UPDATE public.places
-      SET name='${data.get('placename')}',
-          details='${JSON.stringify({ 
-            city: data.get("city"),
-            street: data.get("street"),
-            state: data.get("state")
-          })}'
-      WHERE id = '${data.get('id')}';`
-    );
+    try {
+      const result: any = await client.query(`
+        UPDATE public.places
+        SET name='${data.get('placename')}',
+            details='${JSON.stringify({ 
+              city: data.get("city"),
+              street: data.get("street"),
+              state: data.get("state")
+            })}'
+        WHERE id = '${data.get('id')}';`
+      );
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to update a place record.');
+    }
   }
 
   const ITEMS_PER_PAGE = 1;
