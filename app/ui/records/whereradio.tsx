@@ -1,9 +1,5 @@
 import { SelectProps, RadioOptions } from '@/app/lib/interfaces';
 
-export function x(x: any) {
-    return (<input className="h-[24px]" type="radio" name="where" defaultChecked value={x.id} /> )
-} 
-
 export default function WhereRadio(
     {whereOptions} : {whereOptions: [
         SelectProps,

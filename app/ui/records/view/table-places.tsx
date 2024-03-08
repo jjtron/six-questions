@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { Countries } from './countries';
 import { Place } from '@/app/lib/interfaces';
 
-export function PlacesTable({records} : {records : Place[]} ) {
+export function PlacesTable({placesGroups} : {placesGroups : Place[][]} ) {
 
   const [buttonDisabled, setButtonDisabled] = useState("disabled-link");
   const [selectedRecordId, setSelectedRecordId] = useState(-1);
@@ -19,7 +19,7 @@ export function PlacesTable({records} : {records : Place[]} ) {
   return (
     <form className="md:pl-2 bg-inherit">
         
-      { records.map((group: any, i: number) => {
+      { placesGroups.map((group: any, i: number) => {
             return (
               group.map((record: Place, j: number) => {
                 const lineId: string = (i + '') + (j + '');
