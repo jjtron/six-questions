@@ -3,10 +3,11 @@
 import Breadcrumbs from '@/app/ui/records/breadcrumbs';
 import Form from '@/app/ui/records/create/answer/create-answers';
 import { getDbData } from '@/app/lib/database';
+import { GetDbQueryResult } from '@/app/lib/interfaces';
 
-export default async function Page({rectype} : {rectype: any}) {
-    const whereData = await getDbData('SELECT * FROM places');
-    const whoData = await getDbData('SELECT * FROM people');
+export default async function Page() {
+    const whereData: GetDbQueryResult = await getDbData('SELECT * FROM places');
+    const whoData: GetDbQueryResult = await getDbData('SELECT * FROM people');
     
     return (
         <main>

@@ -5,18 +5,12 @@ import Form from '@/app/ui/records/view/view-people';
 import Search from '@/app/ui/records/search';
 import { fetchRecordsPeople } from '@/app/lib/database';
 import Pagination from '@/app/ui/records/pagination';
+import { searchParams } from '@/app/lib/interfaces';
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams?: {
-    query?: string;
-    page?: string;
-  };
-}) {
-  const query = searchParams?.query || '';
-  const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = await fetchRecordsPeople(query);
+export default async function Page({ searchParams } : { searchParams: searchParams }) {
+  const query: string = searchParams?.query || '';
+  const currentPage: number = Number(searchParams?.page) || 1;
+  const totalPages: number = await fetchRecordsPeople(query);
     
     return (
       <>
