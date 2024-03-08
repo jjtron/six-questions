@@ -85,13 +85,13 @@ export default async function Form({
                     {/* BOTTOM ROW GROUP*/}
                     <div>
                         {([{label: 'WHAT'},
-                        {label: 'HOW'},
-                        {label: 'WHY'}])
+                        {label: 'WHY'},
+                        {label: 'HOW'}])
                             .map((vars, j) => {
                                 let data;
                                 (j === 0) ? data = record.what : 
-                                (j === 1) ? data = record.how : 
-                                (j === 2) ? data = record.why : data = '';
+                                (j === 1) ? data = record.why : 
+                                (j === 2) ? data = record.how : data = '';
                                 return (
                                     <div key={j} className={clsx("flex flex-col rounded-md mt-px border-1 border-slate-400 pl-2 md:h-48 h-32", 
                                         {"even:bg-slate-250 odd:bg-slate-300": ( currentPage & 1 ),
