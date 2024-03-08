@@ -3,6 +3,7 @@ import { getDbData } from "@/app/lib/database";
 import { Button } from "@/app/ui/button";
 import clsx from 'clsx';
 import { fetchFilteredRecords } from '@/app/lib/database';
+import { Person, Place, SixAnswers } from '@/app/lib/interfaces';
 
 export default async function Form({
     query,
@@ -11,12 +12,12 @@ export default async function Form({
     query: string;
     currentPage: number;
   }) {
-    const whoList: any = (await getDbData(`SELECT * FROM people;`)).details.rows;
-    const whereDefs: any = (await getDbData(`SELECT * FROM places`)).details.rows;
+    const whoList: Person[] = (await getDbData(`SELECT * FROM people;`)).details.rows;
+    const whereDefs: Place[] = (await getDbData(`SELECT * FROM places`)).details.rows;
     const records = await fetchFilteredRecords(query, currentPage);
 
     const placeDetailsFunc = (recordWhereId: number, shallowEl: string, detailEl: string | null) => {
-        const place = whereDefs.find((whereDef: {id: number}) => (whereDef.id === recordWhereId));
+        const place: any = whereDefs.find((whereDef: {id: number}) => (whereDef.id === recordWhereId));
         if (detailEl !== null) {
             return place[shallowEl][detailEl];
         }
@@ -26,12 +27,7 @@ export default async function Form({
     return (
         <>
         {
-          records.map((record: 
-            {
-                id: string[]; who: Array<any>; what: string[];
-                where: number; when: {date: string[]; time: string[]}; why: string[];
-                how: string[];
-            }, i: any) => {
+          records.map((record: SixAnswers, i: number) => {
                 return (<div key={i} className="flex flex-col bg-inherit md:pl-2">
                     {/* TOP ROW GROUP*/}
                     <div className="flex md:flex-row flex-col">
