@@ -25,3 +25,23 @@ export type Place = {
     type: string;
     sort_order: number;
 }
+
+export type SixAnswers = {
+    id: string;
+    who: number[];
+    what: string;
+    where: number,
+    when: { date: string; time: string; },
+    why: string;
+    how: string;
+}
+
+export type GetDbQueryResult = {
+    success: boolean;
+    details: { 
+        rows: {
+            index: number;
+            name: string; 
+        }[]
+    };
+}

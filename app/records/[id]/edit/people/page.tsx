@@ -4,15 +4,16 @@ import Breadcrumbs from '@/app/ui/records/breadcrumbs';
 import Form from '@/app/ui/records/edit/people/edit-person';
 import { getDbData } from '@/app/lib/database';
 import { notFound } from 'next/navigation';
+import { GetDbQueryResult } from '@/app/lib/interfaces';
 
 export default async function Page({ params }: { params: { id: string } }) {
-    const id: any = params.id;
-    const person = await getDbData(`SELECT * FROM people WHERE index = '${id}';`);
+    const id: string = params.id;
+    const person: GetDbQueryResult = await getDbData(`SELECT * FROM people WHERE index = '${id}';`);
 
     if (!person || person.details.rows.length === 0) {
       notFound();
     }
-    
+
     return (
       <>
         <div className="md:ml-2">

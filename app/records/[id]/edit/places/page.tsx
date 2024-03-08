@@ -4,10 +4,11 @@ import Breadcrumbs from '@/app/ui/records/breadcrumbs';
 import Form from '@/app/ui/records/edit/places/edit-form';
 import { getDbData } from '@/app/lib/database';
 import { notFound } from 'next/navigation';
+import { GetDbQueryResult } from '@/app/lib/interfaces';
 
 export default async function Page({ params }: { params: { id: string } }) {
-    const id: any = params.id;
-    const whereData = await getDbData(`SELECT * FROM places WHERE id = '${id}';`);
+    const id: string = params.id;
+    const whereData: GetDbQueryResult = await getDbData(`SELECT * FROM places WHERE id = '${id}';`);
     if (!whereData || whereData.details.rows.length === 0) {
       notFound();
     }

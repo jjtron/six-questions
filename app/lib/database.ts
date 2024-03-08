@@ -16,7 +16,7 @@ const client = new Client({
       const result: any = await client.query(q);
       return {success: true, details: result};
     } catch(error: any) {
-      return {succes: false, details: error};
+      return {success: false, details: error};
     }
   };
 
