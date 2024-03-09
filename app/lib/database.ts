@@ -166,19 +166,18 @@ const client = new Client({
 
   export async function insertPlaceRecord(data: FormData) {
     try {
-      const result: any = await client.query(`
-        INSERT INTO public.places ( name, details, type, sort_order )
-        VALUES (
-          '${data.get("placename")}',
-          '${JSON.stringify({ 
-            city: data.get("city"),
-            street: data.get("street"),
-            state: data.get("state"),
-            })}',
-          'street_city_state',
-          1
-        );`
-      );
+      const statement =
+       `INSERT INTO public.places ( name, details, type, sort_order )
+        VALUES (($1), ($2), 'street_city_state', 1);`;
+      const variables = [
+        (data.get("placename") as string).replaceAll("'", "\'"),
+        JSON.stringify({ 
+          city: (data.get("city") as string).replaceAll("'", "\'"),
+          street: (data.get("street") as string).replaceAll("'", "\'"),
+          state: (data.get("state") as string).replaceAll("'", "\'")
+        })
+      ];
+      const result: any = await client.query(statement, variables);
     } catch (error) {
       console.error('Database Error:', error);
       throw new Error('Failed to insert a place record.');
@@ -187,16 +186,20 @@ const client = new Client({
 
   export async function updatePlaceRecord(data: FormData) {
     try {
-      const result: any = await client.query(`
-        UPDATE public.places
-        SET name='${data.get('placename')}',
-            details='${JSON.stringify({ 
-              city: data.get("city"),
-              street: data.get("street"),
-              state: data.get("state")
-            })}'
-        WHERE id = '${data.get('id')}';`
-      );
+      const statement =
+       `UPDATE public.places
+        SET name=($1), details=($2)
+        WHERE id = ($3)`;
+      const variables = [
+        (data.get('placename') as string).replaceAll("'", "\'"),
+        JSON.stringify({ 
+          city: (data.get("city") as string).replaceAll("'", "\'"),
+          street: (data.get("street") as string).replaceAll("'", "\'"),
+          state: (data.get("state") as string).replaceAll("'", "\'")
+        }),
+        data.get('id')
+      ];
+      const result: any = await client.query(statement, variables);
     } catch (error) {
       console.error('Database Error:', error);
       throw new Error('Failed to update a place record.');
@@ -211,8 +214,23 @@ const client = new Client({
     noStore();
     const offset = (currentPage - 1) * ITEMS_PER_PAGE;
     try {
+      const queryDecoded = (decodeURIComponent(query)).replace("'", "\'");
       const whoWhereSearchTerms = await getWhoWhereSearchTerms(query);
       if (whoWhereSearchTerms.success) {
+        
+        const statement =
+         `SELECT id, who, what, "where", "when", why, how
+          FROM public.six_answers
+          WHERE what ILIKE ($1) OR
+              why ILIKE ($1) OR
+              how ILIKE ($1) OR
+              "when"->>'date' ILIKE ($1) OR
+              "when"->>'time' ILIKE ($1)
+              ${whoWhereSearchTerms.stringSegment}
+              LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset};`;
+        const variables = [ `%${queryDecoded}%` ];
+        const answers = await client.query(statement, variables);
+        /*
         const answers = await client.query(
         `SELECT id, who, what, "where", "when", why, how
           FROM public.six_answers
@@ -224,6 +242,7 @@ const client = new Client({
               ${whoWhereSearchTerms.stringSegment}
               LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset};`
         );
+        */
         return answers.rows;
       } else {
         console.error('Database Error:', whoWhereSearchTerms.errormsg);
@@ -240,8 +259,23 @@ const client = new Client({
     noStore();
 
     try {
+      const queryDecoded = (decodeURIComponent(query)).replace("'", "\'");
       const whoWhereSearchTerms = await getWhoWhereSearchTerms(query);
       if (whoWhereSearchTerms.success) {
+        const statement = 
+         `SELECT COUNT(*)
+          FROM public.six_answers
+          WHERE 
+            what ILIKE ($1) OR
+            why ILIKE ($1) OR
+            how ILIKE ($1) OR
+            "when"->>'date' ILIKE ($1) OR
+            "when"->>'time' ILIKE ($1)
+            ${whoWhereSearchTerms.stringSegment}`;
+        const variables = [ `%${queryDecoded}%` ];
+        const count = await client.query(statement, variables);
+        
+        /*
         const count = await client.query(
         `SELECT COUNT(*)
           FROM public.six_answers
@@ -252,6 +286,7 @@ const client = new Client({
               "when"->>'time' ILIKE '%${query}%'
               ${whoWhereSearchTerms.stringSegment}
         `);
+        */
         const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
         return totalPages;
       } else {
@@ -321,9 +356,10 @@ const client = new Client({
 
   export async function getWhoWhereSearchTerms(query: string) {
     try {
+      const queryDecoded = (decodeURIComponent(query)).replace("'", "''");
       // GET MATCHES IN THE PEOPLE TABLE
-      let queryString = `%${query}%`;
-      if (query.length === 0) {
+      let queryString = `%${queryDecoded}%`;
+      if (queryDecoded.length === 0) {
         queryString = 'NULL';
       }
       const indexesOfPeopleFoundByQuery = await client.query(
@@ -370,8 +406,8 @@ const client = new Client({
       );
 
       // GET MATCHES IN THE PLACES TABLE
-      let queryString2 = `%${query}%`;
-      if (query.length === 0) { queryString2 = 'NULL'; }
+      let queryString2 = `%${queryDecoded}%`;
+      if (queryDecoded.length === 0) { queryString2 = 'NULL'; }
       const indexesOfPlacesFoundByQuery = await client.query(
        `SELECT id
         FROM public.places
