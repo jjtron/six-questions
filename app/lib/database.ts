@@ -52,15 +52,15 @@ const client = new Client({
   ) {
     noStore();
     const offset = (currentPage - 1) * PEOPLE_PER_PAGE;
+    const queryDecoded = (decodeURIComponent(query)).replace("'", "''");
   
     try {
-      const answers = await client.query(
-        `SELECT index, name
-         FROM public.people
-         WHERE name ILIKE '%${query}%'
-            LIMIT ${PEOPLE_PER_PAGE} OFFSET ${offset};`
-        );
-
+      const answers = await client.query(`SELECT index, name
+        FROM public.people
+        WHERE name ILIKE '%${queryDecoded}%'
+        LIMIT ${PEOPLE_PER_PAGE} OFFSET ${offset}`
+      );
+      
       return answers.rows;
     } catch (error) {
       console.error('Database Error:', error);
@@ -70,11 +70,12 @@ const client = new Client({
 
   export async function fetchRecordsPeople(query: string) {
     noStore();
+    const queryDecoded = (decodeURIComponent(query)).replace("'", "''");
     try {
       const count = await client.query(
        `SELECT COUNT(*)
         FROM public.people
-        WHERE name ILIKE '%${query}%';
+        WHERE name ILIKE '%${queryDecoded}%';
     `);
   
       const totalPages = Math.ceil(Number(count.rows[0].count) / PEOPLE_PER_PAGE);
