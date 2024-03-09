@@ -22,10 +22,11 @@ const client = new Client({
 
   export async function insertPersonRecord(data: FormData) {
     try {
-      const result: any = await client.query(`
-        INSERT INTO public.people (name)
-        VALUES ('${data.get("name")}');
-      `);
+      const statement: string = 'INSERT INTO public.people (name) VALUES ($1)';
+      const result: any = await client.query(
+        statement,
+        [(data.get("name") as string).replaceAll("'", "\'")]
+      );
     } catch (error) {
       console.error('Database Error:', error);
       throw new Error('Failed to insert a person record.');
@@ -34,11 +35,16 @@ const client = new Client({
 
   export async function updatePersonRecord(data: FormData) {
     try {
-      const result: any = await client.query(`
-        UPDATE public.people
-        SET name='${data.get('personname')}'
-        WHERE index='${data.get('index')}';
-      `);
+      const statement: string = `UPDATE public.people ` + 
+                                `SET name=($1) ` +
+                                `WHERE index=($2)`
+      const result: any = await client.query(
+        statement,
+        [
+          (data.get("personname") as string).replaceAll("'", "\'"),
+           data.get("index")
+        ]
+      );
     } catch (error) {
       console.error('Database Error:', error);
       throw new Error('Failed to update a person record.');
@@ -72,13 +78,16 @@ const client = new Client({
 
   export async function fetchRecordsPeople(query: string) {
     noStore();
-    const queryDecoded = (decodeURIComponent(query)).replace("'", "''");
+    const queryDecoded = (decodeURIComponent(query)).replace("'", "\'");
+    const statement = 
+      `SELECT COUNT(*)
+       FROM public.people
+       WHERE name ILIKE ($1);`
     try {
       const count = await client.query(
-       `SELECT COUNT(*)
-        FROM public.people
-        WHERE name ILIKE '%${queryDecoded}%';
-    `);
+       statement,
+       [`%${queryDecoded}%`]
+    );
   
       const totalPages = Math.ceil(Number(count.rows[0].count) / PEOPLE_PER_PAGE);
       return totalPages;
@@ -102,18 +111,21 @@ const client = new Client({
         re.test(property) ? (timestamp.date = property) : (timestamp.time = property);
       });
 
-      const result: any = await client.query(`
-      INSERT INTO public.six_answers(
-        id, who, what, "where", "when", why, how)
-        VALUES (
-          '${data.get("id")}',
-          '${JSON.stringify(persons).replace('[', '{').replace(']', '}')}',
-          '${data.get("what")}',
-          '${data.get("where")}',
-          '${JSON.stringify(timestamp)}',
-          '${data.get("why")}',
-          '${data.get("how")}'
-        );`
+      const statement = 
+         `INSERT INTO public.six_answers(
+          id, who, what, "where", "when", why, how)
+          VALUES (($1),($2),($3),($4),($5),($6),($7));`
+      const variables = [
+        data.get("id"),
+        JSON.stringify(persons).replace('[', '{').replace(']', '}'),
+        (data.get("what") as string).replaceAll("'", "\'"),
+        data.get("where"),
+        JSON.stringify(timestamp),
+        (data.get("why") as string).replaceAll("'", "\'"),
+        (data.get("how") as string).replaceAll("'", "\'")
+      ];
+      const result: any = await client.query(
+        statement, variables
       );
     } catch (error) {
       console.error('Database Error:', error);
