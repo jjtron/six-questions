@@ -280,20 +280,23 @@ const client = new Client({
     currentPage: number,
   ) {
     noStore();
+    const queryDecoded = (decodeURIComponent(query)).replace("'", "\'");
     const offset = (currentPage - 1) * PLACES_PER_PAGE;
     try {
-      const places = await client.query(`
-        SELECT * FROM public.places
-        WHERE name ILIKE '%${query}%' OR
-            details->>'street' ILIKE '%${query}%' OR
-            details->>'city' ILIKE '%${query}%' OR
-            details->>'state' ILIKE '%${query}%' OR
-            details->>'country(s)' ILIKE '%${query}%' OR
-            details->>'country' ILIKE '%${query}%' OR
-            details->>'description' ILIKE '%${query}%'
-            ORDER BY sort_order ASC
-            LIMIT ${PLACES_PER_PAGE} OFFSET ${offset};`
-        );
+      const statement = 
+         `SELECT * FROM public.places
+          WHERE
+              name ILIKE ($1) OR
+              details->>'street' ILIKE ($1) OR
+              details->>'city' ILIKE ($1) OR
+              details->>'state' ILIKE ($1) OR
+              details->>'country(s)' ILIKE ($1) OR
+              details->>'country' ILIKE ($1) OR
+              details->>'description' ILIKE ($1)
+              ORDER BY sort_order ASC
+              LIMIT ${PLACES_PER_PAGE} OFFSET ${offset};`;
+      const variables = [ `%${queryDecoded}%` ];
+      const places = await client.query(statement, variables);
       const groups = await client.query(`SELECT Distinct type, sort_order FROM public.places ORDER BY sort_order ASC`);
       let groupedPlaces: Place[][] = [];
       groups.rows.map((group: {type: string;}) => {
@@ -311,15 +314,15 @@ const client = new Client({
   export async function fetchRecordsPlaces(query: string) {
     noStore();
     try {
-      const count = await client.query(
-       `SELECT COUNT(*)
-        FROM public.places
-        WHERE name ILIKE '%${query}%' OR
-              details->>'street' ILIKE '%${query}%' OR
-              details->>'city' ILIKE '%${query}%' OR
-              details->>'state' ILIKE '%${query}%';
-    `);
-  
+      const queryDecoded = (decodeURIComponent(query)).replace("'", "\'");
+      const statement = `SELECT COUNT(*)
+      FROM public.places
+      WHERE name ILIKE ($1) OR
+            details->>'street' ILIKE ($1) OR
+            details->>'city' ILIKE ($1) OR
+            details->>'state' ILIKE ($1);`;
+      const variables = [ `%${queryDecoded}%` ];
+      const count = await client.query(statement, variables);
       const totalPages = Math.ceil(Number(count.rows[0].count) / PLACES_PER_PAGE);
       return totalPages;
     } catch (error) {
