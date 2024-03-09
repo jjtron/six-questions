@@ -52,13 +52,15 @@ const client = new Client({
   ) {
     noStore();
     const offset = (currentPage - 1) * PEOPLE_PER_PAGE;
-    const queryDecoded = (decodeURIComponent(query)).replace("'", "''");
-  
+    const queryDecoded = (decodeURIComponent(query)).replace("'", "\'");
+    const statement = `SELECT index, name
+                       FROM public.people
+                       WHERE name ILIKE ($1)
+                       LIMIT ${PEOPLE_PER_PAGE} OFFSET ${offset}`;
     try {
-      const answers = await client.query(`SELECT index, name
-        FROM public.people
-        WHERE name ILIKE '%${queryDecoded}%'
-        LIMIT ${PEOPLE_PER_PAGE} OFFSET ${offset}`
+      const answers = await client.query(
+        statement,
+        [`%${queryDecoded}%`]
       );
       
       return answers.rows;
