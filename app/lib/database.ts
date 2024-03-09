@@ -230,19 +230,6 @@ const client = new Client({
               LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset};`;
         const variables = [ `%${queryDecoded}%` ];
         const answers = await client.query(statement, variables);
-        /*
-        const answers = await client.query(
-        `SELECT id, who, what, "where", "when", why, how
-          FROM public.six_answers
-          WHERE what ILIKE '%${query}%' OR
-              why ILIKE '%${query}%' OR
-              how ILIKE '%${query}%' OR
-              "when"->>'date' ILIKE '%${query}%' OR
-              "when"->>'time' ILIKE '%${query}%'
-              ${whoWhereSearchTerms.stringSegment}
-              LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset};`
-        );
-        */
         return answers.rows;
       } else {
         console.error('Database Error:', whoWhereSearchTerms.errormsg);
@@ -274,19 +261,6 @@ const client = new Client({
             ${whoWhereSearchTerms.stringSegment}`;
         const variables = [ `%${queryDecoded}%` ];
         const count = await client.query(statement, variables);
-        
-        /*
-        const count = await client.query(
-        `SELECT COUNT(*)
-          FROM public.six_answers
-          WHERE what ILIKE '%${query}%' OR
-              why ILIKE '%${query}%' OR
-              how ILIKE '%${query}%' OR
-              "when"->>'date' ILIKE '%${query}%' OR
-              "when"->>'time' ILIKE '%${query}%'
-              ${whoWhereSearchTerms.stringSegment}
-        `);
-        */
         const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
         return totalPages;
       } else {
@@ -359,9 +333,7 @@ const client = new Client({
       const queryDecoded = (decodeURIComponent(query)).replace("'", "''");
       // GET MATCHES IN THE PEOPLE TABLE
       let queryString = `%${queryDecoded}%`;
-      if (queryDecoded.length === 0) {
-        queryString = 'NULL';
-      }
+      if (queryDecoded.length === 0) { queryString = 'NULL'; }
       const indexesOfPeopleFoundByQuery = await client.query(
         `SELECT index
         FROM public.people
@@ -406,15 +378,13 @@ const client = new Client({
       );
 
       // GET MATCHES IN THE PLACES TABLE
-      let queryString2 = `%${queryDecoded}%`;
-      if (queryDecoded.length === 0) { queryString2 = 'NULL'; }
       const indexesOfPlacesFoundByQuery = await client.query(
        `SELECT id
         FROM public.places
-        WHERE name ILIKE '%${queryString2}%' OR
-              details->>'street' ILIKE '%${queryString2}%' OR
-              details->>'city' ILIKE '%${queryString2}%' OR
-              details->>'state' ILIKE '%${queryString2}%'
+        WHERE name ILIKE '%${queryString}%' OR
+              details->>'street' ILIKE '%${queryString}%' OR
+              details->>'city' ILIKE '%${queryString}%' OR
+              details->>'state' ILIKE '%${queryString}%'
       `);
 
       // FIND WHERE THE ids FOUND IN THE where COLUMN MATCH
