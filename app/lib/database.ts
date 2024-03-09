@@ -124,9 +124,7 @@ const client = new Client({
         (data.get("why") as string).replaceAll("'", "\'"),
         (data.get("how") as string).replaceAll("'", "\'")
       ];
-      const result: any = await client.query(
-        statement, variables
-      );
+      const result: any = await client.query(statement, variables);
     } catch (error) {
       console.error('Database Error:', error);
       throw new Error('Failed to insert an answers record.');
@@ -147,17 +145,19 @@ const client = new Client({
         re.test(property) ? (timestamp.date = property) : (timestamp.time = property);
       });
 
-      const result: any = await client.query(`
-      UPDATE public.six_answers
-        SET
-        who='${JSON.stringify(persons).replace('[', '{').replace(']', '}').replace("'", "\'")}',
-        what='${data.get("what")}',
-        "when"='${JSON.stringify(timestamp)}',
-        "where"='${data.get("where")}',
-        why='${data.get("why")}',
-        how='${data.get("how")}'
-        WHERE id = '${data.get("id")}';`
-      );
+      const statement = 
+         `UPDATE public.six_answers
+          SET who=($1), what=($2), "when"=($3), "where"=($4), why=($5), how=($6) WHERE id = ($7);`
+      const variables = [
+        JSON.stringify(persons).replace('[', '{').replace(']', '}').replace("'", "\'"),
+        (data.get("what") as string).replaceAll("'", "\'"),
+        JSON.stringify(timestamp),
+        data.get("where"),
+        (data.get("why") as string).replaceAll("'", "\'"),
+        (data.get("how") as string).replaceAll("'", "\'"),
+        data.get("id")
+      ];
+      const result: any = await client.query(statement, variables);
     } catch (error) {
       console.error('Database Error:', error);
       throw new Error('Failed to update an answers record.');
