@@ -46,4 +46,19 @@ body {
   .h-flow {flex-flow: row wrap;}
 
   .disabled-link { pointer-events: none; }
+
+  .myvisible {
+    visibility: visible;
+    overflow: hidden;
+    opacity: 1;
+    height: 168px;
+    transition:  height 1s linear, opacity 1s linear;
+  }
+  .myhidden {
+    visibility: hidden;
+    overflow: hidden;
+    opacity: 0;
+    height: 0px;
+    transition: visibility 0s 1s, height 1s linear, opacity 1s ease-in;
+  }
 }

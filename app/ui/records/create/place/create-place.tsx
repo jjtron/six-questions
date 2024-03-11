@@ -2,15 +2,35 @@
 import { createPlace } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
-import { v4 as uuidv4 } from 'uuid';
+import { useState } from 'react';
+import clsx from 'clsx';
 
 export default function Form() {
   
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createPlace, initialState);
 
+  const [isOpen1, setIsOpen1] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
+  
   return (
     <form action={dispatch} className="flex flex-col rounded-md bg-slate-200 p-4 md:p-6 md:ml-2">
+
+
+
+          <div className="flex flex-row">
+              <input type="radio" name="my-accordion-1" onClick={() => { setIsOpen2(false); }} />
+              <p className="pl-2">Address</p>
+          </div>
+
+          <div className={clsx("w-full", {"myvisible": !isOpen2, "myhidden": isOpen2 })}>
+                
+
+
+          
+
+
+
 
       <input id="id" name="id" type="hidden" />
 
@@ -93,6 +113,10 @@ export default function Form() {
             ))}
           </div>
       </div>
+       </div>
+
+       <input type="radio" name="my-accordion-1" onClick={() => { setIsOpen2(true); }} />
+
 
       <div className="flex flex-col items-center justify-between p-4">
         <Button type="submit">Create Place</Button>
@@ -100,3 +124,16 @@ export default function Form() {
     </form>
   );
 }
+
+/*
+        <div className={clsx("collapse bg-base-200", {"collapse-close": !isOpen1, "collapse-open": isOpen1 })}  
+          onClick={() => { setIsOpen1(!isOpen1); }}>
+          <input type="radio" name="my-accordion-1" /> 
+          <div className="collapse-title text-xl font-medium">
+            Click to open this one and close others
+          </div>
+          <div className="collapse-content collapse-close"> 
+            <p>hello</p>
+          </div>
+        </div>
+*/
