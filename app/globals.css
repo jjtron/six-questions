@@ -48,17 +48,14 @@ body {
   .disabled-link { pointer-events: none; }
 
   .place-type-visible {
-    visibility: visible;
-    overflow: hidden;
     opacity: 1;
     height: 168px;
-    transition:  height 0.3s linear, opacity 0.3s linear;
+    border: solid lightgray 1px;
+    transition:  opacity 0.3s linear;
   }
   .place-type-hidden {
-    visibility: hidden;
-    overflow: hidden;
-    opacity: 0;
-    height: 0px;
-    transition: visibility 0s 0.3s, height 0.3s linear, opacity 0.3s linear;
+    opacity: 0.5;
+    border: dashed gray 1px;
+    transition: opacity 0.3s linear;
   }
 }
