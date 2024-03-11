@@ -47,18 +47,18 @@ body {
 
   .disabled-link { pointer-events: none; }
 
-  .myvisible {
+  .place-type-visible {
     visibility: visible;
     overflow: hidden;
     opacity: 1;
     height: 168px;
-    transition:  height 1s linear, opacity 1s linear;
+    transition:  height 0.3s linear, opacity 0.3s linear;
   }
-  .myhidden {
+  .place-type-hidden {
     visibility: hidden;
     overflow: hidden;
     opacity: 0;
     height: 0px;
-    transition: visibility 0s 1s, height 1s linear, opacity 1s ease-in;
+    transition: visibility 0s 0.3s, height 0.3s linear, opacity 0.3s linear;
   }
 }
