@@ -12,11 +12,13 @@ export default function Form() {
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [isOpen3, setIsOpen3] = useState(false);
+  const [isOpen4, setIsOpen4] = useState(false);
 
   function setRadioButton (option: number) {
       (option === 1) ? setIsOpen1(true) : setIsOpen1(false);
       (option === 2) ? setIsOpen2(true) : setIsOpen2(false);
       (option === 3) ? setIsOpen3(true) : setIsOpen3(false);
+      (option === 4) ? setIsOpen4(true) : setIsOpen4(false);
   }
   
   return (
@@ -24,8 +26,9 @@ export default function Form() {
 
         <input id="id" name="id" type="hidden" />
 
-        <div className="h-[380px]">
+        <div className="h-[520px]">
 
+          {/* NAME (DESCRIPTION), STREET, CITY, STATE ///////////////////////////////////////////////////////////////// */}
           <div className="flex flex-row">
               <input  type="radio" name="my-accordion-1"
                       onClick={() => {setRadioButton(1)}} 
@@ -34,7 +37,6 @@ export default function Form() {
               />
               <p className="pl-2">Address, City, State</p>
           </div>
-          {/* NAME (DESCRIPTION), STREET, CITY, STATE ///////////////////////////////////////////////////////////////// */}
           <div className={clsx("w-full max-h-[168px] rounded-md",
                 { "place-type-visible": isOpen1,
                   "place-type-hidden": !isOpen1 }
@@ -109,6 +111,7 @@ export default function Form() {
               </div>
           </div>
 
+          {/* COUNTRY ONLY /////////////////////////////////////////////////////////////////////////////////////////// */}
           <div className="flex flex-row">
               <input  type="radio" name="my-accordion-1"
                       onClick={() => {setRadioButton(2)}}
@@ -117,7 +120,6 @@ export default function Form() {
               />
               <p className="pl-2">Country</p>
           </div>
-          {/* COUNTRY ONLY /////////////////////////////////////////////////////////////////////////////////////////// */}
           <div className={clsx("w-full max-h-[40px] rounded-md",
                               {"place-type-visible": isOpen2,
                               "place-type-hidden": !isOpen2 })
@@ -141,6 +143,7 @@ export default function Form() {
                 </div>
           </div>
 
+          {/* COUNTRY AND CITY ////////////////////////////////////////////////////////////////////////////////////// */}
           <div className="flex flex-row">
               <input  type="radio" name="my-accordion-1"
                       onClick={() => {setRadioButton(3)}}
@@ -149,7 +152,6 @@ export default function Form() {
               />
               <p className="pl-2">Country, City</p>
           </div>
-          {/* COUNTRY AND CITY ////////////////////////////////////////////////////////////////////////////////////// */}
           <div className={clsx("w-full max-h-[84px] rounded-md",
                               {"place-type-visible": isOpen3,
                               "place-type-hidden": !isOpen3 })
@@ -190,7 +192,56 @@ export default function Form() {
                       ))}
                     </div>
                 </div>
-                
+          </div>
+
+          {/* ANY: TITLE, DESC ////////////////////////////////////////////////////////////////////////////////////// */}
+          <div className="flex flex-row">
+              <input  type="radio" name="my-accordion-1"
+                      onClick={() => {setRadioButton(4)}}
+                      checked={isOpen4}
+                      onChange={() => {}}
+              />
+              <p className="pl-2">Any - Title & Description</p>
+          </div>
+          <div className={clsx("w-full max-h-[124px] rounded-md",
+                              {"place-type-visible": isOpen4,
+                              "place-type-hidden": !isOpen4 })
+                         }>
+                {/* TITLE */}
+                <div className="flex flex-row">
+                    <input
+                      disabled={!isOpen4} id="country" name="country" type="text" step="0.01"
+                      placeholder='Title'
+                      className="block w-full rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
+                      aria-describedby="country-error"
+                    />
+                    <div id="anytitle-error" aria-live="polite" aria-atomic="true">
+                      {state.errors?.anytitle &&
+                        state.errors.anytitle.map((error: string) => (
+                          <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
+                            {error}
+                          </p>
+                      ))}
+                    </div>
+                </div>
+
+                {/* DESC */}
+                <div className="flex flex-row">
+                    <textarea
+                      disabled={!isOpen4} id="desc" name="desc" rows={3} maxLength={200}
+                      placeholder='Description (max number of characters: 200)'
+                      className="block w-full resize-none rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
+                      aria-describedby="anydesc-error"
+                    />
+                    <div id="city-error" aria-live="polite" aria-atomic="true">
+                      {state.errors?.anydesc &&
+                        state.errors.anydesc.map((error: string) => (
+                          <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
+                            {error}
+                          </p>
+                      ))}
+                    </div>
+                </div>
           </div>
         </div>
 
