@@ -42,11 +42,7 @@ export default function Form() {
               {/* NAME OF THE PLACE (DESCRIPTION) */}
               <div className="flex flex-row">
                   <input
-                    disabled={!isOpen1}
-                    id="placename"
-                    name="placename"
-                    type="text"
-                    step="0.01"
+                    disabled={!isOpen1} id="placename" name="placename" type="text" step="0.01"
                     placeholder='Place name (description)'
                     className="block w-full rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                     aria-describedby="placename-error"
@@ -63,11 +59,7 @@ export default function Form() {
               {/* STREET */}
               <div className="flex flex-row">
                   <input
-                    disabled={!isOpen1}
-                    id="street"
-                    name="street"
-                    type="text"
-                    step="0.01"
+                    disabled={!isOpen1} id="street" name="street" type="text" step="0.01"
                     placeholder='Street address'
                     className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                     aria-describedby="street-error"
@@ -84,11 +76,7 @@ export default function Form() {
               {/* CITY */}
               <div className="flex flex-row">
                   <input
-                    disabled={!isOpen1}
-                    id="city"
-                    name="city"
-                    type="text"
-                    step="0.01"
+                    disabled={!isOpen1} id="city" name="city" type="text" step="0.01"
                     placeholder='Name of city'
                     className="block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                     aria-describedby="city-error"
@@ -105,11 +93,7 @@ export default function Form() {
               {/* STATE */}
               <div className="flex flex-row">
                   <input
-                    disabled={!isOpen1}
-                    id="state"
-                    name="state"
-                    type="text"
-                    step="0.01"
+                    disabled={!isOpen1} id="state" name="state" type="text" step="0.01"
                     placeholder='state'
                     className="block w-full rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                     aria-describedby="State-error"
@@ -141,11 +125,7 @@ export default function Form() {
                 {/* NAME OF COUNTRY */}
                 <div className="flex flex-row">
                     <input
-                      disabled={!isOpen2}
-                      id="country"
-                      name="country"
-                      type="text"
-                      step="0.01"
+                      disabled={!isOpen2} id="country" name="country" type="text" step="0.01"
                       placeholder='Name of country'
                       className="block w-full rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 p-2"
                       aria-describedby="country-error"
@@ -177,11 +157,7 @@ export default function Form() {
                 {/* NAME OF COUNTRY */}
                 <div className="flex flex-row">
                     <input
-                      disabled={!isOpen3}
-                      id="country"
-                      name="country"
-                      type="text"
-                      step="0.01"
+                      disabled={!isOpen3} id="country" name="country" type="text" step="0.01"
                       placeholder='Name of country'
                       className="block w-full rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                       aria-describedby="country-error"
@@ -199,10 +175,7 @@ export default function Form() {
                 {/* NAME OF CITY */}
                 <div className="flex flex-row">
                     <input
-                      disabled={!isOpen3}
-                      id="city"
-                      name="city"
-                      type="text"
+                      disabled={!isOpen3} id="city" name="city" type="text"
                       step="0.01"
                       placeholder='Name of city'
                       className="block w-full rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
