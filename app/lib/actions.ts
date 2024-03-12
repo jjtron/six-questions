@@ -167,51 +167,123 @@ export async function createRecord(prevState: State, formData: FormData) {
 //////////////////////PLACE FUNCTIONS/////////////////////
 export type PlaceState = {
   errors?: {
-    id?: string[];
     placename?: string[];
     city?: string[];
     street?: string[];
     state?: string[];
+    country?: string[];
+    title? : string[];
+    desc?: string[];
+    type?: string[];
   }; 
   message?: string | null;
 };
 
-const zodCreateObj = {
-  placename: z.string().min(1, { message: "required" }),
-  city: z.string().min(1, { message: "required" }),
-  street: z.string().min(1, { message: "required" }),
-  state: z.string().min(1, { message: "required" }),
-};
-const PlaceCreateFormSchema = z.object(zodCreateObj);
-
-const zodUpdateObj = Object.assign(zodCreateObj, {id: z.coerce.number()});
-const PlaceUpdateFormSchema = z.object(zodUpdateObj);
-
 export async function createPlace(prevState: PlaceState, formData: FormData) {
-  const validatedFields = PlaceCreateFormSchema.safeParse({
-    id: formData.get('id'),
-    placename: formData.get('placename'),
-    city: formData.get('city'),
-    street: formData.get('street'),
-    state: formData.get('state'),
-  });
-  
-  // If form validation fails, return errors early. Otherwise, continue.
-  if (!validatedFields.success) {
-    console.log('Error:', validatedFields.error.flatten().fieldErrors);
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Create Record.',
-    };
+  let validatedFields: z.SafeParseReturnType<Object, Object>;
+  if (
+        /* check for type 'street_city_state' */
+        z.object({type: z.string()}).safeParse(
+          {type: formData.get('street_city_state')}
+        ).success
+     )
+     {
+        validatedFields = z.object({
+        placename: z.string().min(1, { message: "required" }),
+        city: z.string().min(1, { message: "required" }),
+        street: z.string().min(1, { message: "required" }),
+        state: z.string().min(1, { message: "required" }),
+      }).safeParse({
+        placename: formData.get('placename'),
+        city: formData.get('city'),
+        street: formData.get('street'),
+        state: formData.get('state'),
+      });
+      // If form validation fails, return errors early. Otherwise, continue.
+      if (!validatedFields.success) {
+        return {
+          errors: validatedFields.error.flatten().fieldErrors,
+          message: 'Missing Fields. Failed to Create Record.',
+        };
+      }
+  } else if (
+        /* check for type 'country' */
+        z.object({type: z.string()}).safeParse(
+            {type: formData.get('country')}
+        ).success) 
+      {
+        validatedFields = z.object({
+          country: z.string().min(1, { message: "required" })
+        }).safeParse({
+          country: formData.get('country')
+        });
+        // If form validation fails, return errors early. Otherwise, continue.
+        if (!validatedFields.success) {
+          console.log('Error:', validatedFields.error.flatten().fieldErrors);
+          return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: 'Missing Fields. Failed to Create Record.',
+          };
+        }
+  } else if (
+        /* check for type 'country_city' */
+        z.object({type: z.string()}).safeParse(
+          {type: formData.get('country_city')}
+        ))
+      {
+        validatedFields = z.object({
+          country: z.string().min(1, { message: "required" }),
+          city: z.string().min(1, { message: "required" })
+        }).safeParse({
+          country: formData.get('country'),
+          city: formData.get('city')
+        });
+        // If form validation fails, return errors early. Otherwise, continue.
+        if (!validatedFields.success) {
+          console.log('Error:', validatedFields.error.flatten().fieldErrors);
+          return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: 'Missing Fields. Failed to Create Record.',
+          };
+        }
+  } else if (
+        /* check for type 'any' */
+        z.object({type: z.string()}).safeParse(
+          {type: formData.get('any')}
+        ))
+      {
+        validatedFields = z.object({
+          title: z.string().min(1, { message: "required" }),
+          desc: z.string().min(1, { message: "required" })
+        }).safeParse({
+          title: formData.get('title'),
+          desc: formData.get('desc')
+        });
+        // If form validation fails, return errors early. Otherwise, continue.
+        if (!validatedFields.success) {
+          console.log('Error:', validatedFields.error.flatten().fieldErrors);
+          return {
+            errors: validatedFields.error.flatten().fieldErrors,
+            message: 'Missing Fields. Failed to Create Record.',
+          };
+        }
+  } else {
+    throw new Error('Failed to provide a valid type.');
   }
 
-  insertPlaceRecord(formData);
+  //insertPlaceRecord(formData);
 
   revalidatePath('/records/view/places');
   redirect('/records/view/places');
 }
 
 export async function updatePlace(prevState: PlaceState, formData: FormData) {
+  const PlaceUpdateFormSchema = z.object({
+    placename: z.string().min(1, { message: "required" }),
+    city: z.string().min(1, { message: "required" }),
+    street: z.string().min(1, { message: "required" }),
+    state: z.string().min(1, { message: "required" }),
+  });
   const validatedFields = PlaceUpdateFormSchema.safeParse({
     id: formData.get('id'),
     placename: formData.get('placename'),

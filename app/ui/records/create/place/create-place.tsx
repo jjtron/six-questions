@@ -24,8 +24,6 @@ export default function Form() {
   return (
     <form action={dispatch} className="flex flex-col rounded-md bg-slate-100 p-4 md:p-6 md:ml-2">
 
-        <input id="id" name="id" type="hidden" />
-
         <div className="h-[520px]">
 
           {/* NAME (DESCRIPTION), STREET, CITY, STATE ///////////////////////////////////////////////////////////////// */}
@@ -42,6 +40,7 @@ export default function Form() {
                   "place-type-hidden": !isOpen1 }
                )}>
               {/* NAME OF THE PLACE (DESCRIPTION) */}
+              <input disabled={!isOpen1} id="type" name="type" value="street_city_state" type="hidden" />
               <div className="flex flex-row">
                   <input
                     disabled={!isOpen1} id="placename" name="placename" type="text" step="0.01"
@@ -126,6 +125,7 @@ export default function Form() {
                         }>
                 {/* NAME OF COUNTRY */}
                 <div className="flex flex-row">
+                    <input disabled={!isOpen2} id="type" name="type" value="country" type="hidden" />
                     <input
                       disabled={!isOpen2} id="country" name="country" type="text" step="0.01"
                       placeholder='Name of country'
@@ -158,6 +158,7 @@ export default function Form() {
                          }>
                 {/* NAME OF COUNTRY */}
                 <div className="flex flex-row">
+                    <input disabled={!isOpen3} id="type" name="type" value="country_city" type="hidden" />
                     <input
                       disabled={!isOpen3} id="country" name="country" type="text" step="0.01"
                       placeholder='Name of country'
@@ -209,15 +210,16 @@ export default function Form() {
                          }>
                 {/* TITLE */}
                 <div className="flex flex-row">
+                    <input disabled={!isOpen4} id="type" name="type" value="any" type="hidden" />
                     <input
-                      disabled={!isOpen4} id="country" name="country" type="text" step="0.01"
+                      disabled={!isOpen4} id="title" name="title" type="text" step="0.01"
                       placeholder='Title'
                       className="block w-full rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
-                      aria-describedby="country-error"
+                      aria-describedby="title-error"
                     />
-                    <div id="anytitle-error" aria-live="polite" aria-atomic="true">
-                      {state.errors?.anytitle &&
-                        state.errors.anytitle.map((error: string) => (
+                    <div id="title-error" aria-live="polite" aria-atomic="true">
+                      {state.errors?.title &&
+                        state.errors.title.map((error: string) => (
                           <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
                             {error}
                           </p>
@@ -231,11 +233,11 @@ export default function Form() {
                       disabled={!isOpen4} id="desc" name="desc" rows={3} maxLength={200}
                       placeholder='Description (max number of characters: 200)'
                       className="block w-full resize-none rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
-                      aria-describedby="anydesc-error"
+                      aria-describedby="desc-error"
                     />
-                    <div id="city-error" aria-live="polite" aria-atomic="true">
-                      {state.errors?.anydesc &&
-                        state.errors.anydesc.map((error: string) => (
+                    <div id="desc-error" aria-live="polite" aria-atomic="true">
+                      {state.errors?.desc &&
+                        state.errors.desc.map((error: string) => (
                           <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
                             {error}
                           </p>
