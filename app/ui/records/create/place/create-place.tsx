@@ -20,12 +20,10 @@ export default function Form() {
       (option === 3) ? setIsOpen3(true) : setIsOpen3(false);
       (option === 4) ? setIsOpen4(true) : setIsOpen4(false);
   }
-  
+
   return (
-    <form action={dispatch} className="flex flex-col rounded-md bg-slate-100 p-4 md:p-6 md:ml-2">
-
+    <form action={dispatch} className="flex flex-col rounded-md bg-slate-200 p-4 md:p-6 md:ml-2">
         <div className="h-[520px]">
-
           {/* NAME (DESCRIPTION), STREET, CITY, STATE ///////////////////////////////////////////////////////////////// */}
           <div className="flex flex-row">
               <input  type="radio" name="my-accordion-1"
@@ -109,7 +107,6 @@ export default function Form() {
                   </div>
               </div>
           </div>
-
           {/* COUNTRY ONLY /////////////////////////////////////////////////////////////////////////////////////////// */}
           <div className="flex flex-row">
               <input  type="radio" name="my-accordion-1"
@@ -142,7 +139,6 @@ export default function Form() {
                     </div>
                 </div>
           </div>
-
           {/* COUNTRY AND CITY ////////////////////////////////////////////////////////////////////////////////////// */}
           <div className="flex flex-row">
               <input  type="radio" name="my-accordion-1"
@@ -194,7 +190,6 @@ export default function Form() {
                     </div>
                 </div>
           </div>
-
           {/* ANY: TITLE, DESC ////////////////////////////////////////////////////////////////////////////////////// */}
           <div className="flex flex-row">
               <input  type="radio" name="my-accordion-1"
@@ -246,8 +241,7 @@ export default function Form() {
                 </div>
           </div>
         </div>
-
-        <div className="flex flex-col items-center justify-between p-2">
+        <div className="flex flex-col items-center justify-between p-4">
           <Button type="submit">Create Place</Button>
         </div>
     </form>
