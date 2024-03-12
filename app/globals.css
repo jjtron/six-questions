@@ -47,13 +47,13 @@ body {
 
   .disabled-link { pointer-events: none; }
 
-  .place-type-visible {
+  .place-type-enabled {
     opacity: 1;
     height: 168px;
     border: solid lightgray 1px;
     transition:  opacity 0.3s linear;
   }
-  .place-type-hidden {
+  .place-type-disabled {
     opacity: 0.5;
     border: dashed gray 1px;
     transition: opacity 0.3s linear;

@@ -34,8 +34,8 @@ export default function Form() {
               <p className="pl-2">Address, City, State</p>
           </div>
           <div className={clsx("w-full max-h-[168px] rounded-md",
-                { "place-type-visible": isOpen1,
-                  "place-type-hidden": !isOpen1 }
+                { "place-type-enabled": isOpen1,
+                  "place-type-disabled": !isOpen1 }
                )}>
               {/* NAME OF THE PLACE (DESCRIPTION) */}
               <input disabled={!isOpen1} id="type" name="type" value="street_city_state" type="hidden" />
@@ -43,7 +43,7 @@ export default function Form() {
                   <input
                     disabled={!isOpen1} id="placename" name="placename" type="text" step="0.01"
                     placeholder='Place name (description)'
-                    className="block w-full rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
+                    className="my-bgc block w-full rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                     aria-describedby="placename-error"
                   />
                   <div id="placename-error" aria-live="polite" aria-atomic="true">
@@ -117,8 +117,8 @@ export default function Form() {
               <p className="pl-2">Country</p>
           </div>
           <div className={clsx("w-full max-h-[40px] rounded-md",
-                              {"place-type-visible": isOpen2,
-                              "place-type-hidden": !isOpen2 })
+                              {"place-type-enabled": isOpen2,
+                              "place-type-disabled": !isOpen2 })
                         }>
                 {/* NAME OF COUNTRY */}
                 <div className="flex flex-row">
@@ -149,8 +149,8 @@ export default function Form() {
               <p className="pl-2">Country, City</p>
           </div>
           <div className={clsx("w-full max-h-[84px] rounded-md",
-                              {"place-type-visible": isOpen3,
-                              "place-type-hidden": !isOpen3 })
+                              {"place-type-enabled": isOpen3,
+                              "place-type-disabled": !isOpen3 })
                          }>
                 {/* NAME OF COUNTRY */}
                 <div className="flex flex-row">
@@ -200,8 +200,8 @@ export default function Form() {
               <p className="pl-2">Any - Title & Description</p>
           </div>
           <div className={clsx("w-full max-h-[124px] rounded-md",
-                              {"place-type-visible": isOpen4,
-                              "place-type-hidden": !isOpen4 })
+                              {"place-type-enabled": isOpen4,
+                              "place-type-disabled": !isOpen4 })
                          }>
                 {/* TITLE */}
                 <div className="flex flex-row">
