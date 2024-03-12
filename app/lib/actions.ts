@@ -167,19 +167,29 @@ export async function createRecord(prevState: State, formData: FormData) {
 //////////////////////PLACE FUNCTIONS/////////////////////
 export type PlaceState = {
   errors?: {
+    /* as in STREET, CITY, STATE */
     placename?: string[];
     city?: string[];
     street?: string[];
     state?: string[];
-    country?: string[];
+
+    /* as in COUNTRY ONLY */
+    country?: string[]; 
+
+    /* as in COUNTRY AND CITY */
+    country_2?: string[]; 
+    city_2?: string[];
+
+    /* as in ANY */
     title?: string[];
     desc?: string[];
+   
   }; 
   message?: string | null;
 };
 
 export async function createPlace(prevState: PlaceState, formData: FormData) {
-  console.log(1, formData.get('type'));
+
   /* Make sure a valid form type is submitted */
   if  (z.object({type: z.string().refine((t) => { return (
           t === 'street_city_state' ||
@@ -198,17 +208,18 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
   if          ( formData.get('type') === 'street_city_state') {
                   validatedFields = z.object({
                     placename: z.string().min(1, { message: "required" }),
-                    city: z.string().min(1, { message: "required" }),
                     street: z.string().min(1, { message: "required" }),
+                    city: z.string().min(1, { message: "required" }),
                     state: z.string().min(1, { message: "required" }),
                   }).safeParse({
                     placename: formData.get('placename'),
-                    city: formData.get('city'),
                     street: formData.get('street'),
+                    city: formData.get('city'),
                     state: formData.get('state'),
                   });
                   // If form validation fails, return errors early. Otherwise, continue.
                   if (!validatedFields.success) {
+                    console.log('Error, street_city_state:', validatedFields.error.flatten().fieldErrors);
                     return {
                       errors: validatedFields.error.flatten().fieldErrors,
                       message: 'Missing Fields. Failed to Create Record.',
@@ -222,7 +233,7 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
                   });
                   // If form validation fails, return errors early. Otherwise, continue.
                   if (!validatedFields.success) {
-                    console.log('Error:', validatedFields.error.flatten().fieldErrors);
+                    console.log('Error, country:', validatedFields.error.flatten().fieldErrors);
                     return {
                       errors: validatedFields.error.flatten().fieldErrors,
                       message: 'Missing Fields. Failed to Create Record.',
@@ -230,15 +241,15 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
                   }
   } else if   ( formData.get('type') === 'country_city') {
                   validatedFields = z.object({
-                    country: z.string().min(1, { message: "required" }),
-                    city: z.string().min(1, { message: "required" })
+                    country_2: z.string().min(1, { message: "required" }),
+                    city_2: z.string().min(1, { message: "required" })
                   }).safeParse({
-                    country: formData.get('country'),
-                    city: formData.get('city')
+                    country_2: formData.get('country_2'),
+                    city_2: formData.get('city_2')
                   });
                   // If form validation fails, return errors early. Otherwise, continue.
                   if (!validatedFields.success) {
-                    console.log('Error:', validatedFields.error.flatten().fieldErrors);
+                    console.log('Error, country_city:', validatedFields.error.flatten().fieldErrors);
                     return {
                       errors: validatedFields.error.flatten().fieldErrors,
                       message: 'Missing Fields. Failed to Create Record.',
@@ -254,7 +265,7 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
                   });
                   // If form validation fails, return errors early. Otherwise, continue.
                   if (!validatedFields.success) {
-                    console.log('Error:', validatedFields.error.flatten().fieldErrors);
+                    console.log('Error, any:', validatedFields.error.flatten().fieldErrors);
                     return {
                       errors: validatedFields.error.flatten().fieldErrors,
                       message: 'Missing Fields. Failed to Create Record.',
@@ -264,8 +275,7 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
     throw new Error('FormData validation failed.');
   }
 
-  console.log(2, formData.get('type'));
-  //insertPlaceRecord(formData);
+  insertPlaceRecord(formData);
 
   revalidatePath('/records/view/places');
   redirect('/records/view/places');

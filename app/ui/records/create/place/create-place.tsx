@@ -49,7 +49,7 @@ export default function Form() {
                   <div id="placename-error" aria-live="polite" aria-atomic="true">
                     {state.errors?.placename &&
                       state.errors.placename.map((error: string) => (
-                        <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
+                        <p className="px-2 leading-9 text-sm text-red-500" key={error}>
                           {error}
                         </p>
                     ))}
@@ -66,7 +66,7 @@ export default function Form() {
                   <div id="street-error" aria-live="polite" aria-atomic="true">
                     {state.errors?.street &&
                       state.errors.street.map((error: string) => (
-                        <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
+                        <p className="px-2 leading-9 text-sm text-red-500" key={error}>
                           {error}
                         </p>
                     ))}
@@ -83,7 +83,7 @@ export default function Form() {
                   <div id="city-error" aria-live="polite" aria-atomic="true">
                     {state.errors?.city &&
                       state.errors.city.map((error: string) => (
-                        <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
+                        <p className="px-2 leading-9 text-sm text-red-500" key={error}>
                           {error}
                         </p>
                     ))}
@@ -100,7 +100,7 @@ export default function Form() {
                   <div id="state-error" aria-live="polite" aria-atomic="true">
                     {state.errors?.state &&
                       state.errors.state.map((error: string) => (
-                        <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
+                        <p className="px-2 leading-9 text-sm text-red-500" key={error}>
                           {error}
                         </p>
                     ))}
@@ -132,7 +132,7 @@ export default function Form() {
                     <div id="country-error" aria-live="polite" aria-atomic="true">
                       {state.errors?.country &&
                         state.errors.country.map((error: string) => (
-                          <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
+                          <p className="px-2 leading-9 text-sm text-red-500" key={error}>
                             {error}
                           </p>
                       ))}
@@ -156,15 +156,15 @@ export default function Form() {
                 <div className="flex flex-row">
                     <input disabled={!isOpen3} id="type" name="type" value="country_city" type="hidden" />
                     <input
-                      disabled={!isOpen3} id="country" name="country" type="text" step="0.01"
+                      disabled={!isOpen3} id="country_2" name="country_2" type="text" step="0.01"
                       placeholder='Name of country'
                       className="block w-full rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
-                      aria-describedby="country-error"
+                      aria-describedby="country_2-error"
                     />
-                    <div id="country-error" aria-live="polite" aria-atomic="true">
-                      {state.errors?.country &&
-                        state.errors.country.map((error: string) => (
-                          <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
+                    <div id="country_2-error" aria-live="polite" aria-atomic="true">
+                      {state.errors?.country_2 &&
+                        state.errors.country_2.map((error: string) => (
+                          <p className="px-2 leading-9 text-sm text-red-500" key={error}>
                             {error}
                           </p>
                       ))}
@@ -174,16 +174,16 @@ export default function Form() {
                 {/* NAME OF CITY */}
                 <div className="flex flex-row">
                     <input
-                      disabled={!isOpen3} id="city" name="city" type="text"
+                      disabled={!isOpen3} id="city" name="city_2" type="text"
                       step="0.01"
                       placeholder='Name of city'
                       className="block w-full rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
-                      aria-describedby="city-error"
+                      aria-describedby="city_2-error"
                     />
-                    <div id="city-error" aria-live="polite" aria-atomic="true">
-                      {state.errors?.city &&
-                        state.errors.city.map((error: string) => (
-                          <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
+                    <div id="city_2-error" aria-live="polite" aria-atomic="true">
+                      {state.errors?.city_2 &&
+                        state.errors.city_2.map((error: string) => (
+                          <p className="px-2 leading-9 text-sm text-red-500" key={error}>
                             {error}
                           </p>
                       ))}
@@ -215,7 +215,7 @@ export default function Form() {
                     <div id="title-error" aria-live="polite" aria-atomic="true">
                       {state.errors?.title &&
                         state.errors.title.map((error: string) => (
-                          <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
+                          <p className="px-2 leading-9 text-sm text-red-500" key={error}>
                             {error}
                           </p>
                       ))}
@@ -233,7 +233,7 @@ export default function Form() {
                     <div id="desc-error" aria-live="polite" aria-atomic="true">
                       {state.errors?.desc &&
                         state.errors.desc.map((error: string) => (
-                          <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
+                          <p className="px-2 leading-9 text-sm text-red-500" key={error}>
                             {error}
                           </p>
                       ))}
