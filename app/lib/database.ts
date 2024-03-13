@@ -171,7 +171,7 @@ const client = new Client({
         VALUES (($1), ($2), ($3), ($4));`;
       
       const sort_order = (data.get("sort_order") as string);
-      let variables: any[] = [];
+      let variables: any[]= [];
       if (sort_order === '1') {
         variables.push((data.get("placename") as string).replaceAll("'", "\'"));
         variables.push(JSON.stringify({ 
@@ -193,6 +193,13 @@ const client = new Client({
         }));
         variables.push("country_city");
         variables.push(3);
+      } else if (sort_order === '4') {
+        variables.push((data.get("title") as string).replaceAll("'", "\'"));
+        variables.push(JSON.stringify({ 
+          desc: (data.get("desc") as string).replaceAll("'", "\'")
+        }));
+        variables.push("any");
+        variables.push(4);
       }
       const result: any = await client.query(statement, variables);
     } catch (error) {
