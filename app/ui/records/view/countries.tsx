@@ -16,8 +16,7 @@ export function Countries (props: {group: any; selectedRecordId: number; country
                           { "rounded-r-md": ( i % 3 === 2 ) && props.group.length - i >= 1 },
                           { "rounded-md": ( i % 3 === 0 ) && props.group.length - i === 1 }
                       )}>
-                    {record.name} { props.group.length - i }
-                    
+                    {record.name}
               </div>
             )
         })
