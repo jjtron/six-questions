@@ -288,10 +288,11 @@ const client = new Client({
   export async function fetchFilteredPlaces(
     query: string,
     currentPage: number,
+    recordsPerPage: number
   ) {
     noStore();
     const queryDecoded = (decodeURIComponent(query)).replace("'", "\'");
-    const offset = (currentPage - 1) * PLACES_PER_PAGE;
+    const offset = (currentPage - 1) * recordsPerPage;
     try {
       const statement = 
          `SELECT * FROM public.places
@@ -304,7 +305,7 @@ const client = new Client({
               details->>'country' ILIKE ($1) OR
               details->>'description' ILIKE ($1)
               ORDER BY sort_order ASC
-              LIMIT ${PLACES_PER_PAGE} OFFSET ${offset};`;
+              LIMIT ${recordsPerPage} OFFSET ${offset};`;
       const variables = [ `%${queryDecoded}%` ];
       const places = await client.query(statement, variables);
       const groups = await client.query(`SELECT Distinct type, sort_order FROM public.places ORDER BY sort_order ASC`);
@@ -321,7 +322,7 @@ const client = new Client({
     }
   }
 
-  export async function fetchRecordsPlaces(query: string) {
+  export async function fetchRecordsPlaces(query: string, recordsPerPage: number) {
     noStore();
     try {
       const queryDecoded = (decodeURIComponent(query)).replace("'", "\'");
@@ -333,7 +334,7 @@ const client = new Client({
             details->>'state' ILIKE ($1);`;
       const variables = [ `%${queryDecoded}%` ];
       const count = await client.query(statement, variables);
-      const totalPages = Math.ceil(Number(count.rows[0].count) / PLACES_PER_PAGE);
+      const totalPages = Math.ceil(Number(count.rows[0].count) / recordsPerPage);
       return totalPages;
     } catch (error) {
       console.error('Database Error:', error);

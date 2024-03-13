@@ -42,6 +42,7 @@ export type GetDbQueryResult = {
 export type searchParams = {
     query?: string;
     page?: string;
+    recordsPerPage?: number;
 }
 
 export type whoOptions = { 
