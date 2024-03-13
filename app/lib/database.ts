@@ -168,15 +168,25 @@ const client = new Client({
     try {
       const statement =
        `INSERT INTO public.places ( name, details, type, sort_order )
-        VALUES (($1), ($2), 'street_city_state', 1);`;
-      const variables = [
-        (data.get("placename") as string).replaceAll("'", "\'"),
-        JSON.stringify({ 
+        VALUES (($1), ($2), ($3), ($4));`;
+      
+      const sort_order = (data.get("sort_order") as string);
+      let variables: any[] = [];
+      if (sort_order === '1') {
+        variables.push((data.get("placename") as string).replaceAll("'", "\'"));
+        variables.push(JSON.stringify({ 
           city: (data.get("city") as string).replaceAll("'", "\'"),
           street: (data.get("street") as string).replaceAll("'", "\'"),
           state: (data.get("state") as string).replaceAll("'", "\'")
-        })
-      ];
+        }));
+        variables.push("street_city_state");
+        variables.push(1);
+      } else if (sort_order === '2') {
+        variables.push((data.get("country") as string).replaceAll("'", "\'"));
+        variables.push('{}');
+        variables.push("country");
+        variables.push(2);
+      }
       const result: any = await client.query(statement, variables);
     } catch (error) {
       console.error('Database Error:', error);

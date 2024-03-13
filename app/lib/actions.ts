@@ -191,14 +191,19 @@ export type PlaceState = {
 export async function createPlace(prevState: PlaceState, formData: FormData) {
 
   /* Make sure a valid form type is submitted */
-  if  (z.object({type: z.string().refine((t) => { return (
+  if  (z.object(
+        {type: z.string().refine((t) => { return (
           t === 'street_city_state' ||
           t === 'country' ||
           t === 'country_city' ||
           t === 'any'
-        )}
-      )}).safeParse({
-        type: formData.get('type')
+        )}),
+        sort_order: z.string().refine((so: string) => { return (
+          Number(so) >= 0 && Number(so) <= 4
+        )})}
+      ).safeParse({
+        type: formData.get('type'),
+        sort_order: formData.get('sort_order')
       }).success) {
   } else {
     throw new Error('Failed to provide a valid type.');

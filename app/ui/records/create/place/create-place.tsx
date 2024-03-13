@@ -106,6 +106,7 @@ export default function Form() {
                     ))}
                   </div>
               </div>
+              <input type="hidden" id="sort_order" name="sort_order" value="1" disabled={!isOpen1} />
           </div>
           {/* COUNTRY ONLY /////////////////////////////////////////////////////////////////////////////////////////// */}
           <div className="flex flex-row">
@@ -138,6 +139,7 @@ export default function Form() {
                       ))}
                     </div>
                 </div>
+                <input type="hidden" id="sort_order" name="sort_order" value="2" disabled={!isOpen2} />
           </div>
           {/* COUNTRY AND CITY ////////////////////////////////////////////////////////////////////////////////////// */}
           <div className="flex flex-row">
@@ -189,6 +191,7 @@ export default function Form() {
                       ))}
                     </div>
                 </div>
+                <input type="hidden" id="sort_order" name="sort_order" value="3" disabled={!isOpen3} />
           </div>
           {/* ANY: TITLE, DESC ////////////////////////////////////////////////////////////////////////////////////// */}
           <div className="flex flex-row">
@@ -239,6 +242,7 @@ export default function Form() {
                       ))}
                     </div>
                 </div>
+                <input type="hidden" id="sort_order" name="sort_order" value="4" disabled={!isOpen4} />
           </div>
         </div>
         <div className="flex flex-col items-center justify-between p-4">
