@@ -186,6 +186,13 @@ const client = new Client({
         variables.push('{}');
         variables.push("country");
         variables.push(2);
+      } else if (sort_order === '3') {
+        variables.push((data.get("country_2") as string).replaceAll("'", "\'"));
+        variables.push(JSON.stringify({ 
+          city: (data.get("city_2") as string).replaceAll("'", "\'")
+        }));
+        variables.push("country_city");
+        variables.push(3);
       }
       const result: any = await client.query(statement, variables);
     } catch (error) {

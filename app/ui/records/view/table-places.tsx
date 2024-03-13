@@ -55,6 +55,16 @@ export function PlacesTable({placesGroups} : {placesGroups : Place[][]} ) {
                             <Countries group={group} selectedRecordId={selectedRecordId} countryClick={handleClick}/>
                     </div>
 
+                    {/* Countries and cities header */}
+                    <div className={clsx("flex flex-row bg-sky-400 rounded-md", {"hidden" : (j !== 0 || record.type !== "country_city")})}>
+                      <div className="basis-full pl-2 text-left font-bold border-tbl-1 border-slate-400 rounded-md">Cities, Countries</div>
+                    </div>
+                    {/* Countries and cities records */}
+                    <div  className={clsx("flex flex-row flex-wrap",
+                                        { "hidden" : (record.type !== "country_city" || j !== 0)}
+                                    )}>
+                            <Countries group={group} selectedRecordId={selectedRecordId} countryClick={handleClick}/>
+                    </div>
                   </div>
                 )
               })
