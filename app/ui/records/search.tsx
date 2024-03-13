@@ -11,20 +11,23 @@ export default function Search({ placeholder }: { placeholder: string }) {
   const { replace } = useRouter();
   const [recordsPerPage, setRecordsPerPage] = useState(10);
 
-  const handleSearch = useDebouncedCallback((term) => {
+  const handleSearch = useDebouncedCallback((term, recordsPerPage) => {
+    setRecordsPerPage(recordsPerPage);
     const params = new URLSearchParams(searchParams);
     params.set('page', '1');
-    params.set('recordsPerPage', recordsPerPage + '');
+    params.set('recordsPerPage', recordsPerPage);
     if (term) {
       params.set('query', term);
     } else {
       params.delete('query');
     }
-    replace(`${pathname}?${params.toString()}`);
-  }, 600);
+    if (recordsPerPage !== 0) {
+      replace(`${pathname}?${params.toString()}`);
+    }
+  }, 750);
  
   return (
-    <div className="flex flex-row items-center">
+    <div className="flex flex-row items-center mb-1">
       <div className="relative md:ml-2">
         <label htmlFor="search" className="sr-only">
           Search
@@ -33,21 +36,27 @@ export default function Search({ placeholder }: { placeholder: string }) {
           className="text-center w-[190px] border-1 border-gray-500 rounded-md hover:bg-sky-50 bg-gray-50"
           placeholder={placeholder}
           onChange={(e) => {
-            handleSearch(e.target.value);
+            handleSearch(e.target.value, recordsPerPage);
           }}
           defaultValue={searchParams.get('query')?.toString()}
         />
         <MagnifyingGlassIcon className="absolute left-1 top-1 h-[18px] w-[18px]" />
       </div>
       <div className="basis-1/3 flex flex-row items-center justify-center">
-      <p className="text-sm pr-1 w-[75px] text-center">Records per page </p>
-        <input  className="input-width"
+        <input  className="input-width rounded-md border-1 border-gray-500"
                 type="text"
                 id="recordsPerPage" 
                 name="recordsPerPage"
                 defaultValue={recordsPerPage?.toString()}
-                onChange={(e) => {setRecordsPerPage(Number(e.target.value));}}
+                onChange={(e) => {
+                  
+                  handleSearch(
+                    searchParams.get('query')?.toString(),
+                    Number(e.target.value)
+                  )
+                }}
         />
+        <p className="text-sm pl-1 text-left">Records per page </p>
       </div>
     </div>
   );
