@@ -21,7 +21,7 @@ export function Countries (props: {group: any; selectedRecordId: number; country
                             if (record.type === 'country_city') {
                               return <>{record.details.city}, </>;
                             }
-                        })()}
+                      })()}
                       {record.name}
               </div>
             )
