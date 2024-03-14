@@ -7,16 +7,32 @@ import WhereRadio from '@/app/ui/records/whereradio';
 import { SelectOptions, WhoOptions, Place } from '@/app/lib/interfaces';
 import DateTimePicker from '@/app/ui/records/datepicker';
 import { v4 as uuidv4 } from 'uuid';
+import { useState } from 'react';
 
 export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptions[], whereOptions: Place[] }) {
 
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createRecord, initialState);
+  const [showDetails, setShowDetails] = useState(<p></p>);
 
   let whoList: SelectOptions = {};
   whoOptions.map((el: WhoOptions) => {
     whoList[el.index] = el.name;
   });
+
+  function xyz(x: any) {
+    if (x.type === 'street_city_state') {
+      setShowDetails(
+        <div className="p-2">
+          <div className="font-bold">{x.name}</div>
+          <div>{x.details.street}</div>
+          <div>{x.details.city}</div>
+          <div>{x.details.state}</div>
+        </div>
+      );
+    }
+    
+  }
 
   return (
     <form action={dispatch} className="flex flex-col md:pl-2 bg-inherit">
@@ -62,6 +78,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
             />
           </div>
 
+          <div className="flex flex-row">
           <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[175px] overflow-auto" >
             <div className="flex flex-row">
               <div className="font-bold">WHERE</div><div className="pl-2 font-normal">(scroll down for more choices)</div>
@@ -74,12 +91,17 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
                   ))}
               </div>
             </div>
-            <WhereRadio whereOptions={[
+            <WhereRadio
+              whereOptions={[
                 {id: 'where', name: 'where', multi: 'no'},
                 {list: whereOptions},
                 null
-              ]}>
+              ]}
+              whereClick={xyz}
+            >
             </WhereRadio>
+          </div>
+            <div className="w-full">{showDetails}</div>
           </div>
 
           <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[100px]" >

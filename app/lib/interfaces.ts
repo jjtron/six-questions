@@ -3,6 +3,12 @@ export type SelectOptions = {[key: number]: string};
 export type WhoOptions = {index: number, name: string};
 export type Person = {index: number, name: string};
 
+export type WhereOptions = [
+    SelectProps,
+    RadioOptions,
+    number | null
+]
+
 export type Place = {
     id: number;
     name: string;

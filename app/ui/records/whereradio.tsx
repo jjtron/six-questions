@@ -1,35 +1,41 @@
-import { SelectProps, RadioOptions } from '@/app/lib/interfaces';
+import { WhereOptions } from '@/app/lib/interfaces';
+import { useState } from 'react';
+import clsx from 'clsx';
 
-export default function WhereRadio(
-    {whereOptions} : {whereOptions: [
-        SelectProps,
-        RadioOptions,
-        number | null
-    ]}
-    ) {
-    
+export default function WhereRadio( props : {whereOptions: WhereOptions, whereClick: Function })
+{
+    const [isChecked, setIsChecked] = useState(-1);
+    const [bgColor, setBgColor] = useState(-1);
+
     return (
-        <div className="flex flex-row pb-2 h-flow place-content-center" >
-            { whereOptions[1].list.map((el, i) => {
+        <div className="flex flex-col pb-2 v-flow" >
+            { props.whereOptions[1].list.map((el, i) => {
                 return (
-                    <div key={i} className="flex flex-row basis-5/12 shrink-0 border-1 border-slate-400 rounded-md px-2 mt-1 mr-1">
+                    <div key={i} className={
+                            clsx(`flex flex-row border-1 border-slate-400
+                                  rounded-md px-2 mt-1 mr-1 cursor-pointer`,
+                                  { "bg-white" : bgColor !== i && isChecked !== i,
+                                    "bg-yellow-100" : bgColor === i && isChecked !== i,
+                                    "bg-green-100" : isChecked === i})} 
+                            onMouseOver={() => {
+                                props.whereClick(el);
+                                setBgColor(i);
+                            }}
+                    >
                         {
                             (function () {
-                                if (whereOptions[2]?.toString() === el.id.toString()) {
+                                if (props.whereOptions[2]?.toString() === el.id.toString()) {
                                     // input is defaultChecked
                                     return (<input className="h-[24px]" type="radio" name="where" defaultChecked value={el.id} /> )
                                 } else {
                                     // input is not checked
-                                    return (<input className="h-[24px]" type="radio" name="where" value={el.id} /> )
+                                    return (<input className="h-[24px]" type="radio" name="where" value={el.id} 
+                                                   onClick={() => {setIsChecked(i)}}/> )
                                 }
                             })()
+                            
                         }
-                        <div className="flex flex-col ml-2">
-                            <div>{el.name}</div>
-                            <div>{el.details.street}</div>
-                            <div>{el.details.city}</div>
-                            <div>{el.details.state}</div>
-                        </div>
+                        <div className="pl-2">{el.name}</div>
                     </div>
                 )
             })}
