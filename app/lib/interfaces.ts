@@ -7,9 +7,10 @@ export type Place = {
     id: number;
     name: string;
     details: {
-        city: string;
-        street: string;
-        state: string;
+        city?: string;
+        street?: string;
+        state?: string;
+        desc?: string;
     },
     type: string;
     sort_order: number;

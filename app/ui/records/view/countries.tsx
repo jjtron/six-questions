@@ -3,7 +3,8 @@ import { Place } from '@/app/lib/interfaces';
 
 export function Countries (props: {group: any; selectedRecordId: number; countryClick: Function} ) {
 
-    return ( <>
+    return (
+      <>
         { props.group.map((record: Place, i: number) => {
             return (
               <div  key={i} onClick={() => props.countryClick(record.id)}
@@ -26,5 +27,6 @@ export function Countries (props: {group: any; selectedRecordId: number; country
             )
         })
         }
-    </>)
+      </>
+    )
 }

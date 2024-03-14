@@ -65,6 +65,26 @@ export function PlacesTable({placesGroups} : {placesGroups : Place[][]} ) {
                                     )}>
                             <Countries group={group} selectedRecordId={selectedRecordId} countryClick={handleClick}/>
                     </div>
+
+                    {/* General Description header */}
+                    <div className={clsx("flex flex-row bg-sky-400 rounded-md", {"hidden" : (j !== 0 || record.type !== "any")})}>
+                      <div className="basis-full pl-2 text-left font-bold border-tbl-1 border-slate-400 rounded-md">General Description</div>
+                    </div>
+                    {/* General Description records */}
+                    <div  className={clsx("flex flex-row rounded-md",
+                                      { "bg-yellow-100" : selectedRecordId === record.id, "bg-sky-200" : selectedRecordId !== record.id },
+                                      { "hidden" : (record.type !== "any")}
+                                    )}
+                          onClick={() => handleClick(record.id)}
+                    >
+                      <div className="basis-1/4 pl-2 border-tbl-1 border-slate-400 rounded-l-md">{record.name}</div>
+                      <textarea
+                          rows={4}
+                          value={record.details.desc}
+                          readOnly
+                          className="basis-3/4 rounded-r-md border-trb-1 border-slate-400 outline-none pl-2"
+                      />
+                    </div>
                   </div>
                 )
               })
