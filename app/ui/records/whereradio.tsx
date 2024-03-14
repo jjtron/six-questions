@@ -2,7 +2,7 @@ import { WhereOptions } from '@/app/lib/interfaces';
 import { useState } from 'react';
 import clsx from 'clsx';
 
-export default function WhereRadio( props : {whereOptions: WhereOptions, whereClick: Function })
+export default function WhereRadio( props : {whereOptions: WhereOptions, whereMouseOver: Function })
 {
     const [isChecked, setIsChecked] = useState(-1);
     const [bgColor, setBgColor] = useState(-1);
@@ -18,7 +18,7 @@ export default function WhereRadio( props : {whereOptions: WhereOptions, whereCl
                                     "bg-yellow-100" : bgColor === i && isChecked !== i,
                                     "bg-green-100" : isChecked === i})} 
                             onMouseOver={() => {
-                                props.whereClick(el);
+                                props.whereMouseOver(el, (isChecked === i));
                                 setBgColor(i);
                             }}
                     >
@@ -30,7 +30,10 @@ export default function WhereRadio( props : {whereOptions: WhereOptions, whereCl
                                 } else {
                                     // input is not checked
                                     return (<input className="h-[24px]" type="radio" name="where" value={el.id} 
-                                                   onClick={() => {setIsChecked(i)}}/> )
+                                                onClick={() => {
+                                                    setIsChecked(i);
+                                                    props.whereMouseOver(el, true);
+                                                }}/> )
                                 }
                             })()
                             

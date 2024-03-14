@@ -8,6 +8,7 @@ import { SelectOptions, WhoOptions, Place } from '@/app/lib/interfaces';
 import DateTimePicker from '@/app/ui/records/datepicker';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
+import clsx from 'clsx';
 
 export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptions[], whereOptions: Place[] }) {
 
@@ -20,10 +21,10 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
     whoList[el.index] = el.name;
   });
 
-  function xyz(x: any) {
+  function handleMouseOver(x: any, highlight: boolean) {
     if (x.type === 'street_city_state') {
       setShowDetails(
-        <div className="p-2">
+        <div className={clsx("p-2 rounded-md", { "bg-green-100" : highlight, "bg-yellow-100" : !highlight })}>
           <div className="font-bold">{x.name}</div>
           <div>{x.details.street}</div>
           <div>{x.details.city}</div>
@@ -79,28 +80,28 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
           </div>
 
           <div className="flex flex-row">
-          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[175px] overflow-auto" >
-            <div className="flex flex-row">
-              <div className="font-bold">WHERE</div><div className="pl-2 font-normal">(scroll down for more choices)</div>
-              <div id="where-error" aria-live="polite" aria-atomic="true">
-                  {state.errors?.where &&
-                    state.errors.where.map((error: string) => (
-                      <p className="pl-2 leading-6 text-sm text-red-500" key={error}>
-                        {error}
-                      </p>
-                  ))}
+            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[185px] overflow-auto" >
+              <div className="flex flex-row">
+                <div className="font-bold">WHERE</div><div className="pl-2 font-normal">(scroll down for more choices)</div>
+                <div id="where-error" aria-live="polite" aria-atomic="true">
+                    {state.errors?.where &&
+                      state.errors.where.map((error: string) => (
+                        <p className="pl-2 leading-6 text-sm text-red-500" key={error}>
+                          {error}
+                        </p>
+                    ))}
+                </div>
               </div>
+              <WhereRadio
+                whereOptions={[
+                  {id: 'where', name: 'where', multi: 'no'},
+                  {list: whereOptions},
+                  null
+                ]}
+                whereMouseOver={handleMouseOver}
+              >
+              </WhereRadio>
             </div>
-            <WhereRadio
-              whereOptions={[
-                {id: 'where', name: 'where', multi: 'no'},
-                {list: whereOptions},
-                null
-              ]}
-              whereClick={xyz}
-            >
-            </WhereRadio>
-          </div>
             <div className="w-full">{showDetails}</div>
           </div>
 
