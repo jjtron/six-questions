@@ -15,6 +15,8 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createRecord, initialState);
   const [showDetails, setShowDetails] = useState(<p></p>);
+  const [selectedPlaceRecord, setSelectedPlaceRecord] = useState({});
+  const [scrollPosition, setScrollPosition] = useState(0);
 
   let whoList: SelectOptions = {};
   whoOptions.map((el: WhoOptions) => {
@@ -65,7 +67,13 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
             />
           </div>
 
-          <div className="flex flex-row">
+          <div  className="flex flex-row"
+                onMouseLeave={(e) => {
+                  e.stopPropagation();
+                  document.getElementById("where-wrapper-div")?.scroll(0, scrollPosition);
+                  handleMouseOver(selectedPlaceRecord, true)
+                }}
+          >
             <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[185px]" >
               <div className="flex flex-row">
                 <div className="font-bold">WHERE</div>
@@ -79,7 +87,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
                 </div>
               </div>
               <div className="text-xs">(scroll down for more choices)</div>
-              <div className="overflow-auto h-[135px]">
+              <div className="overflow-auto border-1 border-slate-300 h-[135px]" id="where-wrapper-div">
                 <WhereRadio
                   whereOptions={[
                     {id: 'where', name: 'where', multi: 'no'},
@@ -158,11 +166,18 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
     </form>
   );
 
-  function handleMouseOver(record: any, highlight: boolean) {
-    const hL: object = { "bg-green-100" : highlight, "bg-yellow-100" : !highlight };
+  function handleMouseOver(record : any, isSelected: boolean) {
+    if (isSelected){
+      setSelectedPlaceRecord(record);
+    }
+    const scrollPosition = document.getElementById("where-wrapper-div")?.scrollTop;
+    if (scrollPosition && isSelected) {
+      setScrollPosition(scrollPosition)
+    }
+    const bgColor: object = { "bg-green-100" : isSelected, "bg-yellow-100" : !isSelected };
     if (record.type === 'street_city_state') {
       setShowDetails(
-        <div className={clsx("p-4 rounded-md w-full",hL)}>
+        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
           <div className="font-bold bg-slate-200 px-1 rounded-t-md">{record.name}</div>
           <div className="bg-slate-200 px-1">{record.details.street}</div>
           <div className="bg-slate-200 px-1">{record.details.city}</div>
@@ -171,23 +186,22 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
       );
     } else if (record.type === 'country_city') {
       setShowDetails(
-        <div className={clsx("p-4 rounded-md w-full",hL)}>
+        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
           <div className="bg-slate-200 flex flex-row rounded-md">
             <div className="px-1 font-bold">{record.details.city},</div>
             <div>{record.name}</div>
           </div>
         </div>
-
       );
     } else if (record.type === 'country') {
       setShowDetails(
-        <div className={clsx("p-4 rounded-md w-full",hL)}>
+        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
             <div className="px-1 font-bold bg-slate-200 rounded-md">{record.name}</div>
         </div>
       );
     } else if (record.type === 'any') {
       setShowDetails(
-        <div className={clsx("p-4 rounded-md w-full",hL)}>
+        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
             <div className="px-1 font-bold bg-slate-200 pb-1 rounded-t-md">{record.name}</div>
             <div className="bg-slate-200 px-1 rounded-b-md">{record.details.desc}</div>
         </div>
