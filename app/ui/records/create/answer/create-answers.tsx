@@ -21,15 +21,26 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
     whoList[el.index] = el.name;
   });
 
-  function handleMouseOver(x: any, highlight: boolean) {
-    if (x.type === 'street_city_state') {
+  function handleMouseOver(record: any, highlight: boolean) {
+    const h: object = { "bg-green-100" : highlight, "bg-yellow-100" : !highlight };
+    if (record.type === 'street_city_state') {
       setShowDetails(
-        <div className={clsx("p-2 rounded-md", { "bg-green-100" : highlight, "bg-yellow-100" : !highlight })}>
-          <div className="font-bold">{x.name}</div>
-          <div>{x.details.street}</div>
-          <div>{x.details.city}</div>
-          <div>{x.details.state}</div>
+        <div className={clsx("p-4 rounded-md w-full", h)}>
+          <div className="font-bold bg-slate-200 px-1 rounded-t-md">{record.name}</div>
+          <div className="bg-slate-200 px-1">{record.details.street}</div>
+          <div className="bg-slate-200 px-1">{record.details.city}</div>
+          <div className="bg-slate-200 px-1 rounded-b-md" >{record.details.state}</div>
         </div>
+      );
+    } else if (record.type === 'country_city') {
+      setShowDetails(
+        <div className={clsx("p-4 rounded-md w-full", h)}>
+          <div className="bg-slate-200 flex flex-row rounded-md">
+            <div className="px-1 font-bold">{record.details.city},</div>
+            <div>{record.name}</div>
+          </div>
+        </div>
+
       );
     }
     
@@ -102,7 +113,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
               >
               </WhereRadio>
             </div>
-            <div className="w-full">{showDetails}</div>
+            <div className="w-full flex mb-1">{showDetails}</div>
           </div>
 
           <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[100px]" >
