@@ -14,6 +14,9 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
 
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createRecord, initialState);
+
+  // the following three state variables are used in the
+  // place (where) pick section 
   const [showDetails, setShowDetails] = useState(<p></p>);
   const [selectedPlaceRecord, setSelectedPlaceRecord] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
