@@ -21,31 +21,6 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
     whoList[el.index] = el.name;
   });
 
-  function handleMouseOver(record: any, highlight: boolean) {
-    const h: object = { "bg-green-100" : highlight, "bg-yellow-100" : !highlight };
-    if (record.type === 'street_city_state') {
-      setShowDetails(
-        <div className={clsx("p-4 rounded-md w-full", h)}>
-          <div className="font-bold bg-slate-200 px-1 rounded-t-md">{record.name}</div>
-          <div className="bg-slate-200 px-1">{record.details.street}</div>
-          <div className="bg-slate-200 px-1">{record.details.city}</div>
-          <div className="bg-slate-200 px-1 rounded-b-md" >{record.details.state}</div>
-        </div>
-      );
-    } else if (record.type === 'country_city') {
-      setShowDetails(
-        <div className={clsx("p-4 rounded-md w-full", h)}>
-          <div className="bg-slate-200 flex flex-row rounded-md">
-            <div className="px-1 font-bold">{record.details.city},</div>
-            <div>{record.name}</div>
-          </div>
-        </div>
-
-      );
-    }
-    
-  }
-
   return (
     <form action={dispatch} className="flex flex-col md:pl-2 bg-inherit">
       
@@ -179,4 +154,41 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
 
     </form>
   );
+
+  function handleMouseOver(record: any, highlight: boolean) {
+    const hL: object = { "bg-green-100" : highlight, "bg-yellow-100" : !highlight };
+    if (record.type === 'street_city_state') {
+      setShowDetails(
+        <div className={clsx("p-4 w-full",hL)}>
+          <div className="font-bold bg-slate-200 px-1 rounded-t-md">{record.name}</div>
+          <div className="bg-slate-200 px-1">{record.details.street}</div>
+          <div className="bg-slate-200 px-1">{record.details.city}</div>
+          <div className="bg-slate-200 px-1 rounded-b-md" >{record.details.state}</div>
+        </div>
+      );
+    } else if (record.type === 'country_city') {
+      setShowDetails(
+        <div className={clsx("p-4 w-full",hL)}>
+          <div className="bg-slate-200 flex flex-row rounded-md">
+            <div className="px-1 font-bold">{record.details.city},</div>
+            <div>{record.name}</div>
+          </div>
+        </div>
+
+      );
+    } else if (record.type === 'country') {
+      setShowDetails(
+        <div className={clsx("p-4 w-full",hL)}>
+            <div className="px-1 font-bold bg-slate-200 rounded-md">{record.name}</div>
+        </div>
+      );
+    } else if (record.type === 'any') {
+      setShowDetails(
+        <div className={clsx("p-4 w-full",hL)}>
+            <div className="px-1 font-bold bg-slate-200 pb-1 rounded-t-md">{record.name}</div>
+            <div className="bg-slate-200 px-1 rounded-b-md">{record.details.desc}</div>
+        </div>
+      );
+    }
+  }
 }
