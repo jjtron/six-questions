@@ -66,9 +66,9 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
           </div>
 
           <div className="flex flex-row">
-            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[185px] overflow-auto" >
+            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[185px]" >
               <div className="flex flex-row">
-                <div className="font-bold">WHERE</div><div className="pl-2 font-normal">(scroll down for more choices)</div>
+                <div className="font-bold">WHERE</div>
                 <div id="where-error" aria-live="polite" aria-atomic="true">
                     {state.errors?.where &&
                       state.errors.where.map((error: string) => (
@@ -78,15 +78,18 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
                     ))}
                 </div>
               </div>
-              <WhereRadio
-                whereOptions={[
-                  {id: 'where', name: 'where', multi: 'no'},
-                  {list: whereOptions},
-                  null
-                ]}
-                whereMouseOver={handleMouseOver}
-              >
-              </WhereRadio>
+              <div className="text-xs">(scroll down for more choices)</div>
+              <div className="overflow-auto h-[135px]">
+                <WhereRadio
+                  whereOptions={[
+                    {id: 'where', name: 'where', multi: 'no'},
+                    {list: whereOptions},
+                    null
+                  ]}
+                  whereMouseOver={handleMouseOver}
+                >
+                </WhereRadio>
+              </div>
             </div>
             <div className="w-full flex mb-1">{showDetails}</div>
           </div>
@@ -159,7 +162,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
     const hL: object = { "bg-green-100" : highlight, "bg-yellow-100" : !highlight };
     if (record.type === 'street_city_state') {
       setShowDetails(
-        <div className={clsx("p-4 w-full",hL)}>
+        <div className={clsx("p-4 rounded-md w-full",hL)}>
           <div className="font-bold bg-slate-200 px-1 rounded-t-md">{record.name}</div>
           <div className="bg-slate-200 px-1">{record.details.street}</div>
           <div className="bg-slate-200 px-1">{record.details.city}</div>
@@ -168,7 +171,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
       );
     } else if (record.type === 'country_city') {
       setShowDetails(
-        <div className={clsx("p-4 w-full",hL)}>
+        <div className={clsx("p-4 rounded-md w-full",hL)}>
           <div className="bg-slate-200 flex flex-row rounded-md">
             <div className="px-1 font-bold">{record.details.city},</div>
             <div>{record.name}</div>
@@ -178,13 +181,13 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
       );
     } else if (record.type === 'country') {
       setShowDetails(
-        <div className={clsx("p-4 w-full",hL)}>
+        <div className={clsx("p-4 rounded-md w-full",hL)}>
             <div className="px-1 font-bold bg-slate-200 rounded-md">{record.name}</div>
         </div>
       );
     } else if (record.type === 'any') {
       setShowDetails(
-        <div className={clsx("p-4 w-full",hL)}>
+        <div className={clsx("p-4 rounded-md w-full",hL)}>
             <div className="px-1 font-bold bg-slate-200 pb-1 rounded-t-md">{record.name}</div>
             <div className="bg-slate-200 px-1 rounded-b-md">{record.details.desc}</div>
         </div>
