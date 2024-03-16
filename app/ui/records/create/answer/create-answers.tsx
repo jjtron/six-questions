@@ -128,16 +128,16 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
               <DateTimePicker date_time={{date: '01/01/1900', time: '12:00 AM'}} view={["year", "month"]}/>
             </div>
             <div className="flex flex-row pb-1">
-              <div className="basis-24 shrink-0 text-xs  text-right"><p>Date</p><p>(before 1900)</p></div>
-              <InputMask className="ml-1 px-1 w-[152px] border-1 border-slate-300 rounded-md text-center" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+              <div className="basis-24 shrink-0 text-xs text-right"><p>Date</p><p>(before 1900)</p></div>
+              <InputMask className="ml-1 px-1 w-[120px] border-1 border-slate-300 rounded-md text-center" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+            </div>
+            <div className="flex flex-row pb-1">
+              <div className="basis-24 shrink-0 text-xs text-right">Year/Month (before 1900)</div>
+              <InputMask className="ml-1 px-1 w-[120px] border-1 border-slate-300 rounded-md text-center" mask="yyyy-dd" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
             </div>
             <div className="flex flex-row">
-              <div className="basis-24 shrink-0 text-xs  text-right">Year/Month (before 1900)</div>
-              <InputMask className="ml-1 px-1 w-[152px] border-1 border-slate-300 rounded-md text-center" mask="yyyy-dd" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
-            </div>
-            <div className="flex flex-row">
-              <div className="basis-24 shrink-0 text-xs  text-right">Year only (before 1900)</div>
-              <InputMask className="ml-1 px-1 w-[152px] border-1 border-slate-300 rounded-md text-center" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+              <div className="basis-24 shrink-0 text-xs text-right">Year only (before 1900)</div>
+              <InputMask className="ml-1 px-1 w-[120px] border-1 border-slate-300 rounded-md text-center" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
             </div>
           </div>
 
