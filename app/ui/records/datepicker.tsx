@@ -7,43 +7,50 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import dayjs from 'dayjs';
 var convertTime = require('convert-time');
 
-export default function DateTimePicker({date_time} : {date_time: {date: string; time: string;}}) {
+export default function DateTimePicker(
+      {date_time, view} :
+      {
+        date_time: {date: string; time: string;},
+        view: any[]
+      }
+  ) {
 
   const datetime = `${date_time.date.replace(/\//g, '-')}T${convertTime(date_time.time)}`;
   const converted_datetime = datetime.substring(6, 10) + '-' + datetime.substring(0, 2) + '-' + 
                              datetime.substring(3, 4) + datetime.substring(10);
 
-  const customIdWhenProps = {
-      textField: { id: "when", name: "when" }
-  };
-
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div className="flex flex-row place-content-center pb-2">
-        <div className="flex flex-row px-1">
+      <div className="flex flex-row place-content-center pb-1">
+        <div className="px-1 w-40">
           {
             (() => {
               if (converted_datetime !== '1900-01-0T12:00') {
-                return (<DatePicker label="Date" slotProps={customIdWhenProps} 
+                return (<DatePicker className="bg-white" label="Date" slotProps={{ textField: { size: 'small', id: "when", name: "when" } }}
                   value={dayjs(date_time.date)}
+                  views={view}
                   onChange={((e) => {})}
                 />)
               } else {
-                  return (<DatePicker label="Date" slotProps={customIdWhenProps} />)
+                  return (<DatePicker className="bg-white" label="Date" slotProps={{ textField: { size: 'small', id: "when", name: "when" } }}
+                  views={view} />)
               }
             })()
           }
         </div>
-        <div className="flex flex-row px-1">
+        <div className="px-1 w-40">
           {
             (() => {
-              if (converted_datetime !== '1900-01-0T12:00') {
-                return (<TimePicker label="Time" slotProps={customIdWhenProps}
-                            value={dayjs(converted_datetime)}
-                            onChange={((e) => {})}
-                />)
-              } else {
-                  return (<TimePicker label="Time" slotProps={customIdWhenProps} />)
+              // if datepicker view is ["year", "month"] (length of 2), do not show time picker
+              if (view.length === 3) {
+                if (converted_datetime !== '1900-01-0T12:00') {
+                  return (<TimePicker className="bg-white" label="Time" slotProps={{ textField: { size: 'small', id: "when", name: "when" } }}
+                              value={dayjs(converted_datetime)}
+                              onChange={((e) => {})}
+                  />)
+                } else {
+                    return (<TimePicker className="bg-white" label="Time" slotProps={{ textField: { size: 'small', id: "when", name: "when" } }} />)
+                }
               }
             })()
           }

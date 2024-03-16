@@ -9,6 +9,8 @@ import DateTimePicker from '@/app/ui/records/datepicker';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import clsx from 'clsx';
+import { InputMask } from '@react-input/mask';
+
 
 export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptions[], whereOptions: Place[] }) {
 
@@ -105,7 +107,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
             <div className="w-full flex mb-1">{showDetails}</div>
           </div>
 
-          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[100px]" >
+          <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[300px]" >
             <div className="flex flex-row">
               <div className="font-bold">WHEN</div>
               <div id="when-error" aria-live="polite" aria-atomic="true">
@@ -117,7 +119,26 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
                   ))}
               </div>
             </div>
-            <DateTimePicker date_time={{date: '01/01/1900', time: '12:00 AM'}}/>
+            <div className="flex flex-row">
+              <div className="basis-24 shrink-0 text-xs text-right pt-1">Date/Time (since 1900)</div>
+              <DateTimePicker date_time={{date: '01/01/1900', time: '12:00 AM'}} view={["year", "month", "day"]} />
+            </div>
+            <div className="flex flex-row">
+              <div className="basis-24 shrink-0 text-xs  text-right pt-1">Year/Month (since 1900)</div>
+              <DateTimePicker date_time={{date: '01/01/1900', time: '12:00 AM'}} view={["year", "month"]}/>
+            </div>
+            <div className="flex flex-row pb-1">
+              <div className="basis-24 shrink-0 text-xs  text-right"><p>Date</p><p>(before 1900)</p></div>
+              <InputMask className="ml-1 px-1 w-[152px] border-1 border-slate-300 rounded-md text-center" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+            </div>
+            <div className="flex flex-row">
+              <div className="basis-24 shrink-0 text-xs  text-right">Year/Month (before 1900)</div>
+              <InputMask className="ml-1 px-1 w-[152px] border-1 border-slate-300 rounded-md text-center" mask="yyyy-dd" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+            </div>
+            <div className="flex flex-row">
+              <div className="basis-24 shrink-0 text-xs  text-right">Year only (before 1900)</div>
+              <InputMask className="ml-1 px-1 w-[152px] border-1 border-slate-300 rounded-md text-center" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+            </div>
           </div>
 
           <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
