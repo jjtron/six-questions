@@ -134,54 +134,49 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
             </div>
 
             <div className="flex flex-row">
-
-              <span className="basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md">
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime1 })}>
                 <input type="radio" name="date_type" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(1) }} />
                 <p className="inline px-1">Date/Time</p><p>(since 1900)</p>
               </span>
-              
-              <span className="basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md">
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime2 })}>
                 <input type="radio" name="date_type" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(2) }} />
                 <p className="inline px-1">Year/Month</p><p>(since 1900)</p>
               </span>
-
-              <span className="basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md">
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime3 })}>
                 <input type="radio" name="date_type" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(3) }} />
                 <p className="inline px-1">Date</p><p>(before 1900)</p>
               </span>
-
-              <span className="basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md">
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime4 })}>
                 <input type="radio" name="date_type" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(4) }} />
                 <p className="inline px-1">Year/Month</p><p>(before 1900)</p>
               </span>
-
-              <span className="basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md">
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime5 })}>
                 <input type="radio" name="date_type" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(5) }} />
                 <p className="inline px-1">Year only</p><p>(before 1900)</p>
               </span>
-
             </div>
 
-            <div className={clsx("mt-2", { "hidden" : !eventTime1 })}>
-              <DateTimePicker date_time={{date: '01/01/1900', time: '12:00 AM'}} view={["year", "month", "day"]} />
+            <div className="mt-1">
+              <div className={clsx({ "hidden" : !eventTime1 })}>
+                <DateTimePicker date_time={{date: '01/01/1900', time: '12:00 AM'}} view={["year", "month", "day"]} />
+              </div>
+              <div className={clsx("flex flex-row", { "hidden" : !eventTime2 })}>
+                <div className="basis-1/5"></div>
+                <DateTimePicker date_time={{date: '01/01/1900', time: '12:00 AM'}} view={["year", "month"]}/>
+              </div>
+              <div className={clsx("flex flex-row", { "hidden" : !eventTime3 })}>
+                <div className="basis-2/5"></div>
+                <InputMask className="w-[120px] border-1 border-slate-300 rounded-md text-center" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+              </div>
+              <div className={clsx("flex flex-row", { "hidden" : !eventTime4 })}>
+                <div className="basis-3/5"></div>
+                <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+              </div>
+              <div className={clsx("flex flex-row", { "hidden" : !eventTime5 })}>
+                <div className="basis-4/5"></div>
+                <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text-center" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+              </div>
             </div>
-            <div className={clsx("mt-2", { "hidden" : !eventTime2 })}>
-              <DateTimePicker date_time={{date: '01/01/1900', time: '12:00 AM'}} view={["year", "month"]}/>
-            </div>
-            <div className={clsx({ "hidden" : !eventTime3 })}>
-              <InputMask className="ml-1 px-1 w-[120px] border-1 border-slate-300 rounded-md text-center" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
-            </div>
-            <div className={clsx({ "hidden" : !eventTime4 })}>
-              <InputMask className="ml-1 px-1 w-[120px] border-1 border-slate-300 rounded-md text-center" mask="yyyy-dd" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
-            </div>
-
-            <InputMask
-                    className={clsx("w-[120px] border-1 border-slate-300 rounded-md text-center",
-                              { "hidden" : !eventTime5 })} mask="yyyy"
-                    replacement={{ d: /\d/, m: /\d/, y: /\d/ }}
-                    showMask separate
-            />
-            
           </div>
 
           <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >

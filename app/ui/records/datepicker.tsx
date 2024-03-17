@@ -21,8 +21,8 @@ export default function DateTimePicker(
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div className="flex flex-row place-content-center pb-1">
-        <div className="px-1 w-40">
+      <div className="flex flex-row">
+        <div className="w-40">
           {
             (() => {
               if (converted_datetime !== '1900-01-0T12:00') {
@@ -38,7 +38,7 @@ export default function DateTimePicker(
             })()
           }
         </div>
-        <div className="px-1 w-40">
+        <div className="w-40 pl-1">
           {
             (() => {
               // if datepicker view is ["year", "month"] (length of 2), do not show time picker
