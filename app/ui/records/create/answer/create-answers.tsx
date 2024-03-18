@@ -4,6 +4,7 @@ import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
 import WhereRadio from '@/app/ui/records/whereradio';
+import WhenRadio from '@/app/ui/records/whenradio';
 import { SelectOptions, WhoOptions, Place } from '@/app/lib/interfaces';
 import DateTimePicker from '@/app/ui/records/datepicker';
 import { v4 as uuidv4 } from 'uuid';
@@ -17,14 +18,19 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createRecord, initialState);
 
-  // the following three state variables are used in the
-  // place (where) pick section 
-  const [showDetails, setShowDetails] = useState(<p></p>);
+  // the following pairs of state variables are used in the
+  // place (where) and event-time (when) pick sections
+  const [showWhereDetails, setshowWhereDetails] = useState(<p></p>);
   const [showWhenDetails, setShowWhenDetails] = useState(<p></p>);
+
   const [selectedPlaceRecord, setSelectedPlaceRecord] = useState({});
   const [selectedWhenRecord, setSelectedWhenRecord] = useState({});
-  const [scrollPosition, setScrollPosition] = useState(0);
+
+  const [scrollWherePosition, setScrollWherePosition] = useState(0);
   const [scrollWhenPosition, setScrollWhenPosition] = useState(0);
+
+  const [hoverWhereHighlight, setWhereHoverHighlight] = useState(false);
+  const [hoverWhenHighlight, setWhenHoverHighlight] = useState(false);
 
   const [eventTime1, setEventTime1] = useState(false);
   const [eventTime2, setEventTime2] = useState(false);
@@ -92,8 +98,9 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
           <div  className="flex flex-row"
                 onMouseLeave={(e) => {
                   e.stopPropagation();
-                  document.getElementById("where-wrapper-div")?.scroll(0, scrollPosition);
-                  handleMouseOver(selectedPlaceRecord, true)
+                  document.getElementById("where-wrapper-div")?.scroll(0, scrollWherePosition);
+                  handleWhereMouseOver(selectedPlaceRecord, true);
+                  setWhereHoverHighlight(false);
                 }}
           >
             <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[185px]" >
@@ -116,12 +123,13 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
                     {list: whereOptions},
                     null
                   ]}
-                  whereMouseOver={handleMouseOver}
+                  whereMouseOver={handleWhereMouseOver}
+                  hoverWhereHighlight={hoverWhereHighlight}
                 >
                 </WhereRadio>
               </div>
             </div>
-            <div className="w-full flex mb-1">{showDetails}</div>
+            <div className="w-full flex mb-1">{showWhereDetails}</div>
           </div>
 
           <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[200px]" >
@@ -187,19 +195,21 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
                         e.stopPropagation();
                         document.getElementById("when-wrapper-div")?.scroll(0, scrollWhenPosition);
                         handleWhenMouseOver(selectedWhenRecord, true)
+                        setWhenHoverHighlight(false);
                       }}
               >
               <div className="overflow-auto border-1 border-slate-300 h-[135px] mb-2" id="when-wrapper-div">
                   <div className="text-xs">Custom event-time styles (scroll down for more options)</div>
-                  <WhereRadio
+                  <WhenRadio
                     whereOptions={[
                       {id: 'where', name: 'where', multi: 'no'},
                       {list: whereOptions},
                       null
                     ]}
-                    whereMouseOver={handleWhenMouseOver}
+                    whenMouseOver={handleWhenMouseOver}
+                    hoverWhenHighlight={hoverWhenHighlight}
                   >
-                  </WhereRadio>
+                  </WhenRadio>
               </div>
               <div className="w-full flex mb-1">{showWhenDetails}</div>
             </div>
@@ -254,17 +264,18 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
     </form>
   );
 
-  function handleMouseOver(record : any, isSelected: boolean) {
+  function handleWhereMouseOver(record : any, isSelected: boolean) {
+    setWhereHoverHighlight(true);
     if (isSelected){
       setSelectedPlaceRecord(record);
     }
     const scrollPosition = document.getElementById("where-wrapper-div")?.scrollTop;
     if (scrollPosition && isSelected) {
-      setScrollPosition(scrollPosition)
+      setScrollWherePosition(scrollPosition)
     }
     const bgColor: object = { "bg-green-100" : isSelected, "bg-yellow-100" : !isSelected };
     if (record.type === 'street_city_state') {
-      setShowDetails(
+      setshowWhereDetails(
         <div className={clsx("p-4 rounded-md w-full", bgColor)}>
           <div className="font-bold bg-slate-200 px-1 rounded-t-md">{record.name}</div>
           <div className="bg-slate-200 px-1">{record.details.street}</div>
@@ -273,7 +284,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
         </div>
       );
     } else if (record.type === 'country_city') {
-      setShowDetails(
+      setshowWhereDetails(
         <div className={clsx("p-4 rounded-md w-full", bgColor)}>
           <div className="bg-slate-200 flex flex-row rounded-md">
             <div className="px-1 font-bold">{record.details.city},</div>
@@ -282,13 +293,13 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
         </div>
       );
     } else if (record.type === 'country') {
-      setShowDetails(
+      setshowWhereDetails(
         <div className={clsx("p-4 rounded-md w-full", bgColor)}>
             <div className="px-1 font-bold bg-slate-200 rounded-md">{record.name}</div>
         </div>
       );
     } else if (record.type === 'any') {
-      setShowDetails(
+      setshowWhereDetails(
         <div className={clsx("p-4 rounded-md w-full", bgColor)}>
             <div className="px-1 font-bold bg-slate-200 pb-1 rounded-t-md">{record.name}</div>
             <div className="bg-slate-200 px-1 rounded-b-md">{record.details.desc}</div>
@@ -298,6 +309,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
   }
 
   function handleWhenMouseOver(record : any, isSelected: boolean) {
+    setWhenHoverHighlight(true);
     if (isSelected){
       setSelectedWhenRecord(record);
     }

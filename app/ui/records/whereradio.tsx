@@ -2,20 +2,25 @@ import { WhereOptions } from '@/app/lib/interfaces';
 import { useState } from 'react';
 import clsx from 'clsx';
 
-export default function WhereRadio( props : {whereOptions: WhereOptions, whereMouseOver: Function })
+export default function WhereRadio(
+    props : {
+      whereOptions: WhereOptions,
+      whereMouseOver: Function,
+      hoverWhereHighlight: boolean
+    })
 {
     const [isChecked, setIsChecked] = useState(-1);
     const [bgColor, setBgColor] = useState(-1);
 
     return (
-      <div className="flex flex-col pb-2" >
+      <div className="flex flex-col pb-2 bg-white" >
         { props.whereOptions[1].list.map((el, i) => {
           return (
             <div key={i} className={
               clsx(`flex flex-row border-1 border-slate-400
                     rounded-md px-2 mr-1 cursor-pointer`,
                     { "bg-white" : bgColor !== i && isChecked !== i,
-                      "bg-yellow-100" : bgColor === i && isChecked !== i,
+                      "bg-yellow-100" : bgColor === i && isChecked !== i && props.hoverWhereHighlight,
                       "bg-green-100" : isChecked === i})} 
               onMouseOver={() => {
                   props.whereMouseOver(el, (isChecked === i));
