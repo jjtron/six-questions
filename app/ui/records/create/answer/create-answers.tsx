@@ -116,7 +116,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
                 </div>
               </div>
               <div className="text-xs">(scroll down for more options)</div>
-              <div className="overflow-auto border-1 border-slate-300 h-[135px]" id="where-wrapper-div">
+              <div className="overflow-auto border-1 border-slate-300 h-[135px] rounded-md" id="where-wrapper-div">
                 <WhereRadio
                   whereOptions={[
                     {id: 'where', name: 'where', multi: 'no'},
@@ -168,7 +168,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
               </span>
             </div>
             {/* HIDDEN INPUT BOXES FOR VARIOUS DATE STYLES */}
-            <div className="mt-1 h-[60px]">
+            <div className="mt-1 min-h-[42px]">
               <div className={clsx({ "hidden" : !eventTime1 })}>
                 <DateTimePicker date_time={{date: '01/01/1900', time: '12:00 AM'}} view={["year", "month", "day"]} />
               </div>
@@ -198,7 +198,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
                         setWhenHoverHighlight(false);
                       }}
               >
-              <div className="overflow-auto border-1 border-slate-300 h-[135px] mb-2" id="when-wrapper-div">
+              <div className="overflow-auto border-1 border-slate-300 h-[95px] mb-2 rounded-md" id="when-wrapper-div">
                   <div className="text-xs">Custom event-time styles (scroll down for more options)</div>
                   <WhenRadio
                     whereOptions={[
