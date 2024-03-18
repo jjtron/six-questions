@@ -303,7 +303,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
     }
     const scrollPosition = document.getElementById("when-wrapper-div")?.scrollTop;
     if (scrollPosition && isSelected) {
-      setScrollWhenPosition(scrollWhenPosition)
+      setScrollWhenPosition(scrollPosition)
     }
     const bgColor: object = { "bg-green-100" : isSelected, "bg-yellow-100" : !isSelected };
     if (record.type === 'street_city_state') {
