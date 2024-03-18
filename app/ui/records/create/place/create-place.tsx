@@ -34,8 +34,8 @@ export default function Form() {
               <p className="pl-2">Address, City, State</p>
           </div>
           <div className={clsx("w-full max-h-[168px] rounded-md",
-                { "place-type-enabled": isOpen1,
-                  "place-type-disabled": !isOpen1 }
+                { "record-type-enabled": isOpen1,
+                  "record-type-disabled": !isOpen1 }
                )}>
               {/* NAME OF THE PLACE (DESCRIPTION) */}
               <input disabled={!isOpen1} id="type" name="type" value="street_city_state" type="hidden" />
@@ -118,8 +118,8 @@ export default function Form() {
               <p className="pl-2">Country</p>
           </div>
           <div className={clsx("w-full max-h-[40px] rounded-md",
-                              {"place-type-enabled": isOpen2,
-                              "place-type-disabled": !isOpen2 })
+                              {"record-type-enabled": isOpen2,
+                              "record-type-disabled": !isOpen2 })
                         }>
                 {/* NAME OF COUNTRY */}
                 <div className="flex flex-row">
@@ -151,8 +151,8 @@ export default function Form() {
               <p className="pl-2">Country, City</p>
           </div>
           <div className={clsx("w-full max-h-[84px] rounded-md",
-                              {"place-type-enabled": isOpen3,
-                              "place-type-disabled": !isOpen3 })
+                              {"record-type-enabled": isOpen3,
+                              "record-type-disabled": !isOpen3 })
                          }>
                 {/* NAME OF COUNTRY */}
                 <div className="flex flex-row">
@@ -203,8 +203,8 @@ export default function Form() {
               <p className="pl-2">Any - Title & Description</p>
           </div>
           <div className={clsx("w-full max-h-[124px] rounded-md",
-                              {"place-type-enabled": isOpen4,
-                              "place-type-disabled": !isOpen4 })
+                              {"record-type-enabled": isOpen4,
+                              "record-type-disabled": !isOpen4 })
                          }>
                 {/* TITLE */}
                 <div className="flex flex-row">

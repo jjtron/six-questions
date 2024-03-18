@@ -33,6 +33,24 @@ const client = new Client({
     }
   }
 
+  export async function insertTimeRecord(data: FormData) {
+    try {
+      const statement: string =  `INSERT INTO public.times (name, comments, type, sort_order)
+                                  VALUES (($1),($2),($3),($4))`;
+      const variables = [
+        (data.get("circa") as string).replaceAll("'", "\'"),
+        (data.get("comments") as string).replaceAll("'", "\'"),
+        (data.get("type") as string),
+        (1),
+      ];
+      console.log(variables);
+      const result: any = await client.query( statement, variables );
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to insert an event-time record.');
+    }
+  }
+
   export async function updatePersonRecord(data: FormData) {
     try {
       const statement: string = `UPDATE public.people ` + 

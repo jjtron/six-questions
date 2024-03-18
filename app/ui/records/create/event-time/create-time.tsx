@@ -1,5 +1,5 @@
 'use client';
-import { createPlace } from '@/app/lib/actions';
+import { createEventTime } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
 import { useState } from 'react';
@@ -30,8 +30,8 @@ export default function Form() {
               <p className="pl-2">Circa</p>
           </div>
           <div className={clsx("w-full max-h-[124px] rounded-md",
-                              {"place-type-enabled": isOpen1,
-                              "place-type-disabled": !isOpen1 })
+                              {"record-type-enabled": isOpen1,
+                               "record-type-disabled": !isOpen1 })
                         }>
                 <div className="flex flex-row">
                     <input disabled={!isOpen1} id="type" name="type" value="circa" type="hidden" />
@@ -68,7 +68,6 @@ export default function Form() {
                       ))}
                     </div>
                 </div>
-                <input type="hidden" id="sort_order" name="sort_order" value="1" disabled={!isOpen1} />
           </div>
           {/* GENERAL ///////////////////////////////////////////////////////////////// */}
           <div className="flex flex-row">
@@ -80,8 +79,8 @@ export default function Form() {
               <p className="pl-2">General</p>
           </div>
           <div className={clsx("w-full max-h-[124px] rounded-md",
-                              {"place-type-enabled": isOpen2,
-                              "place-type-disabled": !isOpen2 })
+                              {"record-type-enabled": isOpen2,
+                               "record-type-disabled": !isOpen2 })
                         }>
                 <div className="flex flex-row">
                     <input disabled={!isOpen2} id="type" name="type" value="general" type="hidden" />
@@ -104,21 +103,20 @@ export default function Form() {
                 {/* COMMENTS */}
                 <div className="flex flex-row">
                     <textarea
-                      disabled={!isOpen2} id="comments" name="comments" rows={3} maxLength={200}
+                      disabled={!isOpen2} id="comments_2" name="comments_2" rows={3} maxLength={200}
                       placeholder='Comments (max number of characters: 200)'
                       className="block w-full resize-none rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
-                      aria-describedby="comments-error"
+                      aria-describedby="comments_2-error"
                     />
-                    <div id="comments-error" aria-live="polite" aria-atomic="true">
-                      {state.errors?.comments &&
-                        state.errors.comments.map((error: string) => (
+                    <div id="comments_2-error" aria-live="polite" aria-atomic="true">
+                      {state.errors?.comments_2 &&
+                        state.errors.comments_2.map((error: string) => (
                           <p className="px-2 leading-9 text-sm text-red-500" key={error}>
                             {error}
                           </p>
                       ))}
                     </div>
                 </div>
-                <input type="hidden" id="sort_order" name="sort_order" value="1" disabled={!isOpen2} />
           </div>
 
 

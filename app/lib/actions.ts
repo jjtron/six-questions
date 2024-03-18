@@ -4,8 +4,68 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { insertAnswerRecord, insertPlaceRecord,
          updateAnswerRecord, updatePlaceRecord,
-         insertPersonRecord, updatePersonRecord } from './database';
+         insertPersonRecord, updatePersonRecord,
+         insertTimeRecord } from './database';
 
+//////////////////////EVENT-TIME FUNCTIONS/////////////////////
+export type EventTimeState = {
+  errors?: {
+    circa?: string[];
+    general?: string[];
+    comments?: string[];
+    comments_2?: string[];
+  }; 
+  message?: string | null;
+};
+
+export async function createEventTime(prevState: EventTimeState, formData: FormData) {
+  /* Make sure a valid form type is submitted */
+  if  (z.object(
+        {type: z.string().refine((t) => { return (
+          t === 'general' ||
+          t === 'circa'
+        )})}
+      ).safeParse({
+        type: formData.get('type')
+      }).success) {
+  } else {
+    throw new Error('Failed to provide a valid type.');
+  }
+
+  let validatedFields: any;
+  if  ( formData.get('type') === 'circa') {
+        validatedFields = z.object({
+          circa: z.string().min(1, { message: "required" }),
+          comments: z.string().min(1, { message: "required" })
+        }).safeParse({
+          circa: formData.get('circa'),
+          comments: formData.get('comments')
+        });
+  } else if ( formData.get('type') === 'general' ) {
+    validatedFields = z.object({
+      general: z.string().min(1, { message: "required" }),
+      comments_2: z.string().min(1, { message: "required" })
+    }).safeParse({
+      general: formData.get('general'),
+      comments_2: formData.get('comments_2')
+    });
+
+  }
+  
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    console.log('Error:', validatedFields.error.flatten().fieldErrors);
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Person.',
+    };
+  }
+
+  insertTimeRecord(formData);
+
+  //revalidatePath('/records/view/event-time');
+  //redirect('/records/view/event-time');
+}
 //////////////////////PERSON FUNCTIONS/////////////////////
 export type PersonState = {
   errors?: {
