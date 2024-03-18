@@ -20,8 +20,12 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
   // the following three state variables are used in the
   // place (where) pick section 
   const [showDetails, setShowDetails] = useState(<p></p>);
+  const [showWhenDetails, setShowWhenDetails] = useState(<p></p>);
   const [selectedPlaceRecord, setSelectedPlaceRecord] = useState({});
+  const [selectedWhenRecord, setSelectedWhenRecord] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [scrollWhenPosition, setScrollWhenPosition] = useState(0);
+
   const [eventTime1, setEventTime1] = useState(false);
   const [eventTime2, setEventTime2] = useState(false);
   const [eventTime3, setEventTime3] = useState(false);
@@ -104,7 +108,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
                     ))}
                 </div>
               </div>
-              <div className="text-xs">(scroll down for more choices)</div>
+              <div className="text-xs">(scroll down for more options)</div>
               <div className="overflow-auto border-1 border-slate-300 h-[135px]" id="where-wrapper-div">
                 <WhereRadio
                   whereOptions={[
@@ -120,7 +124,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
             <div className="w-full flex mb-1">{showDetails}</div>
           </div>
 
-          <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[300px]" >
+          <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[200px]" >
             <div className="flex flex-row">
               <div className="font-bold">WHEN</div>
               <div id="when-error" aria-live="polite" aria-atomic="true">
@@ -132,7 +136,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
                   ))}
               </div>
             </div>
-
+            {/* SELECTORS TO CAUSE VARIOUS DATE STYLE INPUTS TO APPEAR */}
             <div className="flex flex-row">
               <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime1 })}>
                 <input type="radio" name="date_type" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(1) }} />
@@ -155,8 +159,8 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
                 <p className="inline px-1">Year only</p><p>(before 1900)</p>
               </span>
             </div>
-
-            <div className="mt-1">
+            {/* HIDDEN INPUT BOXES FOR VARIOUS DATE STYLES */}
+            <div className="mt-1 h-[60px]">
               <div className={clsx({ "hidden" : !eventTime1 })}>
                 <DateTimePicker date_time={{date: '01/01/1900', time: '12:00 AM'}} view={["year", "month", "day"]} />
               </div>
@@ -172,10 +176,32 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
                 <div className="basis-3/5"></div>
                 <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
               </div>
-              <div className={clsx("flex flex-row", { "hidden" : !eventTime5 })}>
+              <div className={clsx("flex flex-row items-center", { "hidden" : !eventTime5 })}>
                 <div className="basis-4/5"></div>
                 <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text-center" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
               </div>
+            </div>
+
+            <div className="flex flex-row" 
+                  onMouseLeave={(e) => {
+                        e.stopPropagation();
+                        document.getElementById("when-wrapper-div")?.scroll(0, scrollWhenPosition);
+                        handleWhenMouseOver(selectedWhenRecord, true)
+                      }}
+              >
+              <div className="overflow-auto border-1 border-slate-300 h-[135px] mb-2" id="when-wrapper-div">
+                  <div className="text-xs">Custom event-time styles (scroll down for more options)</div>
+                  <WhereRadio
+                    whereOptions={[
+                      {id: 'where', name: 'where', multi: 'no'},
+                      {list: whereOptions},
+                      null
+                    ]}
+                    whereMouseOver={handleWhenMouseOver}
+                  >
+                  </WhereRadio>
+              </div>
+              <div className="w-full flex mb-1">{showWhenDetails}</div>
             </div>
           </div>
 
@@ -263,6 +289,49 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
       );
     } else if (record.type === 'any') {
       setShowDetails(
+        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
+            <div className="px-1 font-bold bg-slate-200 pb-1 rounded-t-md">{record.name}</div>
+            <div className="bg-slate-200 px-1 rounded-b-md">{record.details.desc}</div>
+        </div>
+      );
+    }
+  }
+
+  function handleWhenMouseOver(record : any, isSelected: boolean) {
+    if (isSelected){
+      setSelectedWhenRecord(record);
+    }
+    const scrollPosition = document.getElementById("when-wrapper-div")?.scrollTop;
+    if (scrollPosition && isSelected) {
+      setScrollWhenPosition(scrollWhenPosition)
+    }
+    const bgColor: object = { "bg-green-100" : isSelected, "bg-yellow-100" : !isSelected };
+    if (record.type === 'street_city_state') {
+      setShowWhenDetails(
+        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
+          <div className="font-bold bg-slate-200 px-1 rounded-t-md">{record.name}</div>
+          <div className="bg-slate-200 px-1">{record.details.street}</div>
+          <div className="bg-slate-200 px-1">{record.details.city}</div>
+          <div className="bg-slate-200 px-1 rounded-b-md" >{record.details.state}</div>
+        </div>
+      );
+    } else if (record.type === 'country_city') {
+      setShowWhenDetails(
+        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
+          <div className="bg-slate-200 flex flex-row rounded-md">
+            <div className="px-1 font-bold">{record.details.city},</div>
+            <div>{record.name}</div>
+          </div>
+        </div>
+      );
+    } else if (record.type === 'country') {
+      setShowWhenDetails(
+        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
+            <div className="px-1 font-bold bg-slate-200 rounded-md">{record.name}</div>
+        </div>
+      );
+    } else if (record.type === 'any') {
+      setShowWhenDetails(
         <div className={clsx("p-4 rounded-md w-full", bgColor)}>
             <div className="px-1 font-bold bg-slate-200 pb-1 rounded-t-md">{record.name}</div>
             <div className="bg-slate-200 px-1 rounded-b-md">{record.details.desc}</div>

@@ -8,7 +8,7 @@ export default function WhereRadio( props : {whereOptions: WhereOptions, whereMo
     const [bgColor, setBgColor] = useState(-1);
 
     return (
-      <div className="flex flex-col pb-2" >
+      <div className="flex flex-col pb-2 v-flow" >
         { props.whereOptions[1].list.map((el, i) => {
           return (
             <div key={i} className={
