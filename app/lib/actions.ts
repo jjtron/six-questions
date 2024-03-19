@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 import { insertAnswerRecord, insertPlaceRecord,
          updateAnswerRecord, updatePlaceRecord,
          insertPersonRecord, updatePersonRecord,
-         insertTimeRecord } from './database';
+         insertTimeRecord, updateEventTimeRecord } from './database';
 
 //////////////////////EVENT-TIME FUNCTIONS/////////////////////
 export type EventTimeState = {
@@ -66,6 +66,62 @@ export async function createEventTime(prevState: EventTimeState, formData: FormD
   revalidatePath('/records/view/event-times');
   redirect('/records/view/event-times');
 }
+
+export type EventTimeUpdateState = {
+  errors?: {
+    name?: string[];
+    comments?: string[];
+  }; 
+  message?: string | null;
+};
+
+export async function updateEventTime(prevState: EventTimeUpdateState, formData: FormData) {
+  /* Make sure a valid form type is submitted */
+  if  (z.object(
+      {type: z.string().refine((t) => { return (
+        t === 'general' ||
+        t === 'circa'
+      )})}
+      ).safeParse({
+        type: formData.get('type')
+      }).success) {
+  } else {
+    throw new Error('Failed to provide a valid type.');
+  }
+  const validatedFields = z.object({
+    name: z.string().min(1, { message: "required" }),
+    comments: z.string().min(1, { message: "required" })
+  }).safeParse({
+    name: formData.get('name'),
+    comments: formData.get('comments')
+  });
+
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    console.log('Error:', validatedFields.error.flatten().fieldErrors);
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Person.',
+    };
+  }
+
+  updateEventTimeRecord(formData);
+
+  revalidatePath('/records/view/event-times');
+  redirect('/records/view/event-times');
+}
+
+
+
+
+
+
+
+
+
+
+
+
 //////////////////////PERSON FUNCTIONS/////////////////////
 export type PersonState = {
   errors?: {

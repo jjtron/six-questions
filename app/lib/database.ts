@@ -62,6 +62,26 @@ const client = new Client({
     }
   }
 
+  export async function updateEventTimeRecord(data: FormData) {
+    try {
+      const statement: string = `UPDATE public.times
+                                 SET name=($1), comments=($2), sort_order=($3)
+                                 WHERE id=($4)`
+      const result: any = await client.query(
+        statement,
+        [
+          (data.get("name") as string).replaceAll("'", "\'"),
+          (data.get("comments") as string).replaceAll("'", "\'"),
+          (((data.get("type") as string) === "circa") ? 1 : 2),
+           data.get("id")
+        ]
+      );
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to update a person record.');
+    }
+  }
+
   export async function updatePersonRecord(data: FormData) {
     try {
       const statement: string = `UPDATE public.people ` + 

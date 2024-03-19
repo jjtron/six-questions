@@ -44,14 +44,14 @@ export type SixAnswers = {
     how: string;
 }
 
-export type GetDbQueryResult = {
+export type GetDbQueryPersonResult = {
     success: boolean;
-    details: { 
-        rows: {
-            index: number;
-            name: string; 
-        }[]
-    };
+    details: { rows: Person[]; }
+}
+
+export type GetDbQueryEventTimeResult = {
+    success: boolean;
+    details: { rows: EventTime[]; }
 }
 
 export type searchParams = {
