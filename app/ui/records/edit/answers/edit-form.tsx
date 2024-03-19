@@ -2,19 +2,19 @@
 import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
 import WhereRadio from '@/app/ui/records/whereradio';
-import { SelectOptions, WhoOptions, Place, SixAnswers } from '@/app/lib/interfaces';
+import { SelectOptions, Person, Place, SixAnswers } from '@/app/lib/interfaces';
 import DateTimePicker from '@/app/ui/records/datepicker';
 import { useFormState } from 'react-dom';
 import { updateRecord } from '@/app/lib/actions';
 
 export default function Form({whereOptions, whoOptions, record} : 
-    { whereOptions: Place[], whoOptions: WhoOptions[], record: SixAnswers[]}) {
+    { whereOptions: Place[], whoOptions: Person[], record: SixAnswers[]}) {
 
     const initialState = { message: null, errors: {} };
     const [state, dispatch] = useFormState(updateRecord, initialState);
 
     let whoList: SelectOptions = {};
-    whoOptions.map((el: WhoOptions) => {
+    whoOptions.map((el: Person) => {
         whoList[el.index] = el.name;
     });
 
@@ -75,10 +75,13 @@ export default function Form({whereOptions, whoOptions, record} :
               </div>
             </div>
             <WhereRadio whereOptions={[
-                    {id: 'where', name: 'where', multi: 'no'},
-                    {list: whereOptions},
-                    record[0].where
-                ]}>
+                            {id: 'where', name: 'where', multi: 'no'},
+                            {list: whereOptions},
+                            record[0].where
+                        ]}
+                        whereMouseOver={() => {}}
+                        hoverWhereHighlight={false}
+                        >
             </WhereRadio>
         </div>
                 
@@ -94,7 +97,7 @@ export default function Form({whereOptions, whoOptions, record} :
                   ))}
               </div>
             </div>
-            <DateTimePicker date_time={record[0].when} />
+            <DateTimePicker date_time={record[0].when} view={["year", "month", "day"]}/>
         </div>
 
         <div className="flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >

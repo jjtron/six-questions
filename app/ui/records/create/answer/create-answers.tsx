@@ -5,7 +5,7 @@ import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
 import WhereRadio from '@/app/ui/records/whereradio';
 import WhenRadio from '@/app/ui/records/whenradio';
-import { SelectOptions, WhoOptions, Place } from '@/app/lib/interfaces';
+import { SelectOptions, Person, Place } from '@/app/lib/interfaces';
 import DateTimePicker from '@/app/ui/records/datepicker';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
@@ -13,7 +13,7 @@ import clsx from 'clsx';
 import { InputMask } from '@react-input/mask';
 
 
-export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptions[], whereOptions: Place[] }) {
+export default function Form({whoOptions, whereOptions} : { whoOptions: Person[], whereOptions: Place[] }) {
 
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createRecord, initialState);
@@ -47,7 +47,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: WhoOptio
   }
 
   let whoList: SelectOptions = {};
-  whoOptions.map((el: WhoOptions) => {
+  whoOptions.map((el: Person) => {
     whoList[el.index] = el.name;
   });
 
