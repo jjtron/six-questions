@@ -22,6 +22,14 @@ export type Place = {
     sort_order: number;
 }
 
+export type EventTime = {
+    id: number;
+    name: string;
+    comments: string;
+    type: string;
+    sort_order: number;
+}
+
 export type RadioOptions = {
     list: Place[];
 };

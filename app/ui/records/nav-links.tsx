@@ -22,6 +22,7 @@ const links = [
   { name: 'View \'6-Answers\' Records', href: '/records/view/answers', icon: DocumentDuplicateIcon, },
   { name: 'View Places', href: '/records/view/places', icon: BuildingOffice2Icon, },
   { name: 'View People', href: '/records/view/people', icon: UsersIcon, },
+  { name: 'View Event-Times', href: '/records/view/event-times', icon: CalendarIcon, },
   { name: 'Create a \'6-Answers\' Record', href: '/records/create/answer', icon: DocumentTextIcon },
   { name: 'Create a Place', href: '/records/create/place', icon: BuildingOfficeIcon },
   { name: 'Create a Person', href: '/records/create/person', icon: UserIcon },

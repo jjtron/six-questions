@@ -63,8 +63,8 @@ export async function createEventTime(prevState: EventTimeState, formData: FormD
 
   insertTimeRecord(formData);
 
-  revalidatePath('/records/view/event-time');
-  redirect('/records/view/event-time');
+  revalidatePath('/records/view/event-times');
+  redirect('/records/view/event-times');
 }
 //////////////////////PERSON FUNCTIONS/////////////////////
 export type PersonState = {

@@ -1,9 +1,9 @@
 "use server"
 
 import Breadcrumbs from '@/app/ui/records/breadcrumbs';
-import Form from '@/app/ui/records/view/view-places';
+import Form from '@/app/ui/records/view/view-times';
 import Search from '@/app/ui/records/search';
-import { fetchRecordsPlaces } from '@/app/lib/database';
+import { fetchRecordsTimes } from '@/app/lib/database';
 import Pagination from '@/app/ui/records/pagination';
 import { searchParams } from '@/app/lib/interfaces';
 
@@ -11,7 +11,7 @@ export default async function Page({ searchParams } : { searchParams: searchPara
   const query: string = searchParams?.query || '';
   const recordsPerPage: number = searchParams?.recordsPerPage || 10;
   const currentPage: number = Number(searchParams?.page) || 1;
-  const totalPages: number = await fetchRecordsPlaces(query, Number(recordsPerPage));
+  const totalPages: number = await fetchRecordsTimes(query, Number(recordsPerPage));
     
     return (
       <>

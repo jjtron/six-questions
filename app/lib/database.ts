@@ -1,6 +1,6 @@
 import { Client } from 'pg';
 import { unstable_noStore as noStore } from 'next/cache';
-import { Place } from './interfaces'
+import { Place, EventTime } from './interfaces'
 
 const client = new Client({
     user: 'postgres',
@@ -327,7 +327,6 @@ const client = new Client({
     }
   }
 
-  const PLACES_PER_PAGE = 10;
   export async function fetchFilteredPlaces(
     query: string,
     currentPage: number,
@@ -382,6 +381,54 @@ const client = new Client({
     } catch (error) {
       console.error('Database Error:', error);
       throw new Error('Failed to fetch total number of places.');
+    }
+  }
+
+  export async function fetchFilteredTimes(
+    query: string,
+    currentPage: number,
+    recordsPerPage: number
+  ) {
+    noStore();
+    const queryDecoded = (decodeURIComponent(query)).replace("'", "\'");
+    const offset = (currentPage - 1) * recordsPerPage;
+    try {
+      const statement = 
+         `SELECT * FROM public.times
+            WHERE name ILIKE ($1) OR comments ILIKE ($1)
+            ORDER BY sort_order ASC
+            LIMIT ${recordsPerPage} OFFSET ${offset};`;
+
+      const variables = [ `%${queryDecoded}%` ];
+      const eventTimes = await client.query(statement, variables);
+      const groups = await client.query(`SELECT Distinct type, sort_order FROM public.times ORDER BY sort_order ASC`);
+      let groupedEventTimes: EventTime[][] = [];
+      groups.rows.map((group: {type: string;}) => {
+        groupedEventTimes.push(eventTimes.rows.filter((place: Place) => {
+          return place.type === group.type;
+        }));
+      })
+      return groupedEventTimes;
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch filtered event-times.');
+    }
+  }
+
+  export async function fetchRecordsTimes(query: string, recordsPerPage: number) {
+    noStore();
+    try {
+      const queryDecoded = (decodeURIComponent(query)).replace("'", "\'");
+      const statement = `SELECT COUNT(*)
+      FROM public.times
+      WHERE name ILIKE ($1) OR comments ILIKE ($1)`;
+      const variables = [ `%${queryDecoded}%` ];
+      const count = await client.query(statement, variables);
+      const totalPages = Math.ceil(Number(count.rows[0].count) / recordsPerPage);
+      return totalPages;
+    } catch (error) {
+      console.error('Database Error:', error);
+      throw new Error('Failed to fetch total number of evet-times.');
     }
   }
 
