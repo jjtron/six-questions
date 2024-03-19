@@ -37,13 +37,24 @@ const client = new Client({
     try {
       const statement: string =  `INSERT INTO public.times (name, comments, type, sort_order)
                                   VALUES (($1),($2),($3),($4))`;
+      let nameCol: string;
+      let commentCol: string;
+      let sort_order: number;
+      if (data.get("type") === 'general') {
+        nameCol = (data.get("general") as string).replaceAll("'", "\'");
+        commentCol = (data.get("comments_2") as string).replaceAll("'", "\'");
+        sort_order = 2;
+      } else {
+        nameCol = (data.get("circa") as string).replaceAll("'", "\'");
+        commentCol = (data.get("comments") as string).replaceAll("'", "\'");
+        sort_order = 1;
+      }
       const variables = [
-        (data.get("circa") as string).replaceAll("'", "\'"),
-        (data.get("comments") as string).replaceAll("'", "\'"),
+        (nameCol),
+        (commentCol),
         (data.get("type") as string),
-        (1),
+        (sort_order),
       ];
-      console.log(variables);
       const result: any = await client.query( statement, variables );
     } catch (error) {
       console.error('Database Error:', error);
