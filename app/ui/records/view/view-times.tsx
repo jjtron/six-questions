@@ -8,7 +8,5 @@ import { EventTimesTable } from "./table-event-times";
 export default async function Form({ query, currentPage, recordsPerPage } :
     { query: string, currentPage: number, recordsPerPage: number }) {
     const eventTimesGroups = await fetchFilteredTimes(query, currentPage, recordsPerPage);
-        console.log(eventTimesGroups);
-
     return <EventTimesTable eventTimesGroups={eventTimesGroups} />
 }
