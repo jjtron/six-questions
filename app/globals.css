@@ -44,9 +44,7 @@ body {
   .bg-stone-250 {background-color: rgb(240, 232, 232);}
   .bg-sky-250 {background-color: rgb(155, 221, 252);}
   .h-flow {flex-flow: row wrap;}
-
   .disabled-link { pointer-events: none; }
-
   .record-type-enabled {
     opacity: 1;
     height: 168px;
@@ -59,4 +57,5 @@ body {
     transition: opacity 0.3s linear;
   }
   .input-width { width: 30px; text-align: center;}
+  .fake-link { text-decoration: underline; text-underline-offset: 4px; }
 }
