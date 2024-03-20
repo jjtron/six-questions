@@ -11,8 +11,8 @@ export default function Form() {
   const [state, dispatch] = useFormState(createEventTime, initialState);
   const [circaYearOnlyError, setCircaOnlyError] = useState({error: ''});
   const [circaYearOnlyInput, setCircaYearOnlyInput] = useState(false);
-  const [circaYearRangeStartError, setCircaYearRangeStartError] = useState({error: ''});
-  const [circaYearRangeEndError, setCircaYearRangeEndError] = useState({error: ''});
+  const [circaYearRangeStartError, setCircaYearRangeStartError] = useState({error: '', value: ''});
+  const [circaYearRangeEndError, setCircaYearRangeEndError] = useState({error: '', value: ''});
   const [circaYearRangeInput, setCircaYearRangeInput] = useState(false);
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
@@ -22,8 +22,17 @@ export default function Form() {
       (option === 2) ? setIsOpen2(true) : setIsOpen2(false);
   }
 
-  function ensureLogicalTimeSequence() {
-      console.log (document.getElementById('circa-yr-only') as HTMLInputElement).value)
+  function ensureLogicalTimeSequence(a: string, b: string) {
+    // convert AD and BC to negative an positive respectfully
+    const start = (a.substring(a.length - 2) === 'BC') ? -1 * Number(a.substring(0, a.length - 3)) : Number(a.substring(0, a.length - 3));
+    const end = (b.substring(b.length - 2) === 'BC') ? -1 * Number(b.substring(0, b.length - 3)) : Number(b.substring(0, b.length - 3));
+    if (a === '' || b === '') {
+      return (<></>);
+    } else if (start < end) {
+      return (<></>);
+    } else {
+      return (<>begin &gt; end</>);
+    }
   }
 
   return (
@@ -39,19 +48,20 @@ export default function Form() {
               />
               <span className="inline font-bold">&nbsp;Circa</span>
           </div>
-          <div className={clsx("w-full max-h-[144px] rounded-md",
+          <div className={clsx("w-full max-h-[152px] rounded-md",
                               {"record-type-enabled": isOpen1,
                                "record-type-disabled": !isOpen1 })
                         }>
-                <div className="flex flex-row">
-                    <div className="basis-[195px] flex flex-col items-left grow-0">
-                      <div className="fake-link " onClick={() => { setCircaYearOnlyInput(true); setCircaYearRangeInput(false) }}>
+                <div className="flex md:flex-row ">
+                    <div className="basis-[195px] flex flex-col items-left grow-0 ml-2">
+                      <div className="fake-link text-xs/[22px] pl-1 hover:cursor-pointer w-fit"
+                        onClick={() => { if (isOpen1) { setCircaYearOnlyInput(true); setCircaYearRangeInput(false); }}}>
                         yyyy AD/BC
                       </div>
                       <div className="flex flex-row pb-2">
                         <input
                           disabled={!(isOpen1 && circaYearOnlyInput)} id="circa-yr-only" name="circa-yr-only" type="text" step="0.01"
-                          className={clsx("block w-[82px] rounded-md border border-gray-400 text-sm outline-2 text-center")}
+                          className={clsx("block w-[78px] rounded-md border border-gray-400 text-sm outline-2 text-center")}
                           onChange={(e) => {
                             (new RegExp(/^\d{1,4}\s((AD|BC))$/).test(e.target.value))
                               ? setCircaOnlyError({error: ''})
@@ -64,36 +74,40 @@ export default function Form() {
                             state.errors.circa.map((error: string) => (
                               <p className="px-2 leading-9 text-sm text-red-500" key={error}>{error}</p>
                           ))}
-                          {(() => <p className="h-[38px] px-2 leading-9 text-sm text-red-500">{circaYearOnlyError.error}</p>)()}
+                          {(() => <p className="h-[38px] px-2 leading-9 text-xs text-red-500 w-fit">{circaYearOnlyError.error}</p>)()}
                         </div>
                       </div>
                     </div>
 
-                    <div className="basis-[307px] flex flex-row"> {/* div 0 */}
-                      <div className="flex flex-col items-center"> {/* div 1 */}
+                    <div className="basis-[310px] flex flex-row">
+                      <div className="flex flex-col items-center">
                         <div className="flex flex-col items-center">
-                          <div className="fake-link" onClick={() => { setCircaYearOnlyInput(false); setCircaYearRangeInput(true) }}>
-                              yyyy AD/BC - yyyy AD/BC
+                          <div  className="fake-link text-xs/[22px] hover:cursor-pointer"
+                                onClick={() => { if (isOpen1) {
+                                  setCircaYearOnlyInput(false);
+                                  setCircaYearRangeInput(true);
+                                }}}>
+                               yyyy AD/BC - yyyy AD/BC
                           </div>
                           <div className="flex flex-row items-center">
                             <input
                               disabled={!(isOpen1 && circaYearRangeInput)} id="circa-yr-range-start" name="circa-yr-range-start" type="text" step="0.01"
-                              className={clsx("block w-[82px] rounded-md border border-gray-400 text-sm outline-2 text-center p-2")}
+                              className={clsx("block w-[78px] rounded-md border border-gray-400 text-sm outline-2 text-center p-2")}
                               onChange={(e) => {
                                 (new RegExp(/^\d{1,4}\s((AD|BC))$/).test(e.target.value))
-                                  ? setCircaYearRangeStartError({error: ''})
-                                  : setCircaYearRangeStartError({error: 'format error'});
+                                  ? setCircaYearRangeStartError({error: '', value: e.target.value})
+                                  : setCircaYearRangeStartError({error: 'format error', value: ''});
                               }}
                               aria-describedby="circa-yr-range-error"
                             />
                             <p>-</p>
                             <input
                               disabled={!(isOpen1 && circaYearRangeInput)} id="circa-yr-range-end" name="circa-yr-range-end" type="text" step="0.01"
-                              className={clsx("block w-[82px] rounded-md border border-gray-400 text-sm outline-2 text-center p-2")}
+                              className={clsx("block w-[78px] rounded-md border border-gray-400 text-sm outline-2 text-center p-2")}
                               onChange={(e) => {
                                 (new RegExp(/^\d{1,4}\s((AD|BC))$/).test(e.target.value))
-                                  ? setCircaYearRangeEndError({error: ''})
-                                  : setCircaYearRangeEndError({error: 'format error'});
+                                  ? setCircaYearRangeEndError({error: '', value: e.target.value})
+                                  : setCircaYearRangeEndError({error: 'format error', value: ''});
                               }}
                               aria-describedby="circa-yr-range-error"
                             />
@@ -113,39 +127,20 @@ export default function Form() {
                                 } else if (circaYearRangeEndError.error !== '') {
                                   return (<><p className="h-[38px] px-2 leading-9 text-sm text-red-500">{circaYearRangeEndError.error}</p></>)
                                 } else {
-                                  return (<><p className="h-[38px] px-2 leading-9 text-sm text-red-500">{ensureLogicalTimeSequence()}</p></>)
+                                  //const rangeStart = (document.getElementById('circa-yr-range-start') as HTMLInputElement)?.value;
+                                  //const rangeEnd = (document.getElementById('circa-yr-range-end') as HTMLInputElement)?.value;
+                                  return (
+                                    <div className="h-[30px] px-2 leading-9 text-xs text-red-500 w-fit">{
+                                      ensureLogicalTimeSequence(circaYearRangeStartError.value, circaYearRangeEndError.value)
+                                    }</div>
+                                  )
                                 }
                               }
                             )()
                             }
                           </div>
                         </div>
-                    </div> {/* div 0 */}
-{/*
-                    <p className="pl-2 w-full">
-                      <span>format&nbsp;</span>
-                      <span className="fake-link">yyyy AD/BC&nbsp;</span>
-                      <i className="font-bold">or&nbsp;</i>
-                      <span className="fake-link">yyyy AD/BC - yyyy AD/BC</span>
-                    </p>
-                    <input
-                      disabled={!isOpen1} id="circa" name="circa" type="text" step="0.01"
-                      className={clsx("block w-full rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2")}
-                      onChange={(e) => {
-                        (new RegExp(/^\d{1,4}$/).test(e.target.value)) ? setCircaYearInput({error: ''}) : setCircaYearInput({error: 'bad'});
-                      }}
-                      aria-describedby="circa-error"
-                    />
-                    <div id="circa-error" aria-live="polite" aria-atomic="true">
-                      {state.errors?.circa &&
-                        state.errors.circa.map((error: string) => (
-                          <p className="px-2 leading-9 text-sm text-red-500" key={error}>
-                            {error}
-                          </p>
-                      ))}
-                      {(() => <p className="px-2 leading-9 text-sm text-red-500">{circaYearInput.error}</p>)()}
                     </div>
-*/}
                 </div>
 
                 {/* COMMENTS */}
