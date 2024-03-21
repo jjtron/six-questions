@@ -4,6 +4,7 @@ import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
 import { useState } from 'react';
 import clsx from 'clsx';
+import { useRef } from 'react';
 
 export default function Form() {
   
@@ -16,6 +17,11 @@ export default function Form() {
   const [circaYearRangeInput, setCircaYearRangeInput] = useState(false);
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
+
+  const el = <input /> as unknown as HTMLInputElement;
+  const yearOnlyInput = useRef(el);
+  const yearRangeStartInput = useRef(el);
+  const yearRangeEndInput = useRef(el);
 
   function setRadioButton (option: number) {
       (option === 1) ? setIsOpen1(true) : setIsOpen1(false);
@@ -53,19 +59,29 @@ export default function Form() {
                                "record-type-disabled": !isOpen1 })
                         }>
                 <div className="flex md:flex-row ">
-                    <div className="basis-[195px] flex flex-col items-left grow-0 ml-2">
-                      <div className="fake-link text-xs/[22px] pl-1 hover:cursor-pointer w-fit"
-                        onClick={() => { if (isOpen1) { setCircaYearOnlyInput(true); setCircaYearRangeInput(false); }}}>
-                        yyyy AD/BC
-                      </div>
+                    <div className="basis-[195px] flex flex-col items-left grow-0 ml-1">
+                      <div  className="fake-link text-xs/[22px] pl-1 hover:cursor-pointer w-fit"
+                            onClick={() => { if (isOpen1) {
+                                setCircaYearOnlyInput(true);
+                                setCircaYearRangeInput(false);
+                                yearRangeStartInput.current.value = '';
+                                yearRangeEndInput.current.value = '';
+                                setCircaYearRangeStartError({error: '', value: ''});
+                                setCircaYearRangeEndError({error: '', value: ''});
+                                ensureLogicalTimeSequence('', '');
+                            }}
+                        }
+                      >yyyy AD/BC</div>
                       <div className="flex flex-row pb-2">
                         <input
+                          ref={ yearOnlyInput }
                           disabled={!(isOpen1 && circaYearOnlyInput)} id="circa-yr-only" name="circa-yr-only" type="text" step="0.01"
                           className={clsx("block w-[78px] rounded-md border border-gray-400 text-sm outline-2 text-center")}
                           onChange={(e) => {
                             (new RegExp(/^\d{1,4}\s((AD|BC))$/).test(e.target.value))
                               ? setCircaOnlyError({error: ''})
                               : setCircaOnlyError({error: 'format error'});
+                              console.log('hello');
                           }}
                           aria-describedby="circa-yr-only-error"
                         />
@@ -86,11 +102,15 @@ export default function Form() {
                                 onClick={() => { if (isOpen1) {
                                   setCircaYearOnlyInput(false);
                                   setCircaYearRangeInput(true);
-                                }}}>
-                               yyyy AD/BC - yyyy AD/BC
-                          </div>
+                                  yearOnlyInput.current.value = '';
+                                  setCircaYearRangeStartError({error: '', value: ''});
+                                  setCircaYearRangeEndError({error: '', value: ''});
+                                  circaYearOnlyError.error = '';
+                                }}}
+                          >yyyy AD/BC - yyyy AD/BC</div>
                           <div className="flex flex-row items-center">
                             <input
+                              ref={ yearRangeStartInput }
                               disabled={!(isOpen1 && circaYearRangeInput)} id="circa-yr-range-start" name="circa-yr-range-start" type="text" step="0.01"
                               className={clsx("block w-[78px] rounded-md border border-gray-400 text-sm outline-2 text-center p-2")}
                               onChange={(e) => {
@@ -102,6 +122,7 @@ export default function Form() {
                             />
                             <p>-</p>
                             <input
+                              ref={ yearRangeEndInput }
                               disabled={!(isOpen1 && circaYearRangeInput)} id="circa-yr-range-end" name="circa-yr-range-end" type="text" step="0.01"
                               className={clsx("block w-[78px] rounded-md border border-gray-400 text-sm outline-2 text-center p-2")}
                               onChange={(e) => {
@@ -144,11 +165,11 @@ export default function Form() {
                 </div>
 
                 {/* COMMENTS */}
-                <div className="flex flex-row">
+                <div className="flex flex-row px-1">
                     <textarea
                       disabled={!isOpen1} id="comments" name="comments" rows={3} maxLength={200}
                       placeholder='Comments (max number of characters: 200)'
-                      className="block w-full resize-none rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
+                      className="block w-full resize-none rounded-md border border-gray-400 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                       aria-describedby="comments-error"
                     />
                     <div id="comments-error" aria-live="polite" aria-atomic="true">
@@ -164,22 +185,31 @@ export default function Form() {
           {/* GENERAL ///////////////////////////////////////////////////////////////// */}
           <div className="flex flex-row">
               <input  type="radio" name="my-accordion-1"
-                      onClick={() => {setRadioButton(2)}}
+                      onClick={() => {
+                        setRadioButton(2);
+                        yearRangeStartInput.current.value = '';
+                        yearRangeEndInput.current.value = '';
+                        setCircaYearRangeStartError({error: '', value: ''});
+                        setCircaYearRangeEndError({error: '', value: ''});
+                        ensureLogicalTimeSequence('', '');
+                        circaYearOnlyError.error = '';
+                        yearOnlyInput.current.value = '';
+                      }}
                       checked={isOpen2}
                       onChange={() => {}}
               />
-              <p className="pl-2">General</p>
+              <span className="inline font-bold">&nbsp;General</span>
           </div>
           <div className={clsx("w-full max-h-[124px] rounded-md",
                               {"record-type-enabled": isOpen2,
                                "record-type-disabled": !isOpen2 })
                         }>
-                <div className="flex flex-row">
+                <div className="flex flex-row px-1">
                     <input disabled={!isOpen2} id="type" name="type" value="general" type="hidden" />
                     <input
                       disabled={!isOpen2} id="general" name="general" type="text" step="0.01"
                       placeholder='Title (up to 100 characters)'
-                      className="block w-full rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
+                      className="block w-full rounded-md border border-gray-400 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                       aria-describedby="general-error"
                     />
                     <div id="general-error" aria-live="polite" aria-atomic="true">
@@ -193,11 +223,11 @@ export default function Form() {
                 </div>
 
                 {/* COMMENTS */}
-                <div className="flex flex-row">
+                <div className="flex flex-row px-1">
                     <textarea
                       disabled={!isOpen2} id="comments_2" name="comments_2" rows={3} maxLength={200}
                       placeholder='Comments (max number of characters: 200)'
-                      className="block w-full resize-none rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
+                      className="block w-full resize-none rounded-md border border-gray-400 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                       aria-describedby="comments_2-error"
                     />
                     <div id="comments_2-error" aria-live="polite" aria-atomic="true">
