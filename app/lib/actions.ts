@@ -78,7 +78,6 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     const errs = validatedFields.error.flatten().fieldErrors;
-    console.log('Error:', errs);
     if (errs.circa_yr_range_start || errs.circa_yr_range_end) {
       return {
         errors: { circa_range: [ 'range required' ] },

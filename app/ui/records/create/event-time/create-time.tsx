@@ -155,7 +155,7 @@ export default function Form() {
                       </div> {/* div 1 */}
                         <div className="flex flex-col">
                           <div className="h-[24px]"></div>
-                          <div id="circa-yr-range-error" aria-live="polite" aria-atomic="true">
+                          <div id="circa-yr-range-error" aria-live="polite" aria-atomic="true" className="h-[24px]">
                             {state.errors?.circa_range &&
                               state.errors.circa_range.map((error: string) => (
                                 <p className="px-2 leading-7 text-xs text-red-500" key={error}>{error}</p>
@@ -166,8 +166,6 @@ export default function Form() {
                                 } else if (circaYearRangeEndError.error !== '') {
                                   return (<><p className="h-[38px] px-2 leading-9 text-xs text-red-500">{circaYearRangeEndError.error}</p></>)
                                 } else {
-                                  //const rangeStart = (document.getElementById('circa-yr-range-start') as HTMLInputElement)?.value;
-                                  //const rangeEnd = (document.getElementById('circa-yr-range-end') as HTMLInputElement)?.value;
                                   return (
                                     <div className="h-[30px] px-2 leading-9 text-xs text-red-500 w-fit">{
                                       ensureLogicalTimeSequence(circaYearRangeStartError.value, circaYearRangeEndError.value)
