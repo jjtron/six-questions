@@ -33,14 +33,17 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
         type: formData.get('type')
       }).success) {
   } else {
-    throw new Error('Failed to provide a valid type.');
+    return {
+      errors: { circa_tbd: [ 'No valid data' ] },
+      message: 'No valid data. Failed to Create Event-Time.',
+    };
   }
 
   let validatedFields: any;
   if (formData.get('type') === 'circa_tbd') {
     return {
       errors: { circa_tbd: [ 'a year or year-range is required' ] },
-      message: 'Missing Fields. Failed to Create Person.',
+      message: 'Missing data. Failed to Create Event-Time.',
     };
   } else if ( formData.get('type') === 'circa_yr') {
         validatedFields = z.object({
@@ -80,13 +83,13 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
     const errs = validatedFields.error.flatten().fieldErrors;
     if (errs.circa_yr_range_start || errs.circa_yr_range_end) {
       return {
-        errors: { circa_range: [ 'range required' ] },
-        message: 'Missing Fields. Failed to Create Person.',
+        errors: { circa_range: [ 'range invalid' ] },
+        message: 'Missing Fields. Failed to Create Event-Time.',
       };
     }
     return {
       errors: errs,
-      message: 'Missing Fields. Failed to Create Person.',
+      message: 'Missing Fields. Failed to Create Event-Time.',
     };
   }
 
