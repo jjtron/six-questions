@@ -52,7 +52,7 @@ export default function Form() {
         <div className="h-[520px]">
           {/* CIRCA ///////////////////////////////////////////////////////////////// */}
           <input ref={ circaType } disabled={!isOpen1} id="type" name="type" type="hidden" />
-          <div className="flex flex-row">
+          <div className="flex flex-row items-center">
               <input  type="radio" name="my-accordion-1"
                       onClick={() => {setRadioButton(1)}}
                       checked={isOpen1}
@@ -62,13 +62,13 @@ export default function Form() {
                         circaType.current.value = 'circa_tbd';
                       }}
               />
-              <span className="inline font-bold">&nbsp;Circa</span>
-              <div id="circa-tbd-error" aria-live="polite" aria-atomic="true" className="h-[8px]">
+              <span className="font-bold">&nbsp;Circa</span>
+              <span id="circa-tbd-error" aria-live="polite" aria-atomic="true" className="inline">
                           {state.errors?.circa_tbd &&
                             state.errors.circa_tbd.map((error: string) => (
-                              <p className="px-2 leading-9 text-sm text-red-500" key={error}>{error}</p>
+                              <p className="px-2 leading-6 text-xs text-red-500" key={error}>{error}</p>
                           ))}
-                        </div>
+              </span>
           </div>
           <div className={clsx("w-full max-h-[152px] rounded-md",
                               {"record-type-enabled": isOpen1,
@@ -105,7 +105,7 @@ export default function Form() {
                         <div id="circa-yr-only-error" aria-live="polite" aria-atomic="true" className="h-[38px]">
                           {state.errors?.circa_yr_only &&
                             state.errors.circa_yr_only.map((error: string) => (
-                              <p className="px-2 leading-9 text-sm text-red-500" key={error}>{error}</p>
+                              <p className="px-2 leading-9 text-xs text-red-500" key={error}>{error}</p>
                           ))}
                           {(() => <p className="h-[38px] px-2 leading-9 text-xs text-red-500 w-fit">{circaYearOnlyError.error}</p>)()}
                         </div>
@@ -158,13 +158,13 @@ export default function Form() {
                           <div id="circa-yr-range-error" aria-live="polite" aria-atomic="true">
                             {state.errors?.circa_range &&
                               state.errors.circa_range.map((error: string) => (
-                                <p className="px-2 leading-9 text-sm text-red-500" key={error}>{error}</p>
+                                <p className="px-2 leading-7 text-xs text-red-500" key={error}>{error}</p>
                             ))}
                             {(() => {
                                 if (circaYearRangeStartError.error !== '') {
-                                  return (<><p className="h-[38px] px-2 leading-9 text-sm text-red-500">{circaYearRangeStartError.error}</p></>)
+                                  return (<><p className="h-[38px] px-2 leading-9 text-xs text-red-500">{circaYearRangeStartError.error}</p></>)
                                 } else if (circaYearRangeEndError.error !== '') {
-                                  return (<><p className="h-[38px] px-2 leading-9 text-sm text-red-500">{circaYearRangeEndError.error}</p></>)
+                                  return (<><p className="h-[38px] px-2 leading-9 text-xs text-red-500">{circaYearRangeEndError.error}</p></>)
                                 } else {
                                   //const rangeStart = (document.getElementById('circa-yr-range-start') as HTMLInputElement)?.value;
                                   //const rangeEnd = (document.getElementById('circa-yr-range-end') as HTMLInputElement)?.value;
@@ -193,7 +193,7 @@ export default function Form() {
                     <div id="comments-error" aria-live="polite" aria-atomic="true">
                       {state.errors?.comments &&
                         state.errors.comments.map((error: string) => (
-                          <p className="px-2 leading-9 text-sm text-red-500" key={error}>
+                          <p className="px-2 leading-9 text-xs text-red-500" key={error}>
                             {error}
                           </p>
                       ))}
@@ -234,7 +234,7 @@ export default function Form() {
                     <div id="general-error" aria-live="polite" aria-atomic="true">
                       {state.errors?.general &&
                         state.errors.general.map((error: string) => (
-                          <p className="px-2 leading-9 text-sm text-red-500" key={error}>
+                          <p className="px-2 leading-9 text-xs text-red-500" key={error}>
                             {error}
                           </p>
                       ))}
@@ -252,7 +252,7 @@ export default function Form() {
                     <div id="comments_2-error" aria-live="polite" aria-atomic="true">
                       {state.errors?.comments_2 &&
                         state.errors.comments_2.map((error: string) => (
-                          <p className="px-2 leading-9 text-sm text-red-500" key={error}>
+                          <p className="px-2 leading-9 text-xs text-red-500" key={error}>
                             {error}
                           </p>
                       ))}
