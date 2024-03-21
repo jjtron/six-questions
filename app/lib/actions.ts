@@ -1,5 +1,5 @@
 'use server';
-import z, { number } from "zod"; 
+import z, { nullable, number } from "zod"; 
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { insertAnswerRecord, insertPlaceRecord,
@@ -8,22 +8,26 @@ import { insertAnswerRecord, insertPlaceRecord,
          insertTimeRecord, updateEventTimeRecord } from './database';
 
 //////////////////////EVENT-TIME FUNCTIONS/////////////////////
-export type EventTimeState = {
+export type CreateEventTimeState = {
   errors?: {
-    circa?: string[];
+    circa_yr_only?: string[];
+    circa_range?: string[];
     general?: string[];
     comments?: string[];
     comments_2?: string[];
+    circa_tbd?: string[]
   }; 
   message?: string | null;
 };
 
-export async function createEventTime(prevState: EventTimeState, formData: FormData) {
+export async function createEventTime(prevState: CreateEventTimeState, formData: FormData) {
   /* Make sure a valid form type is submitted */
   if  (z.object(
         {type: z.string().refine((t) => { return (
           t === 'general' ||
-          t === 'circa'
+          t === 'circa_yr' ||
+          t === 'circa_range' ||
+          t === 'circa_tbd'
         )})}
       ).safeParse({
         type: formData.get('type')
@@ -33,14 +37,34 @@ export async function createEventTime(prevState: EventTimeState, formData: FormD
   }
 
   let validatedFields: any;
-  if  ( formData.get('type') === 'circa') {
+  if (formData.get('type') === 'circa_tbd') {
+    return {
+      errors: { circa_tbd: [ 'a year or year-range is required' ] },
+      message: 'Missing Fields. Failed to Create Person.',
+    };
+  } else if ( formData.get('type') === 'circa_yr') {
         validatedFields = z.object({
-          circa: z.string().min(1, { message: "required" }),
+          circa_yr_only: z.string().min(1, { message: "required" }).nullable().refine(
+              (val) => {
+                return (val !== null)
+              },
+              { message: "required" }
+          ),
           comments: z.string().min(1, { message: "required" })
         }).safeParse({
-          circa: formData.get('circa'),
+          circa_yr_only: formData.get('circa_yr_only'),
           comments: formData.get('comments')
         });
+  } else if ( formData.get('type') === 'circa_range' ) {
+    validatedFields = z.object({
+      circa_yr_range_start: z.string().min(1, { message: "required" }),
+      circa_yr_range_end: z.string().min(1, { message: "required" }),
+      comments: z.string().min(1, { message: "required" })
+    }).safeParse({
+      circa_yr_range_start: formData.get('circa_yr_range_start'),
+      circa_yr_range_end: formData.get('circa_yr_range_end'),
+      comments: formData.get('comments')
+    });
   } else if ( formData.get('type') === 'general' ) {
     validatedFields = z.object({
       general: z.string().min(1, { message: "required" }),
@@ -49,7 +73,6 @@ export async function createEventTime(prevState: EventTimeState, formData: FormD
       general: formData.get('general'),
       comments_2: formData.get('comments_2')
     });
-
   }
   
   // If form validation fails, return errors early. Otherwise, continue.
