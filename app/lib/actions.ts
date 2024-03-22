@@ -47,22 +47,22 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
     };
   } else if ( formData.get('type') === 'circa_yr') {
         validatedFields = z.object({
-          circa_yr_only: z.string().min(1, { message: "required" }).nullable().refine(
+          circa_yr_only: z.string().min(1, { message: "year error" }).nullable().refine(
               (val) => {
                 return (val !== null)
               },
-              { message: "required" }
+              { message: "year or year-range required" }
           ),
-          comments: z.string().min(1, { message: "required" })
+          comments: z.string().min(1, { message: "comments required" })
         }).safeParse({
           circa_yr_only: formData.get('circa_yr_only'),
           comments: formData.get('comments')
         });
   } else if ( formData.get('type') === 'circa_range' ) {
     validatedFields = z.object({
-      circa_yr_range_start: z.string().min(1, { message: "required" }),
-      circa_yr_range_end: z.string().min(1, { message: "required" }),
-      comments: z.string().min(1, { message: "required" })
+      circa_yr_range_start: z.string().min(1, { message: "start year error" }),
+      circa_yr_range_end: z.string().min(1, { message: "end year error" }),
+      comments: z.string().min(1, { message: "comments required" })
     }).safeParse({
       circa_yr_range_start: formData.get('circa_yr_range_start'),
       circa_yr_range_end: formData.get('circa_yr_range_end'),
@@ -70,8 +70,8 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
     });
   } else if ( formData.get('type') === 'general' ) {
     validatedFields = z.object({
-      general: z.string().min(1, { message: "required" }),
-      comments_2: z.string().min(1, { message: "required" })
+      general: z.string().min(1, { message: "title required" }),
+      comments_2: z.string().min(1, { message: "comments required" })
     }).safeParse({
       general: formData.get('general'),
       comments_2: formData.get('comments_2')
@@ -81,16 +81,31 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     const errs = validatedFields.error.flatten().fieldErrors;
-    if (errs.circa_yr_range_start || errs.circa_yr_range_end) {
+    //console.log(errs);
+    let s: string = '';
+    Object.keys(errs).forEach((k) => {
+      s += errs[k] + ', ';
+    });
+    console.log(s);
+    if ((formData.get('type') as string)?.substring(0, 5) === 'circa') {
+        return {
+          errors: { circa_tbd: [ s ] },
+          message: 'Missing Fields. Failed to Create Event-Time.',
+        };
+    } else {
+        return {
+          errors: { general: [ s ] },
+          message: 'Missing Fields. Failed to Create Event-Time.',
+        };
+    }
+    /*
+    //if (errs.circa_yr_range_start || errs.circa_yr_range_end) {
       return {
-        errors: { circa_range: [ 'range invalid' ] },
+        errors: { circa_tbd: [ 'range invalid' ] },
         message: 'Missing Fields. Failed to Create Event-Time.',
       };
-    }
-    return {
-      errors: errs,
-      message: 'Missing Fields. Failed to Create Event-Time.',
-    };
+    //}
+    */
   }
 
   insertTimeRecord(formData);

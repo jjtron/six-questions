@@ -76,21 +76,22 @@ export default function Form() {
                         }>
                 <div className="flex md:flex-row ">
                     <div className="basis-[195px] flex flex-col items-left grow-0 ml-1">
-                      <div className="flex flex-row items-center">
-                        <div  className="fake-link text-xs/[22px] pl-1 hover:cursor-pointer w-fit h-[22px]"
-                              onClick={() => { if (isOpen1) {
-                                  setCircaYearOnlyInput(true);
-                                  setCircaYearRangeInput(false);
-                                  yearRangeStartInput.current.value = '';
-                                  yearRangeEndInput.current.value = '';
-                                  setCircaYearRangeStartError({error: '', value: ''});
-                                  setCircaYearRangeEndError({error: '', value: ''});
-                                  ensureLogicalTimeSequence('', '');
-                                  circaType.current.value = 'circa_yr';
-                                }}
-                              }
-                              aria-describedby="circa-tbd-error"
-                        >yyyy AD/BC</div>
+                      
+                      <div  className="fake-link text-xs/[22px] pl-1 hover:cursor-pointer w-fit h-[22px]"
+                            onClick={() => { if (isOpen1) {
+                                setCircaYearOnlyInput(true);
+                                setCircaYearRangeInput(false);
+                                yearRangeStartInput.current.value = '';
+                                yearRangeEndInput.current.value = '';
+                                setCircaYearRangeStartError({error: '', value: ''});
+                                setCircaYearRangeEndError({error: '', value: ''});
+                                ensureLogicalTimeSequence('', '');
+                                circaType.current.value = 'circa_yr';
+                              }}
+                            }
+                            //aria-describedby="circa-tbd-error"
+                      >yyyy AD/BC</div>
+                        {/*
                         <div id="circa-yr-only-error" aria-live="polite" aria-atomic="true" className="h-[22px]">
                           {state.errors?.circa_yr_only && 
                             state.errors.circa_yr_only.map((error: string) => (
@@ -99,7 +100,8 @@ export default function Form() {
                           ))}
                           
                         </div>
-                      </div>
+                        */}
+                      
                       <div className="flex flex-row pb-2 h-[42px] ">
                         <input
                           ref={ yearOnlyInput }
@@ -110,7 +112,7 @@ export default function Form() {
                               ? setCircaOnlyError({error: ''})
                               : setCircaOnlyError({error: 'format error'});
                           }}
-                          aria-describedby="circa-yr-only-error"
+                          //aria-describedby="circa-yr-only-error"
                         />
                         {(() => <p className="px-2 leading-9 text-xs text-red-500 w-fit">{circaYearOnlyError.error}</p>)()}
                       </div>
@@ -140,7 +142,7 @@ export default function Form() {
                                   ? setCircaYearRangeStartError({error: '', value: e.target.value})
                                   : setCircaYearRangeStartError({error: 'format error', value: ''});
                               }}
-                              aria-describedby="circa-yr-range-error"
+                              //aria-describedby="circa-yr-range-error"
                             />
                             <p>-</p>
                             <input
@@ -152,13 +154,13 @@ export default function Form() {
                                   ? setCircaYearRangeEndError({error: '', value: e.target.value})
                                   : setCircaYearRangeEndError({error: 'format error', value: ''});
                               }}
-                              aria-describedby="circa-yr-range-error"
+                              //aria-describedby="circa-yr-range-error"
                             />
                           </div>
                         </div>
                       </div> {/* div 1 */}
                         <div className="flex flex-col">
-                         
+                         {/*
                           <div id="circa-yr-range-error" aria-live="polite" aria-atomic="true" className="h-[24px]">
                             {state.errors?.circa_range &&
                               state.errors.circa_range.map((error: string) => (
@@ -166,21 +168,23 @@ export default function Form() {
                                              { "hidden" : circaYearOnlyInput } )} key={error}>{error}</p>
                             ))}
                           </div>
-                          {(() => {
-                                if (circaYearRangeStartError.error !== '') {
-                                  return (<><p className="h-[38px] px-2 leading-8 text-xs text-red-500">{circaYearRangeStartError.error}</p></>)
-                                } else if (circaYearRangeEndError.error !== '') {
-                                  return (<><p className="h-[38px] px-2 leading-8 text-xs text-red-500">{circaYearRangeEndError.error}</p></>)
-                                } else {
-                                  return (
-                                    <div className="h-[30px] px-2 leading-8 text-xs text-red-500 w-fit">{
-                                      ensureLogicalTimeSequence(circaYearRangeStartError.value, circaYearRangeEndError.value)
-                                    }</div>
-                                  )
+                         */}
+                          <div className="h-[24px]"></div>
+                            {(() => {
+                                  if (circaYearRangeStartError.error !== '') {
+                                    return (<><p className="h-[38px] px-2 leading-8 text-xs text-red-500">{circaYearRangeStartError.error}</p></>)
+                                  } else if (circaYearRangeEndError.error !== '') {
+                                    return (<><p className="h-[38px] px-2 leading-8 text-xs text-red-500">{circaYearRangeEndError.error}</p></>)
+                                  } else {
+                                    return (
+                                      <div className="h-[30px] px-2 leading-8 text-xs text-red-500 w-fit">{
+                                        ensureLogicalTimeSequence(circaYearRangeStartError.value, circaYearRangeEndError.value)
+                                      }</div>
+                                    )
+                                  }
                                 }
-                              }
-                            )()
-                          }
+                              )()
+                            }
                         </div>
                     </div>
                 </div>
@@ -191,8 +195,9 @@ export default function Form() {
                       disabled={!isOpen1} id="comments" name="comments" rows={3} maxLength={200}
                       placeholder='Comments (max number of characters: 200)'
                       className="block w-full resize-none rounded-md border border-gray-400 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
-                      aria-describedby="comments-error"
+                      //aria-describedby="comments-error"
                     />
+                    {/*
                     <div id="comments-error" aria-live="polite" aria-atomic="true">
                       {state.errors?.comments &&
                         state.errors.comments.map((error: string) => (
@@ -201,6 +206,7 @@ export default function Form() {
                           </p>
                       ))}
                     </div>
+                    */}
                 </div>
           </div>
           {/* GENERAL ///////////////////////////////////////////////////////////////// */}
@@ -221,6 +227,12 @@ export default function Form() {
                       onChange={() => {}}
               />
               <span className="inline font-bold">&nbsp;General</span>
+              <span id="general-error" aria-live="polite" aria-atomic="true" className="inline">
+                                {state.errors?.general &&
+                                  state.errors.general.map((error: string) => (
+                                    <p className="px-2 leading-6 text-xs text-red-500" key={error}>{error}</p>
+                                ))}
+                    </span>
           </div>
           <div className={clsx("w-full max-h-[124px] rounded-md",
                               {"record-type-enabled": isOpen2,
@@ -232,8 +244,9 @@ export default function Form() {
                       disabled={!isOpen2} id="general" name="general" type="text" step="0.01"
                       placeholder='Title (up to 100 characters)'
                       className="block w-full rounded-md border border-gray-400 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
-                      aria-describedby="general-error"
+                      //aria-describedby="general-error"
                     />
+                    {/*
                     <div id="general-error" aria-live="polite" aria-atomic="true">
                       {state.errors?.general &&
                         state.errors.general.map((error: string) => (
@@ -242,6 +255,7 @@ export default function Form() {
                           </p>
                       ))}
                     </div>
+                    */}
                 </div>
 
                 {/* COMMENTS */}
@@ -250,8 +264,9 @@ export default function Form() {
                       disabled={!isOpen2} id="comments_2" name="comments_2" rows={3} maxLength={200}
                       placeholder='Comments (max number of characters: 200)'
                       className="block w-full resize-none rounded-md border border-gray-400 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
-                      aria-describedby="comments_2-error"
+                      //aria-describedby="comments_2-error"
                     />
+                    {/*
                     <div id="comments_2-error" aria-live="polite" aria-atomic="true">
                       {state.errors?.comments_2 &&
                         state.errors.comments_2.map((error: string) => (
@@ -260,6 +275,7 @@ export default function Form() {
                           </p>
                       ))}
                     </div>
+                    */}
                 </div>
           </div>
 
