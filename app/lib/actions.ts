@@ -118,7 +118,7 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
     }
   }
 
-  //insertTimeRecord(formData);
+  insertTimeRecord(formData);
 
   revalidatePath('/records/view/event-times');
   redirect('/records/view/event-times');

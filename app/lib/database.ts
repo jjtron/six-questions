@@ -44,10 +44,15 @@ const client = new Client({
         nameCol = (data.get("general") as string).replaceAll("'", "\'");
         commentCol = (data.get("comments_2") as string).replaceAll("'", "\'");
         sort_order = 2;
-      } else {
-        nameCol = (data.get("circa") as string).replaceAll("'", "\'");
+      } else if (data.get("type") === 'circa_range') {
+        nameCol = `${(data.get("circa_yr_range_start") as string)} - ` +
+                  `${(data.get("circa_yr_range_end") as string)}`;
         commentCol = (data.get("comments") as string).replaceAll("'", "\'");
         sort_order = 1;
+      } else {
+        nameCol = (data.get("circa_yr_only") as string);
+        commentCol = (data.get("comments") as string).replaceAll("'", "\'");
+        sort_order = 0;
       }
       const variables = [
         (nameCol),
