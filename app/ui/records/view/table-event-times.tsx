@@ -25,22 +25,42 @@ export function EventTimesTable({eventTimesGroups} : {eventTimesGroups : EventTi
                 const lineId: string = (i + '') + (j + '');
                 return (
                   <div key={lineId} className="w-full flex flex-col">
-                    {/* CIRCA header */}
+                    {/* CIRCA YEAR ONLY header */}
                     <div className={clsx(`bg-sky-400 rounded-md pl-2 text-left
                                           font-bold border-tbl-1 border-slate-400
                                           rounded-l-md`,
-                                          { "hidden" : (j !== 0 || record.type !== "circa" )}
+                                          { "hidden" : (j !== 0 || record.type !== "circa_yr" )}
                                         )
                                    }
-                    >CIRCA</div>
+                    >CIRCA, YEAR ONLY</div>
 
                     {/* CIRCA records */}
                     <div className={clsx("flex flex-row rounded-md",
                             { "bg-yellow-100" : selectedRecordId === record.id, "bg-sky-200" : selectedRecordId !== record.id },
-                            { "hidden" : (record.type !== "circa")}
+                            { "hidden" : (record.type !== "circa_yr")}
                           )}
                         onClick={() => handleClick(record.id)} >
-                      <div className="basis-1/4 pl-2 border-tbl-1 border-slate-400 rounded-l-md"><span>Year:</span><span className="pl-2">{record.name}</span></div>
+                      <div className="basis-1/4 pl-2 border-tbl-1 border-slate-400 rounded-l-md"><span className="pl-2">{record.name}</span></div>
+                      <div className="basis-3/4 border-trb-1 border-slate-400 rounded-r-md">{record.comments}</div>
+                    </div>
+
+                    {/* //////////////////////////////////////////////////////////////////////////// */}
+                    {/* CIRCA YEAR RANGE header */}
+                    <div className={clsx(`bg-sky-400 rounded-md pl-2 text-left
+                                          font-bold border-tbl-1 border-slate-400
+                                          rounded-l-md`,
+                                          { "hidden" : (j !== 0 || record.type !== "circa_range" )}
+                                        )
+                                   }
+                    >CIRCA, YEAR RANGE</div>
+
+                    {/* CIRCA records */}
+                    <div className={clsx("flex flex-row rounded-md",
+                            { "bg-yellow-100" : selectedRecordId === record.id, "bg-sky-200" : selectedRecordId !== record.id },
+                            { "hidden" : (record.type !== "circa_range")}
+                          )}
+                        onClick={() => handleClick(record.id)} >
+                      <div className="basis-1/4 pl-2 border-tbl-1 border-slate-400 rounded-l-md"><span className="pl-2">{record.name}</span></div>
                       <div className="basis-3/4 border-trb-1 border-slate-400 rounded-r-md">{record.comments}</div>
                     </div>
 
