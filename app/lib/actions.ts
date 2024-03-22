@@ -81,7 +81,6 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     const errs = validatedFields.error.flatten().fieldErrors;
-    //console.log(errs);
     let s: string = '';
     Object.keys(errs).forEach((k) => {
       s += errs[k] + ', ';
@@ -98,14 +97,6 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
           message: 'Missing Fields. Failed to Create Event-Time.',
         };
     }
-    /*
-    //if (errs.circa_yr_range_start || errs.circa_yr_range_end) {
-      return {
-        errors: { circa_tbd: [ 'range invalid' ] },
-        message: 'Missing Fields. Failed to Create Event-Time.',
-      };
-    //}
-    */
   }
 
   insertTimeRecord(formData);

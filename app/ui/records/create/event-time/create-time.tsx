@@ -89,18 +89,7 @@ export default function Form() {
                                 circaType.current.value = 'circa_yr';
                               }}
                             }
-                            //aria-describedby="circa-tbd-error"
                       >yyyy AD/BC</div>
-                        {/*
-                        <div id="circa-yr-only-error" aria-live="polite" aria-atomic="true" className="h-[22px]">
-                          {state.errors?.circa_yr_only && 
-                            state.errors.circa_yr_only.map((error: string) => (
-                              <p className={clsx("px-2 leading-6 text-xs text-red-500",
-                                            { "hidden" : circaYearRangeInput } )} key={error}>{error}</p>
-                          ))}
-                          
-                        </div>
-                        */}
                       
                       <div className="flex flex-row pb-2 h-[42px] ">
                         <input
@@ -112,7 +101,6 @@ export default function Form() {
                               ? setCircaOnlyError({error: ''})
                               : setCircaOnlyError({error: 'format error'});
                           }}
-                          //aria-describedby="circa-yr-only-error"
                         />
                         {(() => <p className="px-2 leading-9 text-xs text-red-500 w-fit">{circaYearOnlyError.error}</p>)()}
                       </div>
@@ -142,7 +130,7 @@ export default function Form() {
                                   ? setCircaYearRangeStartError({error: '', value: e.target.value})
                                   : setCircaYearRangeStartError({error: 'format error', value: ''});
                               }}
-                              //aria-describedby="circa-yr-range-error"
+
                             />
                             <p>-</p>
                             <input
@@ -154,21 +142,13 @@ export default function Form() {
                                   ? setCircaYearRangeEndError({error: '', value: e.target.value})
                                   : setCircaYearRangeEndError({error: 'format error', value: ''});
                               }}
-                              //aria-describedby="circa-yr-range-error"
+
                             />
                           </div>
                         </div>
                       </div> {/* div 1 */}
                         <div className="flex flex-col">
-                         {/*
-                          <div id="circa-yr-range-error" aria-live="polite" aria-atomic="true" className="h-[24px]">
-                            {state.errors?.circa_range &&
-                              state.errors.circa_range.map((error: string) => (
-                                <p className={clsx("px-2 leading-7 text-xs text-red-500",
-                                             { "hidden" : circaYearOnlyInput } )} key={error}>{error}</p>
-                            ))}
-                          </div>
-                         */}
+
                           <div className="h-[24px]"></div>
                             {(() => {
                                   if (circaYearRangeStartError.error !== '') {
@@ -197,16 +177,6 @@ export default function Form() {
                       className="block w-full resize-none rounded-md border border-gray-400 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                       //aria-describedby="comments-error"
                     />
-                    {/*
-                    <div id="comments-error" aria-live="polite" aria-atomic="true">
-                      {state.errors?.comments &&
-                        state.errors.comments.map((error: string) => (
-                          <p className="px-2 leading-9 text-xs text-red-500" key={error}>
-                            {error}
-                          </p>
-                      ))}
-                    </div>
-                    */}
                 </div>
           </div>
           {/* GENERAL ///////////////////////////////////////////////////////////////// */}
@@ -244,18 +214,7 @@ export default function Form() {
                       disabled={!isOpen2} id="general" name="general" type="text" step="0.01"
                       placeholder='Title (up to 100 characters)'
                       className="block w-full rounded-md border border-gray-400 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
-                      //aria-describedby="general-error"
                     />
-                    {/*
-                    <div id="general-error" aria-live="polite" aria-atomic="true">
-                      {state.errors?.general &&
-                        state.errors.general.map((error: string) => (
-                          <p className="px-2 leading-9 text-xs text-red-500" key={error}>
-                            {error}
-                          </p>
-                      ))}
-                    </div>
-                    */}
                 </div>
 
                 {/* COMMENTS */}
@@ -264,22 +223,9 @@ export default function Form() {
                       disabled={!isOpen2} id="comments_2" name="comments_2" rows={3} maxLength={200}
                       placeholder='Comments (max number of characters: 200)'
                       className="block w-full resize-none rounded-md border border-gray-400 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
-                      //aria-describedby="comments_2-error"
                     />
-                    {/*
-                    <div id="comments_2-error" aria-live="polite" aria-atomic="true">
-                      {state.errors?.comments_2 &&
-                        state.errors.comments_2.map((error: string) => (
-                          <p className="px-2 leading-9 text-xs text-red-500" key={error}>
-                            {error}
-                          </p>
-                      ))}
-                    </div>
-                    */}
                 </div>
           </div>
-
-
         </div>
         <div className="flex flex-col items-center justify-between p-4">
           <Button type="submit">Create Event Time</Button>
