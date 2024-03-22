@@ -68,6 +68,7 @@ const client = new Client({
   }
 
   export async function updateEventTimeRecord(data: FormData) {
+    const sortArray: string[] = ['circa_yr', 'circa_range', 'general'];
     try {
       const statement: string = `UPDATE public.times
                                  SET name=($1), comments=($2), sort_order=($3)
@@ -77,7 +78,7 @@ const client = new Client({
         [
           (data.get("name") as string).replaceAll("'", "\'"),
           (data.get("comments") as string).replaceAll("'", "\'"),
-          (((data.get("type") as string) === "circa") ? 1 : 2),
+          (sortArray.indexOf((data.get("type") as string))),
            data.get("id")
         ]
       );

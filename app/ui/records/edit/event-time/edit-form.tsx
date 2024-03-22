@@ -28,7 +28,7 @@ export default function Form({ eventTime } : { eventTime: EventTime }) {
             <div id="name-error" aria-live="polite" aria-atomic="true">
               {state.errors?.name &&
                 state.errors.name.map((error: string) => (
-                  <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
+                  <p className="pl-2 leading-4 text-sm text-red-500" key={error}>
                     {error}
                   </p>
               ))}

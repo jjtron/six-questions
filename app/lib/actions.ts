@@ -147,25 +147,26 @@ export async function updateEventTime(prevState: EventTimeUpdateState, formData:
   const validatedFields = z.object({
     name: z.string().min(4, { message: "required" })
       .refine((val) => {
-          if (new RegExp(/^\d{1,4}\s((AD|BC))$/).test(val) && formData.get('type') === 'circa_yr') {
-            console.log(0);
-            return true;
-          } else if (new RegExp(/^\d{1,4}\s((AD|BC))\s-\s\d{1,4}\s((AD|BC))$/).test(val) && formData.get('type') === 'circa_range') {
-              // ensure logical chronological sequence of year range
-              const a = val.substring(0, val.indexOf('-') - 1);
-              const b = val.substring(val.indexOf('-') + 2)
-              const start = (a.substring(a.length - 2) === 'BC') ? -1 * Number(a.substring(0, a.length - 3)) : Number(a.substring(0, a.length - 3));
-              const end = (b.substring(b.length - 2) === 'BC') ? -1 * Number(b.substring(0, b.length - 3)) : Number(b.substring(0, b.length - 3));
-              return (start < end);
-
-          } else {
-            console.log(2);
-            return {
-              errors:  { name: [ 'fail' ] },
-              message: 'Format Error in updating the event-time record name field',
-            };
-          }
-      }),
+                          if (formData.get('type') === 'circa_yr') {
+                            return (new RegExp(/^\d{1,4}\s((AD|BC))$/).test(val));
+                          } else if (formData.get('type') === 'circa_range') {
+                              return (new RegExp(/^\d{1,4}\s((AD|BC))\s-\s\d{1,4}\s((AD|BC))$/).test(val)
+                              &&  (
+                                    (() => {
+                                      // ensure logical chronological sequence of year range
+                                      const a = val.substring(0, val.indexOf('-') - 1);
+                                      const b = val.substring(val.indexOf('-') + 2)
+                                      const start = (a.substring(a.length - 2) === 'BC') ? -1 * Number(a.substring(0, a.length - 3)) : Number(a.substring(0, a.length - 3));
+                                      const end = (b.substring(b.length - 2) === 'BC') ? -1 * Number(b.substring(0, b.length - 3)) : Number(b.substring(0, b.length - 3));
+                                      return (start < end);
+                                    }))()
+                                  )
+                          } else {
+                            return true;
+                          }
+                        },
+                        { message: "format-error or end-date preceeds start-date" }
+      ),
 
     comments: z.string().min(1, { message: "required" })
   }).safeParse({
@@ -182,7 +183,7 @@ export async function updateEventTime(prevState: EventTimeUpdateState, formData:
     };
   }
 
-  //updateEventTimeRecord(formData);
+  updateEventTimeRecord(formData);
 
   revalidatePath('/records/view/event-times');
   redirect('/records/view/event-times');
