@@ -10,12 +10,8 @@ import { insertAnswerRecord, insertPlaceRecord,
 //////////////////////EVENT-TIME FUNCTIONS/////////////////////
 export type CreateEventTimeState = {
   errors?: {
-    circa_yr_only?: string[];
-    circa_range?: string[];
     general?: string[];
-    comments?: string[];
-    comments_2?: string[];
-    circa_tbd?: string[]
+    circa?: string[]
   }; 
   message?: string | null;
 };
@@ -27,22 +23,22 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
           t === 'general' ||
           t === 'circa_yr' ||
           t === 'circa_range' ||
-          t === 'circa_tbd'
+          t === 'circa'
         )})}
       ).safeParse({
         type: formData.get('type')
       }).success) {
   } else {
     return {
-      errors: { circa_tbd: [ 'No valid data' ] },
+      errors: { circa: [ 'No valid data' ] },
       message: 'No valid data. Failed to Create Event-Time.',
     };
   }
 
   let validatedFields: any;
-  if (formData.get('type') === 'circa_tbd') {
+  if (formData.get('type') === 'circa') {
     return {
-      errors: { circa_tbd: [ 'a year or year-range is required' ] },
+      errors: { circa: [ 'a year or year-range is required' ] },
       message: 'Missing data. Failed to Create Event-Time.',
     };
   } else if ( formData.get('type') === 'circa_yr') {
@@ -111,7 +107,7 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
     });
     if ((formData.get('type') as string)?.substring(0, 5) === 'circa') {
         return {
-          errors: { circa_tbd: [ s ] },
+          errors: { circa: [ s ] },
           message: 'Missing Fields. Failed to Create Event-Time.',
         };
     } else {
@@ -171,17 +167,6 @@ export async function updateEventTime(prevState: EventTimeUpdateState, formData:
   revalidatePath('/records/view/event-times');
   redirect('/records/view/event-times');
 }
-
-
-
-
-
-
-
-
-
-
-
 
 //////////////////////PERSON FUNCTIONS/////////////////////
 export type PersonState = {

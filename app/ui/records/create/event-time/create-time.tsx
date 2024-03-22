@@ -58,15 +58,15 @@ export default function Form() {
                         setRadioButton(1);
                         generalComments.current.value = '';
                         generalTitle.current.value = '';
-                        circaType.current.value = 'circa_tbd';
+                        circaType.current.value = 'circa';
                       }}
                       checked={isOpen1}
                       onChange={() => {}}
               />
               <span className="font-bold">&nbsp;Circa</span>
               <span id="circa-tbd-error" aria-live="polite" aria-atomic="true" className="inline">
-                    {state.errors?.circa_tbd &&
-                      state.errors.circa_tbd.map(
+                    {state.errors?.circa &&
+                      state.errors.circa.map(
                         (error: string) => {
                           const eTmp: string = (isOpen2) ? '' : error;
                           return (
@@ -182,7 +182,6 @@ export default function Form() {
                       disabled={!isOpen1} id="comments" name="comments" rows={3} maxLength={200}
                       placeholder='Comments (max number of characters: 200)'
                       className="block w-full resize-none rounded-md border border-gray-400 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
-                      //aria-describedby="comments-error"
                     />
                 </div>
           </div>
