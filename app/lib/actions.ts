@@ -47,12 +47,22 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
     };
   } else if ( formData.get('type') === 'circa_yr') {
         validatedFields = z.object({
-          circa_yr_only: z.string().min(1, { message: "year error" }).nullable().refine(
+          circa_yr_only: z.string().min(4, { message: "year error" }).nullable()
+            .refine(
               (val) => {
                 return (val !== null)
               },
               { message: "year or year-range required" }
-          ),
+            ).refine(
+              (val) => {
+                if ( val !== null) {
+                  return (new RegExp(/^\d{1,4}\s((AD|BC))$/).test(val))
+                } else {
+                  return true;
+                }
+              },
+              { message: "year format error" }
+            ),
           comments: z.string().min(1, { message: "comments required" })
         }).safeParse({
           circa_yr_only: formData.get('circa_yr_only'),
@@ -60,8 +70,19 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
         });
   } else if ( formData.get('type') === 'circa_range' ) {
     validatedFields = z.object({
-      circa_yr_range_start: z.string().min(1, { message: "start year error" }),
-      circa_yr_range_end: z.string().min(1, { message: "end year error" }),
+      circa_yr_range_start: z.string().min(4, { message: "start year error" }),
+      circa_yr_range_end: z.string().min(4, { message: "end year error" })
+      .refine(
+        (val) => {
+          const a = formData.get('circa_yr_range_start') as string;
+          const b = formData.get('circa_yr_range_end') as string;
+          if (a === '' || b === '') { return true; }
+          const start = (a.substring(a.length - 2) === 'BC') ? -1 * Number(a.substring(0, a.length - 3)) : Number(a.substring(0, a.length - 3));
+          const end = (b.substring(b.length - 2) === 'BC') ? -1 * Number(b.substring(0, b.length - 3)) : Number(b.substring(0, b.length - 3));
+          return (start < end);
+        },
+        { message: "begin > end" }
+      ),
       comments: z.string().min(1, { message: "comments required" })
     }).safeParse({
       circa_yr_range_start: formData.get('circa_yr_range_start'),
@@ -83,8 +104,10 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
     const errs = validatedFields.error.flatten().fieldErrors;
     let s: string = '';
     const keys: string[] = Object.keys(errs);
-    keys.forEach((k, i) => {
-      s += errs[k] += ((keys.length !== i + 1) ? ', ' : '');
+    keys.forEach((key: any, i: number) => {
+      errs[key].forEach((val: string, j: number) => {
+        s += val += '. ';
+      })
     });
     if ((formData.get('type') as string)?.substring(0, 5) === 'circa') {
         return {
