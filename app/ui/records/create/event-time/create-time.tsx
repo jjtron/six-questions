@@ -54,20 +54,27 @@ export default function Form() {
           <input ref={ circaType } disabled={!isOpen1} id="type" name="type" type="hidden" />
           <div className="flex flex-row items-center">
               <input  type="radio" name="my-accordion-1"
-                      onClick={() => {setRadioButton(1)}}
-                      checked={isOpen1}
-                      onChange={() => {
+                      onClick={() => {
+                        setRadioButton(1);
                         generalComments.current.value = '';
                         generalTitle.current.value = '';
                         circaType.current.value = 'circa_tbd';
                       }}
+                      checked={isOpen1}
+                      onChange={() => {}}
               />
               <span className="font-bold">&nbsp;Circa</span>
               <span id="circa-tbd-error" aria-live="polite" aria-atomic="true" className="inline">
-                          {state.errors?.circa_tbd &&
-                            state.errors.circa_tbd.map((error: string) => (
-                              <p className="px-2 leading-6 text-xs text-red-500" key={error}>{error}</p>
-                          ))}
+                    {state.errors?.circa_tbd &&
+                      state.errors.circa_tbd.map(
+                        (error: string) => {
+                          const eTmp: string = (isOpen2) ? '' : error;
+                          return (
+                            <p className="px-2 leading-6 text-xs text-red-500"
+                                key={error}>{eTmp}
+                            </p>
+                          )
+                        })}
               </span>
           </div>
           <div className={clsx("w-full max-h-[148px] rounded-md",
@@ -198,11 +205,17 @@ export default function Form() {
               />
               <span className="inline font-bold">&nbsp;General</span>
               <span id="general-error" aria-live="polite" aria-atomic="true" className="inline">
-                                {state.errors?.general &&
-                                  state.errors.general.map((error: string) => (
-                                    <p className="px-2 leading-6 text-xs text-red-500" key={error}>{error}</p>
-                                ))}
-                    </span>
+                    {state.errors?.general &&
+                      state.errors.general.map(
+                        (error: string) => {
+                          const eTmp: string = (isOpen1) ? '' : error;
+                          return (
+                            <p className="px-2 leading-6 text-xs text-red-500"
+                                key={error}>{eTmp}
+                            </p>
+                          )
+                        })}
+              </span>
           </div>
           <div className={clsx("w-full max-h-[124px] rounded-md",
                               {"record-type-enabled": isOpen2,

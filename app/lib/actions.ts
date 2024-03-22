@@ -82,10 +82,10 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
   if (!validatedFields.success) {
     const errs = validatedFields.error.flatten().fieldErrors;
     let s: string = '';
-    Object.keys(errs).forEach((k) => {
-      s += errs[k] + ', ';
+    const keys: string[] = Object.keys(errs);
+    keys.forEach((k, i) => {
+      s += errs[k] += ((keys.length !== i + 1) ? ', ' : '');
     });
-    console.log(s);
     if ((formData.get('type') as string)?.substring(0, 5) === 'circa') {
         return {
           errors: { circa_tbd: [ s ] },
@@ -99,7 +99,7 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
     }
   }
 
-  insertTimeRecord(formData);
+  //insertTimeRecord(formData);
 
   revalidatePath('/records/view/event-times');
   redirect('/records/view/event-times');
