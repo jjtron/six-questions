@@ -1,10 +1,10 @@
-import { WhereOptions } from '@/app/lib/interfaces';
+import { WhenRadioOptions } from '@/app/lib/interfaces';
 import { useState } from 'react';
 import clsx from 'clsx';
 
 export default function WhenRadio(
   props : {
-    whereOptions: WhereOptions,
+    whenRadioOptions: WhenRadioOptions,
     whenMouseOver: Function,
     hoverWhenHighlight: boolean
   })
@@ -14,7 +14,7 @@ export default function WhenRadio(
 
     return (
       <div className="flex flex-col pb-2 bg-white" >
-        { props.whereOptions[1].list.map((el, i) => {
+        { props.whenRadioOptions[1].list.map((el, i) => {
           return (
             <div key={i} className={
               clsx(`flex flex-row border-1 border-slate-400
@@ -29,12 +29,12 @@ export default function WhenRadio(
             >
               {
                 (function () {
-                  if (props.whereOptions[2]?.toString() === el.id.toString()) {
-                      // input is defaultChecked
-                      return (<input className="h-[24px]" type="radio" name="where" defaultChecked value={el.id} /> )
+                  if (props.whenRadioOptions[2]?.toString() === el.id.toString()) {
+                      // input is defaultCheckn
+                      return (<input className="h-[24px]" type="radio" name="when" defaultChecked value={el.id} /> )
                   } else {
                       // input is not checked
-                      return (<input className="h-[24px]" type="radio" name="where" value={el.id} 
+                      return (<input className="h-[24px]" type="radio" name="when" value={el.id} 
                           onClick={() => {
                               setIsChecked(i);
                               props.whenMouseOver(el, true);

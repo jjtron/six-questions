@@ -5,7 +5,7 @@ import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
 import WhereRadio from '@/app/ui/records/whereradio';
 import WhenRadio from '@/app/ui/records/whenradio';
-import { SelectOptions, Person, Place } from '@/app/lib/interfaces';
+import { SelectOptions, Person, Place, EventTime } from '@/app/lib/interfaces';
 import DateTimePicker from '@/app/ui/records/datepicker';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
@@ -13,7 +13,17 @@ import clsx from 'clsx';
 import { InputMask } from '@react-input/mask';
 
 
-export default function Form({whoOptions, whereOptions} : { whoOptions: Person[], whereOptions: Place[] }) {
+export default function Form(
+    { 
+      whoOptions,
+      whereOptions,
+      whenOptions
+    } : { 
+          whoOptions: Person[],
+          whereOptions: Place[],
+          whenOptions: EventTime[]
+        })
+{
 
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createRecord, initialState);
@@ -118,7 +128,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: Person[]
               <div className="text-xs">(scroll down for more options)</div>
               <div className="overflow-auto border-1 border-slate-300 h-[135px] rounded-md" id="where-wrapper-div">
                 <WhereRadio
-                  whereOptions={[
+                  whereRadioOptions={[
                     {id: 'where', name: 'where', multi: 'no'},
                     {list: whereOptions},
                     null
@@ -198,12 +208,12 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: Person[]
                         setWhenHoverHighlight(false);
                       }}
               >
-              <div className="overflow-auto border-1 border-slate-300 h-[95px] mb-2 rounded-md" id="when-wrapper-div">
+              <div className="overflow-auto border-1 border-slate-300 h-[90px] mb-2 rounded-md" id="when-wrapper-div">
                   <div className="text-xs">Custom event-time styles (scroll down for more options)</div>
                   <WhenRadio
-                    whereOptions={[
+                    whenRadioOptions={[
                       {id: 'where', name: 'where', multi: 'no'},
-                      {list: whereOptions},
+                      {list: whenOptions},
                       null
                     ]}
                     whenMouseOver={handleWhenMouseOver}
@@ -211,7 +221,7 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: Person[]
                   >
                   </WhenRadio>
               </div>
-              <div className="w-full flex mb-1">{showWhenDetails}</div>
+              <div className="w-full flex mb-2">{showWhenDetails}</div>
             </div>
           </div>
 
@@ -318,35 +328,25 @@ export default function Form({whoOptions, whereOptions} : { whoOptions: Person[]
       setScrollWhenPosition(scrollPosition)
     }
     const bgColor: object = { "bg-green-100" : isSelected, "bg-yellow-100" : !isSelected };
-    if (record.type === 'street_city_state') {
+    if (record.type === 'circa_yr') {
       setShowWhenDetails(
         <div className={clsx("p-4 rounded-md w-full", bgColor)}>
           <div className="font-bold bg-slate-200 px-1 rounded-t-md">{record.name}</div>
-          <div className="bg-slate-200 px-1">{record.details.street}</div>
-          <div className="bg-slate-200 px-1">{record.details.city}</div>
-          <div className="bg-slate-200 px-1 rounded-b-md" >{record.details.state}</div>
+          <div className="bg-slate-200 px-1 rounded-b-md" >{record.comments}</div>
         </div>
       );
-    } else if (record.type === 'country_city') {
+    } else if (record.type === 'circa_range') {
       setShowWhenDetails(
         <div className={clsx("p-4 rounded-md w-full", bgColor)}>
-          <div className="bg-slate-200 flex flex-row rounded-md">
-            <div className="px-1 font-bold">{record.details.city},</div>
-            <div>{record.name}</div>
-          </div>
+          <div className="font-bold bg-slate-200 px-1 rounded-t-md">{record.name}</div>
+          <div className="bg-slate-200 px-1 rounded-b-md" >{record.comments}</div>
         </div>
       );
-    } else if (record.type === 'country') {
+    } else if (record.type === 'general') {
       setShowWhenDetails(
         <div className={clsx("p-4 rounded-md w-full", bgColor)}>
-            <div className="px-1 font-bold bg-slate-200 rounded-md">{record.name}</div>
-        </div>
-      );
-    } else if (record.type === 'any') {
-      setShowWhenDetails(
-        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
-            <div className="px-1 font-bold bg-slate-200 pb-1 rounded-t-md">{record.name}</div>
-            <div className="bg-slate-200 px-1 rounded-b-md">{record.details.desc}</div>
+          <div className="font-bold bg-slate-200 px-1 rounded-t-md">{record.name}</div>
+          <div className="bg-slate-200 px-1 rounded-b-md" >{record.comments}</div>
         </div>
       );
     }

@@ -3,7 +3,13 @@ export type SelectOptions = {[key: number]: string};
 export type WhoOptions = {index: number, name: string};
 export type Person = {index: number, name: string};
 
-export type WhereOptions = [
+export type WhereRadioOptions = [
+    SelectProps,
+    RadioOptions,
+    number | null
+]
+
+export type WhenRadioOptions = [
     SelectProps,
     RadioOptions,
     number | null
@@ -31,7 +37,7 @@ export type EventTime = {
 }
 
 export type RadioOptions = {
-    list: Place[];
+    list: Place[] | EventTime[];
 };
 
 export type SixAnswers = {

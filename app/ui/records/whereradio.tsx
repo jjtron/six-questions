@@ -1,10 +1,10 @@
-import { WhereOptions } from '@/app/lib/interfaces';
+import { WhereRadioOptions } from '@/app/lib/interfaces';
 import { useState } from 'react';
 import clsx from 'clsx';
 
 export default function WhereRadio(
     props : {
-      whereOptions: WhereOptions,
+      whereRadioOptions: WhereRadioOptions,
       whereMouseOver: Function,
       hoverWhereHighlight: boolean
     })
@@ -14,7 +14,7 @@ export default function WhereRadio(
 
     return (
       <div className="flex flex-col pb-2 bg-white" >
-        { props.whereOptions[1].list.map((el, i) => {
+        { props.whereRadioOptions[1].list.map((el, i) => {
           return (
             <div key={i} className={
               clsx(`flex flex-row border-1 border-slate-400
@@ -29,7 +29,7 @@ export default function WhereRadio(
             >
               {
                 (function () {
-                  if (props.whereOptions[2]?.toString() === el.id.toString()) {
+                  if (props.whereRadioOptions[2]?.toString() === el.id.toString()) {
                       // input is defaultChecked
                       return (<input className="h-[24px]" type="radio" name="where" defaultChecked value={el.id} /> )
                   } else {

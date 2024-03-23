@@ -25,7 +25,10 @@ export default async function Page() {
               ]}
             />
           </div>
-          <Form whoOptions={whoOptions} whereOptions={whereOptions}></Form>
+          <Form whoOptions={whoOptions}
+                whereOptions={whereOptions}
+                whenOptions={whenOptions}>
+          </Form>
         </main>
     );
     
