@@ -105,6 +105,7 @@ export default function StepperForm(
         </React.Fragment>
       ) : (
         <React.Fragment>
+          <div className="h-[4px]"></div>
           {/* NOT NEEDED . . . <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
           {
             (() => { if (activeStep === 0) {

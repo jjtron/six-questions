@@ -152,7 +152,7 @@ export default function AnswerForm(
 
         <div className={clsx({"hidden" : page !== 1 })}>
           {/* PAGE 2 */}
-          <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[400px]" >
+          <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[406px]" >
             <div className="flex flex-row">
               <div className="font-bold">WHEN</div>
               <div id="when-error" aria-live="polite" aria-atomic="true">
@@ -218,7 +218,7 @@ export default function AnswerForm(
                         setWhenHoverHighlight(false);
                       }}
               >
-              <div className="overflow-auto border-1 border-slate-300 h-[90px] mb-2 rounded-md" id="when-wrapper-div">
+              <div className="overflow-auto border-1 border-slate-290 h-[290px] mb-2 rounded-md" id="when-wrapper-div">
                   <div className="text-xs">Custom event-time styles (scroll down for more options)</div>
                   <WhenRadio
                     whenRadioOptions={[
