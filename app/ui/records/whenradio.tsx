@@ -6,7 +6,8 @@ export default function WhenRadio(
   props : {
     whenRadioOptions: WhenRadioOptions,
     whenMouseOver: Function,
-    hoverWhenHighlight: boolean
+    hoverWhenHighlight: boolean,
+    customWhenClick: Function
   })
 {
     const [isChecked, setIsChecked] = useState(-1);
@@ -31,13 +32,14 @@ export default function WhenRadio(
                 (function () {
                   if (props.whenRadioOptions[2]?.toString() === el.id.toString()) {
                       // input is defaultCheckn
-                      return (<input className="h-[24px]" type="radio" name="when" defaultChecked value={el.id} /> )
+                      return (<input className="h-[24px]" type="radio" name="custom_when" defaultChecked value={el.id} />)
                   } else {
                       // input is not checked
-                      return (<input className="h-[24px]" type="radio" name="when" value={el.id} 
+                      return (<input className="h-[24px]" type="radio" name="custom_when" value={el.id} 
                           onClick={() => {
                               setIsChecked(i);
                               props.whenMouseOver(el, true);
+                              props.customWhenClick(i);
                           }}/> )
                   }
                 })()

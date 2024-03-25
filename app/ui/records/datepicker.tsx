@@ -8,13 +8,15 @@ import dayjs from 'dayjs';
 var convertTime = require('convert-time');
 
 export default function DateTimePicker(
-      {date_time, view} :
+      {date_time, view, form_data_name} :
       {
         date_time: {date: string; time: string;},
-        view: any[]
+        view: any[],
+        form_data_name: string
       }
   ) {
 
+  const xy = 'whatever';
   const datetime = `${date_time.date.replace(/\//g, '-')}T${convertTime(date_time.time)}`;
   const converted_datetime = datetime.substring(6, 10) + '-' + datetime.substring(0, 2) + '-' + 
                              datetime.substring(3, 4) + datetime.substring(10);
@@ -26,13 +28,13 @@ export default function DateTimePicker(
           {
             (() => {
               if (converted_datetime !== '1900-01-0T12:00') {
-                return (<DatePicker className="bg-white" label="Date" slotProps={{ textField: { size: 'small', id: "when", name: "when" } }}
+                return (<DatePicker className="bg-white" label="Date" slotProps={{ textField: { size: 'small', id: "when", name: form_data_name } }}
                   value={dayjs(date_time.date)}
                   views={view}
                   onChange={((e) => {})}
                 />)
               } else {
-                  return (<DatePicker className="bg-white" label="Date" slotProps={{ textField: { size: 'small', id: "when", name: "when" } }}
+                  return (<DatePicker className="bg-white" label="Date" slotProps={{ textField: { size: 'small', id: "when", name: form_data_name } }}
                   views={view} />)
               }
             })()
@@ -44,12 +46,12 @@ export default function DateTimePicker(
               // if datepicker view is ["year", "month"] (length of 2), do not show time picker
               if (view.length === 3) {
                 if (converted_datetime !== '1900-01-0T12:00') {
-                  return (<TimePicker className="bg-white" label="Time" slotProps={{ textField: { size: 'small', id: "when", name: "when" } }}
+                  return (<TimePicker className="bg-white" label="Time" slotProps={{ textField: { size: 'small', id: "yr_mon_day_time", name: "yr_mon_day_time" } }}
                               value={dayjs(converted_datetime)}
                               onChange={((e) => {})}
                   />)
                 } else {
-                    return (<TimePicker className="bg-white" label="Time" slotProps={{ textField: { size: 'small', id: "when", name: "when" } }} />)
+                    return (<TimePicker className="bg-white" label="Time" slotProps={{ textField: { size: 'small', id: "yr_mon_day_time", name: "yr_mon_day_time" } }} />)
                 }
               }
             })()

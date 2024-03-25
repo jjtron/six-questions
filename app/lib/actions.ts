@@ -253,7 +253,7 @@ export async function updatePerson(prevState: PersonUpdateState, formData: FormD
   redirect('/records/view/people');
 }
 
-export type State = {
+export type InsertAndCreateState = {
   errors?: {
     id?: string[];
     who?: string[];
@@ -280,6 +280,11 @@ const FormSchema = z.object({
   what: z.string().min(1, { message: "required" }),
   where: z.string().nullable()
     .refine((val) => { return (val !== null) },{ message: "required" }),
+  yr_mon_day: z.string(),
+  yr_mon_day_time: z.string(),
+  yr_mon: z.string(),
+  custom_when: z.coerce.number(),
+  /*
   when: z.string().array().length(2).refine(
       (a) => {
               const dateRegexp = /^\d{2}\/\d{2}\/\d{4}/;
@@ -291,11 +296,12 @@ const FormSchema = z.object({
              }, 
              { message: "Invalid date and/or time; both required" }
     ),
+  */
   why: z.string().min(1, { message: "required" }),
   how: z.string().min(1, { message: "required" }),
 });
 
-export async function updateRecord(prevState: State, formData: FormData) {
+export async function updateRecord(prevState: InsertAndCreateState, formData: FormData) {
   const validatedFields = FormSchema.safeParse({
     id: formData.get('id'),
     who: formData.getAll('who'),
@@ -321,13 +327,17 @@ export async function updateRecord(prevState: State, formData: FormData) {
   redirect('/records/view/answers');
 }
 
-export async function createRecord(prevState: State, formData: FormData) {
+export async function createRecord(prevState: InsertAndCreateState, formData: FormData) {
+  console.log(formData);
   const validatedFields = FormSchema.safeParse({
     id: formData.get('id'),
     who: formData.getAll('who'),
     what: formData.get('what'),
     where: formData.get('where'),
-    when: formData.getAll('when'),
+    yr_mon_day: formData.get('yr_mon_day'),
+    yr_mon_day_time: formData.get('yr_mon_day_time'),
+    yr_mon: formData.get('yr_mon'),
+    custom_when: formData.get('custom_when'),
     why: formData.get('why'),
     how: formData.get('how'),
   });
@@ -335,16 +345,21 @@ export async function createRecord(prevState: State, formData: FormData) {
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     const errors = validatedFields.error.flatten().fieldErrors;
+    console.log(errors);
     return {
       errors: errors,
       message: 'Missing Fields. Failed to Create Record.',
     };
   }
 
-  insertAnswerRecord(formData);
+  //insertAnswerRecord(formData);
 
-  revalidatePath('/records/view/answers');
-  redirect('/records/view/answers');
+  //    TEMPROARY
+  revalidatePath('/records/create/answer');
+  redirect('/records/create/answer');
+
+  //revalidatePath('/records/view/answers');
+  //redirect('/records/view/answers');
 }
 
 //////////////////////PLACE FUNCTIONS/////////////////////

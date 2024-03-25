@@ -27,8 +27,6 @@ export default function AnswerForm(
         })
 {
 
-  console.log(page);
-
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createRecord, initialState);
 
@@ -167,46 +165,52 @@ export default function AnswerForm(
             {/* SELECTORS TO CAUSE VARIOUS DATE STYLE INPUTS TO APPEAR */}
             <div className="flex flex-row">
               <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime1 })}>
-                <input type="radio" name="date_type" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(1) }} />
+                <input type="radio" name="date_type_1" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(1) }} checked={eventTime1} onChange={() => {}} />
                 <p className="inline px-1">Date/Time</p><p>(since 1900)</p>
               </span>
               <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime2 })}>
-                <input type="radio" name="date_type" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(2) }} />
+                <input type="radio" name="date_type_2" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(2) }} checked={eventTime2} onChange={() => {}} />
                 <p className="inline px-1">Year/Month</p><p>(since 1900)</p>
               </span>
               <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime3 })}>
-                <input type="radio" name="date_type" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(3) }} />
+                <input type="radio" name="date_type_3" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(3) }} checked={eventTime3} onChange={() => {}} />
                 <p className="inline px-1">Date</p><p>(before 1900)</p>
               </span>
               <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime4 })}>
-                <input type="radio" name="date_type" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(4) }} />
+                <input type="radio" name="date_type_4" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(4) }} checked={eventTime4} onChange={() => {}} />
                 <p className="inline px-1">Year/Month</p><p>(before 1900)</p>
               </span>
               <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime5 })}>
-                <input type="radio" name="date_type" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(5) }} />
+                <input type="radio" name="date_type_5" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(5) }} checked={eventTime4} onChange={() => {}} />
                 <p className="inline px-1">Year only</p><p>(before 1900)</p>
               </span>
             </div>
             {/* HIDDEN INPUT BOXES FOR VARIOUS DATE STYLES */}
             <div className="mt-1 min-h-[42px]">
               <div className={clsx({ "hidden" : !eventTime1 })}>
-                <DateTimePicker date_time={{date: '01/01/1900', time: '12:00 AM'}} view={["year", "month", "day"]} />
+                <DateTimePicker
+                    date_time={{date: '01/01/1900', time: '12:00 AM'}}
+                    view={["year", "month", "day"]}
+                    form_data_name={"yr_mon_day"} />
               </div>
               <div className={clsx("flex flex-row", { "hidden" : !eventTime2 })}>
                 <div className="basis-1/5"></div>
-                <DateTimePicker date_time={{date: '01/01/1900', time: '12:00 AM'}} view={["year", "month"]}/>
+                <DateTimePicker
+                    date_time={{date: '01/01/1900', time: '12:00 AM'}}
+                    view={["year", "month"]}
+                    form_data_name={"yr_mon"} />
               </div>
               <div className={clsx("flex flex-row", { "hidden" : !eventTime3 })}>
                 <div className="basis-2/5"></div>
-                <InputMask className="w-[120px] border-1 border-slate-300 rounded-md text-center" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                <InputMask className="w-[120px] border-1 border-slate-300 rounded-md text-center" name="date_only_pre1900" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
               </div>
               <div className={clsx("flex flex-row", { "hidden" : !eventTime4 })}>
                 <div className="basis-3/5"></div>
-                <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center" name="year_mon_pre1900" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
               </div>
               <div className={clsx("flex flex-row items-center", { "hidden" : !eventTime5 })}>
                 <div className="basis-4/5"></div>
-                <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text-center" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text-center" name="yr_only_pre1900" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
               </div>
             </div>
 
@@ -228,6 +232,7 @@ export default function AnswerForm(
                     ]}
                     whenMouseOver={handleWhenMouseOver}
                     hoverWhenHighlight={hoverWhenHighlight}
+                    customWhenClick={() => {pickEventTimeStyle(0)}}
                   >
                   </WhenRadio>
               </div>
