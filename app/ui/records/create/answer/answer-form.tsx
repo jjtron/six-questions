@@ -49,6 +49,7 @@ export default function AnswerForm(
   const [eventTime3, setEventTime3] = useState(false);
   const [eventTime4, setEventTime4] = useState(false);
   const [eventTime5, setEventTime5] = useState(false);
+  const [eventTime6, setEventTime6] = useState(false);
 
   function pickEventTimeStyle (n: number) {
     (n === 1) ? setEventTime1(true) : setEventTime1(false);
@@ -56,6 +57,7 @@ export default function AnswerForm(
     (n === 3) ? setEventTime3(true) : setEventTime3(false);
     (n === 4) ? setEventTime4(true) : setEventTime4(false);
     (n === 5) ? setEventTime5(true) : setEventTime5(false);
+    (n === 6) ? setEventTime6(true) : setEventTime6(false);
   }
 
   let whoList: SelectOptions = {};
@@ -165,23 +167,23 @@ export default function AnswerForm(
             {/* SELECTORS TO CAUSE VARIOUS DATE STYLE INPUTS TO APPEAR */}
             <div className="flex flex-row">
               <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime1 })}>
-                <input type="radio" name="date_type_1" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(1) }} checked={eventTime1} onChange={() => {}} />
+                <input type="checkbox" name="date_type_1" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(1) }} checked={eventTime1} onChange={() => {}} />
                 <p className="inline px-1">Date/Time</p><p>(since 1900)</p>
               </span>
               <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime2 })}>
-                <input type="radio" name="date_type_2" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(2) }} checked={eventTime2} onChange={() => {}} />
+                <input type="checkbox" name="date_type_2" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(2) }} checked={eventTime2} onChange={() => {}} />
                 <p className="inline px-1">Year/Month</p><p>(since 1900)</p>
               </span>
               <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime3 })}>
-                <input type="radio" name="date_type_3" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(3) }} checked={eventTime3} onChange={() => {}} />
+                <input type="checkbox" name="date_type_3" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(3) }} checked={eventTime3} onChange={() => {}} />
                 <p className="inline px-1">Date</p><p>(before 1900)</p>
               </span>
               <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime4 })}>
-                <input type="radio" name="date_type_4" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(4) }} checked={eventTime4} onChange={() => {}} />
+                <input type="checkbox" name="date_type_4" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(4) }} checked={eventTime4} onChange={() => {}} />
                 <p className="inline px-1">Year/Month</p><p>(before 1900)</p>
               </span>
               <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime5 })}>
-                <input type="radio" name="date_type_5" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(5) }} checked={eventTime4} onChange={() => {}} />
+                <input type="checkbox" name="date_type_5" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(5) }} checked={eventTime5} onChange={() => {}} />
                 <p className="inline px-1">Year only</p><p>(before 1900)</p>
               </span>
             </div>
@@ -222,8 +224,14 @@ export default function AnswerForm(
                         setWhenHoverHighlight(false);
                       }}
               >
-              <div className="overflow-auto border-1 border-slate-290 h-[290px] mb-2 rounded-md" id="when-wrapper-div">
-                  <div className="text-xs">Custom event-time styles (scroll down for more options)</div>
+
+              <div className="overflow-auto border-1 border-slate-290 h-[290px] mb-2 rounded-md"  id="when-wrapper-div" >
+                  <div className="text-xs w-[195px] pt-1 pl-1">
+                    <input type="checkbox" name="date_type_6" onClick={() => { pickEventTimeStyle(6) }} 
+                            checked={eventTime6} onChange={() => {}} />
+                    <span>&nbsp;&nbsp;Custom event-time styles (scroll down for more options)</span>
+                  </div>
+                  <div className={clsx( { "hidden" : !eventTime6 })}>
                   <WhenRadio
                     whenRadioOptions={[
                       {id: 'where', name: 'where', multi: 'no'},
@@ -232,11 +240,12 @@ export default function AnswerForm(
                     ]}
                     whenMouseOver={handleWhenMouseOver}
                     hoverWhenHighlight={hoverWhenHighlight}
-                    customWhenClick={() => {pickEventTimeStyle(0)}}
+                    customWhenClick={() => {pickEventTimeStyle(6)}}
                   >
                   </WhenRadio>
+                  </div>
               </div>
-              <div className="w-full flex mb-2">{showWhenDetails}</div>
+              <div className={clsx("w-full flex mb-2", { "hidden" : !eventTime6 })} >{showWhenDetails}</div>
             </div>
           </div>
 
