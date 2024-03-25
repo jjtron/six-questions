@@ -6,13 +6,21 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import Page1 from './Page1';
-import Page2 from './Page2';
+import { Person, Place, EventTime } from '@/app/lib/interfaces';
+import AnswerForm from './answer-form';
 
 const steps = ['Who, What, Where', 'When, Why, How', 'Done'];
 
-
-export default function Form() {
+export default function StepperForm(
+  { 
+    whoOptions,
+    whereOptions,
+    whenOptions
+  } : { 
+        whoOptions: Person[],
+        whereOptions: Place[],
+        whenOptions: EventTime[]
+      }) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
 
@@ -68,11 +76,13 @@ export default function Form() {
           const labelProps: {
             optional?: React.ReactNode;
           } = {};
+          {/* NOT NEEDED
           if (isStepOptional(index)) {
             labelProps.optional = (
               <Typography variant="caption">Optional</Typography>
             );
           }
+          */}
           if (isStepSkipped(index)) {
             stepProps.completed = false;
           }
@@ -95,9 +105,22 @@ export default function Form() {
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+          {/* NOT NEEDED . . . <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
           {
-            (() => activeStep === 0 ? <Page1 /> : <Page2 />)()
+            (() => { if (activeStep === 0) {
+                return (<AnswerForm whoOptions={whoOptions}
+                                    whereOptions={whereOptions}
+                                    whenOptions={whenOptions}
+                                    page={activeStep}/>
+                )
+              } else {
+                return (<AnswerForm whoOptions={whoOptions}
+                                    whereOptions={whereOptions}
+                                    whenOptions={whenOptions}
+                                    page={activeStep}/>
+                )}
+              }
+            )()
           }
           
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>

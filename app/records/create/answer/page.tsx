@@ -1,7 +1,7 @@
 "use server"
 
 import Breadcrumbs from '@/app/ui/records/breadcrumbs';
-import Form from '@/app/ui/records/create/answer/create-answers';
+import StepperForm from '@/app/ui/records/create/answer/stepper-form';
 import { getDbData } from '@/app/lib/database';
 import { Person, Place, EventTime } from '@/app/lib/interfaces';
 
@@ -25,10 +25,10 @@ export default async function Page() {
               ]}
             />
           </div>
-          <Form whoOptions={whoOptions}
+          <StepperForm whoOptions={whoOptions}
                 whereOptions={whereOptions}
                 whenOptions={whenOptions}>
-          </Form>
+          </StepperForm>
         </main>
     );
     
