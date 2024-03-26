@@ -259,12 +259,67 @@ export type InsertAndCreateState = {
     who?: string[];
     what?: string[];
     where?: string[];
-    when?: string[];
     why?: string[];
     how?: string[];
   }; 
   message?: string | null;
 };
+
+const DateFieldSchema = z.object({
+  // the six date/time data types: either 'on' or null
+  date_type_1: z.string().nullable().refine((val) => { return (val === 'on' || val === null) }, { message: 'date_type_1 invalid'}),
+  date_type_2: z.string().nullable().refine((val) => { return (val === 'on' || val === null) }, { message: 'date_type_2 invalid'}),
+  date_type_3: z.string().nullable().refine((val) => { return (val === 'on' || val === null) }, { message: 'date_type_3 invalid'}),
+  date_type_4: z.string().nullable().refine((val) => { return (val === 'on' || val === null) }, { message: 'date_type_4 invalid'}),
+  date_type_5: z.string().nullable().refine((val) => { return (val === 'on' || val === null) }, { message: 'date_type_5 invalid'}),
+  date_type_6: z.string().nullable().refine((val) => { return (val === 'on' || val === null) }, { message: 'date_type_6 invalid'})
+});
+
+const DateType1Schema = z.object({
+    // date_type_1
+    yr_mon_day: z.string().refine((d) => {
+        const dateRegexp = /^\d{2}\/\d{2}\/\d{4}/;
+        return (d.length > 0 && dateRegexp.test(d));
+      },
+      { message: 'invalid date dd/mm/yyyy' }
+    ),
+    yr_mon_day_time: z.string().refine((t) => {
+        const timeRegexp = /^\d{2}:\d{2}\s(AM|PM)/;
+        return (t.length > 0 && timeRegexp.test(t));
+      },
+      { message: 'invalid time hh:mm aa' }
+    ),
+});
+
+const DateType2Schema = z.object({
+  // date_type_2
+  yr_mon: z.string(),
+});
+
+const DateType3Schema = z.object({
+    // date_type_3
+    date_only_pre1900: z.string().refine((d) => {
+        const dateRegexp = /^\d{2}\/\d{2}\/\d{4}/;
+        return (d.length > 0 && dateRegexp.test(d));
+      },
+      { message: 'invalid date dd/mm/yyyy' }
+    ),
+});
+
+const DateType4Schema = z.object({
+  // date_type_4
+  year_mon_pre1900: z.string(),
+});
+
+const DateType5Schema = z.object({
+  // date_type_5
+  yr_only_pre1900: z.string(),
+});
+
+const DateType6Schema = z.object({
+  // date_type_6
+  custom_when: z.coerce.number().nullable().refine((val) => { return (val !== null) },{ message: "required" }),
+});
 
 const FormSchema = z.object({
   id: z.string().uuid({ message: "invalid UUID" }),
@@ -280,48 +335,130 @@ const FormSchema = z.object({
   what: z.string().min(1, { message: "required" }),
   where: z.string().nullable()
     .refine((val) => { return (val !== null) },{ message: "required" }),
-  yr_mon_day: z.string(),
-  yr_mon_day_time: z.string(),
-  yr_mon: z.string(),
-  custom_when: z.coerce.number(),
-  /*
-  when: z.string().array().length(2).refine(
-      (a) => {
-              const dateRegexp = /^\d{2}\/\d{2}\/\d{4}/;
-              const timeRegexp = /^\d{2}:\d{2}\s(AM|PM)/;
-              return a[0].length > 0 && 
-                      a[1].length > 0 &&
-                      dateRegexp.test(a[0]) &&
-                      timeRegexp.test(a[1]);
-             }, 
-             { message: "Invalid date and/or time; both required" }
-    ),
-  */
   why: z.string().min(1, { message: "required" }),
   how: z.string().min(1, { message: "required" }),
 });
 
 export async function createRecord(prevState: InsertAndCreateState, formData: FormData) {
-  console.log(formData);
+  //console.log(formData);
+
+  const validatedDateFields = DateFieldSchema.safeParse({
+    date_type_1: formData.get('date_type_1'),
+    date_type_2: formData.get('date_type_2'),
+    date_type_3: formData.get('date_type_3'),
+    date_type_4: formData.get('date_type_4'),
+    date_type_5: formData.get('date_type_5'),
+    date_type_6: formData.get('date_type_6'),
+  });
+  if (!validatedDateFields.success) {
+    // something other than 'on' or null is being attempted
+    // DO SOMETHING
+    console.log(validatedDateFields.error.flatten().fieldErrors);
+  }
+  let date_type_error: boolean = false;
+  if (
+    // check to make sure only on date_type_X is provided
+    !(() => {
+      let n: number = 0;
+      formData.get('date_type_1') !== null ? n++ : n;
+      formData.get('date_type_2') !== null ? n++ : n;
+      formData.get('date_type_3') !== null ? n++ : n;
+      formData.get('date_type_4') !== null ? n++ : n;
+      formData.get('date_type_5') !== null ? n++ : n;
+      formData.get('date_type_6') !== null ? n++ : n;
+      return (n === 1)
+    })()
+  ) {
+    // either none-at-all or more-than-one has been submitted
+    //console.log('no data_type_X field submitted');
+    date_type_error = true;
+  }
+  if (formData.get('date_type_1') === 'on') {
+    const validatedDateType1Fields = DateType1Schema.safeParse({
+      yr_mon_day: formData.get('yr_mon_day'),
+      yr_mon_day_time: formData.get('yr_mon_day_time'),
+    });
+    if (!validatedDateType1Fields.success) {
+      // something wrong with date_type_1 submission
+      // DO SOMETHING
+      console.log(validatedDateType1Fields.error.flatten().fieldErrors);
+    }
+  }
+  if (formData.get('date_type_2') === 'on') {
+    const validatedDateType2Fields = DateType2Schema.safeParse({
+      yr_mon: formData.get('yr_mon'),
+    });
+    if (!validatedDateType2Fields.success) {
+      // something wrong with date_type_2 submission
+      // DO SOMETHING
+      console.log(validatedDateType2Fields.error.flatten().fieldErrors);
+    }
+  }
+  if (formData.get('date_type_3') === 'on') {
+    const validatedDateType3Fields = DateType3Schema.safeParse({
+      date_only_pre1900: formData.get('date_only_pre1900'),
+    });
+    if (!validatedDateType3Fields.success) {
+      // something wrong with date_type_3 submission
+      // DO SOMETHING
+      console.log(validatedDateType3Fields.error.flatten().fieldErrors);
+    }
+  }
+  if (formData.get('date_type_4') === 'on') {
+    const validatedDateType4Fields = DateType4Schema.safeParse({
+      year_mon_pre1900: formData.get('year_mon_pre1900'),
+    });
+    if (!validatedDateType4Fields.success) {
+      // something wrong with date_type_4 submission
+      // DO SOMETHING
+      console.log(validatedDateType4Fields.error.flatten().fieldErrors);
+    }
+  }
+  if (formData.get('date_type_5') === 'on') {
+    const validatedDateType5Fields = DateType5Schema.safeParse({
+      yr_only_pre1900: formData.get('yr_only_pre1900'),
+    });
+    if (!validatedDateType5Fields.success) {
+      // something wrong with date_type_5 submission
+      // DO SOMETHING
+      console.log(validatedDateType5Fields.error.flatten().fieldErrors);
+    }
+  }
+  if (formData.get('date_type_6') === 'on') {
+    const validatedDateType6Fields = DateType6Schema.safeParse({
+      custom_when: formData.get('custom_when'),
+    });
+    if (!validatedDateType6Fields.success) {
+      // something wrong with date_type_6 submission
+      // DO SOMETHING
+      console.log(validatedDateType6Fields.error.flatten().fieldErrors);
+    }
+  }
+
   const validatedFields = FormSchema.safeParse({
     id: formData.get('id'),
     who: formData.getAll('who'),
     what: formData.get('what'),
     where: formData.get('where'),
-    yr_mon_day: formData.get('yr_mon_day'),
-    yr_mon_day_time: formData.get('yr_mon_day_time'),
-    yr_mon: formData.get('yr_mon'),
-    custom_when: formData.get('custom_when'),
     why: formData.get('why'),
     how: formData.get('how'),
   });
   
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
-    const errors = validatedFields.error.flatten().fieldErrors;
+    const errors: any = validatedFields.error.flatten().fieldErrors;
+    if (date_type_error) {
+      errors['date_type_x'] = [ 'required' ];
+    }
     console.log(errors);
     return {
       errors: errors,
+      message: 'Missing Fields. Failed to Create Record.',
+    };
+  } else if (date_type_error) {
+    console.log({ date_type_x: [ 'required' ] });
+    return {
+      errors: { date_type_x: [ 'required' ] },
       message: 'Missing Fields. Failed to Create Record.',
     };
   }
@@ -329,8 +466,8 @@ export async function createRecord(prevState: InsertAndCreateState, formData: Fo
   //insertAnswerRecord(formData);
 
   //    TEMPROARY
-  revalidatePath('/records/create/answer');
-  redirect('/records/create/answer');
+  revalidatePath('/records/view/answers');
+  redirect('/records/view/answers');
 
   //revalidatePath('/records/view/answers');
   //redirect('/records/view/answers');
