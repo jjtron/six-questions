@@ -301,32 +301,6 @@ const FormSchema = z.object({
   how: z.string().min(1, { message: "required" }),
 });
 
-export async function updateRecord(prevState: InsertAndCreateState, formData: FormData) {
-  const validatedFields = FormSchema.safeParse({
-    id: formData.get('id'),
-    who: formData.getAll('who'),
-    what: formData.get('what'),
-    where: formData.get('where'),
-    when: formData.getAll('when'),
-    why: formData.get('why'),
-    how: formData.get('how'),
-  });
-  
-  // If form validation fails, return errors early. Otherwise, continue.
-  if (!validatedFields.success) {
-    const errors = validatedFields.error.flatten().fieldErrors;
-    return {
-      errors: errors,
-      message: 'Missing Fields. Failed to Create Record.',
-    };
-  }
-
-  updateAnswerRecord(formData);
-
-  revalidatePath('/records/view/answers');
-  redirect('/records/view/answers');
-}
-
 export async function createRecord(prevState: InsertAndCreateState, formData: FormData) {
   console.log(formData);
   const validatedFields = FormSchema.safeParse({
@@ -360,6 +334,32 @@ export async function createRecord(prevState: InsertAndCreateState, formData: Fo
 
   //revalidatePath('/records/view/answers');
   //redirect('/records/view/answers');
+}
+
+export async function updateRecord(prevState: InsertAndCreateState, formData: FormData) {
+  const validatedFields = FormSchema.safeParse({
+    id: formData.get('id'),
+    who: formData.getAll('who'),
+    what: formData.get('what'),
+    where: formData.get('where'),
+    when: formData.getAll('when'),
+    why: formData.get('why'),
+    how: formData.get('how'),
+  });
+  
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    const errors = validatedFields.error.flatten().fieldErrors;
+    return {
+      errors: errors,
+      message: 'Missing Fields. Failed to Create Record.',
+    };
+  }
+
+  updateAnswerRecord(formData);
+
+  revalidatePath('/records/view/answers');
+  redirect('/records/view/answers');
 }
 
 //////////////////////PLACE FUNCTIONS/////////////////////
