@@ -9,7 +9,7 @@ export default async function Page() {
 
     const whereOptions: Place[] = (await getDbData('SELECT * FROM places')).details.rows;
     const whoOptions: Person[] = (await getDbData('SELECT * FROM people')).details.rows;
-    const whenOptions: EventTime[] = (await getDbData('SELECT * FROM times')).details.rows;
+    const whenOptions: EventTime[] = (await getDbData('SELECT * FROM times ORDER BY sort_order, name')).details.rows;
 
     return (
         <main>

@@ -33,7 +33,7 @@ export default function AnswerForm(
 
   // the following pairs of state variables are used in the
   // place (where) and event-time (when) pick sections
-  const [showWhereDetails, setshowWhereDetails] = useState(<p></p>);
+  const [showWhereDetails, setshowWhereDetails] = useState(<div className="w-full flex border-1 bg-slate-100 rounded-md">&nbsp;</div>);
   const [showWhenDetails, setShowWhenDetails] = useState(<p></p>);
 
   const [selectedPlaceRecord, setSelectedPlaceRecord] = useState({});
