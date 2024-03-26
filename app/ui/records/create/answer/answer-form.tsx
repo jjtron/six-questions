@@ -167,19 +167,19 @@ export default function AnswerForm(
             </div>
             {/* SELECTORS TO CAUSE VARIOUS DATE STYLE INPUTS TO APPEAR */}
             <div className="flex flex-row">
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime1 })}>
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime1 })}>
                 <input type="checkbox" name="date_type_1" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(1) }} checked={eventTime1} onChange={() => {}} />
                 <p className="inline px-1">Date/Time</p><p>(since 1900)</p>
               </span>
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime2 })}>
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime2 })}>
                 <input type="checkbox" name="date_type_2" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(2) }} checked={eventTime2} onChange={() => {}} />
                 <p className="inline px-1">Year/Month</p><p>(since 1900)</p>
               </span>
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime3 })}>
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime3 })}>
                 <input type="checkbox" name="date_type_3" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(3) }} checked={eventTime3} onChange={() => {}} />
                 <p className="inline px-1">Date</p><p>(before 1900)</p>
               </span>
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime4 })}>
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime4 })}>
                 <input type="checkbox" name="date_type_4" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(4) }} checked={eventTime4} onChange={() => {}} />
                 <p className="inline px-1">Year/Month</p><p>(before 1900)</p>
               </span>
@@ -245,7 +245,7 @@ export default function AnswerForm(
                   >
                   </WhenRadio>
                   </div>
-                  <div className={clsx( { "hidden" : eventTime6 })}>
+                  <div className={clsx( { "hidden" : eventTime6, "opacity-40" : !eventTime6 })}>
                   <FakeWhenRadio
                     whenRadioOptions={[
                       {id: 'where', name: 'where', multi: 'no'},

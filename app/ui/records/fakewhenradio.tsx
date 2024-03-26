@@ -13,7 +13,7 @@ export default function FakeWhenRadio(
                                     rounded-md px-2 mr-1 cursor-pointer bg-slate-100"
             >
               <input disabled className="h-[24px]" type="radio" name="custom_when" value={el.id} />
-              <div className="pl-2 font-extralight text-sm">{el.name}</div>
+              <div className="pl-2 font-normal text-sm">{el.name}</div>
             </div>
           )
         })}
