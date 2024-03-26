@@ -5,6 +5,7 @@ import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
 import WhereRadio from '@/app/ui/records/whereradio';
 import WhenRadio from '@/app/ui/records/whenradio';
+import FakeWhenRadio from '@/app/ui/records/fakewhenradio';
 import { SelectOptions, Person, Place, EventTime } from '@/app/lib/interfaces';
 import DateTimePicker from '@/app/ui/records/datepicker';
 import { v4 as uuidv4 } from 'uuid';
@@ -225,7 +226,7 @@ export default function AnswerForm(
                       }}
               >
 
-              <div className="overflow-auto border-1 border-slate-290 h-[290px] mb-2 rounded-md"  id="when-wrapper-div" >
+              <div className="basis-1/3 overflow-auto border-1 border-slate-300 h-[290px] mb-2 rounded-md"  id="when-wrapper-div" >
                   <div className="text-xs w-[195px] pt-1 pl-1">
                     <input type="checkbox" name="date_type_6" onClick={() => { pickEventTimeStyle(6) }} 
                             checked={eventTime6} onChange={() => {}} />
@@ -244,8 +245,18 @@ export default function AnswerForm(
                   >
                   </WhenRadio>
                   </div>
+                  <div className={clsx( { "hidden" : eventTime6 })}>
+                  <FakeWhenRadio
+                    whenRadioOptions={[
+                      {id: 'where', name: 'where', multi: 'no'},
+                      {list: whenOptions},
+                      null
+                    ]}
+                  >
+                  </FakeWhenRadio>
+                  </div>
               </div>
-              <div className={clsx("w-full flex mb-2", { "hidden" : !eventTime6 })} >{showWhenDetails}</div>
+              <div className={clsx("basis-2/3 w-full flex mb-2 border-1 rounded-md", { "hidden" : !eventTime6 })} >{showWhenDetails}</div>
             </div>
           </div>
 
