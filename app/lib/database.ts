@@ -160,13 +160,51 @@ const client = new Client({
         persons.push(Number(person));
       });
 
-      let timestamp: {date?: string; time?: string;} = {};
-      if (submittedDateType === 'date_type_1') {
-        // prepare the date_type_1 for insert
-        const re = new RegExp(/\d{2}\/\d{2}\/\d{4}/);
-        timestamp.date = data.get("yr_mon_day") as string;
-        timestamp.time = data.get("yr_mon_day_time") as string;
-      }
+      const whenTime: {
+        type: number;
+        date?: string;
+        time?: string;
+        yr_mon?: string;
+        date_only_pre1900?: string;
+        year_mon_pre1900?: string;
+        yr_only_pre1900?: string;
+        customID?: number;
+      } = ((() => {
+        if (submittedDateType === 'date_type_1') {
+          return  {
+            type: 1,
+            date: data.get("yr_mon_day") as string,
+            time: data.get("yr_mon_day_time") as string,
+          }
+        } else if (submittedDateType === 'date_type_2') {
+          return  {
+            type: 2,
+            yr_mon: data.get("yr_mon") as string,
+          };
+        } else if (submittedDateType === 'date_type_3') {
+          return  {
+            type: 3,
+            date_only_pre1900: data.get("date_only_pre1900") as string,
+          };
+        } else if (submittedDateType === 'date_type_4') {
+          return  {
+            type: 4,
+            year_mon_pre1900: data.get("year_mon_pre1900") as string,
+          };
+        } else if (submittedDateType === 'date_type_5') {
+          return  {
+            type: 5,
+            yr_only_pre1900: data.get("yr_only_pre1900") as string,
+          };
+        } else if (submittedDateType === 'date_type_6') {
+          return  {
+            type: 6,
+            customID: Number(data.get("custom_when")),
+          };
+        } else {
+          throw new Error('Undetermined date type submitted.');
+        }
+      }))();
 
       const statement = 
          `INSERT INTO public.six_answers(
@@ -177,7 +215,7 @@ const client = new Client({
         JSON.stringify(persons).replace('[', '{').replace(']', '}'),
         (data.get("what") as string).replaceAll("'", "\'"),
         data.get("where"),
-        JSON.stringify(timestamp),
+        JSON.stringify(whenTime),
         (data.get("why") as string).replaceAll("'", "\'"),
         (data.get("how") as string).replaceAll("'", "\'")
       ];
