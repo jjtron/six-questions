@@ -152,19 +152,21 @@ const client = new Client({
     }
   }
 
-  export async function insertAnswerRecord(data: FormData) {
+  export async function insertAnswerRecord(data: FormData, submittedDateType: string) {
     try {
       // prepare the people for insert
       let persons: number[] = [];
       data.getAll("who").map((person: any) => {
         persons.push(Number(person));
       });
-      // prepare the whens for insert
+
       let timestamp: {date?: string; time?: string;} = {};
-      data.getAll("when").map((property: any) => {
+      if (submittedDateType === 'date_type_1') {
+        // prepare the date_type_1 for insert
         const re = new RegExp(/\d{2}\/\d{2}\/\d{4}/);
-        re.test(property) ? (timestamp.date = property) : (timestamp.time = property);
-      });
+        timestamp.date = data.get("yr_mon_day") as string;
+        timestamp.time = data.get("yr_mon_day_time") as string;
+      }
 
       const statement = 
          `INSERT INTO public.six_answers(

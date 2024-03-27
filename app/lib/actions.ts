@@ -252,13 +252,14 @@ export async function updatePerson(prevState: PersonUpdateState, formData: FormD
   revalidatePath('/records/view/people');
   redirect('/records/view/people');
 }
-
+//////////////////////////// ANSWER CREATE AND UPDATE //////////////////////////
 export type InsertAndCreateState = {
   errors?: {
     id?: string[];
     who?: string[];
     what?: string[];
     where?: string[];
+    when?: string[];
     why?: string[];
     how?: string[];
   }; 
@@ -278,47 +279,64 @@ const DateFieldSchema = z.object({
 const DateType1Schema = z.object({
     // date_type_1
     yr_mon_day: z.string().refine((d) => {
-        const dateRegexp = /^\d{2}\/\d{2}\/\d{4}/;
-        return (d.length > 0 && dateRegexp.test(d));
+        const dateRegexp = /^\d{2}\/\d{2}\/\d{4}$/;
+        return (dateRegexp.test(d));
       },
       { message: 'invalid date dd/mm/yyyy' }
     ),
     yr_mon_day_time: z.string().refine((t) => {
-        const timeRegexp = /^\d{2}:\d{2}\s(AM|PM)/;
-        return (t.length > 0 && timeRegexp.test(t));
+        const timeRegexp = /^\d{2}:\d{2}\s(AM|PM)$/;
+        return (timeRegexp.test(t));
       },
       { message: 'invalid time hh:mm aa' }
     ),
 });
 
 const DateType2Schema = z.object({
-  // date_type_2
-  yr_mon: z.string(),
+    // date_type_2
+    yr_mon: z.string().refine((d) => {
+        const timeRegexp = /^\w{3,9}\s\d{4}$/;
+        return (timeRegexp.test(d));
+      },
+      { message: 'invalid month/year' }
+    ),
 });
 
 const DateType3Schema = z.object({
     // date_type_3
     date_only_pre1900: z.string().refine((d) => {
-        const dateRegexp = /^\d{2}\/\d{2}\/\d{4}/;
-        return (d.length > 0 && dateRegexp.test(d));
+        const dateRegexp = /^\d{2}\/\d{2}\/\d{4}$/;
+        return (dateRegexp.test(d));
       },
       { message: 'invalid date dd/mm/yyyy' }
     ),
 });
 
 const DateType4Schema = z.object({
-  // date_type_4
-  year_mon_pre1900: z.string(),
+    // date_type_4
+    year_mon_pre1900: z.string().refine((d) => {
+          const dateRegexp = /^\d{4}-\d{2}$/;
+          return (dateRegexp.test(d));
+        },
+        { message: 'invalid date yyyy-mm' }
+    ),
 });
 
 const DateType5Schema = z.object({
   // date_type_5
-  yr_only_pre1900: z.string(),
+  yr_only_pre1900: z.string().refine((d) => {
+      const dateRegexp = /^\d{4}$/;
+      return (dateRegexp.test(d));
+    },
+    { message: 'invalid date yyyy' }
+  ),
 });
 
 const DateType6Schema = z.object({
   // date_type_6
-  custom_when: z.coerce.number().nullable().refine((val) => { return (val !== null) },{ message: "required" }),
+  custom_when: z.coerce.number().nullable().refine((val) => {
+      return (val !== null) },
+      { message: "custom event-time missing" }),
 });
 
 const FormSchema = z.object({
@@ -342,6 +360,9 @@ const FormSchema = z.object({
 export async function createRecord(prevState: InsertAndCreateState, formData: FormData) {
   //console.log(formData);
 
+  let date_error: { [key: string]: string[] | null; } = {  };
+  let submittedDateType: string = '';
+
   const validatedDateFields = DateFieldSchema.safeParse({
     date_type_1: formData.get('date_type_1'),
     date_type_2: formData.get('date_type_2'),
@@ -353,25 +374,25 @@ export async function createRecord(prevState: InsertAndCreateState, formData: Fo
   if (!validatedDateFields.success) {
     // something other than 'on' or null is being attempted
     // DO SOMETHING
-    console.log(validatedDateFields.error.flatten().fieldErrors);
+    date_error = validatedDateFields.error.flatten().fieldErrors;
   }
-  let date_type_error: boolean = false;
+  
   if (
     // check to make sure only on date_type_X is provided
     !(() => {
       let n: number = 0;
-      formData.get('date_type_1') !== null ? n++ : n;
-      formData.get('date_type_2') !== null ? n++ : n;
-      formData.get('date_type_3') !== null ? n++ : n;
-      formData.get('date_type_4') !== null ? n++ : n;
-      formData.get('date_type_5') !== null ? n++ : n;
-      formData.get('date_type_6') !== null ? n++ : n;
+      if (formData.get('date_type_1') !== null) { n++; submittedDateType = 'date_type_1' }
+      if (formData.get('date_type_2') !== null) { n++; submittedDateType = 'date_type_2' }
+      if (formData.get('date_type_3') !== null) { n++; submittedDateType = 'date_type_3' }
+      if (formData.get('date_type_4') !== null) { n++; submittedDateType = 'date_type_4' }
+      if (formData.get('date_type_5') !== null) { n++; submittedDateType = 'date_type_5' }
+      if (formData.get('date_type_6') !== null) { n++; submittedDateType = 'date_type_6' }
       return (n === 1)
     })()
   ) {
     // either none-at-all or more-than-one has been submitted
-    //console.log('no data_type_X field submitted');
-    date_type_error = true;
+    // console.log('no data_type_X field submitted');
+    date_error = { when: [ 'too many date type submissions' ] }
   }
   if (formData.get('date_type_1') === 'on') {
     const validatedDateType1Fields = DateType1Schema.safeParse({
@@ -380,8 +401,8 @@ export async function createRecord(prevState: InsertAndCreateState, formData: Fo
     });
     if (!validatedDateType1Fields.success) {
       // something wrong with date_type_1 submission
-      // DO SOMETHING
-      console.log(validatedDateType1Fields.error.flatten().fieldErrors);
+      // console.log(validatedDateType1Fields.error.flatten().fieldErrors);
+      date_error = validatedDateType1Fields.error.flatten().fieldErrors;
     }
   }
   if (formData.get('date_type_2') === 'on') {
@@ -390,8 +411,8 @@ export async function createRecord(prevState: InsertAndCreateState, formData: Fo
     });
     if (!validatedDateType2Fields.success) {
       // something wrong with date_type_2 submission
-      // DO SOMETHING
-      console.log(validatedDateType2Fields.error.flatten().fieldErrors);
+      // console.log(validatedDateType2Fields.error.flatten().fieldErrors);
+      date_error = validatedDateType2Fields.error.flatten().fieldErrors;
     }
   }
   if (formData.get('date_type_3') === 'on') {
@@ -400,8 +421,8 @@ export async function createRecord(prevState: InsertAndCreateState, formData: Fo
     });
     if (!validatedDateType3Fields.success) {
       // something wrong with date_type_3 submission
-      // DO SOMETHING
-      console.log(validatedDateType3Fields.error.flatten().fieldErrors);
+      // console.log(validatedDateType3Fields.error.flatten().fieldErrors);
+      date_error = validatedDateType3Fields.error.flatten().fieldErrors;
     }
   }
   if (formData.get('date_type_4') === 'on') {
@@ -410,8 +431,8 @@ export async function createRecord(prevState: InsertAndCreateState, formData: Fo
     });
     if (!validatedDateType4Fields.success) {
       // something wrong with date_type_4 submission
-      // DO SOMETHING
-      console.log(validatedDateType4Fields.error.flatten().fieldErrors);
+      // console.log(validatedDateType4Fields.error.flatten().fieldErrors);
+      date_error = validatedDateType4Fields.error.flatten().fieldErrors;
     }
   }
   if (formData.get('date_type_5') === 'on') {
@@ -420,8 +441,8 @@ export async function createRecord(prevState: InsertAndCreateState, formData: Fo
     });
     if (!validatedDateType5Fields.success) {
       // something wrong with date_type_5 submission
-      // DO SOMETHING
-      console.log(validatedDateType5Fields.error.flatten().fieldErrors);
+      // console.log(validatedDateType5Fields.error.flatten().fieldErrors);
+      date_error = validatedDateType5Fields.error.flatten().fieldErrors;
     }
   }
   if (formData.get('date_type_6') === 'on') {
@@ -430,8 +451,8 @@ export async function createRecord(prevState: InsertAndCreateState, formData: Fo
     });
     if (!validatedDateType6Fields.success) {
       // something wrong with date_type_6 submission
-      // DO SOMETHING
-      console.log(validatedDateType6Fields.error.flatten().fieldErrors);
+      // console.log(validatedDateType6Fields.error.flatten().fieldErrors);
+      date_error = validatedDateType6Fields.error.flatten().fieldErrors;
     }
   }
 
@@ -447,30 +468,27 @@ export async function createRecord(prevState: InsertAndCreateState, formData: Fo
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     const errors: any = validatedFields.error.flatten().fieldErrors;
-    if (date_type_error) {
-      errors['date_type_x'] = [ 'required' ];
+    if (Object.keys(date_error).length > 0) {
+      let key: string = Object.keys(date_error)[0];
+      errors['when'] = date_error[key];
     }
-    console.log(errors);
+    // console.log('ERRORS 1', errors);
     return {
       errors: errors,
       message: 'Missing Fields. Failed to Create Record.',
     };
-  } else if (date_type_error) {
-    console.log({ date_type_x: [ 'required' ] });
+  } else if (Object.keys(date_error).length > 0) {
+    let key: string = Object.keys(date_error)[0];
+    // console.log('ERRORS 2', { when: [ date_error[key] ] });
     return {
-      errors: { date_type_x: [ 'required' ] },
+      errors: { when: [ date_error[key] ] },
       message: 'Missing Fields. Failed to Create Record.',
     };
   }
-
-  //insertAnswerRecord(formData);
-
-  //    TEMPROARY
+  
+  insertAnswerRecord(formData, submittedDateType);
   revalidatePath('/records/view/answers');
   redirect('/records/view/answers');
-
-  //revalidatePath('/records/view/answers');
-  //redirect('/records/view/answers');
 }
 
 export async function updateRecord(prevState: InsertAndCreateState, formData: FormData) {
