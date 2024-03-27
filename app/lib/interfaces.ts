@@ -9,6 +9,17 @@ export type WhereRadioOptions = [
     number | null
 ]
 
+export type InsertWhenTime = {
+    type: number;
+    date?: string;
+    time?: string;
+    yr_mon?: string;
+    date_only_pre1900?: string;
+    year_mon_pre1900?: string;
+    yr_only_pre1900?: string;
+    customID?: number;
+}
+
 export type WhenRadioOptions = [
     SelectProps,
     RadioOptions,

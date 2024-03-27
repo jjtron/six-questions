@@ -1,6 +1,6 @@
 import { Client } from 'pg';
 import { unstable_noStore as noStore } from 'next/cache';
-import { Place, EventTime } from './interfaces'
+import { Place, EventTime, InsertWhenTime } from './interfaces'
 
 const client = new Client({
     user: 'postgres',
@@ -160,16 +160,7 @@ const client = new Client({
         persons.push(Number(person));
       });
 
-      const whenTime: {
-        type: number;
-        date?: string;
-        time?: string;
-        yr_mon?: string;
-        date_only_pre1900?: string;
-        year_mon_pre1900?: string;
-        yr_only_pre1900?: string;
-        customID?: number;
-      } = ((() => {
+      const insertWhenTime: InsertWhenTime = ((() => {
         if (submittedDateType === 'date_type_1') {
           return  {
             type: 1,
@@ -215,7 +206,7 @@ const client = new Client({
         JSON.stringify(persons).replace('[', '{').replace(']', '}'),
         (data.get("what") as string).replaceAll("'", "\'"),
         data.get("where"),
-        JSON.stringify(whenTime),
+        JSON.stringify(insertWhenTime),
         (data.get("why") as string).replaceAll("'", "\'"),
         (data.get("how") as string).replaceAll("'", "\'")
       ];
