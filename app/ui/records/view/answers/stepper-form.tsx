@@ -121,7 +121,7 @@ export default function StepperForm({
           }
           
           <Box className="pl-2 mt-[-40px]" >
-            <button className={clsx("rounded-md bg-sky-200 px-2 active:bg-sky-300", {"hidden" : activeStep === 0})}
+            <button className={clsx("rounded-md bg-sky-200 px-2 active:bg-sky-300 border-1 border-slate-400", {"hidden" : activeStep === 0})}
               color="inherit"
               disabled={activeStep === 0}
               onClick={handleBack}
@@ -137,7 +137,7 @@ export default function StepperForm({
               </Button>
             )}
             */}
-            <button onClick={handleNext} className={clsx("rounded-md bg-sky-200 px-2 active:bg-sky-300", {"hidden" : activeStep === 1})}
+            <button onClick={handleNext} className={clsx("rounded-md bg-sky-200 px-2 active:bg-sky-300 border-1 border-slate-400", {"hidden" : activeStep === 1})}
               disabled={activeStep === 1}
             >Go To When, Why, How (Part 2)
             </button>

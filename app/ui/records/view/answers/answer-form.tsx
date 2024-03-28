@@ -2,7 +2,7 @@
 
 import { Button } from "@/app/ui/button";
 import clsx from 'clsx';
-import { Person, Place, SixAnswers } from '@/app/lib/interfaces';
+import { Person, Place, EventTime, SixAnswers } from '@/app/lib/interfaces';
 
 export default function AnswerForm({
     currentPage,
@@ -17,6 +17,7 @@ export default function AnswerForm({
     const whoList: Person[] = dataPackage[0];
     const whereDefs: Place[] = dataPackage[1];
     const records: SixAnswers[] = dataPackage[2];
+    const customWhenRecs: EventTime[] = dataPackage[3];
     
 
     const placeDetailsFunc = (recordWhereId: number, shallowEl: string, detailEl: string | null) => {
@@ -103,6 +104,30 @@ export default function AnswerForm({
                     {/* WHEN */}
                     <div className="pl-2 border-1 border-slate-400 rounded-md bg-slate-250">
                             <p className="font-bold">WHEN</p>
+                            {
+                                (() => {
+                                    if (record.when.type === 6 && record.when.customID !== undefined) {
+                                        return (<>{JSON.stringify(customWhenRecs.find((item) => {
+                                            return item.id === record.when['customID'];
+                                        }))}</>);
+                                    }
+                                    switch (record.when.type) {
+                                        case 5: return <p>{record.when['yr_only_pre1900']}</p>
+                                        case 4: return <p>{record.when['year_mon_pre1900']}</p>
+                                        case 3: return <p>{record.when['date_only_pre1900']}</p>
+                                        case 2: return <p>{record.when['yr_mon']}</p>
+                                        case 1: return <p>{record.when['date']},&nbsp{record.when['time']}</p>
+                                        default: return <>undefined</>;
+                                    }
+
+                                })()
+                                
+                            }
+                            {/*
+                            <div>{JSON.stringify(customWhenRecs.find((item) => {
+                                return (item.id === 1);
+                            }))}</div>
+                            */}
                             <div>{record.when.date}</div>
                             <div>{record.when.time}</div>
                     </div>

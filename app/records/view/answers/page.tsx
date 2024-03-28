@@ -9,7 +9,7 @@ import { searchParams } from '@/app/lib/interfaces';
 import StepperForm from '@/app/ui/records/view/answers/stepper-form';
 import { getDbData } from "@/app/lib/database";
 import { fetchFilteredRecords } from '@/app/lib/database';
-import { Person, Place, SixAnswers } from '@/app/lib/interfaces';
+import { Person, Place, EventTime, SixAnswers } from '@/app/lib/interfaces';
 
 export default async function Page({ searchParams } : { searchParams: searchParams })
 {
@@ -19,8 +19,9 @@ export default async function Page({ searchParams } : { searchParams: searchPara
 
   const whoList: Person[] = (await getDbData(`SELECT * FROM people;`)).details.rows;
   const whereDefs: Place[] = (await getDbData(`SELECT * FROM places`)).details.rows;
+  const whenOptions: EventTime[] = (await getDbData('SELECT * FROM times ORDER BY sort_order, name')).details.rows;
   const records: SixAnswers[] = await fetchFilteredRecords(query, currentPage);
-  const dataPackage: any[][] = [whoList, whereDefs, records]
+  const dataPackage: any[][] = [whoList, whereDefs, records, whenOptions]
     
     return (
       <>

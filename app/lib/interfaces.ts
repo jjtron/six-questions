@@ -56,7 +56,7 @@ export type SixAnswers = {
     who: number[];
     what: string;
     where: number,
-    when: { date: string; time: string; },
+    when: InsertWhenTime,
     why: string;
     how: string;
 }
