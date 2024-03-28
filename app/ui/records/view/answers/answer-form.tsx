@@ -36,10 +36,10 @@ export default function AnswerForm({
                   {/* PAGE 1 */}
                   <div className={clsx({"hidden" : page !== 0 })}>
                     {/* WHO */}
+                    <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Record ID: ...{record.id.slice(-6)}, Part 1</p>
                     <div className="flex md:flex-row flex-col">
                         {/* col 1 */}
-                        <div className={clsx("flex flex-col basis-1/4 pl-2 border-1 border-slate-400 rounded-md h-[100px] overflow-auto",
-                                            {"bg-slate-200": ( currentPage & 1 ), "bg-sky-250": !( currentPage & 1 )})}>
+                        <div className="flex flex-col basis-1/4 pl-2 border-1 border-slate-400 rounded-md h-[100px] overflow-auto bg-slate-200" >
                             <p className="font-bold">WHO</p>{
                             record.who.map((whoIndex: number, n: number) => {
                                 const nameP = whoList.map((row: {index: number; name: string;}) => {
@@ -53,15 +53,13 @@ export default function AnswerForm({
                         </div>
                     </div>
                     {/* WHAT */}
-                    <div>
+                    
                         {([{label: 'WHAT'}])
                             .map((vars, j) => {
                                 let data;
                                 (j === 0) ? data = record.what : data = '';
                                 return (
-                                    <div key={j} className={clsx("flex flex-col rounded-md mt-px border-1 border-slate-400 pl-2 md:h-48 h-32", 
-                                        {"even:bg-slate-250 odd:bg-slate-300": ( currentPage & 1 ),
-                                        "even:bg-sky-250 odd:bg-sky-300": !( currentPage & 1 )})}>
+                                    <div key={j} className="flex flex-col bg-slate-200 rounded-md mt-px border-1 border-slate-400 pl-2 md:h-48 h-32" >
                                         <p className="font-bold">{vars.label}</p>
                                         
                                         <textarea
@@ -74,10 +72,9 @@ export default function AnswerForm({
                                 )
                             })
                         }
-                    </div>
+                    
                     {/* WHERE */}
-                    <div className={clsx("pl-2 border-1 border-slate-400 rounded-md ",
-                                        {"bg-slate-200": ( currentPage & 1 ), "bg-sky-250": !( currentPage & 1 )})}>
+                    <div className="pl-2 border-1 border-slate-400 rounded-md bg-slate-200" >
                         {([
                         {title: "WHERE:", level: 'name', sublevel: null},
                         {title: "Street: ", level: 'details', sublevel: 'street'},
@@ -98,20 +95,19 @@ export default function AnswerForm({
                         </div>
                         })}
                     </div>
-                    <div className="pl-2 bg-yellow-100 rounded-md">When, Why, and How on next page . . .</div>
                   </div>
 
                   {/* PAGE 2 */}
                   <div className={clsx({"hidden" : page !== 1 })}>
+                    <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Record ID: ...{record.id.slice(-6)}, Part 2</p>
                     {/* WHEN */}
-                    <div className={clsx("pl-2 border-1 border-slate-400 rounded-md ",
-                                            {"bg-slate-250": ( currentPage & 1 ), "bg-sky-300": !( currentPage & 1 )})}>
+                    <div className="pl-2 border-1 border-slate-400 rounded-md bg-slate-250">
                             <p className="font-bold">WHEN</p>
                             <div>{record.when.date}</div>
                             <div>{record.when.time}</div>
                     </div>
                     {/* WHY, HOW */}
-                    <div>
+                    
                         {([{label: 'WHY'},
                         {label: 'HOW'}])
                             .map((vars, j) => {
@@ -119,9 +115,7 @@ export default function AnswerForm({
                                 (j === 1) ? data = record.why : 
                                 (j === 2) ? data = record.how : data = '';
                                 return (
-                                    <div key={j} className={clsx("flex flex-col rounded-md mt-px border-1 border-slate-400 pl-2 md:h-48 h-32", 
-                                        {"even:bg-slate-250 odd:bg-slate-300": ( currentPage & 1 ),
-                                        "even:bg-sky-250 odd:bg-sky-300": !( currentPage & 1 )})}>
+                                    <div key={j} className="flex flex-col rounded-md mt-px border-1 bg-slate-200 border-slate-400 pl-2 md:h-48 h-32" >
                                         <p className="font-bold">{vars.label}</p>
                                         
                                         <textarea
@@ -134,11 +128,12 @@ export default function AnswerForm({
                                 )
                             })
                         }
-                    </div>
-                  </div>
                     
-                  <Button cName={"w-24"} showdatalink={`/records/${record.id}/edit/answers`} buttontext={"Edit"} />
+                  </div>
                   
+                  <div className="flex flex-col items-end">
+                    <Button cName={"w-20"} showdatalink={`/records/${record.id}/edit/answers`} buttontext={"Edit"} />
+                  </div>
                 </div>);
             })
         }

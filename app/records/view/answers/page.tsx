@@ -6,7 +6,7 @@ import Search from '@/app/ui/records/search';
 import { fetchRecordsPages } from '@/app/lib/database';
 import Pagination from '@/app/ui/records/pagination';
 import { searchParams } from '@/app/lib/interfaces';
-import StepperForm from '@/app/ui/records/view/answer/stepper-form';
+import StepperForm from '@/app/ui/records/view/answers/stepper-form';
 import { getDbData } from "@/app/lib/database";
 import { fetchFilteredRecords } from '@/app/lib/database';
 import { Person, Place, SixAnswers } from '@/app/lib/interfaces';
