@@ -23,7 +23,7 @@ export type InsertWhenTime = {
 export type WhenRadioOptions = [
     SelectProps,
     RadioOptions,
-    number | null
+    InsertWhenTime | null
 ]
 
 export type Place = {

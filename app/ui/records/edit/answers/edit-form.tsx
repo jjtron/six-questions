@@ -51,7 +51,7 @@ export default function EditAnswerForm(
   const [eventTime3, setEventTime3] = useState(false);
   const [eventTime4, setEventTime4] = useState(false);
   const [eventTime5, setEventTime5] = useState(false);
-  const [eventTime6, setEventTime6] = useState(false);
+  const [eventTime6, setEventTime6] = useState(record.when.type === 6);
 
   function pickEventTimeStyle (n: number) {
     (n === 1) ? setEventTime1(true) : setEventTime1(false);
@@ -240,7 +240,7 @@ export default function EditAnswerForm(
                     whenRadioOptions={[
                       {id: 'where', name: 'where', multi: 'no'},
                       {list: whenOptions},
-                      record.when.type
+                      record.when
                     ]}
                     whenMouseOver={handleWhenMouseOver}
                     hoverWhenHighlight={hoverWhenHighlight}
@@ -309,7 +309,7 @@ export default function EditAnswerForm(
         </div>
 
         <div className="flex flex-col items-center justify-between p-4">
-          <Button type="submit">Create Record</Button>
+          <Button type="submit">Save Changes</Button>
         </div>
 
     </form>
