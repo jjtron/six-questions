@@ -102,37 +102,38 @@ export default function AnswerForm({
                   <div className={clsx({"hidden" : page !== 1 })}>
                     <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Record ID: ...{record.id.slice(-6)}, Part 2</p>
                     {/* WHEN */}
-                    <div className="pl-2 border-1 border-slate-400 rounded-md bg-slate-250">
+                    <div className="pl-2 border-1 border-slate-400 rounded-md bg-slate-200">
                             <p className="font-bold">WHEN</p>
                             {
                                 (() => {
                                     if (record.when.type === 6 && record.when.customID !== undefined) {
-                                        return (<>{JSON.stringify(customWhenRecs.find((item) => {
+                                        const whenRecord = customWhenRecs.find((item) => {
                                             return item.id === record.when['customID'];
-                                        }))}</>);
+                                        });
+                                        return (<>
+                                            <div className="flex flex-col mt-px pr-2 md:h-48 h-32" >
+                                                <p className="bg-white rounded-t-md pl-2">{whenRecord?.name}</p>
+                                                <textarea
+                                                    rows={7}
+                                                    value={whenRecord?.comments}
+                                                    readOnly
+                                                    className="rounded-b-md outline-none text-sm mb-1 pl-2 h-[156px]"
+                                                />
+                                            </div>
+                                        </>);
                                     }
                                     switch (record.when.type) {
                                         case 5: return <p>{record.when['yr_only_pre1900']}</p>
                                         case 4: return <p>{record.when['year_mon_pre1900']}</p>
                                         case 3: return <p>{record.when['date_only_pre1900']}</p>
                                         case 2: return <p>{record.when['yr_mon']}</p>
-                                        case 1: return <p>{record.when['date']},&nbsp{record.when['time']}</p>
+                                        case 1: return <><span>{record.when['date']}</span>&nbsp;&nbsp;<span>{record.when['time']}</span></>
                                         default: return <>undefined</>;
                                     }
-
                                 })()
-                                
                             }
-                            {/*
-                            <div>{JSON.stringify(customWhenRecs.find((item) => {
-                                return (item.id === 1);
-                            }))}</div>
-                            */}
-                            <div>{record.when.date}</div>
-                            <div>{record.when.time}</div>
                     </div>
                     {/* WHY, HOW */}
-                    
                         {([{label: 'WHY'},
                         {label: 'HOW'}])
                             .map((vars, j) => {
@@ -140,9 +141,9 @@ export default function AnswerForm({
                                 (j === 1) ? data = record.why : 
                                 (j === 2) ? data = record.how : data = '';
                                 return (
-                                    <div key={j} className="flex flex-col rounded-md mt-px border-1 bg-slate-200 border-slate-400 pl-2 md:h-48 h-32" >
+                                    <div key={j} className={clsx("flex flex-col rounded-md mt-px border-1 bg-slate-200 border-slate-400 p-2",
+                                                           { "md:h-48 h-32" : record.when.type === 6, " md:h-[276px] h-32 " : record.when.type !== 6 } )} >
                                         <p className="font-bold">{vars.label}</p>
-                                        
                                         <textarea
                                             rows={7}
                                             value={data}
@@ -153,9 +154,7 @@ export default function AnswerForm({
                                 )
                             })
                         }
-                    
                   </div>
-                  
                   <div className="flex flex-col items-end">
                     <Button cName={"w-20"} showdatalink={`/records/${record.id}/edit/answers`} buttontext={"Edit"} />
                   </div>
