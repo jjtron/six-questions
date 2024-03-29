@@ -196,30 +196,39 @@ export default function EditAnswerForm(
             <div className="mt-1 min-h-[42px] relative">
               <div className={clsx({ "hidden" : !eventTime1 })}>
                 <DateTimePicker
-                    date_time={{date: '01/01/1900', time: '12:00 AM'}}
+                    date_time={record.when.type === 1 ? {date: '01/01/1900', time: '12:00 AM'} : {date: '01/01/1900', time: '12:00 AM'}}
                     view={["year", "month", "day"]}
                     form_data_name={"yr_mon_day"} />
               </div>
               <div className={clsx("flex flex-row", { "hidden" : !eventTime2 })}>
                 <div className="basis-1/5"></div>
                 <DateTimePicker
-                    date_time={{date: '01/01/1900', time: '12:00 AM'}}
+                    date_time={record.when.type === 2 ? convertDateYrMon(record.when.yr_mon) : {date: '01/01/1900', time: '12:00 AM'}}
                     view={["year", "month"]}
                     form_data_name={"yr_mon"} />
               </div>
               <div className={clsx("flex flex-row", { "hidden" : !eventTime3 })}>
                 <div className="basis-2/5"></div>
-                <InputMask className="w-[120px] border-1 border-slate-300 rounded-md text-center h-[40px]" name="date_only_pre1900" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                <InputMask className="w-[120px] border-1 border-slate-300 rounded-md text-center h-[40px]"
+                           value={record.when.type === 3 ? record.when.date_only_pre1900 : 'undefined' }
+                           name="date_only_pre1900" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate
+                           onChange={() => {}} />
               </div>
               <div className={clsx("flex flex-row", { "hidden" : !eventTime4 })}>
                 <div className="basis-3/5"></div>
-                <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center h-[40px]" name="year_mon_pre1900" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center h-[40px]"
+                           value={record.when.type === 4 ? record.when.year_mon_pre1900 : 'undefined'}
+                           name="year_mon_pre1900" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate
+                           onChange={() => {}} />
               </div>
               <div className={clsx("flex flex-row items-center", { "hidden" : !eventTime5 })}>
                 <div className="basis-4/5"></div>
-                <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text-center h-[40px]" name="yr_only_pre1900" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text-center h-[40px]"
+                           value={record.when.type === 5 ? record.when.yr_only_pre1900 : 'undefined'}
+                           name="yr_only_pre1900" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate
+                           onChange={() => {}} />
               </div>
-              <div className="absolute left-80 h-[10px] w-[10px]">x</div>
+              <div className={clsx("absolute left-80 h-[10px] w-[10px]", { "hidden" : eventTime6 })} >{JSON.stringify(record.when)}</div>
             </div>
 
             <div className="flex flex-row" 
@@ -316,6 +325,15 @@ export default function EditAnswerForm(
         <input id="operation" name="operation" type="hidden" value="update" />
     </form>
   );
+ 
+  function convertDateYrMon(year_mon: string | undefined) : {date: string, time: string} {
+    const year = (typeof year_mon === 'undefined') ? '' : year_mon?.split(' ')[1];
+    const mon = (typeof year_mon === 'undefined') ? '' : year_mon?.split(' ')[0];
+    const monthList = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const monthNumber: number = monthList.indexOf(mon) + 1;
+    const monthString: string = (typeof monthNumber === 'number') ? ((monthNumber < 10) ? '0' + monthNumber : '') : '';
+    return  {date: `${monthString}/01/${year}`, time: '12:00 AM'};
+  }
 
   function handleWhereMouseOver(record : any, isSelected: boolean) {
     setWhereHoverHighlight(true);

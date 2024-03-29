@@ -16,7 +16,6 @@ export default function DateTimePicker(
       }
   ) {
 
-  const xy = 'whatever';
   const datetime = `${date_time.date.replace(/\//g, '-')}T${convertTime(date_time.time)}`;
   const converted_datetime = datetime.substring(6, 10) + '-' + datetime.substring(0, 2) + '-' + 
                              datetime.substring(3, 4) + datetime.substring(10);
