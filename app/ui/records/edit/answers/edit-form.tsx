@@ -1,5 +1,5 @@
 'use client';
-import { updateRecord } from '@/app/lib/actions';
+import { createRecord } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
@@ -29,7 +29,7 @@ export default function EditAnswerForm(
       }) {
 
   const initialState = { message: null, errors: {} };
-  const [state, dispatch] = useFormState(updateRecord, initialState);
+  const [state, dispatch] = useFormState(createRecord, initialState);
 
   // the following pairs of state variables are used in the
   // place (where) and event-time (when) pick sections
@@ -312,7 +312,7 @@ export default function EditAnswerForm(
         <div className="flex flex-col items-end justify-between">
           <Button type="submit">Save Changes</Button>
         </div>
-
+        <input id="operation" name="operation" type="hidden" value="update" />
     </form>
   );
 

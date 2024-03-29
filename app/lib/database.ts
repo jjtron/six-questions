@@ -197,23 +197,39 @@ const client = new Client({
         }
       }))();
 
-      const statement = 
-         `INSERT INTO public.six_answers(
-          id, who, what, "where", "when", why, how)
-          VALUES (($1),($2),($3),($4),($5),($6),($7));`
-      const variables = [
-        data.get("id"),
-        JSON.stringify(persons).replace('[', '{').replace(']', '}'),
-        (data.get("what") as string).replaceAll("'", "\'"),
-        data.get("where"),
-        JSON.stringify(insertWhenTime),
-        (data.get("why") as string).replaceAll("'", "\'"),
-        (data.get("how") as string).replaceAll("'", "\'")
-      ];
+      let statement: string = '';
+      let variables: any[] = [];
+      if (data.get('operation') === 'create') {
+          statement = `INSERT INTO public.six_answers(
+                      id, who, what, "where", "when", why, how)
+                      VALUES (($1),($2),($3),($4),($5),($6),($7));`
+          variables = [
+            data.get("id"),
+            JSON.stringify(persons).replace('[', '{').replace(']', '}').replace("'", "\'"),
+            (data.get("what") as string).replaceAll("'", "\'"),
+            data.get("where"),
+            JSON.stringify(insertWhenTime),
+            (data.get("why") as string).replaceAll("'", "\'"),
+            (data.get("how") as string).replaceAll("'", "\'")
+          ];
+      } else if (data.get('operation') === 'update') {
+          statement = `UPDATE public.six_answers
+                      SET who=($1), what=($2), "when"=($3), "where"=($4), why=($5), how=($6) WHERE id = ($7);`
+          variables = [
+            JSON.stringify(persons).replace('[', '{').replace(']', '}').replace("'", "\'"),
+            (data.get("what") as string).replaceAll("'", "\'"),
+            JSON.stringify(insertWhenTime),
+            data.get("where"),
+            (data.get("why") as string).replaceAll("'", "\'"),
+            (data.get("how") as string).replaceAll("'", "\'"),
+            data.get("id")
+          ];
+      }
+
       const result: any = await client.query(statement, variables);
     } catch (error) {
       console.error('Database Error:', error);
-      throw new Error('Failed to insert an answers record.');
+      throw new Error(`Failed to ${data.get('operation')} an answers record.`);
     }
   };
 

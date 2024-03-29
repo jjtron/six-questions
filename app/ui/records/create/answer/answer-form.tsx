@@ -308,7 +308,7 @@ export default function AnswerForm(
         <div className="flex flex-col items-end justify-between">
           <Button type="submit">Create Record</Button>
         </div>
-
+        <input id="operation" name="operation" type="hidden" value="create" />
     </form>
   );
 
