@@ -233,39 +233,6 @@ const client = new Client({
     }
   };
 
-  export async function updateAnswerRecord(data: FormData) {
-    try {
-      // prepare the people for update
-      let persons: number[] = [];
-      data.getAll("who").map((person: any) => {
-        persons.push(Number(person));
-      });
-      // prepare the whens for update
-      let timestamp: {date?: string; time?: string;} = {};
-      data.getAll("when").map((property: any) => {
-        const re = new RegExp(/\d{2}\/\d{2}\/\d{4}/);
-        re.test(property) ? (timestamp.date = property) : (timestamp.time = property);
-      });
-
-      const statement = 
-         `UPDATE public.six_answers
-          SET who=($1), what=($2), "when"=($3), "where"=($4), why=($5), how=($6) WHERE id = ($7);`
-      const variables = [
-        JSON.stringify(persons).replace('[', '{').replace(']', '}').replace("'", "\'"),
-        (data.get("what") as string).replaceAll("'", "\'"),
-        JSON.stringify(timestamp),
-        data.get("where"),
-        (data.get("why") as string).replaceAll("'", "\'"),
-        (data.get("how") as string).replaceAll("'", "\'"),
-        data.get("id")
-      ];
-      const result: any = await client.query(statement, variables);
-    } catch (error) {
-      console.error('Database Error:', error);
-      throw new Error('Failed to update an answers record.');
-    }
-  };
-
   export async function insertPlaceRecord(data: FormData) {
     try {
       const statement =
