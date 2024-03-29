@@ -1,5 +1,5 @@
 'use client';
-import { createRecord } from '@/app/lib/actions';
+import { create0rUpdateAnswer } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
 import MultiSelect from '@/app/ui/records/multiselect';
@@ -29,7 +29,7 @@ export default function EditAnswerForm(
       }) {
 
   const initialState = { message: null, errors: {} };
-  const [state, dispatch] = useFormState(createRecord, initialState);
+  const [state, dispatch] = useFormState(create0rUpdateAnswer, initialState);
 
   // the following pairs of state variables are used in the
   // place (where) and event-time (when) pick sections
