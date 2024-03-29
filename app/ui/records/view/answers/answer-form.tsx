@@ -45,7 +45,7 @@ export default function AnswerForm({
                             record.who.map((whoIndex: number, n: number) => {
                                 const nameP = whoList.map((row: {index: number; name: string;}) => {
                                     if (row.index === whoIndex) {
-                                        return (<p className="">{row.name}</p>)
+                                        return (<p key={n} className="">{row.name}</p>)
                                     };
                                 });
                                 return nameP;

@@ -45,11 +45,11 @@ export default function EditAnswerForm(
   const [hoverWhereHighlight, setWhereHoverHighlight] = useState(false);
   const [hoverWhenHighlight, setWhenHoverHighlight] = useState(false);
 
-  const [eventTime1, setEventTime1] = useState(false);
-  const [eventTime2, setEventTime2] = useState(false);
-  const [eventTime3, setEventTime3] = useState(false);
-  const [eventTime4, setEventTime4] = useState(false);
-  const [eventTime5, setEventTime5] = useState(false);
+  const [eventTime1, setEventTime1] = useState(record.when.type === 1);
+  const [eventTime2, setEventTime2] = useState(record.when.type === 2);
+  const [eventTime3, setEventTime3] = useState(record.when.type === 3);
+  const [eventTime4, setEventTime4] = useState(record.when.type === 4);
+  const [eventTime5, setEventTime5] = useState(record.when.type === 5);
   const [eventTime6, setEventTime6] = useState(record.when.type === 6);
 
   function pickEventTimeStyle (n: number) {
@@ -66,7 +66,6 @@ export default function EditAnswerForm(
     whoList[el.index] = el.name;
   });
 
-  
   return (
     <form action={dispatch} className="flex flex-col md:pl-2 bg-inherit">
       
@@ -196,7 +195,7 @@ export default function EditAnswerForm(
             <div className="mt-1 min-h-[42px] relative">
               <div className={clsx({ "hidden" : !eventTime1 })}>
                 <DateTimePicker
-                    date_time={record.when.type === 1 ? {date: '01/01/1900', time: '12:00 AM'} : {date: '01/01/1900', time: '12:00 AM'}}
+                    date_time={record.when.type === 1 ? convertDatePlusTime({date: record.when.date, time: record.when.time}) : {date: '01/01/1900', time: '12:00 AM'}}
                     view={["year", "month", "day"]}
                     form_data_name={"yr_mon_day"} />
               </div>
@@ -210,23 +209,23 @@ export default function EditAnswerForm(
               <div className={clsx("flex flex-row", { "hidden" : !eventTime3 })}>
                 <div className="basis-2/5"></div>
                 <InputMask className="w-[120px] border-1 border-slate-300 rounded-md text-center h-[40px]"
-                           value={record.when.type === 3 ? record.when.date_only_pre1900 : 'undefined' }
-                           name="date_only_pre1900" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate
-                           onChange={() => {}} />
+                           defaultValue={record.when.type === 3 ? record.when.date_only_pre1900 : 'undefined' }
+                           name="date_only_pre1900" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }}
+                           showMask separate />
               </div>
               <div className={clsx("flex flex-row", { "hidden" : !eventTime4 })}>
                 <div className="basis-3/5"></div>
                 <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center h-[40px]"
-                           value={record.when.type === 4 ? record.when.year_mon_pre1900 : 'undefined'}
-                           name="year_mon_pre1900" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate
-                           onChange={() => {}} />
+                           defaultValue={record.when.type === 4 ? record.when.year_mon_pre1900 : 'undefined'}
+                           name="year_mon_pre1900" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }}
+                           showMask separate />
               </div>
               <div className={clsx("flex flex-row items-center", { "hidden" : !eventTime5 })}>
                 <div className="basis-4/5"></div>
                 <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text-center h-[40px]"
-                           value={record.when.type === 5 ? record.when.yr_only_pre1900 : 'undefined'}
-                           name="yr_only_pre1900" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate
-                           onChange={() => {}} />
+                           defaultValue={record.when.type === 5 ? record.when.yr_only_pre1900 : 'undefined'}
+                           name="yr_only_pre1900" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }}
+                           showMask separate />
               </div>
               <div className={clsx("absolute left-80 h-[10px] w-[10px]", { "hidden" : eventTime6 })} >{JSON.stringify(record.when)}</div>
             </div>
@@ -325,6 +324,12 @@ export default function EditAnswerForm(
         <input id="operation" name="operation" type="hidden" value="update" />
     </form>
   );
+
+  function convertDatePlusTime( datePlusTime: {date: string | undefined, time: string | undefined} ) : {date: string, time: string} {
+    const returnDate = (typeof datePlusTime.date !== 'string') ? '01/01/1900' : datePlusTime.date;
+    const returnTime = (typeof datePlusTime.time !== 'string') ? '12:00 AM' : datePlusTime.time;
+    return {date: returnDate, time: returnTime};
+  }
  
   function convertDateYrMon(year_mon: string | undefined) : {date: string, time: string} {
     const year = (typeof year_mon === 'undefined') ? '' : year_mon?.split(' ')[1];
