@@ -74,6 +74,7 @@ export default function AnswerForm(
         <div className={clsx({"hidden" : page !== 0 })}>
           {/* PAGE 1 */}
           {/* WHO */}
+          <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Part 1: Who, What, Where</p>
           <div className="w-[15rem] bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
             <div className="flex flex-row">
                 <div className="font-bold">WHO</div>
@@ -153,6 +154,7 @@ export default function AnswerForm(
 
         <div className={clsx({"hidden" : page !== 1 })}>
           {/* PAGE 2 */}
+          <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Part 2: When, Why, How</p>
           <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[406px]" >
             <div className="flex flex-row">
               <div className="font-bold">WHEN</div>
@@ -303,7 +305,7 @@ export default function AnswerForm(
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-between p-4">
+        <div className="flex flex-col items-end justify-between">
           <Button type="submit">Create Record</Button>
         </div>
 

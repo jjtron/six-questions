@@ -8,7 +8,6 @@ import WhenRadio from '@/app/ui/records/whenradio';
 import FakeWhenRadio from '@/app/ui/records/fakewhenradio';
 import { SelectOptions, Person, Place, EventTime, SixAnswers } from '@/app/lib/interfaces';
 import DateTimePicker from '@/app/ui/records/datepicker';
-import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import clsx from 'clsx';
 import { InputMask } from '@react-input/mask';
@@ -76,6 +75,7 @@ export default function EditAnswerForm(
         <div className={clsx({"hidden" : page !== 0 })}>
           {/* PAGE 1 */}
           {/* WHO */}
+          <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Record ID: ...{record.id.slice(-6)}, Part 1</p>
           <div className="w-[15rem] bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
             <div className="flex flex-row">
                 <div className="font-bold">WHO</div>
@@ -116,7 +116,7 @@ export default function EditAnswerForm(
             />
           </div>
           {/* WHERE */}
-          <div  className="flex flex-row"
+          <div  className="flex flex-row h-[344px]"
                 onMouseLeave={(e) => {
                   e.stopPropagation();
                   document.getElementById("where-wrapper-div")?.scroll(0, scrollWherePosition);
@@ -124,7 +124,7 @@ export default function EditAnswerForm(
                   setWhereHoverHighlight(false);
                 }}
           >
-            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[320px]" >
+            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[340px]" >
               <div className="flex flex-row">
                 <div className="font-bold">WHERE</div>
                 <div id="where-error" aria-live="polite" aria-atomic="true">
@@ -137,7 +137,7 @@ export default function EditAnswerForm(
                 </div>
               </div>
               <div className="text-xs">(scroll down for more options)</div>
-              <div className="overflow-auto border-1 border-slate-300 h-[270px] rounded-md" id="where-wrapper-div">
+              <div className="overflow-auto border-1 border-slate-300 h-[288px] rounded-md" id="where-wrapper-div">
                 <WhereRadio
                   whereRadioOptions={[
                     {id: 'where', name: 'where', multi: 'no'},
@@ -156,6 +156,7 @@ export default function EditAnswerForm(
 
         <div className={clsx({"hidden" : page !== 1 })}>
           {/* PAGE 2 */}
+          <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Record ID: ...{record.id.slice(-6)}, Part 2</p>
           <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[406px]" >
             <div className="flex flex-row">
               <div className="font-bold">WHEN</div>
@@ -308,7 +309,7 @@ export default function EditAnswerForm(
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-between p-4">
+        <div className="flex flex-col items-end justify-between">
           <Button type="submit">Save Changes</Button>
         </div>
 

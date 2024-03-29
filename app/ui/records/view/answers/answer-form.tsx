@@ -40,7 +40,7 @@ export default function AnswerForm({
                     <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Record ID: ...{record.id.slice(-6)}, Part 1</p>
                     <div className="flex md:flex-row flex-col">
                         {/* col 1 */}
-                        <div className="flex flex-col basis-1/4 pl-2 border-1 border-slate-400 rounded-md h-[100px] overflow-auto bg-slate-200" >
+                        <div className="flex flex-col basis-1/4 pl-2 border-1 border-slate-400 rounded-md h-[211px] overflow-auto bg-slate-200" >
                             <p className="font-bold">WHO</p>{
                             record.who.map((whoIndex: number, n: number) => {
                                 const nameP = whoList.map((row: {index: number; name: string;}) => {
@@ -75,7 +75,7 @@ export default function AnswerForm({
                         }
                     
                     {/* WHERE */}
-                    <div className="pl-2 border-1 border-slate-400 rounded-md bg-slate-200" >
+                    <div className="pl-2 border-1 border-slate-400 rounded-md bg-slate-200 h-[200px]" >
                         {([
                         {title: "WHERE:", level: 'name', sublevel: null},
                         {title: "Street: ", level: 'details', sublevel: 'street'},
@@ -138,8 +138,8 @@ export default function AnswerForm({
                         {label: 'HOW'}])
                             .map((vars, j) => {
                                 let data;
-                                (j === 1) ? data = record.why : 
-                                (j === 2) ? data = record.how : data = '';
+                                (j === 0) ? data = record.why : 
+                                (j === 1) ? data = record.how : data = '';
                                 return (
                                     <div key={j} className={clsx("flex flex-col rounded-md mt-px border-1 bg-slate-200 border-slate-400 p-2",
                                                            { "md:h-48 h-32" : record.when.type === 6, " md:h-[276px] h-32 " : record.when.type !== 6 } )} >

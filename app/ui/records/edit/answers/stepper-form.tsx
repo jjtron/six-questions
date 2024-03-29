@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Person, Place, EventTime, SixAnswers } from '@/app/lib/interfaces';
 import EditAnswerForm from './edit-form';
+import clsx from 'clsx';
 
 const steps = ['Who, What, Where', 'When, Why, How', 'Done'];
 
@@ -130,15 +131,14 @@ export default function StepperForm(
             )()
           }
           
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            <Button
+          <Box className="pl-2 mt-[-40px]" >
+            <button className={clsx("rounded-md bg-sky-200 px-2 active:bg-sky-300 border-1 border-slate-400", {"hidden" : activeStep === 0})}
               color="inherit"
               disabled={activeStep === 0}
               onClick={handleBack}
-              sx={{ mr: 1 }}
             >
-              Back
-            </Button>
+              Go To Who, What, Where (Part 1)
+            </button>
             
             <Box sx={{ flex: '1 1 auto' }} />
             {/* OPTIONAL SKIP STEP FUNCTION NOT USED
@@ -148,9 +148,10 @@ export default function StepperForm(
               </Button>
             )}
             */}
-            <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-            </Button>
+            <button onClick={handleNext} className={clsx("rounded-md bg-sky-200 px-2 active:bg-sky-300 border-1 border-slate-400", {"hidden" : activeStep === 1})}
+              disabled={activeStep === 1}
+            >Go To When, Why, How (Part 2)
+            </button>
           </Box>
         </React.Fragment>
       )}
