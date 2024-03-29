@@ -393,7 +393,7 @@ export async function create0rUpdateAnswer(prevState: InsertAndCreateState, form
   ) {
     // either none-at-all or more-than-one has been submitted
     // console.log('no data_type_X field submitted');
-    date_error = { when: [ 'too many date type submissions' ] }
+    date_error = { when: [ 'One and one only date type is allowed' ] }
   }
   if (formData.get('date_type_1') === 'on') {
     const validatedDateType1Fields = DateType1Schema.safeParse({
@@ -473,14 +473,14 @@ export async function create0rUpdateAnswer(prevState: InsertAndCreateState, form
       let key: string = Object.keys(date_error)[0];
       errors['when'] = date_error[key];
     }
-    // console.log('ERRORS 1', errors);
+    console.log('ERRORS 1', errors);
     return {
       errors: errors,
       message: 'Missing Fields. Failed to Create Record.',
     };
   } else if (Object.keys(date_error).length > 0) {
     let key: string = Object.keys(date_error)[0];
-    // console.log('ERRORS 2', { when: [ date_error[key] ] });
+    console.log('ERRORS 2', { when: [ date_error[key] ] });
     return {
       errors: { when: [ date_error[key] ] },
       message: 'Missing Fields. Failed to Create Record.',

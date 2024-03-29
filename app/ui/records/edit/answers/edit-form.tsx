@@ -193,7 +193,7 @@ export default function EditAnswerForm(
               </span>
             </div>
             {/* HIDDEN INPUT BOXES FOR VARIOUS DATE STYLES */}
-            <div className="mt-1 min-h-[42px]">
+            <div className="mt-1 min-h-[42px] relative">
               <div className={clsx({ "hidden" : !eventTime1 })}>
                 <DateTimePicker
                     date_time={{date: '01/01/1900', time: '12:00 AM'}}
@@ -209,16 +209,17 @@ export default function EditAnswerForm(
               </div>
               <div className={clsx("flex flex-row", { "hidden" : !eventTime3 })}>
                 <div className="basis-2/5"></div>
-                <InputMask className="w-[120px] border-1 border-slate-300 rounded-md text-center" name="date_only_pre1900" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                <InputMask className="w-[120px] border-1 border-slate-300 rounded-md text-center h-[40px]" name="date_only_pre1900" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
               </div>
               <div className={clsx("flex flex-row", { "hidden" : !eventTime4 })}>
                 <div className="basis-3/5"></div>
-                <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center" name="year_mon_pre1900" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center h-[40px]" name="year_mon_pre1900" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
               </div>
               <div className={clsx("flex flex-row items-center", { "hidden" : !eventTime5 })}>
                 <div className="basis-4/5"></div>
-                <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text-center" name="yr_only_pre1900" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text-center h-[40px]" name="yr_only_pre1900" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
               </div>
+              <div className="absolute left-80 h-[10px] w-[10px]">x</div>
             </div>
 
             <div className="flex flex-row" 
