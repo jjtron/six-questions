@@ -227,7 +227,19 @@ export default function EditAnswerForm(
                            name="yr_only_pre1900" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }}
                            showMask separate />
               </div>
-              <div className={clsx("absolute left-80 h-[10px] w-[10px]", { "hidden" : eventTime6 })} >{JSON.stringify(record.when)}</div>
+              <div className={clsx("absolute left-80", { "hidden" : eventTime6 })} >
+                <p className="pl-2" >Date Comments: &#40;optional&#41;</p>
+                <textarea 
+                  id="comments"
+                  name="comments"
+                  rows={4}
+                  cols={80}
+                  defaultValue={record.when.comments}
+                  className="block w-full resize-none rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
+                  aria-describedby="what-error"
+                >
+                </textarea>
+              </div>
             </div>
 
             <div className="flex flex-row" 

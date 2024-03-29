@@ -166,31 +166,37 @@ const client = new Client({
             type: 1,
             date: data.get("yr_mon_day") as string,
             time: data.get("yr_mon_day_time") as string,
+            comments: data.get("comments") as string
           }
         } else if (submittedDateType === 'date_type_2') {
           return  {
             type: 2,
             yr_mon: data.get("yr_mon") as string,
+            comments: data.get("comments") as string
           };
         } else if (submittedDateType === 'date_type_3') {
           return  {
             type: 3,
             date_only_pre1900: data.get("date_only_pre1900") as string,
+            comments: data.get("comments") as string
           };
         } else if (submittedDateType === 'date_type_4') {
           return  {
             type: 4,
             year_mon_pre1900: data.get("year_mon_pre1900") as string,
+            comments: data.get("comments") as string
           };
         } else if (submittedDateType === 'date_type_5') {
           return  {
             type: 5,
             yr_only_pre1900: data.get("yr_only_pre1900") as string,
+            comments: data.get("comments") as string
           };
         } else if (submittedDateType === 'date_type_6') {
           return  {
             type: 6,
             customID: Number(data.get("custom_when")),
+            comments: ''
           };
         } else {
           throw new Error('Undetermined date type submitted.');

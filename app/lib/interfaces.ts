@@ -18,6 +18,7 @@ export type InsertWhenTime = {
     year_mon_pre1900?: string;
     yr_only_pre1900?: string;
     customID?: number;
+    comments: string;
 }
 
 export type WhenRadioOptions = [
