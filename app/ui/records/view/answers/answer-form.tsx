@@ -106,30 +106,38 @@ export default function AnswerForm({
                             <p className="font-bold">WHEN</p>
                             {
                                 (() => {
+                                    let header; let whenRecord;
                                     if (record.when.type === 6 && record.when.customID !== undefined) {
-                                        const whenRecord = customWhenRecs.find((item) => {
+                                        whenRecord = customWhenRecs.find((item) => {
                                             return item.id === record.when['customID'];
                                         });
-                                        return (<>
-                                            <div className="flex flex-col mt-px pr-2 md:h-48 h-32" >
-                                                <p className="bg-white rounded-t-md pl-2">{whenRecord?.name}</p>
-                                                <textarea
-                                                    rows={7}
-                                                    value={whenRecord?.comments}
-                                                    readOnly
-                                                    className="rounded-b-md outline-none text-sm mb-1 pl-2 h-[156px]"
-                                                />
-                                            </div>
-                                        </>);
+                                        header = <p className="bg-white rounded-t-md pl-2">{whenRecord?.name}</p>
+                                    } else {
+                                        whenRecord = (() => {
+                                            return record.when;
+                                        })();
+                                        header = (() => {
+                                            switch (record.when.type) {
+                                                case 5: return <p className="bg-white rounded-t-md pl-2">{record.when['yr_only_pre1900']}</p>
+                                                case 4: return <p className="bg-white rounded-t-md pl-2">{record.when['year_mon_pre1900']}</p>
+                                                case 3: return <p className="bg-white rounded-t-md pl-2">{record.when['date_only_pre1900']}</p>
+                                                case 2: return <p className="bg-white rounded-t-md pl-2">{record.when['yr_mon']}</p>
+                                                case 1: return <p className="bg-white rounded-t-md pl-2">{record.when['date']}&nbsp;@&nbsp;{record.when['time']}</p>
+                                                default: return <>undefined</>;
+                                            }
+                                        })();
                                     }
-                                    switch (record.when.type) {
-                                        case 5: return <p>{record.when['yr_only_pre1900']}</p>
-                                        case 4: return <p>{record.when['year_mon_pre1900']}</p>
-                                        case 3: return <p>{record.when['date_only_pre1900']}</p>
-                                        case 2: return <p>{record.when['yr_mon']}</p>
-                                        case 1: return <><span>{record.when['date']}</span>&nbsp;&nbsp;<span>{record.when['time']}</span></>
-                                        default: return <>undefined</>;
-                                    }
+                                    return (<>
+                                        <div className="flex flex-col mt-px pr-2 md:h-[162px] h-32" >
+                                            {header}
+                                            <textarea
+                                                rows={7}
+                                                value={whenRecord?.comments}
+                                                readOnly
+                                                className="rounded-b-md outline-none text-sm mb-1 pl-2"
+                                            />
+                                        </div>
+                                    </>);
                                 })()
                             }
                     </div>
@@ -142,7 +150,7 @@ export default function AnswerForm({
                                 (j === 1) ? data = record.how : data = '';
                                 return (
                                     <div key={j} className={clsx("flex flex-col rounded-md mt-px border-1 bg-slate-200 border-slate-400 p-2",
-                                                           { "md:h-48 h-32" : record.when.type === 6, " md:h-[276px] h-32 " : record.when.type !== 6 } )} >
+                                                           { "md:h-[207px] h-32" : record.when.type === 6, " md:h-[207px] h-32 " : record.when.type !== 6 } )} >
                                         <p className="font-bold">{vars.label}</p>
                                         <textarea
                                             rows={7}
