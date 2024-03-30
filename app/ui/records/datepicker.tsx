@@ -27,13 +27,13 @@ export default function DateTimePicker(
           {
             (() => {
               if (converted_datetime !== '1900-01-0T12:00') {
-                return (<DatePicker className="bg-white" slotProps={{ textField: { size: 'small', id: "when", name: form_data_name } }}
+                return (<DatePicker className="bg-indigo-100" slotProps={{ textField: { size: 'small', id: "when", name: form_data_name } }}
                   value={dayjs(date_time.date)}
                   views={view}
                   onChange={((e) => {})}
                 />)
               } else {
-                  return (<DatePicker className="bg-white" slotProps={{ textField: { size: 'small', id: "when", name: form_data_name } }}
+                  return (<DatePicker className="bg-indigo-100" slotProps={{ textField: { size: 'small', id: "when", name: form_data_name } }}
                   views={view} />)
               }
             })()
@@ -45,12 +45,12 @@ export default function DateTimePicker(
               // if datepicker view is ["year", "month"] (length of 2), do not show time picker
               if (view.length === 3) {
                 if (converted_datetime !== '1900-01-0T12:00') {
-                  return (<TimePicker className="bg-white" slotProps={{ textField: { size: 'small', id: "yr_mon_day_time", name: "yr_mon_day_time" } }}
+                  return (<TimePicker className="bg-indigo-100" slotProps={{ textField: { size: 'small', id: "yr_mon_day_time", name: "yr_mon_day_time" } }}
                               value={dayjs(converted_datetime)}
                               onChange={((e) => {})}
                   />)
                 } else {
-                    return (<TimePicker className="bg-white" slotProps={{ textField: { size: 'small', id: "yr_mon_day_time", name: "yr_mon_day_time" } }} />)
+                    return (<TimePicker className="bg-indigo-100" slotProps={{ textField: { size: 'small', id: "yr_mon_day_time", name: "yr_mon_day_time" } }} />)
                 }
               }
             })()
