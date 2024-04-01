@@ -9,14 +9,7 @@ export default function WhereRadio(
       hoverWhereHighlight: boolean
     })
 {
-    let n: number = -1; // n will remain -1 in the case of where this 
-                        // component is used to CREATE a 6-Answers record
-    props.whereRadioOptions[1].list.forEach((place, i) => {
-      if (place.id === props.whereRadioOptions[2]) {
-        n = i;
-      }
-    });
-    
+    const n: number = props.whereRadioOptions[1].list.findIndex((place) => place.id === props.whereRadioOptions[2]);
     const [isChecked, setIsChecked] = useState(n);
     const [bgColor, setBgColor] = useState(n);
 

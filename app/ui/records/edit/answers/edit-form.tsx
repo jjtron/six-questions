@@ -11,6 +11,7 @@ import DateTimePicker from '@/app/ui/records/datepicker';
 import { useState } from 'react';
 import clsx from 'clsx';
 import { InputMask } from '@react-input/mask';
+import { useRef } from 'react';
 
 
 export default function EditAnswerForm(
@@ -75,6 +76,9 @@ export default function EditAnswerForm(
     whoList[el.index] = el.name;
   });
 
+  const whereList = useRef(<div></div> as unknown as HTMLDivElement);
+  const whenList = useRef(<div></div> as unknown as HTMLDivElement);
+
   return (
     <form action={dispatch} className="flex flex-col md:pl-2 bg-inherit">
       
@@ -127,7 +131,7 @@ export default function EditAnswerForm(
           <div  className="flex flex-row h-[344px]"
                 onMouseLeave={(e) => {
                   e.stopPropagation();
-                  document.getElementById("where-wrapper-div")?.scroll(0, scrollWherePosition);
+                  whereList.current.scrollTop = scrollWherePosition;
                   handleWhereMouseOver(selectedPlaceRecord, true);
                   setWhereHoverHighlight(false);
                 }}
@@ -145,7 +149,7 @@ export default function EditAnswerForm(
                 </div>
               </div>
               <div className="text-xs">(scroll down for more options)</div>
-              <div className="overflow-auto border-1 border-slate-300 h-[288px] rounded-md" id="where-wrapper-div">
+              <div className="overflow-auto border-1 border-slate-300 h-[288px] rounded-md" ref={whereList}>
                 <WhereRadio
                   whereRadioOptions={[
                     {id: 'where', name: 'where', multi: 'no'},
@@ -258,14 +262,14 @@ export default function EditAnswerForm(
             <div className="flex flex-row" 
                   onMouseLeave={(e) => {
                         e.stopPropagation();
-                        document.getElementById("when-wrapper-div")?.scroll(0, scrollWhenPosition);
+                        whenList.current.scrollTop = scrollWhenPosition;
                         handleWhenMouseOver(selectedWhenRecord, true)
                         setWhenHoverHighlight(false);
                       }}
               >
               <div className={clsx(`basis-1/3 overflow-auto border-1 
                                     border-slate-300 mb-2 rounded-md`,
-                                    { "h-[290px]" : eventTime6, "h-[200px]" : !eventTime6 })}  id="when-wrapper-div" >
+                                    { "h-[290px]" : eventTime6, "h-[200px]" : !eventTime6 })}  ref={whenList} >
                   <div className="text-xs w-[195px] pt-1 pl-1">
                     <input type="checkbox" name="date_type_6" onClick={() => { pickEventTimeStyle(6) }} 
                             checked={eventTime6} onChange={() => {}} />
@@ -371,7 +375,7 @@ export default function EditAnswerForm(
     if (isSelected){
       setSelectedPlaceRecord(record);
     }
-    const scrollPosition = document.getElementById("where-wrapper-div")?.scrollTop;
+    const scrollPosition = whereList.current.scrollTop;
     if (scrollPosition && isSelected) {
       setScrollWherePosition(scrollPosition)
     }
@@ -415,7 +419,7 @@ export default function EditAnswerForm(
     if (isSelected){
       setSelectedWhenRecord(record);
     }
-    const scrollPosition = document.getElementById("when-wrapper-div")?.scrollTop;
+    const scrollPosition = whenList.current.scrollTop;
     if (scrollPosition && isSelected) {
       setScrollWhenPosition(scrollPosition)
     }
