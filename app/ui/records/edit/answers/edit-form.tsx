@@ -31,12 +31,21 @@ export default function EditAnswerForm(
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(create0rUpdateAnswer, initialState);
 
+  let placeObject: Place | undefined = whereOptions.find((place) => { return place.id === record.where });
+  let placeHtml: any;
+  if (typeof placeObject === "object") {
+    placeHtml = initWhereDetailsHTML(placeObject, { "bg-green-100" : true, "bg-yellow-100" : false });
+  } else {
+    placeHtml = (<p></p>);
+    placeObject = { id: 0, name: '', details: {}, type: '', sort_order: 0 }
+  }
+  
   // the following pairs of state variables are used in the
   // place (where) and event-time (when) pick sections
-  const [showWhereDetails, setshowWhereDetails] = useState(<div className="w-full flex border-1 bg-slate-100 rounded-md">&nbsp;</div>);
+  const [showWhereDetails, setshowWhereDetails] = useState(placeHtml);
   const [showWhenDetails, setShowWhenDetails] = useState(<p></p>);
 
-  const [selectedPlaceRecord, setSelectedPlaceRecord] = useState({});
+  const [selectedPlaceRecord, setSelectedPlaceRecord] = useState(placeObject);
   const [selectedWhenRecord, setSelectedWhenRecord] = useState({});
 
   const [scrollWherePosition, setScrollWherePosition] = useState(0);
@@ -357,7 +366,7 @@ export default function EditAnswerForm(
     return  {date: `${monthString}/01/${year}`, time: '12:00 AM'};
   }
 
-  function handleWhereMouseOver(record : any, isSelected: boolean) {
+  function handleWhereMouseOver(record : Place, isSelected: boolean) {
     setWhereHoverHighlight(true);
     if (isSelected){
       setSelectedPlaceRecord(record);
@@ -430,6 +439,38 @@ export default function EditAnswerForm(
         <div className={clsx("p-4 rounded-md w-full", bgColor)}>
           <div className="font-bold bg-slate-200 px-1 rounded-t-md">{record.name}</div>
           <div className="bg-slate-200 px-1 rounded-b-md" >{record.comments}</div>
+        </div>
+      );
+    }
+  }
+
+  function initWhereDetailsHTML(record: Place, bgColor: object) : any {
+    switch (record.type) {
+      case 'street_city_state': return (
+        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
+          <div className="font-bold bg-slate-200 px-1 rounded-t-md">{record.name}</div>
+          <div className="bg-slate-200 px-1">{record.details.street}</div>
+          <div className="bg-slate-200 px-1">{record.details.city}</div>
+          <div className="bg-slate-200 px-1 rounded-b-md" >{record.details.state}</div>
+        </div>
+      );
+      case 'country_city': return (
+        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
+          <div className="bg-slate-200 flex flex-row rounded-md">
+            <div className="px-1 font-bold">{record.details.city},</div>
+            <div>{record.name}</div>
+          </div>
+        </div>
+      );
+      case 'country': return (
+        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
+            <div className="px-1 font-bold bg-slate-200 rounded-md">{record.name}</div>
+        </div>
+      );
+      case 'any': return (
+        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
+            <div className="px-1 font-bold bg-slate-200 pb-1 rounded-t-md">{record.name}</div>
+            <div className="bg-slate-200 px-1 rounded-b-md">{record.details.desc}</div>
         </div>
       );
     }

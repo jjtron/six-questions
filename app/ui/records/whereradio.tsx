@@ -9,8 +9,16 @@ export default function WhereRadio(
       hoverWhereHighlight: boolean
     })
 {
-    const [isChecked, setIsChecked] = useState(-1);
-    const [bgColor, setBgColor] = useState(-1);
+    let n: number = -1; // n will remain -1 in the case of where this 
+                        // component is used to CREATE a 6-Answers record
+    props.whereRadioOptions[1].list.forEach((place, i) => {
+      if (place.id === props.whereRadioOptions[2]) {
+        n = i;
+      }
+    });
+    
+    const [isChecked, setIsChecked] = useState(n);
+    const [bgColor, setBgColor] = useState(n);
 
     return (
       <div className="flex flex-col pb-2 bg-white" >
@@ -31,7 +39,11 @@ export default function WhereRadio(
                 (function () {
                   if (props.whereRadioOptions[2]?.toString() === el.id.toString()) {
                       // input is defaultChecked
-                      return (<input className="h-[24px]" type="radio" name="where" defaultChecked value={el.id} /> )
+                      return (<input className="h-[24px]" type="radio" name="where" defaultChecked value={el.id}
+                          onClick={() => {
+                              setIsChecked(i);
+                              props.whereMouseOver(el, true);
+                          }}/> )
                   } else {
                       // input is not checked
                       return (<input className="h-[24px]" type="radio" name="where" value={el.id} 
