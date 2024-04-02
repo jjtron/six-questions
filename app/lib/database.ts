@@ -258,17 +258,52 @@ const client = new Client({
         variables.push(1);
       } else if (sort_order === '2') {
         variables.push((data.get("country") as string).replaceAll("'", "\'"));
-        variables.push('{}');
-        variables.push("country");
-        variables.push(2);
+        // add description field if the description option has been exercized
+        if (data.get("desc") === null) {
+          variables.push('{}');
+        } else {
+          variables.push(JSON.stringify({ 
+            desc: (data.get("desc") as string).replaceAll("'", "\'")
+          }));
+        }
+        // name the type 'country_and_desc' if desc field option is exercized
+        if (data.get("desc") === null) {
+          variables.push("country");
+        } else {
+          variables.push("country_and_desc");
+        }
+        // use sort order 4 if desc field option is exercized
+        if (data.get("desc") === null) {
+          variables.push(2);
+        } else {
+          variables.push(4);
+        }
       } else if (sort_order === '3') {
         variables.push((data.get("country_2") as string).replaceAll("'", "\'"));
-        variables.push(JSON.stringify({ 
-          city: (data.get("city_2") as string).replaceAll("'", "\'")
-        }));
-        variables.push("country_city");
-        variables.push(3);
-      } else if (sort_order === '4') {
+        // add description field if the description option has been exercized
+        if (data.get("desc") === null) {
+          variables.push(JSON.stringify({ 
+            city: (data.get("city_2") as string).replaceAll("'", "\'")
+          }));
+        } else {
+          variables.push(JSON.stringify({ 
+            city: (data.get("city_2") as string).replaceAll("'", "\'"),
+            desc: (data.get("desc") as string).replaceAll("'", "\'")
+          }));
+        }
+        // name the type 'country_and_desc' if desc field option is exercized
+        if (data.get("desc") === null) {
+          variables.push("country_city");
+        } else {
+          variables.push("country_city_and_desc");
+        }
+        // use sort order 5 if desc field option is exercized
+        if (data.get("desc") === null) {
+          variables.push(3);
+        } else {
+          variables.push(5);
+        }
+      } else if (sort_order === '6') {
         variables.push((data.get("title") as string).replaceAll("'", "\'"));
         variables.push(JSON.stringify({ 
           desc: (data.get("desc") as string).replaceAll("'", "\'")

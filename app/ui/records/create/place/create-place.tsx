@@ -23,7 +23,7 @@ export default function Form() {
 
   return (
     <form action={dispatch} className="flex flex-col rounded-md bg-slate-200 p-4 md:p-6 md:ml-2">
-        <div className="h-[520px]">
+        <div className="h-[670px]">
           {/* NAME (DESCRIPTION), STREET, CITY, STATE ///////////////////////////////////////////////////////////////// */}
           <div className="flex flex-row">
               <input  type="radio" name="my-accordion-1"
@@ -117,7 +117,7 @@ export default function Form() {
               />
               <p className="pl-2">Country</p>
           </div>
-          <div className={clsx("w-full max-h-[40px] rounded-md",
+          <div className={clsx("w-full max-h-[120px] rounded-md",
                               {"record-type-enabled": isOpen2,
                               "record-type-disabled": !isOpen2 })
                         }>
@@ -139,6 +139,23 @@ export default function Form() {
                       ))}
                     </div>
                 </div>
+                {/* COUNTRY ONLY DESC */}
+                <div className="flex flex-row">
+                  <textarea
+                    disabled={!isOpen2} id="desc" name="desc" rows={3} maxLength={200}
+                    placeholder='Description/comments/notes (max number of characters: 200)'
+                    className="block w-full resize-none rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
+                    aria-describedby="desc-error"
+                  />
+                  <div id="desc-error" aria-live="polite" aria-atomic="true">
+                    {state.errors?.desc &&
+                      state.errors.desc.map((error: string) => (
+                        <p className="px-2 leading-9 text-sm text-red-500" key={error}>
+                          {error}
+                        </p>
+                    ))}
+                  </div>
+                </div>
                 <input type="hidden" id="sort_order" name="sort_order" value="2" disabled={!isOpen2} />
           </div>
           {/* COUNTRY AND CITY ////////////////////////////////////////////////////////////////////////////////////// */}
@@ -150,7 +167,7 @@ export default function Form() {
               />
               <p className="pl-2">Country, City</p>
           </div>
-          <div className={clsx("w-full max-h-[84px] rounded-md",
+          <div className={clsx("w-full max-h-[170px] rounded-md",
                               {"record-type-enabled": isOpen3,
                               "record-type-disabled": !isOpen3 })
                          }>
@@ -190,6 +207,23 @@ export default function Form() {
                           </p>
                       ))}
                     </div>
+                </div>
+                {/* COUNTRY AND CITY DESC */}
+                <div className="flex flex-row">
+                  <textarea
+                    disabled={!isOpen3} id="desc" name="desc" rows={3} maxLength={200}
+                    placeholder='Description/comments/notes (max number of characters: 200)'
+                    className="block w-full resize-none rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
+                    aria-describedby="desc-error"
+                  />
+                  <div id="desc-error" aria-live="polite" aria-atomic="true">
+                    {state.errors?.desc &&
+                      state.errors.desc.map((error: string) => (
+                        <p className="px-2 leading-9 text-sm text-red-500" key={error}>
+                          {error}
+                        </p>
+                    ))}
+                  </div>
                 </div>
                 <input type="hidden" id="sort_order" name="sort_order" value="3" disabled={!isOpen3} />
           </div>
@@ -242,10 +276,10 @@ export default function Form() {
                       ))}
                     </div>
                 </div>
-                <input type="hidden" id="sort_order" name="sort_order" value="4" disabled={!isOpen4} />
+                <input type="hidden" id="sort_order" name="sort_order" value="6" disabled={!isOpen4} />
           </div>
         </div>
-        <div className="flex flex-col items-center justify-between p-4">
+        <div className="flex flex-col items-center justify-between pt-4">
           <Button type="submit">Create Place</Button>
         </div>
     </form>

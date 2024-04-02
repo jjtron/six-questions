@@ -560,9 +560,11 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
                   }
   }  else if  ( formData.get('type') === 'country') {
                   validatedFields = z.object({
-                    country: z.string().min(1, { message: "required" })
+                    country: z.string().min(1, { message: "required" }),
+                    desc: z.string().nullable()
                   }).safeParse({
-                    country: formData.get('country')
+                    country: formData.get('country'),
+                    desc: formData.get('desc')
                   });
                   // If form validation fails, return errors early. Otherwise, continue.
                   if (!validatedFields.success) {
@@ -575,10 +577,12 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
   } else if   ( formData.get('type') === 'country_city') {
                   validatedFields = z.object({
                     country_2: z.string().min(1, { message: "required" }),
-                    city_2: z.string().min(1, { message: "required" })
+                    city_2: z.string().min(1, { message: "required" }),
+                    desc: z.string().nullable()
                   }).safeParse({
                     country_2: formData.get('country_2'),
-                    city_2: formData.get('city_2')
+                    city_2: formData.get('city_2'),
+                    desc: formData.get('desc')
                   });
                   // If form validation fails, return errors early. Otherwise, continue.
                   if (!validatedFields.success) {
