@@ -32,6 +32,33 @@ export default function EditAnswerForm(
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(create0rUpdateAnswer, initialState);
 
+  // arrange selected custom WHEN (if applicable) to be at the first index of the list
+  // (this is so that setting the scroll position is no longer necessary on rendering the list)
+  if (record.when.type === 6) {
+    // find index of the selected WHEN in the whenOptions
+    const n: number = whenOptions.findIndex((when: EventTime) => { return when.id === record.when.customID });
+    // save the WHEN object from the array
+    const whenObj: EventTime = whenOptions[n];
+    // remove it from the whenOptions array
+    whenOptions.splice(n, 1);
+    // add it to the beginning of the array
+    whenOptions.unshift(whenObj);
+  }
+
+  // arrange selected WHERE to be at the first index of the list
+  // (this is so that setting the scroll position is no longer necessary on rendering the list)
+  // 1. find index of the selected WHERE in the whereOptions
+  const n = whereOptions.findIndex((where: Place) => { return where.id === record.where });
+  // 2. save the WHERE object from the array
+  const whereObj: Place = whereOptions[n];
+  // 3. remove it from the whereOptions array
+  whereOptions.splice(n, 1);
+  // 4. add it to the beginning of the array
+  whereOptions.unshift(whereObj);
+  
+
+  // The following variables are cooked up to set the intitial state of the two lists
+  // that are presented to the user for picking a custom WHEN and a WHERE
   let placeObject: Place | undefined = whereOptions.find((place) => { return place.id === record.where });
   let placeHtml: any;
   if (typeof placeObject === "object") {
