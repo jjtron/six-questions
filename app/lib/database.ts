@@ -259,7 +259,7 @@ const client = new Client({
       } else if (sort_order === '2') {
         variables.push((data.get("country") as string).replaceAll("'", "\'"));
         // add description field if the description option has been exercized
-        if (data.get("desc") === null) {
+        if (data.get("desc") === '') {
           variables.push('{}');
         } else {
           variables.push(JSON.stringify({ 
@@ -267,13 +267,13 @@ const client = new Client({
           }));
         }
         // name the type 'country_and_desc' if desc field option is exercized
-        if (data.get("desc") === null) {
+        if (data.get("desc") === '') {
           variables.push("country");
         } else {
           variables.push("country_and_desc");
         }
         // use sort order 4 if desc field option is exercized
-        if (data.get("desc") === null) {
+        if (data.get("desc") === '') {
           variables.push(2);
         } else {
           variables.push(4);
@@ -281,7 +281,7 @@ const client = new Client({
       } else if (sort_order === '3') {
         variables.push((data.get("country_2") as string).replaceAll("'", "\'"));
         // add description field if the description option has been exercized
-        if (data.get("desc") === null) {
+        if (data.get("desc") === '') {
           variables.push(JSON.stringify({ 
             city: (data.get("city_2") as string).replaceAll("'", "\'")
           }));
@@ -292,13 +292,13 @@ const client = new Client({
           }));
         }
         // name the type 'country_and_desc' if desc field option is exercized
-        if (data.get("desc") === null) {
+        if (data.get("desc") === '') {
           variables.push("country_city");
         } else {
           variables.push("country_city_and_desc");
         }
         // use sort order 5 if desc field option is exercized
-        if (data.get("desc") === null) {
+        if (data.get("desc") === '') {
           variables.push(3);
         } else {
           variables.push(5);
@@ -322,17 +322,56 @@ const client = new Client({
     try {
       const statement =
        `UPDATE public.places
-        SET name=($1), details=($2)
-        WHERE id = ($3)`;
-      const variables = [
-        (data.get('placename') as string).replaceAll("'", "\'"),
-        JSON.stringify({ 
-          city: (data.get("city") as string).replaceAll("'", "\'"),
-          street: (data.get("street") as string).replaceAll("'", "\'"),
-          state: (data.get("state") as string).replaceAll("'", "\'")
-        }),
-        data.get('id')
-      ];
+        SET name=($1), details=($2), type=($3), sort_order=($4)
+        WHERE id = ($5)`;
+      let variables: any[] = [];
+      if (data.get("type") === 'street_city_state') {
+          variables = [
+            (data.get('placename') as string).replaceAll("'", "\'"),
+            JSON.stringify({
+              street: (data.get("street") as string).replaceAll("'", "\'"),
+              city: (data.get("city") as string).replaceAll("'", "\'"),
+              state: (data.get("state") as string).replaceAll("'", "\'")
+            }),
+            'street_city_state',
+            1,
+            Number(data.get('id'))
+          ];
+      }
+      if (data.get("type") === 'country' || data.get("type") === 'country_and_desc' ) {
+        variables = [
+          (data.get('placename') as string).replaceAll("'", "\'"),
+          (data.get('desc') !== '') ? JSON.stringify({ desc: (data.get('desc') as string).replaceAll("'", "\'")}) : '{}',
+          (data.get('desc') !== '') ? 'country_and_desc' : 'country',
+          (data.get('desc') !== '') ? 4 : 2,
+          Number(data.get('id'))
+        ];
+      }
+      if (data.get("type") === 'country_city' || data.get("type") === 'country_city_and_desc' ) {
+        variables = [
+          (data.get('placename') as string).replaceAll("'", "\'"),
+          (data.get('desc') !== '') ? 
+            JSON.stringify({
+              city: (data.get('city') as string).replaceAll("'", "\'"),
+              desc: (data.get('desc') as string).replaceAll("'", "\'")
+            }) :
+            JSON.stringify({
+              city: (data.get('city') as string).replaceAll("'", "\'")
+            }),
+          (data.get('desc') !== '') ? 'country_city_and_desc' : 'country_city',
+          (data.get('desc') !== '') ? 5 : 3,
+          Number(data.get('id'))
+        ];
+      }
+      if (data.get("type") === 'any') {
+        variables = [
+          (data.get('placename') as string).replaceAll("'", "\'"),
+          JSON.stringify({ desc: (data.get('desc') as string).replaceAll("'", "\'")}),
+          'any',
+          6,
+          Number(data.get('id'))
+        ];
+      }
       const result: any = await client.query(statement, variables);
     } catch (error) {
       console.error('Database Error:', error);

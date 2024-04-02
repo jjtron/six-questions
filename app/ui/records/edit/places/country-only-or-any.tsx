@@ -28,6 +28,7 @@ export default function CountryOnly_Or_Any({ record, state } : { record: Place, 
         <div className="flex flex-row">
             <textarea
                 id="desc" name="desc" rows={3} maxLength={200}
+                defaultValue={record.details.desc}
                 placeholder='Description (optional; max number of characters: 200)'
                 className="block w-full resize-none rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                 aria-describedby="desc-error"

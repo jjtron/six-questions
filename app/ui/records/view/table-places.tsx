@@ -16,6 +16,8 @@ export function PlacesTable({placesGroups} : {placesGroups : Place[][]} ) {
       setButtonDisabled("");
   }
 
+  console.log(placesGroups);
+
   return (
     <form className="md:pl-2 bg-inherit">
         

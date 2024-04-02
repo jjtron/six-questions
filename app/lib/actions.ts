@@ -619,7 +619,6 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
 }
 
 export async function updatePlace(prevState: PlaceState, formData: FormData) {
-  console.log(formData);
   /* Make sure a valid form type is submitted */
   if  (z.object(
     {type: z.string().refine((t) => { return (
@@ -656,8 +655,8 @@ export async function updatePlace(prevState: PlaceState, formData: FormData) {
       formData.get('type') === 'any' ) {
     const FormSchema = z.object({
       placename: z.string().min(1, { message: "required" }),
-      desc: z.string().nullable().refine(() => {
-          return formData.get('type') !== 'any';
+      desc: z.string().nullable().refine((val) => {
+          return !(formData.get('type') === 'any' && val === '');
       }, { message: "required" } // the 'any' type requires a description
       )
     });
@@ -691,7 +690,7 @@ export async function updatePlace(prevState: PlaceState, formData: FormData) {
     };
   }
 
-  //updatePlaceRecord(formData);
+  updatePlaceRecord(formData);
 
   revalidatePath('/records/view/places');
   redirect('/records/view/places');
