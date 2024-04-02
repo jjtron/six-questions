@@ -619,20 +619,69 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
 }
 
 export async function updatePlace(prevState: PlaceState, formData: FormData) {
-  const PlaceUpdateFormSchema = z.object({
-    placename: z.string().min(1, { message: "required" }),
-    city: z.string().min(1, { message: "required" }),
-    street: z.string().min(1, { message: "required" }),
-    state: z.string().min(1, { message: "required" }),
-  });
-  const validatedFields = PlaceUpdateFormSchema.safeParse({
-    id: formData.get('id'),
-    placename: formData.get('placename'),
-    city: formData.get('city'),
-    street: formData.get('street'),
-    state: formData.get('state'),
-  });
-  
+  console.log(formData);
+  /* Make sure a valid form type is submitted */
+  if  (z.object(
+    {type: z.string().refine((t) => { return (
+      t === 'street_city_state' || t === 'country' || t === 'country_city' ||
+      t === 'any' || t === 'country_and_desc' || t === 'country_city_and_desc'
+    )})}
+    ).safeParse({
+      type: formData.get('type')
+    }).success) {
+  } else {
+    throw new Error('Failed to provide a valid type.');
+  }
+
+  let validatedFields: any = null;
+  // TYPE 'street_city_state'
+  if (formData.get('type') === 'street_city_state') {
+    const FormSchema = z.object({
+      placename: z.string().min(1, { message: "required" }),
+      city: z.string().min(1, { message: "required" }),
+      street: z.string().min(1, { message: "required" }),
+      state: z.string().min(1, { message: "required" }),
+    });
+    validatedFields = FormSchema.safeParse({
+      id: formData.get('id'),
+      placename: formData.get('placename'),
+      city: formData.get('city'),
+      street: formData.get('street'),
+      state: formData.get('state'),
+    });
+  }
+  // TYPE 'country' OR 'country_and_desc'
+  if (formData.get('type') === 'country' ||
+      formData.get('type') === 'country_and_desc' ||
+      formData.get('type') === 'any' ) {
+    const FormSchema = z.object({
+      placename: z.string().min(1, { message: "required" }),
+      desc: z.string().nullable().refine(() => {
+          return formData.get('type') !== 'any';
+      }, { message: "required" } // the 'any' type requires a description
+      )
+    });
+    validatedFields = FormSchema.safeParse({
+      id: formData.get('id'),
+      placename: formData.get('placename'),
+      desc: formData.get('desc')
+    });
+  }
+  // TYPE 'country_city' OR 'country_city_and_desc'
+  if (formData.get('type') === 'country_city' || formData.get('type') === 'country_city_and_desc') {
+    const FormSchema = z.object({
+      placename: z.string().min(1, { message: "required" }),
+      city: z.string().min(1, { message: "required" }),
+      desc: z.string().nullable()
+    });
+    validatedFields = FormSchema.safeParse({
+      id: formData.get('id'),
+      placename: formData.get('placename'),
+      city: formData.get('city'),
+      desc: formData.get('desc')
+    });
+  }
+
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     console.log('Error:', validatedFields.error.flatten().fieldErrors);
@@ -642,7 +691,7 @@ export async function updatePlace(prevState: PlaceState, formData: FormData) {
     };
   }
 
-  updatePlaceRecord(formData);
+  //updatePlaceRecord(formData);
 
   revalidatePath('/records/view/places');
   redirect('/records/view/places');
