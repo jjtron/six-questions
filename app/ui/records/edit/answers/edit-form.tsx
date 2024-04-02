@@ -42,7 +42,7 @@ export default function EditAnswerForm(
   }
   let whenObject: EventTime | undefined = whenOptions.find((when) => { return when.id === record.when.customID });
   let whenHtml;
-  if (record.when.type === 6) {
+  if (typeof whenObject === "object" && record.when.type === 6) {
     whenHtml = initWhenDetailsHTML(whenObject);
   } else {
     whenHtml = <p></p>;
