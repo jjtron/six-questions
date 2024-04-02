@@ -10,8 +10,9 @@ export default function WhenRadio(
     customWhenClick: Function
   })
 {
-    const [isChecked, setIsChecked] = useState(-1);
-    const [bgColor, setBgColor] = useState(-1);
+    const n: number = props.whenRadioOptions[1].list.findIndex((eventTime) => eventTime.id === props.whenRadioOptions[2]?.customID);
+    const [isChecked, setIsChecked] = useState(n);
+    const [bgColor, setBgColor] = useState(n);
     const [cancelInit, setCancelInit] = useState(false);
 
     return (

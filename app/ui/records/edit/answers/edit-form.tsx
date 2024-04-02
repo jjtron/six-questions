@@ -40,14 +40,20 @@ export default function EditAnswerForm(
     placeHtml = (<p></p>);
     placeObject = { id: 0, name: '', details: {}, type: '', sort_order: 0 }
   }
-  
+  let r;
+  if (record.when.type === 6) {
+    r = initWhenDetailsHTML(whenOptions.find((when) => { return when.id === record.when.customID }));
+  } else {
+    r = <p></p>;
+  }
+
   // the following pairs of state variables are used in the
   // place (where) and event-time (when) pick sections
   const [showWhereDetails, setshowWhereDetails] = useState(placeHtml);
-  const [showWhenDetails, setShowWhenDetails] = useState(<p></p>);
+  const [showWhenDetails, setShowWhenDetails] = useState(r);
 
   const [selectedPlaceRecord, setSelectedPlaceRecord] = useState(placeObject);
-  const [selectedWhenRecord, setSelectedWhenRecord] = useState({});
+  const [selectedWhenRecord, setSelectedWhenRecord] = useState({id: 0, name: '', comments: '', type: '', sort_order: 0});
 
   const [scrollWherePosition, setScrollWherePosition] = useState(0);
   const [scrollWhenPosition, setScrollWhenPosition] = useState(0);
@@ -299,7 +305,7 @@ export default function EditAnswerForm(
                   </FakeWhenRadio>
                   </div>
               </div>
-              <div className={clsx("basis-2/3 w-full flex mb-2 border-1 rounded-md", { "hidden" : !eventTime6 })} >{showWhenDetails}</div>
+              <div className={clsx("overflow-auto basis-2/3 w-full flex mb-2 border-1 rounded-md h-[288px]", { "hidden" : !eventTime6 })} >{showWhenDetails}</div>
             </div>
           </div>
 
@@ -414,7 +420,7 @@ export default function EditAnswerForm(
     }
   }
 
-  function handleWhenMouseOver(record : any, isSelected: boolean) {
+  function handleWhenMouseOver(record : EventTime, isSelected: boolean) {
     setWhenHoverHighlight(true);
     if (isSelected){
       setSelectedWhenRecord(record);
@@ -424,28 +430,22 @@ export default function EditAnswerForm(
       setScrollWhenPosition(scrollPosition)
     }
     const bgColor: object = { "bg-green-100" : isSelected, "bg-yellow-100" : !isSelected };
-    if (record.type === 'circa_yr') {
-      setShowWhenDetails(
-        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
-          <div className="font-bold bg-slate-200 px-1 rounded-t-md">{record.name}</div>
-          <div className="bg-slate-200 px-1 rounded-b-md" >{record.comments}</div>
-        </div>
-      );
-    } else if (record.type === 'circa_range') {
-      setShowWhenDetails(
-        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
-          <div className="font-bold bg-slate-200 px-1 rounded-t-md">{record.name}</div>
-          <div className="bg-slate-200 px-1 rounded-b-md" >{record.comments}</div>
-        </div>
-      );
-    } else if (record.type === 'general') {
-      setShowWhenDetails(
-        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
-          <div className="font-bold bg-slate-200 px-1 rounded-t-md">{record.name}</div>
-          <div className="bg-slate-200 px-1 rounded-b-md" >{record.comments}</div>
-        </div>
-      );
-    }
+    setShowWhenDetails(
+      <div className={clsx("p-4 rounded-md w-full", bgColor)}>
+        <div className="font-bold bg-slate-200 px-1 rounded-t-md">{record.name}</div>
+        <div className="bg-slate-200 px-1 rounded-b-md" >{record.comments}</div>
+      </div>
+    );
+  }
+
+  function initWhenDetailsHTML(record: any) : any {
+    const bgColor = { "bg-green-100" : true, "bg-yellow-100" : false };
+    return (
+      <div className={clsx("p-4 rounded-md w-full", bgColor)}>
+        <div className="font-bold bg-slate-200 px-1 rounded-t-md">{record.name}</div>
+        <div className="bg-slate-200 px-1 rounded-b-md" >{record.comments}</div>
+      </div>
+    );
   }
 
   function initWhereDetailsHTML(record: Place, bgColor: object) : any {
