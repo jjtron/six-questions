@@ -40,17 +40,17 @@ export default function EditAnswerForm(
     placeHtml = (<p></p>);
     placeObject = { id: 0, name: '', details: {}, type: '', sort_order: 0 }
   }
-  let r;
+  let whenHtml;
   if (record.when.type === 6) {
-    r = initWhenDetailsHTML(whenOptions.find((when) => { return when.id === record.when.customID }));
+    whenHtml = initWhenDetailsHTML(whenOptions.find((when) => { return when.id === record.when.customID }));
   } else {
-    r = <p></p>;
+    whenHtml = <p></p>;
   }
 
   // the following pairs of state variables are used in the
   // place (where) and event-time (when) pick sections
   const [showWhereDetails, setshowWhereDetails] = useState(placeHtml);
-  const [showWhenDetails, setShowWhenDetails] = useState(r);
+  const [showWhenDetails, setShowWhenDetails] = useState(whenHtml);
 
   const [selectedPlaceRecord, setSelectedPlaceRecord] = useState(placeObject);
   const [selectedWhenRecord, setSelectedWhenRecord] = useState({id: 0, name: '', comments: '', type: '', sort_order: 0});
