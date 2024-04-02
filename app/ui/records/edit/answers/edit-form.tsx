@@ -40,11 +40,13 @@ export default function EditAnswerForm(
     placeHtml = (<p></p>);
     placeObject = { id: 0, name: '', details: {}, type: '', sort_order: 0 }
   }
+  let whenObject: EventTime | undefined = whenOptions.find((when) => { return when.id === record.when.customID });
   let whenHtml;
   if (record.when.type === 6) {
-    whenHtml = initWhenDetailsHTML(whenOptions.find((when) => { return when.id === record.when.customID }));
+    whenHtml = initWhenDetailsHTML(whenObject);
   } else {
     whenHtml = <p></p>;
+    whenObject = {id: 0, name: '', comments: '', type: '', sort_order: 0};
   }
 
   // the following pairs of state variables are used in the
@@ -53,7 +55,7 @@ export default function EditAnswerForm(
   const [showWhenDetails, setShowWhenDetails] = useState(whenHtml);
 
   const [selectedPlaceRecord, setSelectedPlaceRecord] = useState(placeObject);
-  const [selectedWhenRecord, setSelectedWhenRecord] = useState({id: 0, name: '', comments: '', type: '', sort_order: 0});
+  const [selectedWhenRecord, setSelectedWhenRecord] = useState(whenObject);
 
   const [scrollWherePosition, setScrollWherePosition] = useState(0);
   const [scrollWhenPosition, setScrollWhenPosition] = useState(0);
