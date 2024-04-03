@@ -82,10 +82,13 @@ export default function AnswerForm({
                                     const placeObject: any | {} = whereDefs.find((whereDef: {id: number}) => (whereDef.id === record.where));
                                     if (placeObject.type === 'country_and_desc' || placeObject.type === 'any') {
                                         return (
-                                          <>
-                                            <div className="font-bold text-base">WHERE : {placeObject.name}</div>
-                                            <div>{placeObject.details.desc}</div>
-                                          </>
+                                            <>
+                                                <div className="flex flex-row">
+                                                    <div className="font-bold text-base">WHERE : </div>
+                                                    <div className="font-normal text-base">&nbsp;{placeObject.name}</div>
+                                                </div>
+                                                <div>{placeObject.details.desc}</div>
+                                            </>
                                         )
                                     } else  if (placeObject.type === 'street_city_state') {
                                         return ([
@@ -117,15 +120,18 @@ export default function AnswerForm({
                                     } else if (placeObject.type === 'country_city_and_desc') {
                                         return (
                                             <>
-                                            <div className="font-bold text-base">WHERE : {placeObject.details.city}, &nbsp;{placeObject.name}</div>
-                                            <div>{placeObject.details.desc}</div>
+                                                <div className="flex flex-row">
+                                                    <div className="font-bold text-base">WHERE : </div>
+                                                    <div className="font-normal text-base">&nbsp;{placeObject.details.city}, &nbsp;{placeObject.name}</div>
+                                                </div>
+                                                <div>{placeObject.details.desc}</div>
                                             </>
                                         )
                                     } else if (placeObject.type === 'country_city') {
                                         return (
                                             <div className="flex flex-row">
-                                                <div className="font-bold text-base">WHERE : {placeObject.name}</div>
-                                                <div className="font-normal text-base">&nbsp;{placeObject.details.city}</div>
+                                                <div className="font-bold text-base">WHERE : </div>
+                                                <div className="font-normal text-base">&nbsp;{placeObject.details.city},&nbsp;{placeObject.name}</div>
                                             </div>
                                         )
                                     }

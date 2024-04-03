@@ -77,7 +77,7 @@ export function PlacesTable({placesGroups} : {placesGroups : Place[][]} ) {
                                     )}
                           onClick={() => handleClick(record.id)}
                     >
-                      <div className="basis-1/4 pl-2 border-tbl-1 border-slate-400 rounded-l-md">{record.name}</div>
+                      <div className="basis-1/4 px-2 border-tbl-1 border-slate-400 rounded-l-md">{record.name}</div>
                       <textarea
                           rows={4}
                           value={record.details.desc}
