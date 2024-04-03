@@ -439,10 +439,18 @@ export default function EditAnswerForm(
             <div className="px-1 font-bold bg-slate-200 rounded-md">{record.name}</div>
         </div>
       );
-    } else if (record.type === 'any') {
+    } else if (record.type === 'any' || record.type === 'country_and_desc') {
       setshowWhereDetails(
         <div className={clsx("p-4 rounded-md w-full", bgColor)}>
             <div className="px-1 font-bold bg-slate-200 pb-1 rounded-t-md">{record.name}</div>
+            <div className="bg-slate-200 px-1 rounded-b-md">{record.details.desc}</div>
+        </div>
+      );
+    } else if (record.type === 'country_city_and_desc') {
+      
+      setshowWhereDetails(
+        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
+            <div className="px-1 font-bold bg-slate-200 pb-1 rounded-t-md">{record.details.city}, &nbsp;{record.name}</div>
             <div className="bg-slate-200 px-1 rounded-b-md">{record.details.desc}</div>
         </div>
       );
@@ -503,6 +511,18 @@ export default function EditAnswerForm(
       case 'any': return (
         <div className={clsx("p-4 rounded-md w-full", bgColor)}>
             <div className="px-1 font-bold bg-slate-200 pb-1 rounded-t-md">{record.name}</div>
+            <div className="bg-slate-200 px-1 rounded-b-md">{record.details.desc}</div>
+        </div>
+      );
+      case 'country_and_desc': return (
+        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
+            <div className="px-1 font-bold bg-slate-200 pb-1 rounded-t-md">{record.name}</div>
+            <div className="bg-slate-200 px-1 rounded-b-md">{record.details.desc}</div>
+        </div>
+      );
+      case 'country_city_and_desc': return (
+        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
+            <div className="px-1 font-bold bg-slate-200 pb-1 rounded-t-md">{record.details.city}, &nbsp;{record.name}</div>
             <div className="bg-slate-200 px-1 rounded-b-md">{record.details.desc}</div>
         </div>
       );

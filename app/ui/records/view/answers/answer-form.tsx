@@ -76,25 +76,62 @@ export default function AnswerForm({
                     
                     {/* WHERE */}
                     <div className="pl-2 border-1 border-slate-400 rounded-md bg-slate-200 h-[200px]" >
-                        {([
-                        {title: "WHERE:", level: 'name', sublevel: null},
-                        {title: "Street: ", level: 'details', sublevel: 'street'},
-                        {title: "City: ", level: 'details', sublevel: 'city'},
-                        {title: "State: ", level: 'details', sublevel: 'state'}
-                        ]).map((el: any, n: number) => {
-                        return <div key={n} className="flex flex-row">
-                        {/* left column */}
-                        <div className={clsx("basis-16 text-right shrink-0 mr-2",
-                            { "font-bold text-base": n === 0, "md:text-base text-sm": n > 0}
-                            )}>{el.title}
-                        </div>
-                        {/* right column */}
-                        <div className={clsx("text-left",
-                            { "font-semibold text-base": n === 0, "md:text-base text-sm": n > 0}
-                            )}> {placeDetailsFunc(record.where, el.level, el.sublevel)}
-                        </div>
-                        </div>
-                        })}
+                        {
+                            (
+                                () => {
+                                    const placeDetails: any | {} = whereDefs.find((whereDef: {id: number}) => (whereDef.id === record.where))?.details;
+                                    if (placeDetails?.desc) {
+                                        return (
+                                          <>
+                                            <div className="font-bold text-base">WHERE</div>
+                                            <div>{placeDetails.desc}</div>
+                                          </>
+                                        )
+                                    } else  if (placeDetails?.street) {
+                                        return ([
+                                            {title: "WHERE:", level: 'name', sublevel: null},
+                                            {title: "Street: ", level: 'details', sublevel: 'street'},
+                                            {title: "City: ", level: 'details', sublevel: 'city'},
+                                            {title: "State: ", level: 'details', sublevel: 'state'}
+                                            ]).map((el: any, n: number) => {
+                                            return <div key={n} className="flex flex-row">
+                                                {/* left column */}
+                                                <div className={clsx("basis-16 text-right shrink-0 mr-2",
+                                                    { "font-bold text-base": n === 0, "md:text-base text-sm": n > 0}
+                                                    )}>{el.title}
+                                                </div>
+                                                {/* right column */}
+                                                <div className={clsx("text-left",
+                                                    { "font-semibold text-base": n === 0, "md:text-base text-sm": n > 0}
+                                                    )}> {placeDetailsFunc(record.where, el.level, el.sublevel)}
+                                                </div>
+                                            </div>
+                                        })
+                                    } else if (placeDetails?.city) {
+                                        // also need to show desc if applicable
+                                        return ([
+                                            {title: "WHERE:", level: 'name', sublevel: null},
+                                            {title: "City: ", level: 'details', sublevel: 'city'},
+                                            ]).map((el: any, n: number) => {
+                                            return <div key={n} className="flex flex-row">
+                                                {/* left column */}
+                                                <div className={clsx("basis-16 text-right shrink-0 mr-2",
+                                                    { "font-bold text-base": n === 0, "md:text-base text-sm": n > 0}
+                                                    )}>{el.title}
+                                                </div>
+                                                {/* right column */}
+                                                <div className={clsx("text-left",
+                                                    { "font-semibold text-base": n === 0, "md:text-base text-sm": n > 0}
+                                                    )}> {placeDetailsFunc(record.where, el.level, el.sublevel)}
+                                                </div>
+                                            </div>
+                                        })
+                                    }
+                                }
+                            )()
+                        }
+
+
                     </div>
                   </div>
 

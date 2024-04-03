@@ -13,9 +13,9 @@ export default function MultiSelectWho(
         <div>
             {Object.entries(options[1]).map((el, i) => {
                 return (
-                    <div className="flex flex-row">
+                    <div className="flex flex-row border-1 rounded-md">
                         <input type="checkbox" name="who" value={el[0]} />
-                        <p key={i}>{el[1]}</p>
+                        <p className="pl-2" key={i}>{el[1]}</p>
                     </div>
                 )
             })}
