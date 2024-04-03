@@ -353,6 +353,23 @@ export default function AnswerForm(
             <div className="bg-slate-200 px-1 rounded-b-md">{record.details.desc}</div>
         </div>
       );
+    } else if (record.type === 'country_and_desc') {
+      setshowWhereDetails(
+        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
+            <div className="px-1 font-bold bg-slate-200 pb-1 rounded-t-md">{record.name}</div>
+            <div className="bg-slate-200 px-1 rounded-b-md">{record.details.desc}</div>
+        </div>
+      );
+    } else if (record.type === 'country_city_and_desc') {
+      setshowWhereDetails(
+        <div className={clsx("p-4 rounded-md w-full", bgColor)}>
+            <div className="flex flex-row">
+              <div className="px-1 font-bold bg-slate-200 pb-1 rounded-l-md">{record.details.city},</div>
+              <div className="px-1 font-normal bg-slate-200 pb-1 rounded-r-md">{record.name}</div>
+            </div>
+            <div className="bg-slate-200 px-1 rounded-b-md">{record.details.desc}</div>
+        </div>
+      );
     }
   }
 
