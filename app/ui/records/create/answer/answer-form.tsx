@@ -2,7 +2,7 @@
 import { create0rUpdateAnswer } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
-import MultiSelect from '@/app/ui/records/multiselect';
+import MultiSelectWho from './multi-select-who';
 import WhereRadio from '@/app/ui/records/whereradio';
 import WhenRadio from '@/app/ui/records/whenradio';
 import FakeWhenRadio from '@/app/ui/records/fakewhenradio';
@@ -87,10 +87,10 @@ export default function AnswerForm(
                     ))}
                 </div>
               </div>
-              <MultiSelect options={[
+              <MultiSelectWho options={[
                   {id: 'who', name: 'who', multi: 'yes'}, whoList, null
                 ]}>
-              </MultiSelect>
+              </MultiSelectWho>
           </div>
           {/* WHAT */}
           <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[190px]" >
