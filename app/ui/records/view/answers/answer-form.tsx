@@ -114,6 +114,7 @@ export default function AnswerForm({
                                         header = <p className="bg-white rounded-t-md pl-2">{whenRecord?.name}</p>
                                     } else {
                                         whenRecord = (() => {
+                                            if (record.when.comments === null) { record.when.comments = ''; }
                                             return record.when;
                                         })();
                                         header = (() => {
@@ -127,7 +128,7 @@ export default function AnswerForm({
                                             }
                                         })();
                                     }
-                                    return (<>
+                                    return (
                                         <div className="flex flex-col mt-px pr-2 md:h-[162px] h-32" >
                                             {header}
                                             <textarea
@@ -137,7 +138,7 @@ export default function AnswerForm({
                                                 className="rounded-b-md outline-none text-sm mb-1 pl-2"
                                             />
                                         </div>
-                                    </>);
+                                    );
                                 })()
                             }
                     </div>
