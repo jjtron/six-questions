@@ -79,15 +79,15 @@ export default function AnswerForm({
                         {
                             (
                                 () => {
-                                    const placeDetails: any | {} = whereDefs.find((whereDef: {id: number}) => (whereDef.id === record.where))?.details;
-                                    if (placeDetails?.desc) {
+                                    const placeObject: any | {} = whereDefs.find((whereDef: {id: number}) => (whereDef.id === record.where));
+                                    if (placeObject.type === 'country_and_desc' || placeObject.type === 'any') {
                                         return (
                                           <>
-                                            <div className="font-bold text-base">WHERE</div>
-                                            <div>{placeDetails.desc}</div>
+                                            <div className="font-bold text-base">WHERE : {placeObject.name}</div>
+                                            <div>{placeObject.details.desc}</div>
                                           </>
                                         )
-                                    } else  if (placeDetails?.street) {
+                                    } else  if (placeObject.type === 'street_city_state') {
                                         return ([
                                             {title: "WHERE:", level: 'name', sublevel: null},
                                             {title: "Street: ", level: 'details', sublevel: 'street'},
@@ -107,31 +107,31 @@ export default function AnswerForm({
                                                 </div>
                                             </div>
                                         })
-                                    } else if (placeDetails?.city) {
-                                        // also need to show desc if applicable
-                                        return ([
-                                            {title: "WHERE:", level: 'name', sublevel: null},
-                                            {title: "City: ", level: 'details', sublevel: 'city'},
-                                            ]).map((el: any, n: number) => {
-                                            return <div key={n} className="flex flex-row">
-                                                {/* left column */}
-                                                <div className={clsx("basis-16 text-right shrink-0 mr-2",
-                                                    { "font-bold text-base": n === 0, "md:text-base text-sm": n > 0}
-                                                    )}>{el.title}
-                                                </div>
-                                                {/* right column */}
-                                                <div className={clsx("text-left",
-                                                    { "font-semibold text-base": n === 0, "md:text-base text-sm": n > 0}
-                                                    )}> {placeDetailsFunc(record.where, el.level, el.sublevel)}
-                                                </div>
+                                    } else if (placeObject.type === 'country') {
+                                        return (
+                                            <div className="flex flex-row">
+                                                <div className="font-bold text-base">WHERE : </div>
+                                                <div className="font-normal text-base">&nbsp;{placeObject.name}</div>
                                             </div>
-                                        })
+                                        )
+                                    } else if (placeObject.type === 'country_city_and_desc') {
+                                        return (
+                                            <>
+                                            <div className="font-bold text-base">WHERE : {placeObject.details.city}, &nbsp;{placeObject.name}</div>
+                                            <div>{placeObject.details.desc}</div>
+                                            </>
+                                        )
+                                    } else if (placeObject.type === 'country_city') {
+                                        return (
+                                            <div className="flex flex-row">
+                                                <div className="font-bold text-base">WHERE : {placeObject.name}</div>
+                                                <div className="font-normal text-base">&nbsp;{placeObject.details.city}</div>
+                                            </div>
+                                        )
                                     }
                                 }
                             )()
                         }
-
-
                     </div>
                   </div>
 
