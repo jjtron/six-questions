@@ -16,12 +16,10 @@ export function PlacesTable({placesGroups} : {placesGroups : Place[][]} ) {
       setButtonDisabled("");
   }
 
-  console.log(placesGroups);
-
   return (
     <form className="md:pl-2 bg-inherit">
         
-      { placesGroups.map((group: any, i: number) => {
+      { placesGroups.map((group: Place[], i: number) => {
             return (
               group.map((record: Place, j: number) => {
                 const lineId: string = (i + '') + (j + '');

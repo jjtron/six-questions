@@ -466,7 +466,7 @@ const client = new Client({
               details->>'country(s)' ILIKE ($1) OR
               details->>'country' ILIKE ($1) OR
               details->>'description' ILIKE ($1)
-              ORDER BY sort_order ASC
+              ORDER BY sort_order ASC, id ASC
               LIMIT ${recordsPerPage} OFFSET ${offset};`;
       const variables = [ `%${queryDecoded}%` ];
       const places = await client.query(statement, variables);
