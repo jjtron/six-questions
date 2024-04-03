@@ -303,13 +303,13 @@ const client = new Client({
         } else {
           variables.push(5);
         }
-      } else if (sort_order === '6') {
+      } else if (sort_order === '4') {
         variables.push((data.get("title") as string).replaceAll("'", "\'"));
         variables.push(JSON.stringify({ 
           desc: (data.get("desc") as string).replaceAll("'", "\'")
         }));
         variables.push("any");
-        variables.push(4);
+        variables.push(6);
       }
       const result: any = await client.query(statement, variables);
     } catch (error) {

@@ -122,7 +122,7 @@ export default function AnswerForm(
                   setWhereHoverHighlight(false);
                 }}
           >
-            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[320px]" >
+            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[285px]" >
               <div className="flex flex-row">
                 <div className="font-bold">WHERE</div>
                 <div id="where-error" aria-live="polite" aria-atomic="true">
@@ -135,7 +135,7 @@ export default function AnswerForm(
                 </div>
               </div>
               <div className="text-xs">(scroll down for more options)</div>
-              <div className="overflow-auto border-1 border-slate-300 h-[270px] rounded-md" id="where-wrapper-div">
+              <div className="overflow-auto border-1 border-slate-300 h-[220px] rounded-md" id="where-wrapper-div">
                 <WhereRadio
                   whereRadioOptions={[
                     {id: 'where', name: 'where', multi: 'no'},

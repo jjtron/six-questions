@@ -276,7 +276,7 @@ export default function Form() {
                       ))}
                     </div>
                 </div>
-                <input type="hidden" id="sort_order" name="sort_order" value="6" disabled={!isOpen4} />
+                <input type="hidden" id="sort_order" name="sort_order" value="4" disabled={!isOpen4} />
           </div>
         </div>
         <div className="flex flex-col items-center justify-between pt-4">

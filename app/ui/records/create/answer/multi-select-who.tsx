@@ -10,7 +10,7 @@ export default function MultiSelectWho(
 ) {
 
     return (
-        <div>
+        <div className="h-[120px] overflow-auto">
             {Object.entries(options[1]).map((el, i) => {
                 return (
                     <div className="flex flex-row border-1 rounded-md">
