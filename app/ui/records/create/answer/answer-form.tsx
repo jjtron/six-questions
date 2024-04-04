@@ -6,7 +6,7 @@ import MultiSelectWho from './multi-select-who';
 import WhereRadio from '@/app/ui/records/whereradio';
 import WhenRadio from '@/app/ui/records/whenradio';
 import FakeWhenRadio from '@/app/ui/records/fakewhenradio';
-import { SelectOptions, Person, Place, EventTime } from '@/app/lib/interfaces';
+import { SelectOptions2, Person, Place, EventTime } from '@/app/lib/interfaces';
 import DateTimePicker from '@/app/ui/records/datepicker';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
@@ -60,10 +60,9 @@ export default function AnswerForm(
     (n === 5) ? setEventTime5(true) : setEventTime5(false);
     (n === 6) ? setEventTime6(true) : setEventTime6(false);
   }
-
-  let whoList: SelectOptions = {};
+  let whoList2: SelectOptions2 = {};
   whoOptions.map((el: Person) => {
-    whoList[el.index] = el.name;
+    whoList2[el.index] = { name: el.name, comments: el.comments }
   });
 
   return (
@@ -75,7 +74,7 @@ export default function AnswerForm(
           {/* PAGE 1 */}
           {/* WHO */}
           <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Part 1: Who, What, Where</p>
-          <div className="w-[15rem] bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
+          <div className="w-full bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[176px]" >
             <div className="flex flex-row">
                 <div className="font-bold">WHO</div>
                 <div id="who-error" aria-live="polite" aria-atomic="true">
@@ -86,11 +85,10 @@ export default function AnswerForm(
                         </p>
                     ))}
                 </div>
-              </div>
-              <MultiSelectWho options={[
-                  {id: 'who', name: 'who', multi: 'yes'}, whoList, null
-                ]}>
-              </MultiSelectWho>
+            </div>
+            <MultiSelectWho
+                options={whoList2}>
+            </MultiSelectWho>
           </div>
           {/* WHAT */}
           <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[190px]" >
@@ -122,7 +120,7 @@ export default function AnswerForm(
                   setWhereHoverHighlight(false);
                 }}
           >
-            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[285px]" >
+            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[255px]" >
               <div className="flex flex-row">
                 <div className="font-bold">WHERE</div>
                 <div id="where-error" aria-live="polite" aria-atomic="true">
@@ -135,7 +133,7 @@ export default function AnswerForm(
                 </div>
               </div>
               <div className="text-xs">(scroll down for more options)</div>
-              <div className="overflow-auto border-1 border-slate-300 h-[220px] rounded-md" id="where-wrapper-div">
+              <div className="overflow-auto border-1 border-slate-300 h-[190px] rounded-md" id="where-wrapper-div">
                 <WhereRadio
                   whereRadioOptions={[
                     {id: 'where', name: 'where', multi: 'no'},

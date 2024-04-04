@@ -3,6 +3,7 @@
 import { Button } from "@/app/ui/button";
 import clsx from 'clsx';
 import { Person, Place, EventTime, SixAnswers } from '@/app/lib/interfaces';
+import MultiSelectWho from './multi-select-who';
 
 export default function AnswerForm({
     currentPage,
@@ -40,16 +41,9 @@ export default function AnswerForm({
                     <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Record ID: ...{record.id.slice(-6)}, Part 1</p>
                     <div className="flex md:flex-row flex-col">
                         {/* col 1 */}
-                        <div className="flex flex-col basis-1/4 pl-2 border-1 border-slate-400 rounded-md h-[211px] overflow-auto bg-slate-200" >
-                            <p className="font-bold">WHO</p>{
-                            record.who.map((whoIndex: number, n: number) => {
-                                const nameP = whoList.map((row: {index: number; name: string;}) => {
-                                    if (row.index === whoIndex) {
-                                        return (<p key={n} className="">{row.name}</p>)
-                                    };
-                                });
-                                return nameP;
-                            })
+                        <div className="flex flex-col border-1 border-slate-400 rounded-md h-[211px] bg-slate-200 w-full" >
+                            <p className="font-bold pl-2">WHO</p>{
+                            <MultiSelectWho options={whoList} initSelected={record.who} />
                         }
                         </div>
                     </div>
@@ -60,14 +54,14 @@ export default function AnswerForm({
                                 let data;
                                 (j === 0) ? data = record.what : data = '';
                                 return (
-                                    <div key={j} className="flex flex-col bg-slate-200 rounded-md mt-px border-1 border-slate-400 pl-2 md:h-48 h-32" >
+                                    <div key={j} className="flex flex-col bg-slate-200 rounded-md mt-px border-1 border-slate-400 px-2 md:h-48 h-32" >
                                         <p className="font-bold">{vars.label}</p>
                                         
                                         <textarea
                                             rows={7}
                                             value={data}
                                             readOnly
-                                            className="rounded-md outline-none p-2 text-sm mb-1 p-2"
+                                            className="rounded-md outline-none p-2 text-sm mb-1 px-2"
                                         />
                                     </div>
                                 )

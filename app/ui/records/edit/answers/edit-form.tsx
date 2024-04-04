@@ -2,11 +2,11 @@
 import { create0rUpdateAnswer } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
-import MultiSelect from '@/app/ui/records/multiselect';
+import MultiSelectWho from './multi-select-who';
 import WhereRadio from '@/app/ui/records/whereradio';
 import WhenRadio from '@/app/ui/records/whenradio';
 import FakeWhenRadio from '@/app/ui/records/fakewhenradio';
-import { SelectOptions, Person, Place, EventTime, SixAnswers } from '@/app/lib/interfaces';
+import { SelectOptions2, Person, Place, EventTime, SixAnswers } from '@/app/lib/interfaces';
 import DateTimePicker from '@/app/ui/records/datepicker';
 import { useState } from 'react';
 import clsx from 'clsx';
@@ -106,9 +106,10 @@ export default function EditAnswerForm(
     (n === 6) ? setEventTime6(true) : setEventTime6(false);
   }
 
-  let whoList: SelectOptions = {};
+
+  let whoList2: SelectOptions2 = {};
   whoOptions.map((el: Person) => {
-    whoList[el.index] = el.name;
+    whoList2[el.index] = { name: el.name, comments: el.comments }
   });
 
   const whereList = useRef(<div></div> as unknown as HTMLDivElement);
@@ -123,7 +124,7 @@ export default function EditAnswerForm(
           {/* PAGE 1 */}
           {/* WHO */}
           <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Record ID: ...{record.id.slice(-6)}, Part 1</p>
-          <div className="w-[15rem] bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
             <div className="flex flex-row">
                 <div className="font-bold">WHO</div>
                 <div id="who-error" aria-live="polite" aria-atomic="true">
@@ -134,11 +135,8 @@ export default function EditAnswerForm(
                         </p>
                     ))}
                 </div>
-              </div>
-            <MultiSelect options={[
-                    {id: 'who', name: 'who', multi: 'yes'}, whoList, record.who
-                ]}>
-            </MultiSelect>
+            </div>
+            <MultiSelectWho options={whoList2} initSelected={record.who} />
           </div>
           {/* WHAT */}
           <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[190px]" >
@@ -163,7 +161,7 @@ export default function EditAnswerForm(
             />
           </div>
           {/* WHERE */}
-          <div  className="flex flex-row h-[344px]"
+          <div  className="flex flex-row h-[290px]"
                 onMouseLeave={(e) => {
                   e.stopPropagation();
                   whereList.current.scrollTop = scrollWherePosition;
@@ -171,7 +169,7 @@ export default function EditAnswerForm(
                   setWhereHoverHighlight(false);
                 }}
           >
-            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[340px]" >
+            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
               <div className="flex flex-row">
                 <div className="font-bold">WHERE</div>
                 <div id="where-error" aria-live="polite" aria-atomic="true">
@@ -184,7 +182,7 @@ export default function EditAnswerForm(
                 </div>
               </div>
               <div className="text-xs">(scroll down for more options)</div>
-              <div className="overflow-auto border-1 border-slate-300 h-[288px] rounded-md" ref={whereList}>
+              <div className="overflow-auto border-1 border-slate-300 h-[220px] rounded-md" ref={whereList}>
                 <WhereRadio
                   whereRadioOptions={[
                     {id: 'where', name: 'where', multi: 'no'},

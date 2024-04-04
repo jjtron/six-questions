@@ -36,7 +36,9 @@ body {
   .border-b-1 {border-bottom-width: 1px;}
   .border-y-1 {border-width: 1px 0px 1px 0px;}
   .border-tl-1 {border-width: 1px 0px 0px 1px;}
+  .border-tr-1 {border-width: 1px 1px 0px 0px;}
   .border-rbl-1 {border-width: 0px 1px 1px 1px;}
+  .border-tlb-1 {border-width: 1px 0px 1px 1px;}
   .border-trl-1 {border-width: 1px 1px 0px 1px;}
   .border-trb-1 {border-width: 1px 1px 1px 0px;}
   .border-tbl-1 {border-width: 1px 0px 1px 1px;}
