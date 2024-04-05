@@ -22,10 +22,11 @@ const client = new Client({
 
   export async function insertPersonRecord(data: FormData) {
     try {
-      const statement: string = 'INSERT INTO public.people (name) VALUES ($1)';
+      const statement: string = 'INSERT INTO public.people (name, comments) VALUES (($1), ($2))';
       const result: any = await client.query(
         statement,
-        [(data.get("name") as string).replaceAll("'", "\'")]
+        [(data.get("name") as string).replaceAll("'", "\'"),
+         (data.get("comments") as string).replaceAll("'", "\'")]
       );
     } catch (error) {
       console.error('Database Error:', error);
@@ -91,12 +92,13 @@ const client = new Client({
   export async function updatePersonRecord(data: FormData) {
     try {
       const statement: string = `UPDATE public.people ` + 
-                                `SET name=($1) ` +
-                                `WHERE index=($2)`
+                                `SET name=($1), comments=($2)` +
+                                `WHERE index=($3)`
       const result: any = await client.query(
         statement,
         [
           (data.get("personname") as string).replaceAll("'", "\'"),
+          (data.get("comments") as string).replaceAll("'", "\'"),
            data.get("index")
         ]
       );

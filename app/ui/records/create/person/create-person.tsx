@@ -32,7 +32,13 @@ export default function Form() {
             ))}
           </div>
       </div>
-
+      <textarea
+              id="comments" name="comments" rows={3} maxLength={200}
+              defaultValue=""
+              placeholder='Description (optional; max number of characters: 200)'
+              className="block w-full resize-none rounded-md border border-gray-200 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
+              aria-describedby="desc-error"
+          />
       <div className="flex flex-col items-center justify-between p-4">
         <Button type="submit">Create Person</Button>
       </div>

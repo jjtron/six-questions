@@ -200,11 +200,13 @@ export type PersonState = {
 
 const PersonCreateFormSchema = z.object({
   name: z.string().min(1, { message: "required" }),
+  comments: z.string().nullable()
 });
 
 export async function createPerson(prevState: PersonState, formData: FormData) {
   const validatedFields = PersonCreateFormSchema.safeParse({
     name: formData.get('name'),
+    comments: formData.get('comments')
   });
   
   // If form validation fails, return errors early. Otherwise, continue.
