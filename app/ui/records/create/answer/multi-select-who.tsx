@@ -1,10 +1,10 @@
-import { SelectOptions2 } from '@/app/lib/interfaces';
+import { SelectOptions } from '@/app/lib/interfaces';
 import { useState } from 'react';
 
-export default function MultiSelectWho(props:  {options: SelectOptions2} ) {
+export default function MultiSelectWho(props:  {options: SelectOptions} ) {
 
     const [hoverShow, setHoverShow] = useState(<div />);
-    const [selected, setSelected] = useState([<div />]);
+    const [selected, setSelected] = useState([<div key={0}></div>]);
 
     function showHoveredAndSet (el: any) {
         let isCheckedArray: any[] = [];

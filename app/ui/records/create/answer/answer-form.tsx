@@ -6,7 +6,7 @@ import MultiSelectWho from './multi-select-who';
 import WhereRadio from '@/app/ui/records/whereradio';
 import WhenRadio from '@/app/ui/records/whenradio';
 import FakeWhenRadio from '@/app/ui/records/fakewhenradio';
-import { SelectOptions2, Person, Place, EventTime } from '@/app/lib/interfaces';
+import { SelectOptions, Person, Place, EventTime } from '@/app/lib/interfaces';
 import DateTimePicker from '@/app/ui/records/datepicker';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
@@ -60,7 +60,7 @@ export default function AnswerForm(
     (n === 5) ? setEventTime5(true) : setEventTime5(false);
     (n === 6) ? setEventTime6(true) : setEventTime6(false);
   }
-  let whoList2: SelectOptions2 = {};
+  let whoList2: SelectOptions = {};
   whoOptions.map((el: Person) => {
     whoList2[el.index] = { name: el.name, comments: el.comments }
   });

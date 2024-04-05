@@ -6,7 +6,7 @@ import MultiSelectWho from './multi-select-who';
 import WhereRadio from '@/app/ui/records/whereradio';
 import WhenRadio from '@/app/ui/records/whenradio';
 import FakeWhenRadio from '@/app/ui/records/fakewhenradio';
-import { SelectOptions2, Person, Place, EventTime, SixAnswers } from '@/app/lib/interfaces';
+import { SelectOptions, Person, Place, EventTime, SixAnswers } from '@/app/lib/interfaces';
 import DateTimePicker from '@/app/ui/records/datepicker';
 import { useState } from 'react';
 import clsx from 'clsx';
@@ -107,7 +107,7 @@ export default function EditAnswerForm(
   }
 
 
-  let whoList2: SelectOptions2 = {};
+  let whoList2: SelectOptions = {};
   whoOptions.map((el: Person) => {
     whoList2[el.index] = { name: el.name, comments: el.comments }
   });

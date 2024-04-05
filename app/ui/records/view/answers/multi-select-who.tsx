@@ -1,7 +1,7 @@
-import { SelectOptions2 } from '@/app/lib/interfaces';
+import { SelectOptions } from '@/app/lib/interfaces';
 import clsx from 'clsx';
 
-export default function MultiSelectWho(props:  {options: SelectOptions2, initSelected: number[] } ) {
+export default function MultiSelectWho(props:  {options: SelectOptions, initSelected: number[] } ) {
 
     return (
         <div className="overflow-auto flex flex-col h-[140px] w-full px-2">

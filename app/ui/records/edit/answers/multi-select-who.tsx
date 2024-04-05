@@ -1,7 +1,7 @@
-import { SelectOptions2 } from '@/app/lib/interfaces';
+import { SelectOptions } from '@/app/lib/interfaces';
 import { useState } from 'react';
 
-export default function MultiSelectWho(props:  {options: SelectOptions2, initSelected: number[] } ) {
+export default function MultiSelectWho(props:  {options: SelectOptions, initSelected: number[] } ) {
 
     const [hoverShow, setHoverShow] = useState(<div key={0} />);
     const [selected, setSelected] = useState(initSelected(props.initSelected));
