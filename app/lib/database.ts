@@ -116,9 +116,9 @@ const client = new Client({
     noStore();
     const offset = (currentPage - 1) * PEOPLE_PER_PAGE;
     const queryDecoded = (decodeURIComponent(query)).replace("'", "\'");
-    const statement = `SELECT index, name
+    const statement = `SELECT index, name, comments
                        FROM public.people
-                       WHERE name ILIKE ($1)
+                       WHERE name ILIKE ($1) OR comments ILIKE ($1)
                        LIMIT ${PEOPLE_PER_PAGE} OFFSET ${offset}`;
     try {
       const answers = await client.query(

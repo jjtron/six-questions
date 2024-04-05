@@ -40,8 +40,8 @@ export function EventTimesTable({eventTimesGroups} : {eventTimesGroups : EventTi
                             { "hidden" : (record.type !== "circa_yr")}
                           )}
                         onClick={() => handleClick(record.id)} >
-                      <div className="basis-1/4 pl-2 border-tbl-1 border-slate-400 rounded-l-md"><span className="pl-2">{record.name}</span></div>
-                      <div className="basis-3/4 pl-2 border-1 border-slate-400 rounded-r-md">{record.comments}</div>
+                      <div className="basis-1/6 pl-2 border-tbl-1 border-slate-400 rounded-l-md"><span className="pl-2">{record.name}</span></div>
+                      <div className="basis-5/6 pl-2 border-1 border-slate-400 rounded-r-md bg-white">{record.comments}</div>
                     </div>
 
                     {/* //////////////////////////////////////////////////////////////////////////// */}
@@ -61,7 +61,7 @@ export function EventTimesTable({eventTimesGroups} : {eventTimesGroups : EventTi
                           )}
                         onClick={() => handleClick(record.id)} >
                       <div className="basis-1/3 pl-2 border-1 border-slate-400 rounded-l-md"><span className="pl-2">{record.name}</span></div>
-                      <div className="basis-2/3 pl-2 border-trb-1 border-slate-400 rounded-r-md">{record.comments}</div>
+                      <div className="basis-2/3 pl-2 border-trb-1 border-slate-400 rounded-r-md bg-white">{record.comments}</div>
                     </div>
 
                     {/* //////////////////////////////////////////////////////////////////////////// */}
@@ -82,7 +82,7 @@ export function EventTimesTable({eventTimesGroups} : {eventTimesGroups : EventTi
                           )}
                         onClick={() => handleClick(record.id)} >
                       <div className="basis-2/5 pl-2 border-1 border-slate-400 rounded-l-md"><span>{record.name}</span></div>
-                      <div className="basis-3/5 pl-2 border-1 border-slate-400 rounded-r-md">{record.comments}</div>
+                      <div className="basis-3/5 pl-2 border-1 border-slate-400 rounded-r-md bg-white">{record.comments}</div>
                     </div>
 
                   </div>

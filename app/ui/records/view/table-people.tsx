@@ -27,15 +27,14 @@ export function PeopleTable({records} : {records : Person[]} ) {
                 </div>
                 { records.map((record: any, i: number) => {
                     return (
-                        <div key={i} className="table-row-group">
-                            <div className={clsx("table-row",
-                                    {"bg-yellow-100" : i === rowIndex,
-                                        "bg-sky-200" : i !== rowIndex
-                                    })}
-                                onClick={() => handleClick(i, record.index)}
-                            >
-                                <div className="table-cell pl-2 border-tbl-1 border-slate-400 rounded-md">{record.name}</div>
-                            </div>
+                        <div key={i} className={clsx("flex flex-row rounded-md",
+                                {"bg-yellow-100" : i === rowIndex,
+                                    "bg-sky-200" : i !== rowIndex
+                                })}
+                            onClick={() => handleClick(i, record.index)}
+                        >
+                            <div className="basis-1/5 pl-2 border-tbl-1 border-slate-400 rounded-l-md">{record.name}</div>
+                            <div className="basis-4/5 pl-2 border-trb-1 border-slate-400 rounded-r-md bg-white">{record.comments}</div>
                         </div>
                     )
                 })}
