@@ -78,12 +78,7 @@ export function PlacesTable({placesGroups} : {placesGroups : Place[][]} ) {
                           onClick={() => handleClick(record.id)}
                     >
                       <div className="basis-1/4 px-2 border-tbl-1 border-slate-400 rounded-l-md">{record.name}</div>
-                      <textarea
-                          rows={4}
-                          value={record.details.desc}
-                          readOnly
-                          className="basis-3/4 rounded-r-md border-trb-1 border-slate-400 outline-none pl-2"
-                      />
+                      <div className="basis-3/4 rounded-r-md border-trb-1 border-slate-400 outline-none pl-2 bg-white">{record.details.desc}</div>
                     </div>
 
                     {/* Country and City with Description header */}
@@ -98,12 +93,7 @@ export function PlacesTable({placesGroups} : {placesGroups : Place[][]} ) {
                           onClick={() => handleClick(record.id)}
                     >
                       <div className="basis-1/4 pl-2 border-tbl-1 border-slate-400 rounded-l-md">{record.details.city}, {record.name}</div>
-                      <textarea
-                          rows={4}
-                          value={record.details.desc}
-                          readOnly
-                          className="basis-3/4 rounded-r-md border-trb-1 border-slate-400 outline-none pl-2"
-                      />
+                      <div className="basis-3/4 rounded-r-md border-trb-1 border-slate-400 outline-none pl-2 bg-white">{record.details.desc}</div>
                     </div>
 
                     {/* General Description header */}
@@ -118,12 +108,7 @@ export function PlacesTable({placesGroups} : {placesGroups : Place[][]} ) {
                           onClick={() => handleClick(record.id)}
                     >
                       <div className="basis-1/4 pl-2 border-tbl-1 border-slate-400 rounded-l-md">{record.name}</div>
-                      <textarea
-                          rows={4}
-                          value={record.details.desc}
-                          readOnly
-                          className="basis-3/4 rounded-r-md border-trb-1 border-slate-400 outline-none pl-2"
-                      />
+                      <div className="basis-3/4 rounded-r-md border-trb-1 border-slate-400 outline-none pl-2 bg-white">{record.details.desc}</div>
                     </div>
                   </div>
                 )
