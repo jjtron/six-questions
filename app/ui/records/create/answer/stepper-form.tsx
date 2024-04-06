@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import { Person, Place, EventTime } from '@/app/lib/interfaces';
 import AnswerForm from './answer-form';
 import clsx from 'clsx';
+import { useState } from 'react';
 
 const steps = ['Who, What, Where', 'When, Why, How', 'Done'];
 
@@ -21,7 +22,10 @@ export default function StepperForm(
         whoOptions: Person[],
         whereOptions: Place[],
         whenOptions: EventTime[]
-      }) {
+      })
+{
+
+  const [mediaWidth, setWidth] = useState(window.innerWidth);
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
 
@@ -71,6 +75,7 @@ export default function StepperForm(
 
   return (
     <Box sx={{ width: '100%' }}>
+      <div className={clsx({ "hidden" : mediaWidth <= 320 })}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps: { completed?: boolean } = {};
@@ -94,6 +99,7 @@ export default function StepperForm(
           );
         })}
       </Stepper>
+      </div>
       {activeStep === steps.length ? (
         <React.Fragment>
           <Typography sx={{ mt: 2, mb: 1 }}>
@@ -125,7 +131,7 @@ export default function StepperForm(
             )()
           }
           
-          <Box className="pl-2 mt-[-40px]" >
+          <Box className={clsx("pl-2 mt-[-40px]", { "hidden" : mediaWidth <= 320 } )} >
             <button className={clsx("rounded-md bg-sky-200 px-2 active:bg-sky-300 border-1 border-slate-400", {"hidden" : activeStep === 0})}
               color="inherit"
               disabled={activeStep === 0}

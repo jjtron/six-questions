@@ -27,6 +27,7 @@ export default function AnswerForm(
           page: number
         })
 {
+  const [mediaWidth, setWidth] = useState(window.innerWidth);
 
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(create0rUpdateAnswer, initialState);
@@ -70,10 +71,13 @@ export default function AnswerForm(
       
         <input id="id" name="id" type="hidden" value={uuidv4()} />
 
-        <div className={clsx({"hidden" : page !== 0 })}>
+        <div className={clsx({ "hidden" : page !== 0 && mediaWidth > 320 })}>
           {/* PAGE 1 */}
           {/* WHO */}
-          <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Part 1: Who, What, Where</p>
+          <p className={clsx(`bg-slate-400 rounded-md border-1
+                              border-slate-600 text-center font-bold`,
+                              { "hidden" : mediaWidth <= 320 }
+                        )}>Part 1: Who, What, Where</p>
           <div className="w-full bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[176px]" >
             <div className="flex flex-row">
                 <div className="font-bold">WHO</div>
@@ -146,13 +150,16 @@ export default function AnswerForm(
                 </WhereRadio>
               </div>
             </div>
-            <div className="w-full flex mb-1">{showWhereDetails}</div>
+            <div className="w-full flex mb-1 max-[320px]:text-xs text-base">{showWhereDetails}</div>
           </div>
         </div>
 
-        <div className={clsx({"hidden" : page !== 1 })}>
+        <div className={clsx({"hidden" : page !== 1 && mediaWidth > 320 })}>
           {/* PAGE 2 */}
-          <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Part 2: When, Why, How</p>
+          <p className={clsx(`bg-slate-400 rounded-md border-1
+                              border-slate-600 text-center font-bold`,
+                              { "hidden" : mediaWidth <= 320 }
+                        )}>Part 2: When, Why, How</p>
           <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[406px]" >
             <div className="flex flex-row">
               <div className="font-bold">WHEN</div>
@@ -303,7 +310,7 @@ export default function AnswerForm(
           </div>
         </div>
 
-        <div className="flex flex-col items-end justify-between">
+        <div className={clsx("flex flex-col items-end justify-between", { "h-[25px] mb-6" : mediaWidth <= 320 })}>
           <Button type="submit">Create Record</Button>
         </div>
         <input id="operation" name="operation" type="hidden" value="create" />
