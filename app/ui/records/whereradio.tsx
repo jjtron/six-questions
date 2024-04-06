@@ -18,8 +18,8 @@ export default function WhereRadio(
         { props.whereRadioOptions[1].list.map((el, i) => {
           return (
             <div key={i} className={
-              clsx(`flex flex-row border-1 border-slate-400
-                    rounded-md px-2 mr-1 cursor-pointer`,
+              clsx(`flex flex-row border-1 border-slate-400 cursor-pointer 
+                    max-[320px]:text-xs text-base rounded-md px-2 mr-1 `,
                     { "bg-white" : bgColor !== i && isChecked !== i,
                       "bg-yellow-100" : bgColor === i && isChecked !== i && props.hoverWhereHighlight,
                       "bg-green-100" : isChecked === i})} 
@@ -32,14 +32,14 @@ export default function WhereRadio(
                 (function () {
                   if (props.whereRadioOptions[2]?.toString() === el.id.toString()) {
                       // input is defaultChecked
-                      return (<input className="h-[24px]" type="radio" name="where" defaultChecked value={el.id}
+                      return (<input className="max-[320px]:h-[16px] h-[24px]" type="radio" name="where" defaultChecked value={el.id}
                           onClick={() => {
                               setIsChecked(i);
                               props.whereMouseOver(el, true);
                           }}/> )
                   } else {
                       // input is not checked
-                      return (<input className="h-[24px]" type="radio" name="where" value={el.id} 
+                      return (<input className="max-[320px]:h-[16px] h-[24px]" type="radio" name="where" value={el.id} 
                           onClick={() => {
                               setIsChecked(i);
                               props.whereMouseOver(el, true);

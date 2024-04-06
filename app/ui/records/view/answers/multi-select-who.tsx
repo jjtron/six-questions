@@ -26,12 +26,12 @@ export default function MultiSelectWho(props:  {options: SelectOptions, initSele
         definedStoredList.forEach((storedEl: any, j) => {
             isCheckedArray.push(
                 <div key={j} className="flex flex-row">
-                    <div className={clsx(`basis-1/5 text-sm bg-green-100 
+                    <div className={clsx(`max-[320px]:basis-1/2 basis-1/5 text-sm bg-green-100 
                                           border-tl-1 border-slate-400 px-2 `,
                                           { "rounded-tl-md" : j === 0,
                                             "rounded-bl-md border-tlb-1" : j === definedStoredList.length - 1
                                           })}>{storedEl[1].name}:</div>
-                    <div className={clsx(`basis-4/5 text-xs bg-white 
+                    <div className={clsx(`max-[320px]:basis-1/2 basis-4/5 text-xs bg-white 
                                           border-tr-1 border-slate-400`,
                                           { "rounded-tr-md" : j === 0,
                                             "rounded-br-md border-trb-1" : j === definedStoredList.length - 1
