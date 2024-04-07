@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import clsx from 'clsx';
 import { InputMask } from '@react-input/mask';
+import { useRef } from 'react';
 
 
 export default function AnswerForm(
@@ -66,6 +67,9 @@ export default function AnswerForm(
     whoList2[el.index] = { name: el.name, comments: el.comments }
   });
 
+  const whereList = useRef(<div></div> as unknown as HTMLDivElement);
+  const whenList = useRef(<div></div> as unknown as HTMLDivElement);
+
   return (
     <form action={dispatch} className="flex flex-col md:pl-2 bg-inherit">
       
@@ -119,7 +123,7 @@ export default function AnswerForm(
           <div  className="flex flex-row"
                 onMouseLeave={(e) => {
                   e.stopPropagation();
-                  document.getElementById("where-wrapper-div")?.scroll(0, scrollWherePosition);
+                  whereList.current.scrollTop = scrollWherePosition;
                   handleWhereMouseOver(selectedPlaceRecord, true);
                   setWhereHoverHighlight(false);
                 }}
@@ -137,7 +141,7 @@ export default function AnswerForm(
                 </div>
               </div>
               <div className="text-xs">(scroll down for more options)</div>
-              <div className="overflow-auto border-1 border-slate-300 h-[190px] rounded-md" id="where-wrapper-div">
+              <div className="overflow-auto border-1 border-slate-300 h-[190px] rounded-md" ref={whereList} > 
                 <WhereRadio
                   whereRadioOptions={[
                     {id: 'where', name: 'where', multi: 'no'},
@@ -160,7 +164,7 @@ export default function AnswerForm(
                               border-slate-600 text-center font-bold`,
                               { "hidden" : mediaWidth <= 320 }
                         )}>Part 2: When, Why, How</p>
-          <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[406px] max-[320px]:h-[510px]" >
+          <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[406px] max-[320px]:h-[810px]" >
             <div className="flex flex-row">
               <div className="font-bold">WHEN</div>
               <div id="when-error" aria-live="polite" aria-atomic="true">
@@ -227,13 +231,13 @@ export default function AnswerForm(
             <div className="flex flex-row max-[320px]:flex-col max-[320px]:min-h-[372px]"
                   onMouseLeave={(e) => {
                         e.stopPropagation();
-                        document.getElementById("when-wrapper-div")?.scroll(0, scrollWhenPosition);
+                        whenList.current.scrollTop = scrollWhenPosition;
                         handleWhenMouseOver(selectedWhenRecord, true)
                         setWhenHoverHighlight(false);
                       }}
               >
 
-              <div className="max-[320px]:basis-2/5 basis-1/3 overflow-auto border-1 border-slate-300 h-[290px] mb-2 rounded-md"  id="when-wrapper-div" >
+              <div className="max-[320px]:basis-2/5 basis-1/3 overflow-auto border-1 border-slate-300 h-[290px] mb-2 rounded-md" ref={whenList} >
                   <div className="text-xs w-[195px] pt-1 pl-1">
                     <input type="checkbox" name="date_type_6" onClick={() => { pickEventTimeStyle(6) }} 
                             checked={eventTime6} onChange={() => {}} />
@@ -323,7 +327,7 @@ export default function AnswerForm(
     if (isSelected){
       setSelectedPlaceRecord(record);
     }
-    const scrollPosition = document.getElementById("where-wrapper-div")?.scrollTop;
+    const scrollPosition = whereList.current.scrollTop;
     if (scrollPosition && isSelected) {
       setScrollWherePosition(scrollPosition)
     }
@@ -384,7 +388,7 @@ export default function AnswerForm(
     if (isSelected){
       setSelectedWhenRecord(record);
     }
-    const scrollPosition = document.getElementById("when-wrapper-div")?.scrollTop;
+    const scrollPosition = whenList.current.scrollTop;
     if (scrollPosition && isSelected) {
       setScrollWhenPosition(scrollPosition)
     }
