@@ -21,7 +21,7 @@ export default function WhenRadio(
           const init = (props.whenRadioOptions[2]?.customID?.toString() === el.id.toString());
           return (
             <div key={i} className={
-              clsx(`flex flex-row border-1 border-slate-400
+              clsx(`flex flex-row border-1 border-slate-400 max-[320px]:text-xs text-base 
                     rounded-md px-2 mr-1 cursor-pointer`,
                     { "bg-white" : bgColor !== i && isChecked !== i && !init,
                       "bg-yellow-100" : bgColor === i && isChecked !== i && props.hoverWhenHighlight,
@@ -35,7 +35,7 @@ export default function WhenRadio(
                 (function () {
                   if (init) {
                       // input is defaultCheckn
-                      return (<input className="h-[24px]" type="radio" name="custom_when" defaultChecked value={el.id} 
+                      return (<input className="max-[320px]:h-[16px] h-[24px]" type="radio" name="custom_when" defaultChecked value={el.id} 
                           onClick={() => {
                               setIsChecked(i);
                               setCancelInit(true);
@@ -44,7 +44,7 @@ export default function WhenRadio(
                           }}/>)
                   } else {
                       // input is not checked
-                      return (<input className="h-[24px]" type="radio" name="custom_when" value={el.id} 
+                      return (<input className="max-[320px]:h-[16px] h-[24px]" type="radio" name="custom_when" value={el.id} 
                           onClick={() => {
                               setIsChecked(i);
                               setCancelInit(true);

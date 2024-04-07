@@ -10,10 +10,11 @@ export default function FakeWhenRadio(
         { props.whenRadioOptions[1].list.map((el, i) => {
           return (
             <div key={i} className="flex flex-row border-1 border-slate-300 items-center
-                                    rounded-md px-2 mr-1 cursor-pointer bg-slate-100"
+                                    rounded-md px-2 mr-1 cursor-pointer bg-slate-100 
+                                    max-[320px]:text-xs text-base"
             >
-              <input disabled className="h-[24px]" type="radio" name="custom_when" value={el.id} />
-              <div className="pl-2 font-normal text-sm">{el.name}</div>
+              <input disabled className="max-[320px]:h-[16px] h-[24px]" type="radio" name="custom_when" value={el.id} />
+              <div className="pl-2 font-normal max-[320px]:text-xs text-sm">{el.name}</div>
             </div>
           )
         })}
