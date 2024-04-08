@@ -164,7 +164,7 @@ export default function AnswerForm(
                               border-slate-600 text-center font-bold`,
                               { "hidden" : mediaWidth <= 320 }
                         )}>Part 2: When, Why, How</p>
-          <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[406px] max-[320px]:h-[810px]" >
+          <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[406px] max-[320px]:h-[510px]" >
             <div className="flex flex-row">
               <div className="font-bold">WHEN</div>
               <div id="when-error" aria-live="polite" aria-atomic="true">
@@ -180,9 +180,9 @@ export default function AnswerForm(
             {/* SELECTORS AND INPUTS TO CAUSE VARIOUS DATE STYLE INPUTS TO APPEAR (SLIM MEDIA) */}
             <div className={clsx("flex flex-col", { "hidden" : mediaWidth > 320 })}>
               
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime1 })}>
-                <input type="checkbox" name="date_type_1" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(1) }} checked={eventTime1} onChange={() => {}} />
-                <p className="inline px-1">Date/Time</p><p>(since 1900)</p>
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime1, "bg-indigo-100" : eventTime1 })}>
+                <input type="checkbox" name="date_type_1" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(1) }} checked={eventTime1} onChange={() => {}} />
+                <p className="px-1">Date/Time (since 1900)</p>
               </span>
               <div className={clsx({ "hidden" : !eventTime1 })}>
                 <DateTimePicker
@@ -191,9 +191,9 @@ export default function AnswerForm(
                     form_data_name={"yr_mon_day"} />
               </div>
 
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime2 })}>
-                <input type="checkbox" name="date_type_2" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(2) }} checked={eventTime2} onChange={() => {}} />
-                <p className="inline px-1">Year/Month</p><p>(since 1900)</p>
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime2, "bg-indigo-100" : eventTime2 })}>
+                <input type="checkbox" name="date_type_2" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(2) }} checked={eventTime2} onChange={() => {}} />
+                <p className="px-1">Year/Month (since 1900)</p>
               </span>
               <div className={clsx("flex flex-row", { "hidden" : !eventTime2 })}>
                 <DateTimePicker
@@ -202,28 +202,28 @@ export default function AnswerForm(
                     form_data_name={"yr_mon"} />
               </div>
 
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime3 })}>
-                <input type="checkbox" name="date_type_3" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(3) }} checked={eventTime3} onChange={() => {}} />
-                <p className="inline px-1">Date</p><p>(before 1900)</p>
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime3, "bg-indigo-100" : eventTime3 })}>
+                <input type="checkbox" name="date_type_3" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(3) }} checked={eventTime3} onChange={() => {}} />
+                <p className="inline px-1">Date (before 1900)</p>
               </span>
               <div className={clsx("flex flex-row", { "hidden" : !eventTime3 })}>
-                <InputMask className="w-[120px] border-1 border-slate-300 rounded-md text-center" name="date_only_pre1900" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                <InputMask className="w-[120px] border-1 border-slate-300 rounded-md text-center bg-indigo-100" name="date_only_pre1900" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
               </div>
 
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime4 })}>
-                <input type="checkbox" name="date_type_4" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(4) }} checked={eventTime4} onChange={() => {}} />
-                <p className="inline px-1">Year/Month</p><p>(before 1900)</p>
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime4, "bg-indigo-100" : eventTime4 })}>
+                <input type="checkbox" name="date_type_4" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(4) }} checked={eventTime4} onChange={() => {}} />
+                <p className="inline px-1">Year/Month (before 1900)</p>
               </span>
               <div className={clsx("flex flex-row", { "hidden" : !eventTime4 })}>
-                <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center" name="year_mon_pre1900" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center bg-indigo-100" name="year_mon_pre1900" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
               </div>
 
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime5 })}>
-                <input type="checkbox" name="date_type_5" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(5) }} checked={eventTime5} onChange={() => {}} />
-                <p className="inline px-1">Year only</p><p>(before 1900)</p>
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime5, "bg-indigo-100" : eventTime5 })}>
+                <input type="checkbox" name="date_type_5" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(5) }} checked={eventTime5} onChange={() => {}} />
+                <p className="inline px-1">Year only (before 1900)</p>
               </span>
               <div className={clsx("flex flex-row items-center", { "hidden" : !eventTime5 })}>
-                <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text-center" name="yr_only_pre1900" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text- bg-indigo-100" name="yr_only_pre1900" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
               </div>
 
             </div>
@@ -269,31 +269,30 @@ export default function AnswerForm(
               </div>
               <div className={clsx("flex flex-row", { "hidden" : !eventTime3 })}>
                 <div className="basis-2/5"></div>
-                <InputMask className="w-[120px] border-1 border-slate-300 rounded-md text-center" name="date_only_pre1900" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                <InputMask className="w-[120px] border-1 border-slate-300 rounded-md text-center bg-indigo-100" name="date_only_pre1900" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
               </div>
               <div className={clsx("flex flex-row", { "hidden" : !eventTime4 })}>
                 <div className="basis-3/5"></div>
-                <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center" name="year_mon_pre1900" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center bg-indigo-100" name="year_mon_pre1900" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
               </div>
               <div className={clsx("flex flex-row items-center", { "hidden" : !eventTime5 })}>
                 <div className="basis-4/5"></div>
-                <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text-center" name="yr_only_pre1900" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text-center bg-indigo-100" name="yr_only_pre1900" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
               </div>
             </div>
             <div className={clsx("w-full flex mb-1 rounded-md h-[90px]",
                                 { "hidden" : eventTime6 },
                                 { "hidden" : !eventTime1 && !eventTime2 && !eventTime3 && !eventTime4 && !eventTime5&& !eventTime6 })} >
-                  <textarea
-                      id="comments"
-                      name="comments"
-                      rows={4}
-                      cols={80}
-                      defaultValue=""
-                      placeholder='Notes (optional)'
-                      className="block w-full resize-none rounded-md border-1 bg-indigo-100 border-slate-400 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
-                      aria-describedby="what-error"
-                    >
-                    </textarea>
+                  <textarea id="comments" name="comments" rows={4} cols={80} defaultValue=""
+                            placeholder={clsx("Notes (optional):",
+                                             {' Date/Time (since 1900)' : eventTime1 },
+                                             {' Year/Month (since 1900)' : eventTime2 },
+                                             {' Date (before 1900)' : eventTime3 },
+                                             {' Year/Month (before 1900)' : eventTime4 },
+                                             {' Year only (before 1900)' : eventTime5 }, )}
+                            className="block w-full resize-none rounded-md border-1 bg-indigo-100 border-slate-400 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
+                  >
+                  </textarea>
             </div>
             <div className="flex flex-row max-[320px]:flex-col max-[320px]:min-h-[372px]"
                   onMouseLeave={(e) => {
