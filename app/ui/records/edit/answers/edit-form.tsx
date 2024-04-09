@@ -162,7 +162,7 @@ export default function EditAnswerForm(
             />
           </div>
           {/* WHERE */}
-          <div  className={clsx("flex flex-row", { "flex-col bg-white rounded-md mb-1" : mediaWidth <= 320 })}
+          <div  className={clsx("flex flex-row h-[290px]", { "flex-col bg-white rounded-md mb-1" : mediaWidth <= 320 })}
                 onMouseLeave={(e) => {
                   e.stopPropagation();
                   whereList.current.scrollTop = scrollWherePosition;
@@ -196,7 +196,7 @@ export default function EditAnswerForm(
                 </WhereRadio>
               </div>
             </div>
-            <div className="w-full flex mb-1 max-[320px]:text-xs text-base h-[140px]">{showWhereDetails}</div>
+            <div className="w-full flex mb-1 text-base max-[320px]:text-xs max-[320px]:h-[140px]">{showWhereDetails}</div>
           </div>
         </div>
 
