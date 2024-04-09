@@ -37,7 +37,7 @@ export default function MultiSelectWho(props:  {options: SelectOptions} ) {
     }
 
     return (
-      <div className="flex flex-row" >
+      <div className="flex flex-row max-[320px]:flex-col" >
         <div className="max-[320px]:basis-32 basis-48 shrink-0 h-[140px] overflow-auto">
             {Object.entries(props.options).map((el, i) => {
                 return (
@@ -52,7 +52,7 @@ export default function MultiSelectWho(props:  {options: SelectOptions} ) {
                 )
             })}
         </div>
-        <div className="overflow-auto flex flex-col h-[140px]  w-full">
+        <div className="overflow-auto flex flex-col h-[140px] w-full">
             <>{hoverShow}</>
             <>{selected}</>
         </div>

@@ -35,7 +35,7 @@ export default function AnswerForm(
 
   // the following pairs of state variables are used in the
   // place (where) and event-time (when) pick sections
-  const [showWhereDetails, setshowWhereDetails] = useState(<div className="w-full flex border-1 bg-slate-100 rounded-md">&nbsp;</div>);
+  const [showWhereDetails, setshowWhereDetails] = useState(<div className="w-full flex border-1 bg-slate-100 rounded-md h-[300px]">&nbsp;</div>);
   const [showWhenDetails, setShowWhenDetails] = useState(<p></p>);
 
   const [selectedPlaceRecord, setSelectedPlaceRecord] = useState({});
@@ -82,7 +82,7 @@ export default function AnswerForm(
                               border-slate-600 text-center font-bold`,
                               { "hidden" : mediaWidth <= 320 }
                         )}>Part 1: Who, What, Where</p>
-          <div className="w-full bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[176px]" >
+          <div className="w-full bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[176px] max-[320px]:h-[306px]" >
             <div className="flex flex-row">
                 <div className="font-bold">WHO</div>
                 <div id="who-error" aria-live="polite" aria-atomic="true">
@@ -99,7 +99,7 @@ export default function AnswerForm(
             </MultiSelectWho>
           </div>
           {/* WHAT */}
-          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[190px]" >
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[160px] max-[320px]:h-[200px]" >
             <div className="flex flex-row">
               <div className="font-bold">WHAT</div>
               <div id="what-error" aria-live="polite" aria-atomic="true">
@@ -120,7 +120,7 @@ export default function AnswerForm(
             />
           </div>
           {/* WHERE */}
-          <div  className="flex flex-row"
+          <div  className="flex flex-row max-[320px]:flex-col"
                 onMouseLeave={(e) => {
                   e.stopPropagation();
                   whereList.current.scrollTop = scrollWherePosition;
@@ -128,7 +128,7 @@ export default function AnswerForm(
                   setWhereHoverHighlight(false);
                 }}
           >
-            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[255px]" >
+            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[255px] max-[320px]:h-[205px]" >
               <div className="flex flex-row">
                 <div className="font-bold">WHERE</div>
                 <div id="where-error" aria-live="polite" aria-atomic="true">
@@ -141,7 +141,7 @@ export default function AnswerForm(
                 </div>
               </div>
               <div className="text-xs">(scroll down for more options)</div>
-              <div className="overflow-auto border-1 border-slate-300 h-[190px] rounded-md" ref={whereList} > 
+              <div className="overflow-auto border-1 border-slate-300 h-[190px] max-[320px]:h-[140px] rounded-md" ref={whereList} > 
                 <WhereRadio
                   whereRadioOptions={[
                     {id: 'where', name: 'where', multi: 'no'},
@@ -154,7 +154,7 @@ export default function AnswerForm(
                 </WhereRadio>
               </div>
             </div>
-            <div className="w-full flex mb-1 max-[320px]:text-xs text-base">{showWhereDetails}</div>
+            <div className="w-full flex mb-1 max-[320px]:text-xs text-base h-[140px]">{showWhereDetails}</div>
           </div>
         </div>
 
@@ -284,12 +284,12 @@ export default function AnswerForm(
                                 { "hidden" : eventTime6 },
                                 { "hidden" : !eventTime1 && !eventTime2 && !eventTime3 && !eventTime4 && !eventTime5&& !eventTime6 })} >
                   <textarea id="comments" name="comments" rows={4} cols={80} defaultValue=""
-                            placeholder={clsx("Notes (optional):",
-                                             {' Date/Time (since 1900)' : eventTime1 },
-                                             {' Year/Month (since 1900)' : eventTime2 },
-                                             {' Date (before 1900)' : eventTime3 },
-                                             {' Year/Month (before 1900)' : eventTime4 },
-                                             {' Year only (before 1900)' : eventTime5 }, )}
+                            placeholder={clsx("Notes:",
+                                             {' Date/Time (since 1900), (optional)' : eventTime1 },
+                                             {' Year/Month (since 1900), (optional)' : eventTime2 },
+                                             {' Date (before 1900), (optional)' : eventTime3 },
+                                             {' Year/Month (before 1900), (optional)' : eventTime4 },
+                                             {' Year only (before 1900), (optional)' : eventTime5 }, )}
                             className="block w-full resize-none rounded-md border-1 bg-indigo-100 border-slate-400 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
                   >
                   </textarea>
