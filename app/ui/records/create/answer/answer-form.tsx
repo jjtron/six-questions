@@ -99,7 +99,7 @@ export default function AnswerForm(
             </MultiSelectWho>
           </div>
           {/* WHAT */}
-          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[160px] max-[320px]:h-[200px]" >
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[150px] max-[320px]:h-[200px]" >
             <div className="flex flex-row">
               <div className="font-bold">WHAT</div>
               <div id="what-error" aria-live="polite" aria-atomic="true">
@@ -114,8 +114,8 @@ export default function AnswerForm(
             <textarea
                 id="what"
                 name="what"
-                rows={7}
-                className="resize-none block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2"
+                rows={5}
+                className="resize-none block w-full rounded-md border border-gray-200 p-2 text-sm outline-2 placeholder:text-gray-500 mb-1 p-2 "
                 aria-describedby="what-error"
             />
           </div>
@@ -128,7 +128,7 @@ export default function AnswerForm(
                   setWhereHoverHighlight(false);
                 }}
           >
-            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[255px] max-[320px]:h-[205px]" >
+            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[300px] max-[320px]:h-[205px]" >
               <div className="flex flex-row">
                 <div className="font-bold">WHERE</div>
                 <div id="where-error" aria-live="polite" aria-atomic="true">
@@ -141,7 +141,7 @@ export default function AnswerForm(
                 </div>
               </div>
               <div className="text-xs">(scroll down for more options)</div>
-              <div className="overflow-auto border-1 border-slate-300 h-[190px] max-[320px]:h-[140px] rounded-md" ref={whereList} > 
+              <div className="overflow-auto border-1 border-slate-300 h-[230px] max-[320px]:h-[140px] rounded-md" ref={whereList} > 
                 <WhereRadio
                   whereRadioOptions={[
                     {id: 'where', name: 'where', multi: 'no'},
@@ -154,7 +154,7 @@ export default function AnswerForm(
                 </WhereRadio>
               </div>
             </div>
-            <div className="w-full flex mb-1 max-[320px]:text-xs text-base h-[140px]">{showWhereDetails}</div>
+            <div className="w-full flex mb-1 text-base max-[320px]:text-xs max-[320px]:h-[140px]">{showWhereDetails}</div>
           </div>
         </div>
 
