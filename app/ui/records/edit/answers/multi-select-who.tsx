@@ -25,7 +25,7 @@ export default function MultiSelectWho(props:  {options: SelectOptions, initSele
                 )
             })}
         </div>
-        <div className="overflow-auto flex flex-col h-[140px]  w-full">
+        <div className="overflow-auto flex flex-col h-[180px]  w-full">
             <>{hoverShow}</>
             <>{selected}</>
         </div>

@@ -4,7 +4,7 @@ import clsx from 'clsx';
 export default function MultiSelectWho(props:  {options: SelectOptions, initSelected: number[] } ) {
 
     return (
-        <div className="overflow-auto flex flex-col h-[140px] w-full px-2">
+        <div className="overflow-auto flex flex-col h-[140px] max-[320px]:h-[170px] w-full px-2">
             {initSelected(props.initSelected)}
         </div>
     );

@@ -4,6 +4,7 @@ import { Button } from "@/app/ui/button";
 import clsx from 'clsx';
 import { Person, Place, EventTime, SixAnswers } from '@/app/lib/interfaces';
 import MultiSelectWho from './multi-select-who';
+import { useState } from 'react';
 
 export default function AnswerForm({
     currentPage,
@@ -14,6 +15,8 @@ export default function AnswerForm({
     dataPackage: any[][];
     page: number;
   }) {
+
+    const [mediaWidth, setWidth] = useState(window.innerWidth);
 
     const whoList: Person[] = dataPackage[0];
     const whereDefs: Place[] = dataPackage[1];
@@ -36,7 +39,7 @@ export default function AnswerForm({
                 return (<div key={i} className="flex flex-col bg-inherit md:pl-2">
                     
                   {/* PAGE 1 */}
-                  <div className={clsx({"hidden" : page !== 0 })}>
+                  <div className={clsx({"hidden" : page !== 0 && mediaWidth > 320 })}>
                     {/* WHO */}
                     <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Record ID: ...{record.id.slice(-6)}, Part 1</p>
                     <div className="flex md:flex-row flex-col">
@@ -136,8 +139,8 @@ export default function AnswerForm({
                   </div>
 
                   {/* PAGE 2 */}
-                  <div className={clsx({"hidden" : page !== 1 })}>
-                    <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Record ID: ...{record.id.slice(-6)}, Part 2</p>
+                  <div className={clsx({"hidden" : page !== 1 && mediaWidth > 320 })}>
+                    <p className={clsx("bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold", { "hidden" : mediaWidth <= 320 })}>Record ID: ...{record.id.slice(-6)}, Part 2</p>
                     {/* WHEN */}
                     <div className="pl-2 border-1 border-slate-400 rounded-md bg-slate-200">
                             <p className="font-bold">WHEN</p>
