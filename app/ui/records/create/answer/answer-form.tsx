@@ -120,7 +120,7 @@ export default function AnswerForm(
             />
           </div>
           {/* WHERE */}
-          <div  className="flex flex-row max-[320px]:flex-col"
+          <div  className={clsx("flex flex-row", { "flex-col bg-white rounded-md mb-1" : mediaWidth <= 320 })}
                 onMouseLeave={(e) => {
                   e.stopPropagation();
                   whereList.current.scrollTop = scrollWherePosition;

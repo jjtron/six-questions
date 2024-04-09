@@ -140,7 +140,7 @@ export default function EditAnswerForm(
             <MultiSelectWho options={whoList2} initSelected={record.who} />
           </div>
           {/* WHAT */}
-          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[190px]" >
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[190px] max-[320px]:h-[306px]" >
             <div className="flex flex-row">
               <div className="font-bold">WHAT</div>
               <div id="what-error" aria-live="polite" aria-atomic="true">
@@ -162,7 +162,7 @@ export default function EditAnswerForm(
             />
           </div>
           {/* WHERE */}
-          <div  className="flex flex-row h-[290px] max-[320px]:flex-col"
+          <div  className={clsx("flex flex-row", { "flex-col bg-white rounded-md mb-1" : mediaWidth <= 320 })}
                 onMouseLeave={(e) => {
                   e.stopPropagation();
                   whereList.current.scrollTop = scrollWherePosition;
@@ -206,7 +206,7 @@ export default function EditAnswerForm(
                               border-slate-600 text-center font-bold`,
                               { "hidden" : mediaWidth <= 320 }
                         )}>Record ID: ...{record.id.slice(-6)}, Part 2</p>
-          <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[406px]" >
+          <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[406px] max-[320px]:h-[510px]" >
             <div className="flex flex-row">
               <div className="font-bold">WHEN</div>
               <div id="when-error" aria-live="polite" aria-atomic="true">
@@ -218,8 +218,66 @@ export default function EditAnswerForm(
                   ))}
               </div>
             </div>
-            {/* SELECTORS TO CAUSE VARIOUS DATE STYLE INPUTS TO APPEAR */}
-            <div className="flex flex-row">
+
+            {/* SELECTORS AND INPUTS TO CAUSE VARIOUS DATE STYLE INPUTS TO APPEAR (SLIM MEDIA) */}
+            <div className={clsx("flex flex-col", { "hidden" : mediaWidth > 320 })}>
+              
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime1, "bg-indigo-100" : eventTime1 })}>
+                <input type="checkbox" name="date_type_1" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(1) }} checked={eventTime1} onChange={() => {}} />
+                <p className="px-1">Date/Time (since 1900)</p>
+              </span>
+              <div className={clsx({ "hidden" : !eventTime1 })}>
+                <DateTimePicker
+                    date_time={record.when.type === 1 ? convertDatePlusTime({date: record.when.date, time: record.when.time}) : {date: '01/01/1900', time: '12:00 AM'}}
+                    view={["year", "month", "day"]}
+                    form_data_name={"yr_mon_day"} />
+              </div>
+
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime2, "bg-indigo-100" : eventTime2 })}>
+                <input type="checkbox" name="date_type_2" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(2) }} checked={eventTime2} onChange={() => {}} />
+                <p className="px-1">Year/Month (since 1900)</p>
+              </span>
+              <div className={clsx("flex flex-row", { "hidden" : !eventTime2 })}>
+                <DateTimePicker
+                    date_time={record.when.type === 2 ? convertDateYrMon(record.when.yr_mon) : {date: '01/01/1900', time: '12:00 AM'}}
+                    view={["year", "month"]}
+                    form_data_name={"yr_mon"} />
+              </div>
+
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime3, "bg-indigo-100" : eventTime3 })}>
+                <input type="checkbox" name="date_type_3" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(3) }} checked={eventTime3} onChange={() => {}} />
+                <p className="inline px-1">Date (before 1900)</p>
+              </span>
+              <div className={clsx("flex flex-row", { "hidden" : !eventTime3 })}>
+                <InputMask className="w-[120px] border-1 border-slate-300 rounded-md text-center bg-indigo-100"
+                           defaultValue={record.when.type === 3 ? record.when.date_only_pre1900 : 'dd/mm/yyyy' }
+                           name="date_only_pre1900" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+              </div>
+
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime4, "bg-indigo-100" : eventTime4 })}>
+                <input type="checkbox" name="date_type_4" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(4) }} checked={eventTime4} onChange={() => {}} />
+                <p className="inline px-1">Year/Month (before 1900)</p>
+              </span>
+              <div className={clsx("flex flex-row", { "hidden" : !eventTime4 })}>
+                <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center bg-indigo-100"
+                           defaultValue={record.when.type === 4 ? record.when.year_mon_pre1900 : 'yyyy-mm'}
+                           name="year_mon_pre1900" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+              </div>
+
+              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime5, "bg-indigo-100" : eventTime5 })}>
+                <input type="checkbox" name="date_type_5" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(5) }} checked={eventTime5} onChange={() => {}} />
+                <p className="inline px-1">Year only (before 1900)</p>
+              </span>
+              <div className={clsx("flex flex-row items-center", { "hidden" : !eventTime5 })}>
+                <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text- bg-indigo-100"
+                           defaultValue={record.when.type === 5 ? record.when.yr_only_pre1900 : 'yyyy'}
+                           name="yr_only_pre1900" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+              </div>
+
+            </div>
+
+            {/* SELECTORS TO CAUSE VARIOUS DATE STYLE INPUTS TO APPEAR (WIDE MEDIA) */}
+            <div className={clsx("flex flex-row", { "hidden" : mediaWidth <= 320 })}>
               <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md",
                                     {"opacity-60" : !eventTime1, "bg-indigo-100" : eventTime1 })}>
                 <input type="checkbox" name="date_type_1" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(1) }} checked={eventTime1} onChange={() => {}} />
@@ -247,7 +305,7 @@ export default function EditAnswerForm(
               </span>
             </div>
             {/* HIDDEN INPUT BOXES FOR VARIOUS DATE STYLES */}
-            <div className="mt-1 min-h-[42px]">
+            <div className={clsx("mt-1 min-h-[42px]", { "hidden" : mediaWidth <= 320 })}>
               <div className={clsx({ "hidden" : !eventTime1 })}>
                 <DateTimePicker
                     date_time={record.when.type === 1 ? convertDatePlusTime({date: record.when.date, time: record.when.time}) : {date: '01/01/1900', time: '12:00 AM'}}
@@ -283,7 +341,12 @@ export default function EditAnswerForm(
                            showMask separate />
               </div>
             </div>
-            <div className={clsx("w-full flex mb-1 rounded-md h-[90px]", { "hidden" : eventTime6 })} >
+            <div className={clsx("w-full flex mb-1 rounded-md h-[90px]",
+                                { "hidden" : eventTime6 },
+                                { "hidden" : !eventTime1 && !eventTime2 && !eventTime3 &&
+                                             !eventTime4 && !eventTime5&& !eventTime6
+                                }
+                            )} >
                 <textarea
                     id="comments"
                     name="comments"
@@ -296,7 +359,7 @@ export default function EditAnswerForm(
                   >
                   </textarea>
             </div>
-            <div className="flex flex-row" 
+            <div className="flex flex-row max-[320px]:flex-col max-[320px]:min-h-[372px]"
                   onMouseLeave={(e) => {
                         e.stopPropagation();
                         whenList.current.scrollTop = scrollWhenPosition;
@@ -304,9 +367,14 @@ export default function EditAnswerForm(
                         setWhenHoverHighlight(false);
                       }}
               >
-              <div className={clsx(`basis-1/3 overflow-auto border-1 
+              <div className={clsx(`max-[320px]:basis-2/5 basis-1/3 overflow-auto border-1 
                                     border-slate-300 mb-2 rounded-md`,
-                                    { "h-[290px]" : eventTime6, "h-[200px]" : !eventTime6 })}  ref={whenList} >
+                                    { "h-[290px]" : eventTime6 },
+                                    { "h-[200px]" : eventTime1 || eventTime2 || eventTime3 || eventTime4 || eventTime5 },
+                                    { "h-[290px]" : !eventTime1 && !eventTime2 && !eventTime3 && 
+                                                    !eventTime4 && !eventTime5 && !eventTime6
+                                    }
+                              )}  ref={whenList} >
                   <div className="text-xs w-[195px] pt-1 pl-1">
                     <input type="checkbox" name="date_type_6" onClick={() => { pickEventTimeStyle(6) }} 
                             checked={eventTime6} onChange={() => {}} />
@@ -336,7 +404,8 @@ export default function EditAnswerForm(
                   </FakeWhenRadio>
                   </div>
               </div>
-              <div className={clsx("overflow-auto basis-2/3 w-full flex mb-2 border-1 rounded-md h-[288px]", { "hidden" : !eventTime6 })} >{showWhenDetails}</div>
+              <div className={clsx("max-[320px]:basis-3/5 basis-2/3", { "hidden" : eventTime6 })} ></div>
+              <div className={clsx("max-[320px]:basis-3/5 basis-2/3 w-full flex mb-2 border-1 rounded-md", { "hidden" : !eventTime6 })} >{showWhenDetails}</div>
             </div>
           </div>
 
