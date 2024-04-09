@@ -170,7 +170,7 @@ export default function EditAnswerForm(
                   setWhereHoverHighlight(false);
                 }}
           >
-            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[255px] max-[320px]:h-[205px]" >
+            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 max-[320px]:h-[205px]" >
               <div className="flex flex-row">
                 <div className="font-bold">WHERE</div>
                 <div id="where-error" aria-live="polite" aria-atomic="true">
