@@ -29,6 +29,7 @@ export default function EditAnswerForm(
         page: number
       }) {
 
+  const [mediaWidth, setWidth] = useState(window.innerWidth);
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(create0rUpdateAnswer, initialState);
 
@@ -161,7 +162,7 @@ export default function EditAnswerForm(
             />
           </div>
           {/* WHERE */}
-          <div  className="flex flex-row h-[290px]"
+          <div  className="flex flex-row h-[290px] max-[320px]:flex-col"
                 onMouseLeave={(e) => {
                   e.stopPropagation();
                   whereList.current.scrollTop = scrollWherePosition;
@@ -169,7 +170,7 @@ export default function EditAnswerForm(
                   setWhereHoverHighlight(false);
                 }}
           >
-            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1" >
+            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[255px] max-[320px]:h-[205px]" >
               <div className="flex flex-row">
                 <div className="font-bold">WHERE</div>
                 <div id="where-error" aria-live="polite" aria-atomic="true">
@@ -182,7 +183,7 @@ export default function EditAnswerForm(
                 </div>
               </div>
               <div className="text-xs">(scroll down for more options)</div>
-              <div className="overflow-auto border-1 border-slate-300 h-[220px] rounded-md" ref={whereList}>
+              <div className="overflow-auto border-1 border-slate-300 h-[220px] max-[320px]:h-[140px] rounded-md rounded-md" ref={whereList}>
                 <WhereRadio
                   whereRadioOptions={[
                     {id: 'where', name: 'where', multi: 'no'},
@@ -195,13 +196,16 @@ export default function EditAnswerForm(
                 </WhereRadio>
               </div>
             </div>
-            <div className="w-full flex mb-1">{showWhereDetails}</div>
+            <div className="w-full flex mb-1 max-[320px]:text-xs text-base h-[140px]">{showWhereDetails}</div>
           </div>
         </div>
 
-        <div className={clsx({"hidden" : page !== 1 })}>
+        <div className={clsx({"hidden" : page !== 1 && mediaWidth > 320 })}>
           {/* PAGE 2 */}
-          <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Record ID: ...{record.id.slice(-6)}, Part 2</p>
+          <p className={clsx(`bg-slate-400 rounded-md border-1 
+                              border-slate-600 text-center font-bold`,
+                              { "hidden" : mediaWidth <= 320 }
+                        )}>Record ID: ...{record.id.slice(-6)}, Part 2</p>
           <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[406px]" >
             <div className="flex flex-row">
               <div className="font-bold">WHEN</div>
