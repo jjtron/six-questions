@@ -9,7 +9,7 @@ export function Countries (props: {group: any; selectedRecordId: number; country
             return (
               <div  key={i} onClick={() => props.countryClick(record.id)}
                     className={
-                      clsx("pl-2 basis-1/3 border-trb-1 border-slate-400",
+                      clsx("pl-2 basis-1/3 border-trb-1 border-slate-400 max-[320px]:text-xs",
                           { "bg-yellow-100" : props.selectedRecordId === record.id },
                           { "bg-sky-200" : props.selectedRecordId !== record.id },
                           { "rounded-l-md": ( i % 3 === 0 ) && props.group.length - i > 1 },
