@@ -1,0 +1,5 @@
+command line : npm run build
+
+The build files will be found in the '/six-questions/.next/ folder
+
+command line: npm run start
