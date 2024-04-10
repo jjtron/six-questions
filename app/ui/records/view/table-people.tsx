@@ -20,7 +20,6 @@ export function PeopleTable({records} : {records : Person[]} ) {
     return (
         <form className="md:pl-2 bg-inherit">
             <div className="table w-full">
-
                 <div className="flex flex-row bg-sky-400 rounded-md">
                     <div className="max-[320px]:basis-1/4 basis-1/5 text-left pl-2 text-left font-bold border-slate-400 max-[320px]:text-xs">Name</div>
                     <div className="max-[320px]:basis-3/4 basis-4/5 text-left pl-2 text-left font-bold border-slate-400 max-[320px]:text-xs">Description</div>
