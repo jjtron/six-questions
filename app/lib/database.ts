@@ -1,4 +1,4 @@
-import { Client } from 'pg';
+import { Client, QueryResult } from 'pg';
 import { unstable_noStore as noStore } from 'next/cache';
 import { Place, EventTime, InsertWhenTime } from './interfaces'
 
@@ -391,7 +391,8 @@ const client = new Client({
     try {
       const queryDecoded = (decodeURIComponent(query)).replace("'", "\'");
       const whoWhereSearchTerms = await getWhoWhereSearchTerms(query);
-      if (whoWhereSearchTerms.success) {
+      const whenType6SearchTerms = await getWhenType6SearchTerms(query);
+      if (whoWhereSearchTerms.success && whenType6SearchTerms.success) {
         
         const statement =
          `SELECT id, who, what, "where", "when", why, how
@@ -407,6 +408,7 @@ const client = new Client({
               "when"->>'yr_only_pre1900' ILIKE ($1) OR
               "when"->>'year_mon_pre1900' ILIKE ($1)
               ${whoWhereSearchTerms.stringSegment}
+              ${whenType6SearchTerms.stringSegment}
               LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset};`;
         const variables = [ `%${queryDecoded}%` ];
         const answers = await client.query(statement, variables);
@@ -424,11 +426,12 @@ const client = new Client({
 
   export async function fetchRecordsPages(query: string) {
     noStore();
-
+    getWhenType6SearchTerms(query);
     try {
       const queryDecoded = (decodeURIComponent(query)).replace("'", "\'");
       const whoWhereSearchTerms = await getWhoWhereSearchTerms(query);
-      if (whoWhereSearchTerms.success) {
+      const whenType6SearchTerms = await getWhenType6SearchTerms(query);
+      if (whoWhereSearchTerms.success && whenType6SearchTerms.success) {
         const statement = 
          `SELECT COUNT(*)
           FROM public.six_answers
@@ -443,7 +446,8 @@ const client = new Client({
             "when"->>'date_only_pre1900' ILIKE ($1) OR
             "when"->>'yr_only_pre1900' ILIKE ($1) OR
             "when"->>'year_mon_pre1900' ILIKE ($1)
-            ${whoWhereSearchTerms.stringSegment}`;
+            ${whoWhereSearchTerms.stringSegment}
+            ${whenType6SearchTerms.stringSegment}`;
         const variables = [ `%${queryDecoded}%` ];
         const count = await client.query(statement, variables);
         const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
@@ -657,6 +661,55 @@ const client = new Client({
     }
   }
 
-  export async function getWhenSearchTerms(query: string) {
-    
+  export async function getWhenType6SearchTerms(query: string) {
+    try {
+      const queryDecoded = (decodeURIComponent(query)).replace("'", "''");
+      // GET LIST OF INDEXES IN THE TIME TABLE MATCHING ON name AND comments FIELDs
+      const queryString = `%${queryDecoded}%`;
+      const idObjList: QueryResult<{ id: number; }[]> = await client.query(
+           `SELECT id FROM public.times
+            WHERE name ILIKE '${queryString}' OR
+            comments ILIKE '${queryString}';`);
+
+      // GET LIST OF six_answers RECORD ids VS TYPE 6 DATE STYLES
+      const recordList: QueryResult<
+        { 
+          id: string;
+          when: {
+                  type: number;
+                  customID: number;
+                  comments: string; 
+                }
+        }[]> = await client.query(
+              `SELECT id, "when" FROM public.six_answers
+               WHERE "when"->>'type' = '6';`
+        );
+
+      let uuidListOfType6TimesFound: string[] = [];
+      idObjList.rows.map((idObj: any) => {
+        return idObj.id;
+      })
+      .forEach((customID: number) => {
+        const match: any | undefined = recordList.rows.find((record: any) => customID === record.when.customID );
+        if (typeof match !== 'undefined') {
+          uuidListOfType6TimesFound.push(match.id);
+        }
+      });
+      // BUILD A SEGMENT OF SQL FOR THE NEXT QUERY TO FIND
+      // ALL MATCHES IN EVERY REMAINING COLUMN
+      let idQuerySegment3: string = '';
+      uuidListOfType6TimesFound.forEach((uuid: string) => {
+        idQuerySegment3 += ` OR id = '${uuid}'`
+      });
+      return {
+        success: true,
+        stringSegment: idQuerySegment3
+      }
+    } catch (error) {
+      console.error('Database Error (getWhenType6SearchTerms):', error);
+      return {
+        success: false,
+        errormsg: "Failed to get when-type-6 query string segment" 
+      }
+    }
   }
