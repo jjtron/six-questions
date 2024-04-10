@@ -20,10 +20,10 @@ export function PeopleTable({records} : {records : Person[]} ) {
     return (
         <form className="md:pl-2 bg-inherit">
             <div className="table w-full">
-                <div className="table-header-group">
-                    <div className="table-row bg-sky-400">
-                        <div className="table-cell text-left pl-2 text-left font-bold border-tbl-1 border-slate-400 rounded-md">Name</div>
-                    </div>
+
+                <div className="flex flex-row bg-sky-400 rounded-md">
+                    <div className="max-[320px]:basis-1/4 basis-1/5 text-left pl-2 text-left font-bold border-slate-400 max-[320px]:text-xs">Name</div>
+                    <div className="max-[320px]:basis-3/4 basis-4/5 text-left pl-2 text-left font-bold border-slate-400 max-[320px]:text-xs">Description</div>
                 </div>
                 { records.map((record: any, i: number) => {
                     return (
@@ -33,8 +33,8 @@ export function PeopleTable({records} : {records : Person[]} ) {
                                 })}
                             onClick={() => handleClick(i, record.index)}
                         >
-                            <div className="basis-1/5 pl-2 border-tbl-1 border-slate-400 rounded-l-md">{record.name}</div>
-                            <div className="basis-4/5 pl-2 border-trb-1 border-slate-400 rounded-r-md bg-white">{record.comments}</div>
+                            <div className="max-[320px]:basis-1/4 basis-1/5 pl-2 border-tbl-1 border-slate-400 rounded-l-md max-[320px]:text-xs">{record.name}</div>
+                            <div className="max-[320px]:basis-3/4 basis-4/5 pl-2 border-trb-1 border-slate-400 rounded-r-md bg-white max-[320px]:text-xs">{record.comments}</div>
                         </div>
                     )
                 })}
