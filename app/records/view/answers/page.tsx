@@ -36,7 +36,7 @@ export default async function Page({ searchParams } : { searchParams: searchPara
           ]}
         />
         </div>
-        <Search placeholder="search" />
+        <Search placeholder="search" showRecordsPerPage={false}/>
         {/* <Form query={query} currentPage={currentPage}></Form> */}
         <StepperForm currentPage={currentPage} dataPackage={dataPackage}></StepperForm>
         <div className="mt-2 flex w-full justify-center">

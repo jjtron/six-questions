@@ -30,7 +30,7 @@ export default async function Page({ searchParams } : { searchParams: searchPara
           ]}
         />
         </div>
-        <Search placeholder="search" />
+        <Search placeholder="search"  showRecordsPerPage={true} />
         <Form query={query} currentPage={currentPage} recordsPerPage={recordsPerPage}></Form>
         <div className="mt-2 flex w-full justify-center">
           <Pagination totalPages={totalPages} />

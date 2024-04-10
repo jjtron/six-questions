@@ -5,11 +5,15 @@ import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import { useState } from 'react';
  
-export default function Search({ placeholder }: { placeholder: string }) {
+export default function Search(
+    { placeholder, showRecordsPerPage }: 
+    { placeholder: string, showRecordsPerPage: boolean; }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
   const [recordsPerPage, setRecordsPerPage] = useState(10);
+
+  showRecordsPerPage ? true : false;
 
   const handleSearch = useDebouncedCallback((term, recordsPerPage) => {
     setRecordsPerPage(recordsPerPage);
@@ -42,22 +46,27 @@ export default function Search({ placeholder }: { placeholder: string }) {
         />
         <MagnifyingGlassIcon className="absolute left-1 top-1 h-[18px] w-[18px]" />
       </div>
-      <div className="basis-1/3 flex flex-row items-center justify-center">
-        <input  className="input-width rounded-md border-1 border-gray-500"
-                type="text"
-                id="recordsPerPage" 
-                name="recordsPerPage"
-                defaultValue={recordsPerPage?.toString()}
-                onChange={(e) => {
-                  
-                  handleSearch(
-                    searchParams.get('query')?.toString(),
-                    Number(e.target.value)
-                  )
-                }}
-        />
-        <p className="text-sm pl-1 text-left">Records per page </p>
-      </div>
+      {(() => {
+        if (showRecordsPerPage) {
+          return  <div className="basis-1/3 flex flex-row items-center justify-center">
+                    <input  className="input-width rounded-md border-1 border-gray-500"
+                            type="text"
+                            id="recordsPerPage" 
+                            name="recordsPerPage"
+                            defaultValue={recordsPerPage?.toString()}
+                            onChange={(e) => {
+                              
+                              handleSearch(
+                                searchParams.get('query')?.toString(),
+                                Number(e.target.value)
+                              )
+                            }}
+                    />
+                    <p className="text-sm pl-1 text-left">Records per page </p>
+                  </div>
+        }
+      })()}
+
     </div>
   );
 }
