@@ -108,18 +108,18 @@ const client = new Client({
     }
   }
 
-  const PEOPLE_PER_PAGE = 10;
   export async function fetchFilteredPeople(
     query: string,
     currentPage: number,
+    recordsPerPage: number
   ) {
     noStore();
-    const offset = (currentPage - 1) * PEOPLE_PER_PAGE;
+    const offset = (currentPage - 1) * recordsPerPage;
     const queryDecoded = (decodeURIComponent(query)).replace("'", "\'");
     const statement = `SELECT index, name, comments
                        FROM public.people
                        WHERE name ILIKE ($1) OR comments ILIKE ($1)
-                       LIMIT ${PEOPLE_PER_PAGE} OFFSET ${offset}`;
+                       LIMIT ${recordsPerPage} OFFSET ${offset}`;
     try {
       const answers = await client.query(
         statement,
@@ -133,7 +133,7 @@ const client = new Client({
     }
   }
 
-  export async function fetchRecordsPeople(query: string) {
+  export async function fetchRecordsPeople(query: string, recordsPerPage: number) {
     noStore();
     const queryDecoded = (decodeURIComponent(query)).replace("'", "\'");
     const statement = 
@@ -146,7 +146,7 @@ const client = new Client({
        [`%${queryDecoded}%`]
     );
   
-      const totalPages = Math.ceil(Number(count.rows[0].count) / PEOPLE_PER_PAGE);
+      const totalPages = Math.ceil(Number(count.rows[0].count) / recordsPerPage);
       return totalPages;
     } catch (error) {
       console.error('Database Error:', error);

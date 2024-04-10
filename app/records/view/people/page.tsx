@@ -10,7 +10,8 @@ import { searchParams } from '@/app/lib/interfaces';
 export default async function Page({ searchParams } : { searchParams: searchParams }) {
   const query: string = searchParams?.query || '';
   const currentPage: number = Number(searchParams?.page) || 1;
-  const totalPages: number = await fetchRecordsPeople(query);
+  const recordsPerPage: number = searchParams?.recordsPerPage || 10;
+  const totalPages: number = await fetchRecordsPeople(query, recordsPerPage);
     
     return (
       <>
@@ -30,7 +31,7 @@ export default async function Page({ searchParams } : { searchParams: searchPara
         />
         </div>
         <Search placeholder="search" />
-        <Form query={query} currentPage={currentPage}></Form>
+        <Form query={query} currentPage={currentPage} recordsPerPage={recordsPerPage}></Form>
         <div className="mt-2 flex w-full justify-center">
           <Pagination totalPages={totalPages} />
         </div>
