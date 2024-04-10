@@ -28,8 +28,8 @@ export default function AnswerForm(
           page: number
         })
 {
-  const [mediaWidth, setWidth] = useState(window.innerWidth);
 
+  const mediaWidth: number = (typeof window !== 'undefined') ? window.innerWidth : 2000;
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(create0rUpdateAnswer, initialState);
 
@@ -75,12 +75,12 @@ export default function AnswerForm(
       
         <input id="id" name="id" type="hidden" value={uuidv4()} />
 
-        <div className={clsx({ "hidden" : page !== 0 && mediaWidth > 320 })}>
+        <div className={clsx({ "hidden" : page !== 0 && mediaWidth > 326 })}>
           {/* PAGE 1 */}
           {/* WHO */}
           <p className={clsx(`bg-slate-400 rounded-md border-1
                               border-slate-600 text-center font-bold`,
-                              { "hidden" : mediaWidth <= 320 }
+                              { "hidden" : mediaWidth <= 326 }
                         )}>Part 1: Who, What, Where</p>
           <div className="w-full bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[176px] max-[320px]:h-[306px]" >
             <div className="flex flex-row">
@@ -120,7 +120,7 @@ export default function AnswerForm(
             />
           </div>
           {/* WHERE */}
-          <div  className={clsx("flex flex-row", { "flex-col bg-white rounded-md mb-1" : mediaWidth <= 320 })}
+          <div  className={clsx("flex flex-row", { "flex-col bg-white rounded-md mb-1" : mediaWidth <= 326 })}
                 onMouseLeave={(e) => {
                   e.stopPropagation();
                   whereList.current.scrollTop = scrollWherePosition;
@@ -158,11 +158,11 @@ export default function AnswerForm(
           </div>
         </div>
 
-        <div className={clsx({"hidden" : page !== 1 && mediaWidth > 320 })}>
+        <div className={clsx({"hidden" : page !== 1 && mediaWidth > 326 })}>
           {/* PAGE 2 */}
           <p className={clsx(`bg-slate-400 rounded-md border-1
                               border-slate-600 text-center font-bold`,
-                              { "hidden" : mediaWidth <= 320 }
+                              { "hidden" : mediaWidth <= 326 }
                         )}>Part 2: When, Why, How</p>
           <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[406px] max-[320px]:h-[510px]" >
             <div className="flex flex-row">
@@ -178,7 +178,7 @@ export default function AnswerForm(
             </div>
 
             {/* SELECTORS AND INPUTS TO CAUSE VARIOUS DATE STYLE INPUTS TO APPEAR (SLIM MEDIA) */}
-            <div className={clsx("flex flex-col", { "hidden" : mediaWidth > 320 })}>
+            <div className={clsx("flex flex-col", { "hidden" : mediaWidth > 326 })}>
               
               <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime1, "bg-indigo-100" : eventTime1 })}>
                 <input type="checkbox" name="date_type_1" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(1) }} checked={eventTime1} onChange={() => {}} />
@@ -230,7 +230,7 @@ export default function AnswerForm(
 
 
             {/* SELECTORS TO CAUSE VARIOUS DATE STYLE INPUTS TO APPEAR (WIDE MEDIA) */}
-            <div className={clsx("flex flex-row", { "hidden" : mediaWidth <= 320 })}>
+            <div className={clsx("flex flex-row", { "hidden" : mediaWidth <= 326 })}>
               <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime1 })}>
                 <input type="checkbox" name="date_type_1" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(1) }} checked={eventTime1} onChange={() => {}} />
                 <p className="inline px-1">Date/Time</p><p>(since 1900)</p>
@@ -253,7 +253,7 @@ export default function AnswerForm(
               </span>
             </div>
             {/* HIDDEN INPUT BOXES FOR VARIOUS DATE STYLES */}
-            <div className={clsx("mt-1 min-h-[42px]", { "hidden" : mediaWidth <= 320 })}>
+            <div className={clsx("mt-1 min-h-[42px]", { "hidden" : mediaWidth <= 326 })}>
               <div className={clsx({ "hidden" : !eventTime1 })}>
                 <DateTimePicker
                     date_time={{date: '01/01/1900', time: '12:00 AM'}}
@@ -384,7 +384,7 @@ export default function AnswerForm(
           </div>
         </div>
 
-        <div className={clsx("flex flex-col items-end justify-between", { "h-[25px] mb-6" : mediaWidth <= 320 })}>
+        <div className={clsx("flex flex-col items-end justify-between", { "h-[25px] mb-6" : mediaWidth <= 326 })}>
           <Button type="submit">Create Record</Button>
         </div>
         <input id="operation" name="operation" type="hidden" value="create" />

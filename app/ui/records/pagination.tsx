@@ -74,10 +74,10 @@ function PaginationNumber({
   position?: 'first' | 'last' | 'middle' | 'single';
   isActive: boolean;
 }) {
-  const [mediaWidth, setWidth] = useState(window.innerWidth);
+  const mediaWidth: number = (typeof window !== 'undefined') ? window.innerWidth : 2000;
   const className = clsx(
     'flex h-10 w-10 items-center justify-center text-sm border',
-    { "h-7 w-7" : mediaWidth <= 320 },
+    { "h-7 w-7" : mediaWidth <= 326 },
     {
       'rounded-l-md': position === 'first' || position === 'single',
       'rounded-r-md': position === 'last' || position === 'single',
@@ -105,10 +105,10 @@ function PaginationArrow({
   direction: 'left' | 'right';
   isDisabled?: boolean;
 }) {
-  const [mediaWidth, setWidth] = useState(window.innerWidth);
+  const mediaWidth: number = (typeof window !== 'undefined') ? window.innerWidth : 2000;
   const className = clsx(
     'flex h-10 w-10 items-center justify-center rounded-md border',
-    { "h-7 w-7" : mediaWidth <= 320 },
+    { "h-7 w-7" : mediaWidth <= 326 },
     {
       'pointer-events-none text-gray-300': isDisabled,
       'hover:bg-gray-100': !isDisabled,

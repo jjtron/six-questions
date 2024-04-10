@@ -25,7 +25,7 @@ export default function StepperForm(
       })
 {
 
-  const [mediaWidth, setWidth] = useState(window.innerWidth);
+  const mediaWidth: number = (typeof window !== 'undefined') ? window.innerWidth : 2000;
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
 
@@ -75,7 +75,7 @@ export default function StepperForm(
 
   return (
     <Box sx={{ width: '100%' }}>
-      <div className={clsx({ "hidden" : mediaWidth <= 320 })}>
+      <div className={clsx({ "hidden" : mediaWidth <= 326 })}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps: { completed?: boolean } = {};
@@ -131,7 +131,7 @@ export default function StepperForm(
             )()
           }
           
-          <Box className={clsx("pl-2 mt-[-40px]", { "hidden" : mediaWidth <= 320 } )} >
+          <Box className={clsx("pl-2 mt-[-40px]", { "hidden" : mediaWidth <= 326 } )} >
             <button className={clsx("rounded-md bg-sky-200 px-2 active:bg-sky-300 border-1 border-slate-400", {"hidden" : activeStep === 0})}
               color="inherit"
               disabled={activeStep === 0}
