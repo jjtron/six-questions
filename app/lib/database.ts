@@ -400,7 +400,12 @@ const client = new Client({
               why ILIKE ($1) OR
               how ILIKE ($1) OR
               "when"->>'date' ILIKE ($1) OR
-              "when"->>'time' ILIKE ($1)
+              "when"->>'time' ILIKE ($1) OR
+              "when"->>'comments' ILIKE ($1) OR
+              "when"->>'yr_mon' ILIKE ($1) OR
+              "when"->>'date_only_pre1900' ILIKE ($1) OR
+              "when"->>'yr_only_pre1900' ILIKE ($1) OR
+              "when"->>'year_mon_pre1900' ILIKE ($1)
               ${whoWhereSearchTerms.stringSegment}
               LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset};`;
         const variables = [ `%${queryDecoded}%` ];
@@ -432,7 +437,12 @@ const client = new Client({
             why ILIKE ($1) OR
             how ILIKE ($1) OR
             "when"->>'date' ILIKE ($1) OR
-            "when"->>'time' ILIKE ($1)
+            "when"->>'time' ILIKE ($1) OR
+            "when"->>'comments' ILIKE ($1) OR
+            "when"->>'yr_mon' ILIKE ($1) OR
+            "when"->>'date_only_pre1900' ILIKE ($1) OR
+            "when"->>'yr_only_pre1900' ILIKE ($1) OR
+            "when"->>'year_mon_pre1900' ILIKE ($1)
             ${whoWhereSearchTerms.stringSegment}`;
         const variables = [ `%${queryDecoded}%` ];
         const count = await client.query(statement, variables);
@@ -645,4 +655,8 @@ const client = new Client({
           errormsg: "Failed to get who/where query string segment" 
         }
     }
+  }
+
+  export async function getWhenSearchTerms(query: string) {
+    
   }
