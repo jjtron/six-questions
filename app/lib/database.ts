@@ -624,7 +624,8 @@ const client = new Client({
         WHERE name ILIKE '%${queryString}%' OR
               details->>'street' ILIKE '%${queryString}%' OR
               details->>'city' ILIKE '%${queryString}%' OR
-              details->>'state' ILIKE '%${queryString}%'
+              details->>'state' ILIKE '%${queryString}%' OR
+              details->>'desc' ILIKE '%${queryString}%'
       `);
 
       // FIND WHERE THE ids FOUND IN THE where COLUMN MATCH
