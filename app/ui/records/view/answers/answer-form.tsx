@@ -43,7 +43,7 @@ export default function AnswerForm({
                     <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Record ID: ...{record.id.slice(-6)}, Part 1</p>
                     <div className="flex md:flex-row flex-col">
                         {/* col 1 */}
-                        <div className="flex flex-col border-1 border-slate-400 rounded-md h-[211px] bg-slate-200 w-full" >
+                        <div className="flex flex-col border-1 border-slate-400 rounded-md h-[192px] bg-slate-200 w-full" >
                             <p className="font-bold pl-2">WHO</p>{
                             <MultiSelectWho options={whoList} initSelected={record.who} />
                         }
@@ -56,7 +56,7 @@ export default function AnswerForm({
                                 let data;
                                 (j === 0) ? data = record.what : data = '';
                                 return (
-                                    <div key={j} className="flex flex-col bg-slate-200 rounded-md mt-px border-1 border-slate-400 px-2 md:h-48 h-32" >
+                                    <div key={j} className="flex flex-col bg-slate-200 rounded-md mt-px border-1 border-slate-400 px-2 h-[192px]" >
                                         <p className="font-bold">{vars.label}</p>
                                         
                                         <textarea
@@ -71,7 +71,7 @@ export default function AnswerForm({
                         }
                     
                     {/* WHERE */}
-                    <div className="pl-2 border-1 border-slate-400 rounded-md bg-slate-200 h-[200px]" >
+                    <div className="pl-2 border-1 border-slate-400 rounded-md bg-slate-200 h-[192px]" >
                         {
                             (
                                 () => {
@@ -141,7 +141,7 @@ export default function AnswerForm({
                   <div className={clsx({"hidden" : page !== 1 && mediaWidth > 431 })}>
                     <p className={clsx("bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold", { "hidden" : mediaWidth <= 431 })}>Record ID: ...{record.id.slice(-6)}, Part 2</p>
                     {/* WHEN */}
-                    <div className="pl-2 border-1 border-slate-400 rounded-md bg-slate-200">
+                    <div className="pl-2 border-1 border-slate-400 rounded-md bg-slate-200 h-[192px]">
                             <p className="font-bold">WHEN</p>
                             {
                                 (() => {
@@ -189,8 +189,7 @@ export default function AnswerForm({
                                 (j === 0) ? data = record.why : 
                                 (j === 1) ? data = record.how : data = '';
                                 return (
-                                    <div key={j} className={clsx("flex flex-col rounded-md mt-px border-1 bg-slate-200 border-slate-400 p-2",
-                                                           { "md:h-[207px] h-32" : record.when.type === 6, " md:h-[207px] h-32 " : record.when.type !== 6 } )} >
+                                    <div key={j} className={clsx("flex flex-col rounded-md mt-px border-1 bg-slate-200 border-slate-400 p-2 h-[192px]")} >
                                         <p className="font-bold">{vars.label}</p>
                                         <textarea
                                             rows={7}
