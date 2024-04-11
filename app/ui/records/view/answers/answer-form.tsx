@@ -93,18 +93,25 @@ export default function AnswerForm({
                                             {title: "City: ", level: 'details', sublevel: 'city'},
                                             {title: "State: ", level: 'details', sublevel: 'state'}
                                             ]).map((el: any, n: number) => {
-                                            return <div key={n} className="flex flex-row">
-                                                {/* left column */}
-                                                <div className={clsx("basis-16 text-right shrink-0 mr-2",
-                                                    { "font-bold text-base": n === 0, "md:text-base text-sm": n > 0}
-                                                    )}>{el.title}
+                                            return <>
+                                                
+                                                <div key={n} className={clsx("flex flex-row mr-2",
+                                                                            { "bg-white rounded-t-md" : n === 1 },
+                                                                            { "bg-white rounded-b-md" : n === 3 },
+                                                                            { "bg-white" : n === 2 })}>
+                                                    {/* left column */}
+                                                    <div className={clsx("basis-16 text-right shrink-0 mr-2",
+                                                        { "font-bold text-base": n === 0, "md:text-base text-sm": n > 0}
+                                                        )}>{el.title}
+                                                    </div>
+                                                    {/* right column */}
+                                                    <div className={clsx("text-left",
+                                                        { "font-semibold text-base": n === 0, "md:text-base text-sm": n > 0}
+                                                        )}> {placeDetailsFunc(record.where, el.level, el.sublevel)}
+                                                    </div>
                                                 </div>
-                                                {/* right column */}
-                                                <div className={clsx("text-left",
-                                                    { "font-semibold text-base": n === 0, "md:text-base text-sm": n > 0}
-                                                    )}> {placeDetailsFunc(record.where, el.level, el.sublevel)}
-                                                </div>
-                                            </div>
+                                                
+                                            </>
                                         })
                                     } else if (placeObject.type === 'country') {
                                         return (
