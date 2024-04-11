@@ -576,7 +576,8 @@ const client = new Client({
       const indexesOfPeopleFoundByQuery = await client.query(
         `SELECT index
         FROM public.people
-        WHERE name ILIKE '${queryString}';`
+        WHERE name ILIKE '${queryString}' OR
+              comments ILIKE '${queryString}';`
       );
 
       // GET THE ENTIRE whos COLUMN WITH REFERENCE TO ids OF THE RECORD
