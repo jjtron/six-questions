@@ -121,6 +121,7 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
 
   insertTimeRecord(formData);
 
+  revalidatePath('/records/create/answer');
   revalidatePath('/records/view/event-times');
   redirect('/records/view/event-times');
 }
@@ -186,6 +187,7 @@ export async function updateEventTime(prevState: EventTimeUpdateState, formData:
 
   updateEventTimeRecord(formData);
 
+  revalidatePath('/records/create/answer');
   revalidatePath('/records/view/event-times');
   redirect('/records/view/event-times');
 }
@@ -220,6 +222,7 @@ export async function createPerson(prevState: PersonState, formData: FormData) {
 
   insertPersonRecord(formData);
 
+  revalidatePath('/records/create/answer');
   revalidatePath('/records/view/people');
   redirect('/records/view/people');
 }
@@ -252,6 +255,7 @@ export async function updatePerson(prevState: PersonUpdateState, formData: FormD
 
   updatePersonRecord(formData);
 
+  revalidatePath('/records/create/answer');
   revalidatePath('/records/view/people');
   redirect('/records/view/people');
 }
@@ -616,6 +620,7 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
 
   insertPlaceRecord(formData);
 
+  revalidatePath('/records/create/answer');
   revalidatePath('/records/view/places');
   redirect('/records/view/places');
 }
@@ -695,5 +700,7 @@ export async function updatePlace(prevState: PlaceState, formData: FormData) {
   updatePlaceRecord(formData);
 
   revalidatePath('/records/view/places');
+  revalidatePath('/records/create/answer');
   redirect('/records/view/places');
+  
 }
