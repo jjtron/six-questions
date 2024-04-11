@@ -83,7 +83,7 @@ export default function AnswerForm({
                                                     <div className="font-bold text-base">WHERE : </div>
                                                     <div className="font-normal text-base">&nbsp;{placeObject.name}</div>
                                                 </div>
-                                                <div>{placeObject.details.desc}</div>
+                                                <div className="bg-white rounded-md px-2 mr-2">{placeObject.details.desc}</div>
                                             </>
                                         )
                                     } else  if (placeObject.type === 'street_city_state') {
