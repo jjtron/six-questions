@@ -16,7 +16,7 @@ export default function WhenRadio(
     const [cancelInit, setCancelInit] = useState(false);
 
     return (
-      <div className="flex flex-col pb-2 bg-white" >
+      <div className="flex flex-col pb-2 bg-slate-100" >
         { props.whenRadioOptions[1].list.map((el, i) => {
           const init = (props.whenRadioOptions[2]?.customID?.toString() === el.id.toString());
           return (
