@@ -479,9 +479,7 @@ const client = new Client({
               details->>'street' ILIKE ($1) OR
               details->>'city' ILIKE ($1) OR
               details->>'state' ILIKE ($1) OR
-              details->>'country(s)' ILIKE ($1) OR
-              details->>'country' ILIKE ($1) OR
-              details->>'description' ILIKE ($1)
+              details->>'desc' ILIKE ($1)
               ORDER BY sort_order ASC, id ASC
               LIMIT ${recordsPerPage} OFFSET ${offset};`;
       const variables = [ `%${queryDecoded}%` ];
@@ -509,7 +507,8 @@ const client = new Client({
       WHERE name ILIKE ($1) OR
             details->>'street' ILIKE ($1) OR
             details->>'city' ILIKE ($1) OR
-            details->>'state' ILIKE ($1);`;
+            details->>'state' ILIKE ($1) OR
+            details->>'desc' ILIKE ($1);`;
       const variables = [ `%${queryDecoded}%` ];
       const count = await client.query(statement, variables);
       const totalPages = Math.ceil(Number(count.rows[0].count) / recordsPerPage);
