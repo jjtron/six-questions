@@ -38,7 +38,7 @@ export default async function Page({ searchParams } : { searchParams: searchPara
             if (group.length > 0) { isEmpty = false; }
           });
           if (isEmpty) {
-            return <div className="grid content-center h-3/6 text-center">NO MATCHING RECORDS</div>
+            return <div className="pl-2">NO MATCHING RECORDS</div>
           } else {
             return <>
               <EventTimesTable eventTimesGroups={eventTimesGroups} ></EventTimesTable>

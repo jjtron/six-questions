@@ -40,7 +40,7 @@ export default async function Page({ searchParams } : { searchParams: searchPara
         {/* <Form query={query} currentPage={currentPage}></Form> */}
         {(() => {
           if (dataPackage[2].length === 0) {
-            return <div className="grid content-center h-3/6 text-center">NO MATCHING RECORDS</div>
+            return <div className="pl-2">NO MATCHING RECORDS</div>
           } else {
             return <>
                 <StepperForm currentPage={currentPage} dataPackage={dataPackage}></StepperForm>
