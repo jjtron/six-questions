@@ -3,15 +3,17 @@
 import Breadcrumbs from '@/app/ui/records/breadcrumbs';
 import Form from '@/app/ui/records/view/view-people';
 import Search from '@/app/ui/records/search';
-import { fetchRecordsPeople } from '@/app/lib/database';
+import { fetchRecordsPeople, fetchFilteredPeople } from '@/app/lib/database';
 import Pagination from '@/app/ui/records/pagination';
 import { searchParams } from '@/app/lib/interfaces';
+import { PeopleTable } from "@/app/ui/records/view/table-people";
 
 export default async function Page({ searchParams } : { searchParams: searchParams }) {
   const query: string = searchParams?.query || '';
   const currentPage: number = Number(searchParams?.page) || 1;
   const recordsPerPage: number = searchParams?.recordsPerPage || 10;
   const totalPages: number = await fetchRecordsPeople(query, recordsPerPage);
+  const records = await fetchFilteredPeople(query, currentPage, recordsPerPage);
     
     return (
       <>
@@ -31,10 +33,18 @@ export default async function Page({ searchParams } : { searchParams: searchPara
         />
         </div>
         <Search placeholder="search" showRecordsPerPage={true} />
-        <Form query={query} currentPage={currentPage} recordsPerPage={recordsPerPage}></Form>
-        <div className="mt-2 flex w-full justify-center">
-          <Pagination totalPages={totalPages} />
-        </div>
+        {(() => {
+          if (records.length === 0) {
+            return <div className="pl-2">NO MATCHING RECORDS</div>
+          } else {
+            return <>
+                <PeopleTable records={records} />
+                <div className="mt-2 flex w-full justify-center">
+                  <Pagination totalPages={totalPages} />
+                </div>
+            </>
+          }
+        })()}
       </>
     );
 }
