@@ -38,10 +38,18 @@ export default async function Page({ searchParams } : { searchParams: searchPara
         </div>
         <Search placeholder="search" showRecordsPerPage={false}/>
         {/* <Form query={query} currentPage={currentPage}></Form> */}
-        <StepperForm currentPage={currentPage} dataPackage={dataPackage}></StepperForm>
-        <div className="mt-2 flex w-full justify-center">
-          <Pagination totalPages={totalPages} />
-        </div>
+        {(() => {
+          if (dataPackage[2].length === 0) {
+            return <div className="grid content-center h-3/6 text-center">NO MATCHING RECORDS</div>
+          } else {
+            return <>
+                <StepperForm currentPage={currentPage} dataPackage={dataPackage}></StepperForm>
+                <div className="mt-2 flex w-full justify-center">
+                  <Pagination totalPages={totalPages} />
+                </div>
+            </>
+          }
+        })()}
       </>
     );
 }
