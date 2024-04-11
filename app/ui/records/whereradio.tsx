@@ -14,7 +14,7 @@ export default function WhereRadio(
     const [bgColor, setBgColor] = useState(n);
 
     return (
-      <div className="flex flex-col pb-2 bg-white" >
+      <div className="flex flex-col pb-2 bg-slate-100" >
         { props.whereRadioOptions[1].list.map((el, i) => {
           return (
             <div key={i} className={
