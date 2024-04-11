@@ -75,14 +75,14 @@ export default function AnswerForm(
       
         <input id="id" name="id" type="hidden" value={uuidv4()} />
 
-        <div className={clsx({ "hidden" : page !== 0 && mediaWidth > 326 })}>
+        <div className={clsx({ "hidden" : page !== 0 && mediaWidth > 431 })}>
           {/* PAGE 1 */}
           {/* WHO */}
           <p className={clsx(`bg-slate-400 rounded-md border-1
                               border-slate-600 text-center font-bold`,
-                              { "hidden" : mediaWidth <= 326 }
+                              { "hidden" : mediaWidth <= 431 }
                         )}>Part 1: Who, What, Where</p>
-          <div className="w-full bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[176px] max-[320px]:h-[306px]" >
+          <div className="w-full bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[176px] max-[431px]:h-[306px]" >
             <div className="flex flex-row">
                 <div className="font-bold">WHO</div>
                 <div id="who-error" aria-live="polite" aria-atomic="true">
@@ -99,7 +99,7 @@ export default function AnswerForm(
             </MultiSelectWho>
           </div>
           {/* WHAT */}
-          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[150px] max-[320px]:h-[200px]" >
+          <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[150px] max-[431px]:h-[200px]" >
             <div className="flex flex-row">
               <div className="font-bold">WHAT</div>
               <div id="what-error" aria-live="polite" aria-atomic="true">
@@ -120,7 +120,7 @@ export default function AnswerForm(
             />
           </div>
           {/* WHERE */}
-          <div  className={clsx("flex flex-row", { "flex-col bg-white rounded-md mb-1" : mediaWidth <= 326 })}
+          <div  className={clsx("flex flex-row", { "flex-col bg-white rounded-md mb-1" : mediaWidth <= 431 })}
                 onMouseLeave={(e) => {
                   e.stopPropagation();
                   whereList.current.scrollTop = scrollWherePosition;
@@ -128,7 +128,7 @@ export default function AnswerForm(
                   setWhereHoverHighlight(false);
                 }}
           >
-            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[300px] max-[320px]:h-[205px]" >
+            <div className="bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[300px] max-[431px]:h-[205px]" >
               <div className="flex flex-row">
                 <div className="font-bold">WHERE</div>
                 <div id="where-error" aria-live="polite" aria-atomic="true">
@@ -141,7 +141,7 @@ export default function AnswerForm(
                 </div>
               </div>
               <div className="text-xs">(scroll down for more options)</div>
-              <div className="overflow-auto border-1 border-slate-300 h-[230px] max-[320px]:h-[140px] rounded-md" ref={whereList} > 
+              <div className="overflow-auto border-1 border-slate-300 h-[230px] max-[431px]:h-[140px] rounded-md" ref={whereList} > 
                 <WhereRadio
                   whereRadioOptions={[
                     {id: 'where', name: 'where', multi: 'no'},
@@ -154,17 +154,17 @@ export default function AnswerForm(
                 </WhereRadio>
               </div>
             </div>
-            <div className="w-full flex mb-1 text-base max-[320px]:text-xs max-[320px]:h-[140px]">{showWhereDetails}</div>
+            <div className="w-full flex mb-1 text-base max-[431px]:text-xs max-[431px]:h-[140px]">{showWhereDetails}</div>
           </div>
         </div>
 
-        <div className={clsx({"hidden" : page !== 1 && mediaWidth > 326 })}>
+        <div className={clsx({"hidden" : page !== 1 && mediaWidth > 431 })}>
           {/* PAGE 2 */}
           <p className={clsx(`bg-slate-400 rounded-md border-1
                               border-slate-600 text-center font-bold`,
-                              { "hidden" : mediaWidth <= 326 }
+                              { "hidden" : mediaWidth <= 431 }
                         )}>Part 2: When, Why, How</p>
-          <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[406px] max-[320px]:h-[510px]" >
+          <div className="flex flex-col bg-slate-100 border-1 border-slate-400 rounded-md px-2 mb-1 h-[406px] max-[431px]:h-[510px]" >
             <div className="flex flex-row">
               <div className="font-bold">WHEN</div>
               <div id="when-error" aria-live="polite" aria-atomic="true">
@@ -178,7 +178,7 @@ export default function AnswerForm(
             </div>
 
             {(() => {
-              if (mediaWidth <= 326) {
+              if (mediaWidth <= 431) {
                 return <>
                   {/* SELECTORS AND INPUTS TO CAUSE VARIOUS DATE STYLE INPUTS TO APPEAR (SLIM MEDIA) */}
                   <div className="flex flex-col">
@@ -233,7 +233,7 @@ export default function AnswerForm(
                 </>
               }
 
-              if (mediaWidth > 326) {
+              if (mediaWidth > 431) {
                 return <>
                   {/* SELECTORS TO CAUSE VARIOUS DATE STYLE INPUTS TO APPEAR (WIDE MEDIA) */}
                   <div className="flex flex-row">
@@ -304,7 +304,7 @@ export default function AnswerForm(
                   >
                   </textarea>
             </div>
-            <div className="flex flex-row max-[320px]:flex-col max-[320px]:min-h-[372px]"
+            <div className="flex flex-row max-[431px]:flex-col max-[431px]:min-h-[372px]"
                   onMouseLeave={(e) => {
                         e.stopPropagation();
                         whenList.current.scrollTop = scrollWhenPosition;
@@ -312,7 +312,7 @@ export default function AnswerForm(
                         setWhenHoverHighlight(false);
                       }}
               >
-              <div className={clsx(`max-[320px]:basis-2/5 basis-1/3 overflow-auto border-1 
+              <div className={clsx(`max-[431px]:basis-2/5 basis-1/3 overflow-auto border-1 
                                     border-slate-300 mb-2 rounded-md`,
                                     { "h-[290px]" : eventTime6 },
                                     { "h-[200px]" : eventTime1 || eventTime2 || eventTime3 || eventTime4 || eventTime5 },
@@ -346,8 +346,8 @@ export default function AnswerForm(
                   </FakeWhenRadio>
                   </div>
               </div>
-              <div className={clsx("max-[320px]:basis-3/5 basis-2/3", { "hidden" : eventTime6 })} ></div>
-              <div className={clsx("max-[320px]:basis-3/5 basis-2/3 w-full flex mb-2 border-1 rounded-md", { "hidden" : !eventTime6 })} >{showWhenDetails}</div>
+              <div className={clsx("max-[431px]:basis-3/5 basis-2/3", { "hidden" : eventTime6 })} ></div>
+              <div className={clsx("max-[431px]:basis-3/5 basis-2/3 w-full flex mb-2 border-1 rounded-md", { "hidden" : !eventTime6 })} >{showWhenDetails}</div>
             </div>
           </div>
 
@@ -394,7 +394,7 @@ export default function AnswerForm(
           </div>
         </div>
 
-        <div className={clsx("flex flex-col items-end justify-between", { "h-[25px] mb-6" : mediaWidth <= 326 })}>
+        <div className={clsx("flex flex-col items-end justify-between", { "h-[25px] mb-6" : mediaWidth <= 431 })}>
           <Button type="submit">Create Record</Button>
         </div>
         <input id="operation" name="operation" type="hidden" value="create" />

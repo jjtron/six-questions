@@ -40,8 +40,8 @@ export function EventTimesTable({eventTimesGroups} : {eventTimesGroups : EventTi
                             { "hidden" : (record.type !== "circa_yr")}
                           )}
                         onClick={() => handleClick(record.id)} >
-                      <div className="max-[320px]:basis-1/5 basis-1/6 pl-2 border-tbl-1 border-slate-400 rounded-l-md max-[320px]:text-xs"><span className="pl-2">{record.name}</span></div>
-                      <div className="max-[320px]:basis-4/5 basis-5/6 pl-2 border-1 border-slate-400 rounded-r-md bg-white max-[320px]:text-xs">{record.comments}</div>
+                      <div className="max-[431px]:basis-1/5 basis-1/6 pl-2 border-tbl-1 border-slate-400 rounded-l-md max-[431px]:text-xs"><span className="pl-2">{record.name}</span></div>
+                      <div className="max-[431px]:basis-4/5 basis-5/6 pl-2 border-1 border-slate-400 rounded-r-md bg-white max-[431px]:text-xs">{record.comments}</div>
                     </div>
 
                     {/* //////////////////////////////////////////////////////////////////////////// */}
@@ -60,8 +60,8 @@ export function EventTimesTable({eventTimesGroups} : {eventTimesGroups : EventTi
                             { "hidden" : (record.type !== "circa_range")}
                           )}
                         onClick={() => handleClick(record.id)} >
-                      <div className="max-[320px]:basis-2/5 basis-1/3 pl-2 border-1 border-slate-400 rounded-l-md max-[320px]:text-xs"><span className="pl-2">{record.name.replaceAll(' ', '')}</span></div>
-                      <div className="max-[320px]:basis-3/5 basis-2/3 pl-2 border-trb-1 border-slate-400 rounded-r-md bg-white max-[320px]:text-xs">{record.comments}</div>
+                      <div className="max-[431px]:basis-2/5 basis-1/3 pl-2 border-1 border-slate-400 rounded-l-md max-[431px]:text-xs"><span className="pl-2">{record.name.replaceAll(' ', '')}</span></div>
+                      <div className="max-[431px]:basis-3/5 basis-2/3 pl-2 border-trb-1 border-slate-400 rounded-r-md bg-white max-[431px]:text-xs">{record.comments}</div>
                     </div>
 
                     {/* //////////////////////////////////////////////////////////////////////////// */}
@@ -81,8 +81,8 @@ export function EventTimesTable({eventTimesGroups} : {eventTimesGroups : EventTi
                             { "hidden" : (record.type !== "general")}
                           )}
                         onClick={() => handleClick(record.id)} >
-                      <div className="basis-2/5 pl-2 border-1 border-slate-400 rounded-l-md max-[320px]:text-xs"><span>{record.name}</span></div>
-                      <div className="basis-3/5 pl-2 border-1 border-slate-400 rounded-r-md bg-white max-[320px]:text-xs">{record.comments}</div>
+                      <div className="basis-2/5 pl-2 border-1 border-slate-400 rounded-l-md max-[431px]:text-xs"><span>{record.name}</span></div>
+                      <div className="basis-3/5 pl-2 border-1 border-slate-400 rounded-r-md bg-white max-[431px]:text-xs">{record.comments}</div>
                     </div>
 
                   </div>

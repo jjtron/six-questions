@@ -27,10 +27,10 @@ export function PlacesTable({placesGroups} : {placesGroups : Place[][]} ) {
                   <div key={lineId} className="w-full flex flex-col">
                     {/* Street, City, State header */}
                     <div className={clsx("flex flex-row bg-sky-400 rounded-md", {"hidden" : (j !== 0 || record.type !== "street_city_state")})}>
-                      <div className="basis-1/4 pl-2 text-left font-bold border-tbl-1 border-slate-400 rounded-l-md max-[320px]:text-xs">Place Name</div>
-                      <div className="basis-1/4 text-left font-bold border-y-1 border-slate-400 max-[320px]:text-xs">Street</div>
-                      <div className="basis-1/4 text-left font-bold border-y-1 border-slate-400 max-[320px]:text-xs">City</div>
-                      <div className="basis-1/4 text-left font-bold border-trb-1 border-slate-400 rounded-r-md max-[320px]:text-xs">State</div>
+                      <div className="basis-1/4 pl-2 text-left font-bold border-tbl-1 border-slate-400 rounded-l-md max-[431px]:text-xs">Place Name</div>
+                      <div className="basis-1/4 text-left font-bold border-y-1 border-slate-400 max-[431px]:text-xs">Street</div>
+                      <div className="basis-1/4 text-left font-bold border-y-1 border-slate-400 max-[431px]:text-xs">City</div>
+                      <div className="basis-1/4 text-left font-bold border-trb-1 border-slate-400 rounded-r-md max-[431px]:text-xs">State</div>
                     </div>
                     {/* Street, City, State records */}
                     <div className={clsx("flex flex-row rounded-md",
@@ -38,15 +38,15 @@ export function PlacesTable({placesGroups} : {placesGroups : Place[][]} ) {
                             { "hidden" : (record.type !== "street_city_state")}
                           )}
                         onClick={() => handleClick(record.id)} >
-                      <div className="basis-1/4 pl-2 border-tbl-1 border-slate-400 rounded-l-md max-[320px]:text-xs">{record.name}</div>
-                      <div className="basis-1/4 border-y-1 border-slate-400 max-[320px]:text-xs">{record.details.street}</div>
-                      <div className="basis-1/4 border-y-1 border-slate-400 max-[320px]:text-xs">{record.details.city}</div>
-                      <div className="basis-1/4 border-trb-1 border-slate-400 rounded-r-md max-[320px]:text-xs">{record.details.state}</div>
+                      <div className="basis-1/4 pl-2 border-tbl-1 border-slate-400 rounded-l-md max-[431px]:text-xs">{record.name}</div>
+                      <div className="basis-1/4 border-y-1 border-slate-400 max-[431px]:text-xs">{record.details.street}</div>
+                      <div className="basis-1/4 border-y-1 border-slate-400 max-[431px]:text-xs">{record.details.city}</div>
+                      <div className="basis-1/4 border-trb-1 border-slate-400 rounded-r-md max-[431px]:text-xs">{record.details.state}</div>
                     </div>
 
                     {/* Countries header */}
                     <div className={clsx("flex flex-row bg-sky-400 rounded-md", {"hidden" : (j !== 0 || record.type !== "country")})}>
-                      <div className="basis-full pl-2 text-left font-bold border-tbl-1 border-slate-400 rounded-md max-[320px]:text-xs">Countries</div>
+                      <div className="basis-full pl-2 text-left font-bold border-tbl-1 border-slate-400 rounded-md max-[431px]:text-xs">Countries</div>
                     </div>
                     {/* Countries records */}
                     <div  className={clsx("flex flex-row flex-wrap",
@@ -57,7 +57,7 @@ export function PlacesTable({placesGroups} : {placesGroups : Place[][]} ) {
 
                     {/* Countries and cities header */}
                     <div className={clsx("flex flex-row bg-sky-400 rounded-md", {"hidden" : (j !== 0 || record.type !== "country_city")})}>
-                      <div className="basis-full pl-2 text-left font-bold border-tbl-1 border-slate-400 rounded-md max-[320px]:text-xs">Cities, Countries</div>
+                      <div className="basis-full pl-2 text-left font-bold border-tbl-1 border-slate-400 rounded-md max-[431px]:text-xs">Cities, Countries</div>
                     </div>
                     {/* Countries and cities records */}
                     <div  className={clsx("flex flex-row flex-wrap",
@@ -68,7 +68,7 @@ export function PlacesTable({placesGroups} : {placesGroups : Place[][]} ) {
 
                     {/* Country with Description header */}
                     <div className={clsx("flex flex-row bg-sky-400 rounded-md", {"hidden" : (j !== 0 || record.type !== "country_and_desc")})}>
-                      <div className="basis-full pl-2 text-left font-bold border-tbl-1 border-slate-400 rounded-md max-[320px]:text-xs">Country with Description</div>
+                      <div className="basis-full pl-2 text-left font-bold border-tbl-1 border-slate-400 rounded-md max-[431px]:text-xs">Country with Description</div>
                     </div>
                     {/* Country with Description records */}
                     <div  className={clsx("flex flex-row rounded-md",
@@ -77,13 +77,13 @@ export function PlacesTable({placesGroups} : {placesGroups : Place[][]} ) {
                                     )}
                           onClick={() => handleClick(record.id)}
                     >
-                      <div className="basis-1/4 px-2 border-tbl-1 border-slate-400 rounded-l-md max-[320px]:text-xs">{record.name}</div>
-                      <div className="basis-3/4 rounded-r-md border-trb-1 border-slate-400 outline-none pl-2 bg-white max-[320px]:text-xs">{record.details.desc}</div>
+                      <div className="basis-1/4 px-2 border-tbl-1 border-slate-400 rounded-l-md max-[431px]:text-xs">{record.name}</div>
+                      <div className="basis-3/4 rounded-r-md border-trb-1 border-slate-400 outline-none pl-2 bg-white max-[431px]:text-xs">{record.details.desc}</div>
                     </div>
 
                     {/* Country and City with Description header */}
                     <div className={clsx("flex flex-row bg-sky-400 rounded-md", {"hidden" : (j !== 0 || record.type !== "country_city_and_desc")})}>
-                      <div className="basis-full pl-2 text-left font-bold border-tbl-1 border-slate-400 rounded-md max-[320px]:text-xs">Country and City with Description</div>
+                      <div className="basis-full pl-2 text-left font-bold border-tbl-1 border-slate-400 rounded-md max-[431px]:text-xs">Country and City with Description</div>
                     </div>
                     {/* Country and City with Description records */}
                     <div  className={clsx("flex flex-row rounded-md",
@@ -92,13 +92,13 @@ export function PlacesTable({placesGroups} : {placesGroups : Place[][]} ) {
                                     )}
                           onClick={() => handleClick(record.id)}
                     >
-                      <div className="basis-1/4 pl-2 border-tbl-1 border-slate-400 rounded-l-md max-[320px]:text-xs">{record.details.city}, {record.name}</div>
-                      <div className="basis-3/4 rounded-r-md border-trb-1 border-slate-400 outline-none pl-2 bg-white max-[320px]:text-xs">{record.details.desc}</div>
+                      <div className="basis-1/4 pl-2 border-tbl-1 border-slate-400 rounded-l-md max-[431px]:text-xs">{record.details.city}, {record.name}</div>
+                      <div className="basis-3/4 rounded-r-md border-trb-1 border-slate-400 outline-none pl-2 bg-white max-[431px]:text-xs">{record.details.desc}</div>
                     </div>
 
                     {/* General Description header */}
                     <div className={clsx("flex flex-row bg-sky-400 rounded-md", {"hidden" : (j !== 0 || record.type !== "any")})}>
-                      <div className="basis-full pl-2 text-left font-bold border-tbl-1 border-slate-400 rounded-md max-[320px]:text-xs">General Description</div>
+                      <div className="basis-full pl-2 text-left font-bold border-tbl-1 border-slate-400 rounded-md max-[431px]:text-xs">General Description</div>
                     </div>
                     {/* General Description records */}
                     <div  className={clsx("flex flex-row rounded-md",
@@ -107,8 +107,8 @@ export function PlacesTable({placesGroups} : {placesGroups : Place[][]} ) {
                                     )}
                           onClick={() => handleClick(record.id)}
                     >
-                      <div className="basis-1/4 pl-2 border-tbl-1 border-slate-400 rounded-l-md max-[320px]:text-xs">{record.name}</div>
-                      <div className="basis-3/4 rounded-r-md border-trb-1 border-slate-400 outline-none pl-2 bg-white max-[320px]:text-xs">{record.details.desc}</div>
+                      <div className="basis-1/4 pl-2 border-tbl-1 border-slate-400 rounded-l-md max-[431px]:text-xs">{record.name}</div>
+                      <div className="basis-3/4 rounded-r-md border-trb-1 border-slate-400 outline-none pl-2 bg-white max-[431px]:text-xs">{record.details.desc}</div>
                     </div>
                   </div>
                 )

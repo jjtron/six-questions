@@ -9,8 +9,8 @@ export default function MultiSelectWho(props:  {options: SelectOptions, initSele
     initSelected(props.initSelected);
 
     return (
-      <div className="flex flex-row max-[320px]:flex-col" >
-        <div className="max-[320px]:text-xs text-base max-[320px]:basis-32 basis-48 shrink-0 h-[140px] overflow-auto">
+      <div className="flex flex-row max-[431px]:flex-col" >
+        <div className="max-[431px]:text-xs text-base max-[431px]:basis-32 basis-48 shrink-0 h-[140px] overflow-auto">
             {Object.entries(props.options).map((el, i) => {
                 return (
                     <div key={i}
@@ -41,9 +41,9 @@ export default function MultiSelectWho(props:  {options: SelectOptions, initSele
             });
             if (typeof selectedList !== 'undefined') {
                 isCheckedArray.push(
-                    <div key={i} className="flex flex-row max-[320px]:flex-col">
-                        <div className="max-[320px]:basis-1/2 basis-1/5 text-xs bg-green-100 border-tbl-1 border-slate-400">{selectedList[1].name}:</div>
-                        <div className="max-[320px]:basis-1/2 basis-4/5 text-xs bg-white border-trb-1 border-slate-400">{selectedList[1].comments}</div>
+                    <div key={i} className="flex flex-row max-[431px]:flex-col">
+                        <div className="max-[431px]:basis-1/2 basis-1/5 text-xs bg-green-100 border-tbl-1 border-slate-400">{selectedList[1].name}:</div>
+                        <div className="max-[431px]:basis-1/2 basis-4/5 text-xs bg-white border-trb-1 border-slate-400">{selectedList[1].comments}</div>
                     </div>
                 );
             }
@@ -59,9 +59,9 @@ export default function MultiSelectWho(props:  {options: SelectOptions, initSele
                 Object.entries(props.options).forEach((arr) => {
                     if (arr.indexOf(elin.value) !== -1) {
                         isCheckedArray.push(
-                            <div key={i} className="flex flex-row max-[320px]:flex-col">
-                                <div className="max-[320px]:basis-1/2 basis-1/5 text-xs bg-green-100 border-tbl-1 border-slate-400">{arr[1].name}:</div>
-                                <div className="max-[320px]:basis-1/2 basis-4/5 text-xs bg-white border-trb-1 border-slate-400">{arr[1].comments}</div>
+                            <div key={i} className="flex flex-row max-[431px]:flex-col">
+                                <div className="max-[431px]:basis-1/2 basis-1/5 text-xs bg-green-100 border-tbl-1 border-slate-400">{arr[1].name}:</div>
+                                <div className="max-[431px]:basis-1/2 basis-4/5 text-xs bg-white border-trb-1 border-slate-400">{arr[1].comments}</div>
                             </div>
                         );
                         alreadyCheckedArray.push(arr[0]);
@@ -71,9 +71,9 @@ export default function MultiSelectWho(props:  {options: SelectOptions, initSele
         });
         if (alreadyCheckedArray.indexOf(el[0]) === -1) {
             setHoverShow(
-                <div className="flex flex-row max-[320px]:flex-col">
-                    <div className="max-[320px]:basis-1/2 basis-1/5 text-xs bg-yellow-100 border-tbl-1 border-slate-400" >{el[1].name}:</div>
-                    <div className="max-[320px]:basis-1/2 basis-4/5 text-xs bg-white border-trb-1 border-slate-400">{el[1].comments}</div>
+                <div className="flex flex-row max-[431px]:flex-col">
+                    <div className="max-[431px]:basis-1/2 basis-1/5 text-xs bg-yellow-100 border-tbl-1 border-slate-400" >{el[1].name}:</div>
+                    <div className="max-[431px]:basis-1/2 basis-4/5 text-xs bg-white border-trb-1 border-slate-400">{el[1].comments}</div>
                 </div>);
         } else {
             setHoverShow(<></>);

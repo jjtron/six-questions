@@ -38,7 +38,7 @@ export default function AnswerForm({
                 return (<div key={i} className="flex flex-col bg-inherit md:pl-2">
                     
                   {/* PAGE 1 */}
-                  <div className={clsx({"hidden" : page !== 0 && mediaWidth > 326 })}>
+                  <div className={clsx({"hidden" : page !== 0 && mediaWidth > 431 })}>
                     {/* WHO */}
                     <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Record ID: ...{record.id.slice(-6)}, Part 1</p>
                     <div className="flex md:flex-row flex-col">
@@ -138,8 +138,8 @@ export default function AnswerForm({
                   </div>
 
                   {/* PAGE 2 */}
-                  <div className={clsx({"hidden" : page !== 1 && mediaWidth > 326 })}>
-                    <p className={clsx("bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold", { "hidden" : mediaWidth <= 326 })}>Record ID: ...{record.id.slice(-6)}, Part 2</p>
+                  <div className={clsx({"hidden" : page !== 1 && mediaWidth > 431 })}>
+                    <p className={clsx("bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold", { "hidden" : mediaWidth <= 431 })}>Record ID: ...{record.id.slice(-6)}, Part 2</p>
                     {/* WHEN */}
                     <div className="pl-2 border-1 border-slate-400 rounded-md bg-slate-200">
                             <p className="font-bold">WHEN</p>
