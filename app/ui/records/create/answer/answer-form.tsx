@@ -177,109 +177,119 @@ export default function AnswerForm(
               </div>
             </div>
 
-            {/* SELECTORS AND INPUTS TO CAUSE VARIOUS DATE STYLE INPUTS TO APPEAR (SLIM MEDIA) */}
-            <div className={clsx("flex flex-col", { "hidden" : mediaWidth > 326 })}>
-              
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime1, "bg-indigo-100" : eventTime1 })}>
-                <input type="checkbox" name="date_type_1" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(1) }} checked={eventTime1} onChange={() => {}} />
-                <p className="px-1">Date/Time (since 1900)</p>
-              </span>
-              <div className={clsx({ "hidden" : !eventTime1 })}>
-                <DateTimePicker
-                    date_time={{date: '01/01/1900', time: '12:00 AM'}}
-                    view={["year", "month", "day"]}
-                    form_data_name={"yr_mon_day"} />
-              </div>
+            {(() => {
+              if (mediaWidth <= 326) {
+                return <>
+                  {/* SELECTORS AND INPUTS TO CAUSE VARIOUS DATE STYLE INPUTS TO APPEAR (SLIM MEDIA) */}
+                  <div className="flex flex-col">
+                    
+                    <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime1, "bg-indigo-100" : eventTime1 })}>
+                      <input type="checkbox" name="date_type_1" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(1) }} checked={eventTime1} onChange={() => {}} />
+                      <p className="px-1">Date/Time (since 1900)</p>
+                    </span>
+                    <div className={clsx({ "hidden" : !eventTime1 })}>
+                      <DateTimePicker
+                          date_time={{date: '01/01/1900', time: '12:00 AM'}}
+                          view={["year", "month", "day"]}
+                          form_data_name={"yr_mon_day"} />
+                    </div>
 
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime2, "bg-indigo-100" : eventTime2 })}>
-                <input type="checkbox" name="date_type_2" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(2) }} checked={eventTime2} onChange={() => {}} />
-                <p className="px-1">Year/Month (since 1900)</p>
-              </span>
-              <div className={clsx("flex flex-row", { "hidden" : !eventTime2 })}>
-                <DateTimePicker
-                    date_time={{date: '01/01/1900', time: '12:00 AM'}}
-                    view={["year", "month"]}
-                    form_data_name={"yr_mon"} />
-              </div>
+                    <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime2, "bg-indigo-100" : eventTime2 })}>
+                      <input type="checkbox" name="date_type_2" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(2) }} checked={eventTime2} onChange={() => {}} />
+                      <p className="px-1">Year/Month (since 1900)</p>
+                    </span>
+                    <div className={clsx("flex flex-row", { "hidden" : !eventTime2 })}>
+                      <DateTimePicker
+                          date_time={{date: '01/01/1900', time: '12:00 AM'}}
+                          view={["year", "month"]}
+                          form_data_name={"yr_mon"} />
+                    </div>
 
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime3, "bg-indigo-100" : eventTime3 })}>
-                <input type="checkbox" name="date_type_3" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(3) }} checked={eventTime3} onChange={() => {}} />
-                <p className="inline px-1">Date (before 1900)</p>
-              </span>
-              <div className={clsx("flex flex-row", { "hidden" : !eventTime3 })}>
-                <InputMask className="w-[120px] border-1 border-slate-300 rounded-md text-center bg-indigo-100" name="date_only_pre1900" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
-              </div>
+                    <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime3, "bg-indigo-100" : eventTime3 })}>
+                      <input type="checkbox" name="date_type_3" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(3) }} checked={eventTime3} onChange={() => {}} />
+                      <p className="inline px-1">Date (before 1900)</p>
+                    </span>
+                    <div className={clsx("flex flex-row", { "hidden" : !eventTime3 })}>
+                      <InputMask className="w-[120px] border-1 border-slate-300 rounded-md text-center bg-indigo-100" name="date_only_pre1900" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                    </div>
 
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime4, "bg-indigo-100" : eventTime4 })}>
-                <input type="checkbox" name="date_type_4" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(4) }} checked={eventTime4} onChange={() => {}} />
-                <p className="inline px-1">Year/Month (before 1900)</p>
-              </span>
-              <div className={clsx("flex flex-row", { "hidden" : !eventTime4 })}>
-                <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center bg-indigo-100" name="year_mon_pre1900" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
-              </div>
+                    <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime4, "bg-indigo-100" : eventTime4 })}>
+                      <input type="checkbox" name="date_type_4" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(4) }} checked={eventTime4} onChange={() => {}} />
+                      <p className="inline px-1">Year/Month (before 1900)</p>
+                    </span>
+                    <div className={clsx("flex flex-row", { "hidden" : !eventTime4 })}>
+                      <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center bg-indigo-100" name="year_mon_pre1900" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                    </div>
 
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime5, "bg-indigo-100" : eventTime5 })}>
-                <input type="checkbox" name="date_type_5" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(5) }} checked={eventTime5} onChange={() => {}} />
-                <p className="inline px-1">Year only (before 1900)</p>
-              </span>
-              <div className={clsx("flex flex-row items-center", { "hidden" : !eventTime5 })}>
-                <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text- bg-indigo-100" name="yr_only_pre1900" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
-              </div>
+                    <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime5, "bg-indigo-100" : eventTime5 })}>
+                      <input type="checkbox" name="date_type_5" className="absolute top-0.5 left-1" onClick={() => { pickEventTimeStyle(5) }} checked={eventTime5} onChange={() => {}} />
+                      <p className="inline px-1">Year only (before 1900)</p>
+                    </span>
+                    <div className={clsx("flex flex-row items-center", { "hidden" : !eventTime5 })}>
+                      <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text- bg-indigo-100" name="yr_only_pre1900" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                    </div>
 
-            </div>
+                  </div>
+                </>
+              }
 
+              if (mediaWidth > 326) {
+                return <>
+                  {/* SELECTORS TO CAUSE VARIOUS DATE STYLE INPUTS TO APPEAR (WIDE MEDIA) */}
+                  <div className="flex flex-row">
+                    <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime1 })}>
+                      <input type="checkbox" name="date_type_1" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(1) }} checked={eventTime1} onChange={() => {}} />
+                      <p className="inline px-1">Date/Time</p><p>(since 1900)</p>
+                    </span>
+                    <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime2 })}>
+                      <input type="checkbox" name="date_type_2" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(2) }} checked={eventTime2} onChange={() => {}} />
+                      <p className="inline px-1">Year/Month</p><p>(since 1900)</p>
+                    </span>
+                    <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime3 })}>
+                      <input type="checkbox" name="date_type_3" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(3) }} checked={eventTime3} onChange={() => {}} />
+                      <p className="inline px-1">Date</p><p>(before 1900)</p>
+                    </span>
+                    <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime4 })}>
+                      <input type="checkbox" name="date_type_4" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(4) }} checked={eventTime4} onChange={() => {}} />
+                      <p className="inline px-1">Year/Month</p><p>(before 1900)</p>
+                    </span>
+                    <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime5 })}>
+                      <input type="checkbox" name="date_type_5" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(5) }} checked={eventTime5} onChange={() => {}} />
+                      <p className="inline px-1">Year only</p><p>(before 1900)</p>
+                    </span>
+                  </div>
+                  {/* HIDDEN INPUT BOXES FOR VARIOUS DATE STYLES */}
+                  <div className="mt-1 min-h-[42px]">
+                    <div className={clsx({ "hidden" : !eventTime1 })}>
+                      <DateTimePicker
+                          date_time={{date: '01/01/1900', time: '12:00 AM'}}
+                          view={["year", "month", "day"]}
+                          form_data_name={"yr_mon_day"} />
+                    </div>
+                    <div className={clsx("flex flex-row", { "hidden" : !eventTime2 })}>
+                      <div className="basis-1/5"></div>
+                      <DateTimePicker
+                          date_time={{date: '01/01/1900', time: '12:00 AM'}}
+                          view={["year", "month"]}
+                          form_data_name={"yr_mon"} />
+                    </div>
+                    <div className={clsx("flex flex-row", { "hidden" : !eventTime3 })}>
+                      <div className="basis-2/5"></div>
+                      <InputMask className="w-[120px] border-1 border-slate-300 rounded-md text-center bg-indigo-100" name="date_only_pre1900" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                    </div>
+                    <div className={clsx("flex flex-row", { "hidden" : !eventTime4 })}>
+                      <div className="basis-3/5"></div>
+                      <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center bg-indigo-100" name="year_mon_pre1900" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                    </div>
+                    <div className={clsx("flex flex-row items-center", { "hidden" : !eventTime5 })}>
+                      <div className="basis-4/5"></div>
+                      <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text-center bg-indigo-100" name="yr_only_pre1900" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
+                    </div>
+                  </div>
+                </>
+              }
+            })()}
 
-            {/* SELECTORS TO CAUSE VARIOUS DATE STYLE INPUTS TO APPEAR (WIDE MEDIA) */}
-            <div className={clsx("flex flex-row", { "hidden" : mediaWidth <= 326 })}>
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime1 })}>
-                <input type="checkbox" name="date_type_1" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(1) }} checked={eventTime1} onChange={() => {}} />
-                <p className="inline px-1">Date/Time</p><p>(since 1900)</p>
-              </span>
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime2 })}>
-                <input type="checkbox" name="date_type_2" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(2) }} checked={eventTime2} onChange={() => {}} />
-                <p className="inline px-1">Year/Month</p><p>(since 1900)</p>
-              </span>
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime3 })}>
-                <input type="checkbox" name="date_type_3" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(3) }} checked={eventTime3} onChange={() => {}} />
-                <p className="inline px-1">Date</p><p>(before 1900)</p>
-              </span>
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-60" : !eventTime4 })}>
-                <input type="checkbox" name="date_type_4" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(4) }} checked={eventTime4} onChange={() => {}} />
-                <p className="inline px-1">Year/Month</p><p>(before 1900)</p>
-              </span>
-              <span className={clsx("basis-1/5 text-xs text-center mr-1 border-1 border-slate-400 relative rounded-md", {"opacity-40" : !eventTime5 })}>
-                <input type="checkbox" name="date_type_5" className="absolute top-1 left-1" onClick={() => { pickEventTimeStyle(5) }} checked={eventTime5} onChange={() => {}} />
-                <p className="inline px-1">Year only</p><p>(before 1900)</p>
-              </span>
-            </div>
-            {/* HIDDEN INPUT BOXES FOR VARIOUS DATE STYLES */}
-            <div className={clsx("mt-1 min-h-[42px]", { "hidden" : mediaWidth <= 326 })}>
-              <div className={clsx({ "hidden" : !eventTime1 })}>
-                <DateTimePicker
-                    date_time={{date: '01/01/1900', time: '12:00 AM'}}
-                    view={["year", "month", "day"]}
-                    form_data_name={"yr_mon_day"} />
-              </div>
-              <div className={clsx("flex flex-row", { "hidden" : !eventTime2 })}>
-                <div className="basis-1/5"></div>
-                <DateTimePicker
-                    date_time={{date: '01/01/1900', time: '12:00 AM'}}
-                    view={["year", "month"]}
-                    form_data_name={"yr_mon"} />
-              </div>
-              <div className={clsx("flex flex-row", { "hidden" : !eventTime3 })}>
-                <div className="basis-2/5"></div>
-                <InputMask className="w-[120px] border-1 border-slate-300 rounded-md text-center bg-indigo-100" name="date_only_pre1900" mask="dd/mm/yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
-              </div>
-              <div className={clsx("flex flex-row", { "hidden" : !eventTime4 })}>
-                <div className="basis-3/5"></div>
-                <InputMask className="w-[110px] border-1 border-slate-300 rounded-md text-center bg-indigo-100" name="year_mon_pre1900" mask="yyyy-mm" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
-              </div>
-              <div className={clsx("flex flex-row items-center", { "hidden" : !eventTime5 })}>
-                <div className="basis-4/5"></div>
-                <InputMask className="w-[100px] border-1 border-slate-300 rounded-md text-center bg-indigo-100" name="yr_only_pre1900" mask="yyyy" replacement={{ d: /\d/, m: /\d/, y: /\d/ }} showMask separate />
-              </div>
-            </div>
             <div className={clsx("w-full flex mb-1 rounded-md h-[90px]",
                                 { "hidden" : eventTime6 },
                                 { "hidden" : !eventTime1 && !eventTime2 && !eventTime3 && !eventTime4 && !eventTime5&& !eventTime6 })} >
