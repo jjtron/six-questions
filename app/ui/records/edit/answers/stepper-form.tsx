@@ -11,7 +11,7 @@ import EditAnswerForm from './edit-form';
 import clsx from 'clsx';
 import { useState } from 'react';
 
-const steps = ['Who, What, Where', 'When, Why, How', 'Done'];
+const steps = ['Who, What, Where', 'When, Why, How'];
 
 export default function StepperForm(
   { 
