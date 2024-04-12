@@ -20,7 +20,7 @@ export default function WhereRadio(
             <div key={i} className={
               clsx(`flex flex-row border-1 border-slate-400 cursor-pointer 
                     max-[431px]:text-xs text-base rounded-md px-2 mr-1 `,
-                    { "bg-white" : bgColor !== i && isChecked !== i,
+                    { "bg-white" : ( bgColor !== i && isChecked !== i ) || ( bgColor === i && isChecked !== i && !props.hoverWhereHighlight ),
                       "bg-yellow-100" : bgColor === i && isChecked !== i && props.hoverWhereHighlight,
                       "bg-green-100" : isChecked === i})} 
               onMouseOver={() => {
