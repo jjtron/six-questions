@@ -119,7 +119,7 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
     }
   }
 
-  insertTimeRecord(formData);
+  await insertTimeRecord(formData);
 
   revalidatePath('/records/create/answer');
   revalidatePath('/records/view/event-times');
@@ -185,7 +185,7 @@ export async function updateEventTime(prevState: EventTimeUpdateState, formData:
     };
   }
 
-  updateEventTimeRecord(formData);
+  await updateEventTimeRecord(formData);
 
   revalidatePath('/records/create/answer');
   revalidatePath('/records/view/event-times');
@@ -220,7 +220,7 @@ export async function createPerson(prevState: PersonState, formData: FormData) {
     };
   }
 
-  insertPersonRecord(formData);
+  await insertPersonRecord(formData);
 
   revalidatePath('/records/create/answer');
   revalidatePath('/records/view/people');
@@ -253,7 +253,7 @@ export async function updatePerson(prevState: PersonUpdateState, formData: FormD
     };
   }
 
-  updatePersonRecord(formData);
+  await updatePersonRecord(formData);
 
   revalidatePath('/records/create/answer');
   revalidatePath('/records/view/people');
@@ -493,7 +493,7 @@ export async function createOrUpdateAnswer(prevState: InsertAndCreateState, form
     };
   }
 
-  insertAnswerRecord(formData, submittedDateType);
+  await insertAnswerRecord(formData, submittedDateType);
   revalidatePath('/records/view/answers');
   redirect('/records/view/answers');
 }
@@ -618,7 +618,7 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
     throw new Error('FormData validation failed.');
   }
 
-  insertPlaceRecord(formData);
+  await insertPlaceRecord(formData);
 
   revalidatePath('/records/create/answer');
   revalidatePath('/records/view/places');
@@ -697,7 +697,7 @@ export async function updatePlace(prevState: PlaceState, formData: FormData) {
     };
   }
 
-  updatePlaceRecord(formData);
+  await updatePlaceRecord(formData);
 
   revalidatePath('/records/view/places');
   revalidatePath('/records/create/answer');
