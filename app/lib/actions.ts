@@ -364,7 +364,7 @@ const FormSchema = z.object({
   how: z.string().min(1, { message: "required" }),
 });
 
-export async function create0rUpdateAnswer(prevState: InsertAndCreateState, formData: FormData) {
+export async function createOrUpdateAnswer(prevState: InsertAndCreateState, formData: FormData) {
   //console.log(formData);
 
   let date_error: { [key: string]: string[] | null; } = {  };
