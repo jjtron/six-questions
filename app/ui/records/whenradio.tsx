@@ -23,7 +23,7 @@ export default function WhenRadio(
             <div key={i} className={
               clsx(`flex flex-row border-1 border-slate-400 max-[431px]:text-xs text-base 
                     rounded-md px-2 mr-1 cursor-pointer`,
-                    { "bg-white" : bgColor !== i && isChecked !== i && !init,
+                    { "bg-white" : (bgColor !== i && isChecked !== i && !init) || (bgColor === i && isChecked !== i && !init) ,
                       "bg-yellow-100" : bgColor === i && isChecked !== i && props.hoverWhenHighlight,
                       "bg-green-100" : isChecked === i || (init && !cancelInit)})}
               onMouseOver={() => {
