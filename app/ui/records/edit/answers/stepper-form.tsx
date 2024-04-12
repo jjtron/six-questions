@@ -11,7 +11,7 @@ import EditAnswerForm from './edit-form';
 import clsx from 'clsx';
 import { useState } from 'react';
 
-const steps = ['Who, What, Where', 'When, Why, How'];
+const steps = ['Who, What, Where (Part 1)', 'When, Why, How (Part 2)'];
 
 export default function StepperForm(
   { 
@@ -77,7 +77,12 @@ export default function StepperForm(
   return (
     <Box sx={{ width: '100%' }}>
       <div className={clsx({ "hidden" : mediaWidth <= 431 })}>
-      <Stepper activeStep={activeStep}>
+      <Stepper activeStep={activeStep}
+              sx={{ '.MuiStepLabel-label' : { color: 'gray' },
+                    '.MuiStepLabel-label.Mui-active' : { fontWeight: 'bold', color: 'blue' },
+                    '.MuiSvgIcon-root' : { visibility: 'hidden', width: '0px' }
+              }}
+      >
         {steps.map((label, index) => {
           const stepProps: { completed?: boolean } = {};
           const labelProps: {
