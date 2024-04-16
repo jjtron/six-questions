@@ -30,9 +30,13 @@ export default async function Page({ searchParams } : { searchParams: searchPara
           breadcrumbs={[
             {
               label: 'View Records',
+              href: '/records/view/answers'
+            },
+            {
+              label: '\'Answers\'',
               href: '/records/view/answers',
               active: true,
-            },
+            }
           ]}
         />
         </div>

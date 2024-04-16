@@ -10,9 +10,9 @@ export default async function Page() {
           <div className="md:ml-2">
           <Breadcrumbs
             breadcrumbs={[
-              { label: 'Records', href: '/create' },
+              { label: 'Create Records', href: '/create' },
               {
-                label: 'Create Person Record (who)',
+                label: '\'Who\'',
                 href: '/create/person',
                 active: true,
               },

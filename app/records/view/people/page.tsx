@@ -24,7 +24,7 @@ export default async function Page({ searchParams } : { searchParams: searchPara
               href: '/records/view/answers',
             },
             {
-              label: 'People',
+              label: '\'Who\'',
               href: '/records/view/people',
               active: true,
             },

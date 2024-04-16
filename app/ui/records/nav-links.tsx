@@ -19,14 +19,14 @@ import Search from '@/app/ui/records/search';
 // Depending on the size of the application, this would be stored in a database.
 const links = [
   { name: 'Home', href: '/', icon: HomeIcon },
-  { name: 'View \'6-Answers\' Records', href: '/records/view/answers', icon: DocumentDuplicateIcon, },
-  { name: 'View Places', href: '/records/view/places', icon: BuildingOffice2Icon, },
-  { name: 'View People', href: '/records/view/people', icon: UsersIcon, },
-  { name: 'View Event-Times', href: '/records/view/event-times', icon: CalendarIcon, },
-  { name: 'Create a \'6-Answers\' Record', href: '/records/create/answer', icon: DocumentTextIcon },
-  { name: 'Create a Place', href: '/records/create/place', icon: BuildingOfficeIcon },
-  { name: 'Create a Person', href: '/records/create/person', icon: UserIcon },
-  { name: 'Create a Time', href: '/records/create/event-time', icon: CalendarIcon },
+  { name: 'View \'Answer\' Record', href: '/records/view/answers', icon: DocumentDuplicateIcon, },
+  { name: 'View \'Where\'', href: '/records/view/places', icon: BuildingOffice2Icon, },
+  { name: 'View \'Who\'', href: '/records/view/people', icon: UsersIcon, },
+  { name: 'View \'When\'', href: '/records/view/event-times', icon: CalendarIcon, },
+  { name: 'Create \'Answer\' Record', href: '/records/create/answer', icon: DocumentTextIcon },
+  { name: 'Create \'Where\'', href: '/records/create/place', icon: BuildingOfficeIcon },
+  { name: 'Create \'Who\'', href: '/records/create/person', icon: UserIcon },
+  { name: 'Create \'When\'', href: '/records/create/event-time', icon: CalendarIcon },
 ];
 
 export default function NavLinks() {

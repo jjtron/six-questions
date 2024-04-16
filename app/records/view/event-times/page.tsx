@@ -24,7 +24,7 @@ export default async function Page({ searchParams } : { searchParams: searchPara
               href: '/records/view/answers',
             },
             {
-              label: 'Event-Times',
+              label: '\'When\'',
               href: '/records/view/places',
               active: true,
             },
