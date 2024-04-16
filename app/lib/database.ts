@@ -1,12 +1,13 @@
 import { Client, QueryResult } from 'pg';
 import { unstable_noStore as noStore } from 'next/cache';
 import { Place, EventTime, InsertWhenTime } from './interfaces'
+import pw from './password';
 
 const client = new Client({
     user: 'postgres',
     host: 'localhost',
-    database: 'questions',
-    password: '',
+    database: 'postgres',
+    password: pw(),
     port: 5432,
   });
   client.connect();
