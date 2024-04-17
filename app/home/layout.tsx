@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import NavLinks from '@/app/ui/records/nav-links';
 import clsx from 'clsx';
+import SideNav from '@/app/ui/sidenav';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,7 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <div className="flex md:flex-row flex-col min-h-screen mx-2">
           <div className={clsx("flex flex-row md:flex-col md:basis-48 mt-6 " +
-                               "shrink-0 space-x-2 py-2 md:space-x-0 md:space-y-4")}><NavLinks /></div>
+                               "shrink-0 space-x-2 py-2 md:space-x-0 md:space-y-4")}><NavLinks /><SideNav /></div>
           <div className="flex-col w-full">{children}</div>
         </div>
       </body>
