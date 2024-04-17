@@ -37,3 +37,6 @@ next-env.d.ts
 
 # password to DB
 /app/lib/password.ts
+
+# scripts
+/scripts
