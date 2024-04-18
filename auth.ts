@@ -5,12 +5,13 @@ import { z } from 'zod';
 import { Client } from 'pg';
 import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
+import pw from '@/app/lib/password';
 
 const client = new Client({
-  user: 'jjtron',
+  user: 'postgres',
   host: 'localhost',
-  database: 'jjtron',
-  password: '',
+  database: 'postgres',
+  password: pw(),
   port: 5432,
 });
 client.connect();
