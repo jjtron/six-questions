@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
 export default function Page() {
-  redirect('/home');
 
   // ALL THE FOLLOWING WAS HERE FOR LOGIN WHICH I CNNOT GET TO WORK ON DIGITAL OCEAN
   return (
