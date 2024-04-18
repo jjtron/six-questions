@@ -1,8 +1,12 @@
 import Link from 'next/link';
 import { lusitana } from '@/app/ui/fonts';
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
 
 export default function Page() {
+  redirect('/home');
+
+  // ALL THE FOLLOWING WAS HERE FOR LOGIN WHICH I CNNOT GET TO WORK ON DIGITAL OCEAN
   return (
     <main className="flex min-h-screen flex-col p-6">
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
