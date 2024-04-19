@@ -25,7 +25,7 @@ export default function Page() {
             >
               <span className="w-full text-center" >Log in</span>
             </Link>
-            <div className="pl-2 leading-none" >You'll be provided with a username and password as a guest</div>
+            <div className="pl-2 leading-none" >You&apos;ll be provided with a username and password as a guest</div>
           </div>
           {/* Add Hero Images Here 
           <Image

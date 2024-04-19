@@ -21,7 +21,7 @@ export default function Home() {
       <div className={`${lusitana.className} text-2xl font-bold text-center w-full ml-[-80px]`}>Six Questions App</div>
       <div className={clsx(`flex flex-row md:flex-col basis-48 md:basis-12
                             shrink-0 space-x-2 py-2 md:space-x-0 md:space-y-4`)}>
-        <p className="basis-12 pl-2 md:text-base">Six Records App Home Page (you're on it)</p>
+        <p className="basis-12 pl-2 md:text-base">Six Records App Home Page (you&apos;re on it)</p>
         <p className="basis-12 pl-2 md:text-base" >Records answering each of the six questions</p>
         <p className="basis-12 pl-2 md:text-base" >Custom, re-useable answers to the question &apos;Who?&apos;</p>
         <p className="basis-12 pl-2 md:text-base" >Custom, re-useable answers to the question &apos;Where?&apos;</p>
@@ -37,7 +37,7 @@ export default function Home() {
       <div className={clsx(`flex flex-col min-[768px]:hidden`)}>
         <p className="basis-4 pl-2 md:text-xs flex flex-row border-trl-1" >
           <HomeIcon width={20} className="inline" />
-          <span className="pl-2">Six Records App Home Page (you're on it)</span>
+          <span className="pl-2">Six Records App Home Page (you&apos;re on it)</span>
         </p>
         <p className="basis-4 pl-2 md:text-xs flex flex-row border-trl-1" >
           <DocumentDuplicateIcon width={20} className="inline"/>
