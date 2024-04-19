@@ -18,13 +18,13 @@ import clsx from 'clsx';
 // Depending on the size of the application, this would be stored in a database.
 const links = [
   { name: 'Home', href: '/', icon: HomeIcon },
-  { name: 'View \'Answer\' Record', href: '/records/view/answers', icon: DocumentDuplicateIcon, },
-  { name: 'View \'Where\'', href: '/records/view/places', icon: BuildingOffice2Icon, },
-  { name: 'View \'Who\'', href: '/records/view/people', icon: UsersIcon, },
-  { name: 'View \'When\'', href: '/records/view/event-times', icon: CalendarIcon, },
-  { name: 'Create \'Answer\' Record', href: '/records/create/answer', icon: DocumentTextIcon },
-  { name: 'Create \'Where\'', href: '/records/create/place', icon: BuildingOfficeIcon },
+  { name: 'View/Edit \'Answer\' Records', href: '/records/view/answers', icon: DocumentDuplicateIcon, },
+  { name: 'View/Edit \'Who\'', href: '/records/view/people', icon: UsersIcon, },
+  { name: 'View/Edit \'Where\'', href: '/records/view/places', icon: BuildingOffice2Icon, },
+  { name: 'View/Edit \'When\'', href: '/records/view/event-times', icon: CalendarIcon, },
+  { name: 'Create \'Answer\'', href: '/records/create/answer', icon: DocumentTextIcon },
   { name: 'Create \'Who\'', href: '/records/create/person', icon: UserIcon },
+  { name: 'Create \'Where\'', href: '/records/create/place', icon: BuildingOfficeIcon },
   { name: 'Create \'When\'', href: '/records/create/event-time', icon: CalendarIcon },
 ];
 
@@ -39,7 +39,7 @@ export default function NavLinks() {
               key={link.name}
               href={link.href}
               className={clsx('flex border-1 md:basis-12 basis-48 border-gray-500 ' +
-                              'rounded-md hover:bg-sky-50 bg-gray-50',
+                              'rounded-md hover:bg-sky-50 bg-gray-50 max-h-[48px]',
                 {
                   'bg-sky-200 text-blue-600': pathname === link.href
                 },

@@ -28,7 +28,7 @@ export default function LoginForm() {
             <div className="relative flex">
               <input
                 className="w-full bg-slate-200 border-1 border-slate-400"
-                value="someuser@someniceplace.com"
+                value="guest@ficticiousdomain.com"
                 id="email"
                 type="email"
                 name="email"

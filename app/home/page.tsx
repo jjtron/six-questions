@@ -2,19 +2,23 @@
 
 import { lusitana } from '@/app/ui/fonts';
 import Image from 'next/image';
+import clsx from 'clsx';
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-start p-24">
-      <div className={`${lusitana.className} text-3xl font-bold text-center w-full mb-4`}>Six Questions</div>
-      <div className={`${lusitana.className} text-xl text-black md:text-xl md:leading-normal text-justify`} >
-          <p className="mb-2">This app is inspired by the famous six questions that one should ask of one&apos;s self before writing about an event,
-          of which I had learned long ago in grade school, and of which I had been instructed by the dear nuns in my Catholic grade-school,
-          who thoroughly taught me the basics of reading, writing, and arithmetic.</p>
-          <p>Anyone using this app is free to add content, as it is only for demonstration purposes, and it will probably not ever become
-            widely popular, since the only people likely to discover it even exists are those invited to sample it as an example of my
-            skill in creating a React app with full CRUD capability into a PostgreSQL database on it&apos;s backend.
-          </p>
+    <main className="flex flex-col items-start">
+      <div className={`${lusitana.className} text-2xl font-bold text-center w-full ml-[-80px] max-[767px]:hidden`}>Six Questions App</div>
+      <div className={clsx(`flex flex-row md:flex-col basis-48 md:basis-12
+                            shrink-0 space-x-2 py-2 md:space-x-0 md:space-y-4`)}>
+        <p className="basis-12 pl-2 md:text-base max-[767px]:hidden ">Six Records App Home Page (you're on it)</p>
+        <p className="basis-12 pl-2 md:text-base max-[767px]:hidden " >Records answering each of the six questions</p>
+        <p className="basis-12 pl-2 md:text-base max-[767px]:hidden " >Custom, re-useable answers to the question &apos;Who?&apos;</p>
+        <p className="basis-12 pl-2 md:text-base max-[767px]:hidden " >Custom, re-useable answers to the question &apos;Where?&apos;</p>
+        <p className="basis-12 pl-2 md:text-base max-[767px]:hidden " >Custom, re-useable answers to the question &apos;When?&apos;</p>
+        <p className="basis-12 pl-2 md:text-base max-[767px]:hidden " >Create a record answering each of the six questions</p>
+        <p className="basis-12 pl-2 md:text-base max-[767px]:hidden " >Create a custom, re-useable answer to the question &apos;Who?&apos;</p>
+        <p className="basis-12 pl-2 md:text-base max-[767px]:hidden " >Create a custom, re-useable answer to the question &apos;Where?&apos;</p>
+        <p className="basis-12 pl-2 md:text-base max-[767px]:hidden " >Create a custom, re-useable answer to the question &apos;When?&apos;</p>
       </div>
       {/*
       <Image
