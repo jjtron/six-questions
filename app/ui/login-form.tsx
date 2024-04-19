@@ -25,13 +25,16 @@ export default function LoginForm() {
             >
               Email
             </label>
-            <div className="relative">
+            <div className="relative flex">
               <input
+                className="w-full bg-slate-200 border-1 border-slate-400"
+                value="someuser@someniceplace.com"
                 id="email"
                 type="email"
                 name="email"
                 placeholder="Enter your email address"
                 required
+                readOnly
               />
             </div>
           </div>
@@ -42,14 +45,17 @@ export default function LoginForm() {
             >
               Password
             </label>
-            <div className="relative">
+            <div className="relative flex">
               <input
+                className="w-full bg-slate-200 border-1 border-slate-400"
+                value="3809_7823_6510"
                 id="password"
                 type="password"
                 name="password"
                 placeholder="Enter password"
                 required
                 minLength={6}
+                readOnly
               />
               
             </div>
@@ -77,7 +83,7 @@ function LoginButton() {
   const { pending } = useFormStatus();
  
   return (
-    <Button className="mt-4 w-full" aria-disabled={pending}>
+    <Button className="mt-4 w-32" aria-disabled={pending}>
       Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
     </Button>
   );
