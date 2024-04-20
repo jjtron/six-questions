@@ -2,11 +2,16 @@
 import { createPerson } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
+import { redirect } from 'next/navigation';
 
 export default function Form() {
   
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createPerson, initialState);
+
+  if ( state.message === "success" ) {
+    redirect('/records/view/people');
+  }
 
   return (
     <form action={dispatch} className="flex flex-col rounded-md bg-slate-200 p-4 md:p-6 md:ml-2">

@@ -5,11 +5,17 @@ import { Button } from '@/app/ui/button1';
 import { useState } from 'react';
 import clsx from 'clsx';
 import { useRef } from 'react';
+import { redirect } from 'next/navigation';
 
 export default function Form() {
   
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createEventTime, initialState);
+  
+  if ( state.message === "success" ) {
+    redirect('/records/view/event-times');
+  }
+
   const [circaYearOnlyError, setCircaOnlyError] = useState({error: ''});
   const [circaYearOnlyInput, setCircaYearOnlyInput] = useState(false);
   const [circaYearRangeStartError, setCircaYearRangeStartError] = useState({error: '', value: ''});

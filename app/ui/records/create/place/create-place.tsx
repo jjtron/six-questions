@@ -4,11 +4,17 @@ import { useFormState } from 'react-dom';
 import { Button } from '@/app/ui/button1';
 import { useState } from 'react';
 import clsx from 'clsx';
+import { redirect } from 'next/navigation';
 
 export default function Form() {
   
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createPlace, initialState);
+
+  if ( state.message === "success" ) {
+    redirect('/records/view/places');
+  }
+
   const [isOpen1, setIsOpen1] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [isOpen3, setIsOpen3] = useState(false);

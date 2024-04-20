@@ -6,11 +6,16 @@ import { Place } from '@/app/lib/interfaces';
 import StreetCityState from './street-city-state';
 import CountryOnly_Or_Any from './country-only-or-any';
 import CountryAndCity from './country-city';
+import { redirect } from 'next/navigation';
 
 export default function Form({ record } : { record: Place }) { 
 
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(updatePlace, initialState);
+  
+  if ( state.message === "success" ) {
+    redirect('/records/view/places');
+  }
 
   return (
     <form action={dispatch} className="flex flex-col rounded-md bg-gray-50 p-4 md:p-6 md:ml-2">

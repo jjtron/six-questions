@@ -1,6 +1,5 @@
 'use server';
 import z, { nullable, number } from "zod"; 
-import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { insertAnswerRecord, insertPlaceRecord,
          updatePlaceRecord, insertPersonRecord,
@@ -144,7 +143,7 @@ export async function createEventTime(prevState: CreateEventTimeState, formData:
 
   revalidatePath('/records/create/answer');
   revalidatePath('/records/view/event-times');
-  redirect('/records/view/event-times');
+  return { message: 'success', errors: {} };
 }
 
 export type EventTimeUpdateState = {
@@ -210,7 +209,7 @@ export async function updateEventTime(prevState: EventTimeUpdateState, formData:
 
   revalidatePath('/records/create/answer');
   revalidatePath('/records/view/event-times');
-  redirect('/records/view/event-times');
+  return { message: 'success', errors: {} };
 }
 
 //////////////////////PERSON FUNCTIONS/////////////////////
@@ -245,7 +244,7 @@ export async function createPerson(prevState: PersonState, formData: FormData) {
 
   revalidatePath('/records/create/answer');
   revalidatePath('/records/view/people');
-  redirect('/records/view/people');
+  return { message: 'success', errors: {} };
 }
 export type PersonUpdateState = {
   errors?: {
@@ -278,7 +277,7 @@ export async function updatePerson(prevState: PersonUpdateState, formData: FormD
 
   revalidatePath('/records/create/answer');
   revalidatePath('/records/view/people');
-  redirect('/records/view/people');
+  return { message: 'success', errors: {} };
 }
 //////////////////////////// ANSWER CREATE AND UPDATE //////////////////////////
 export type InsertAndCreateState = {
@@ -516,7 +515,7 @@ export async function createOrUpdateAnswer(prevState: InsertAndCreateState, form
 
   await insertAnswerRecord(formData, submittedDateType);
   revalidatePath('/records/view/answers');
-  redirect('/records/view/answers');
+  return { message: 'success', errors: {} };
 }
 
 //////////////////////PLACE FUNCTIONS/////////////////////
@@ -643,7 +642,7 @@ export async function createPlace(prevState: PlaceState, formData: FormData) {
 
   revalidatePath('/records/create/answer');
   revalidatePath('/records/view/places');
-  redirect('/records/view/places');
+  return { message: 'success', errors: {} };
 }
 
 export async function updatePlace(prevState: PlaceState, formData: FormData) {
@@ -722,6 +721,6 @@ export async function updatePlace(prevState: PlaceState, formData: FormData) {
 
   revalidatePath('/records/view/places');
   revalidatePath('/records/create/answer');
-  redirect('/records/view/places');
+  return { message: 'success', errors: {} };
   
 }

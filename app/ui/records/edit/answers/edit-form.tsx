@@ -12,7 +12,7 @@ import { useState } from 'react';
 import clsx from 'clsx';
 import { InputMask } from '@react-input/mask';
 import { useRef } from 'react';
-
+import { redirect } from 'next/navigation';
 
 export default function EditAnswerForm(
   { 
@@ -32,6 +32,10 @@ export default function EditAnswerForm(
   const mediaWidth: number = (typeof window !== 'undefined') ? window.innerWidth : 2000;
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createOrUpdateAnswer, initialState);
+  
+  if ( state.message === "success" ) {
+    redirect('/records/view/answers');
+  }
 
   // arrange selected custom WHEN (if applicable) to be at the first index of the list
   // (this is so that setting the scroll position is no longer necessary on rendering the list)

@@ -3,12 +3,16 @@ import { Button } from '@/app/ui/button1';
 import { useFormState } from 'react-dom';
 import { updateEventTime } from '@/app/lib/actions';
 import { EventTime } from '@/app/lib/interfaces';
-
+import { redirect } from 'next/navigation';
 export default function Form({ eventTime } : { eventTime: EventTime }) {
 
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(updateEventTime, initialState);
-
+  
+  if ( state.message === "success" ) {
+    redirect('/records/view/event-times');
+  }
+  
   return (
     <form action={dispatch} className="flex flex-col rounded-md bg-gray-50 p-4 md:p-6 md:ml-2">
         <input id="id" name="id" type="hidden" defaultValue={eventTime.id} />

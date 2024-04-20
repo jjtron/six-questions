@@ -13,7 +13,7 @@ import { useState } from 'react';
 import clsx from 'clsx';
 import { InputMask } from '@react-input/mask';
 import { useRef } from 'react';
-
+import { redirect } from 'next/navigation';
 
 export default function AnswerForm(
     { 
@@ -32,6 +32,10 @@ export default function AnswerForm(
   const mediaWidth: number = (typeof window !== 'undefined') ? window.innerWidth : 2000;
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createOrUpdateAnswer, initialState);
+
+  if ( state.message === "success" ) {
+    redirect('/records/view/answers');
+  }
 
   // the following pairs of state variables are used in the
   // place (where) and event-time (when) pick sections
