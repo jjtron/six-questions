@@ -40,7 +40,12 @@ export default async function Page({ searchParams } : { searchParams: searchPara
           ]}
         />
         </div>
+        
         <Search placeholder="search" showRecordsPerPage={false}/>
+        <div className="mt-2 flex w-full justify-center min-[431px]:hidden">
+          <Pagination totalPages={totalPages} />
+        </div>
+        
         {/* <Form query={query} currentPage={currentPage}></Form> */}
         {(() => {
           if (dataPackage[2].length === 0) {

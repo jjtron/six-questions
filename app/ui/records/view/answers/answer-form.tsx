@@ -40,7 +40,9 @@ export default function AnswerForm({
                   {/* PAGE 1 */}
                   <div className={clsx({"hidden" : page !== 0 && mediaWidth > 431 })}>
                     {/* WHO */}
-                    <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">Record ID: ...{record.id.slice(-6)}, Part 1</p>
+                    <p className="bg-slate-400 rounded-md border-1 border-slate-600 text-center font-bold">
+                        Record ID: ...{record.id.slice(-6)}<span className="max-[431px]:hidden">, Part 1</span>
+                    </p>
                     <div className="flex md:flex-row flex-col">
                         {/* col 1 */}
                         <div className="flex flex-col border-1 border-slate-400 rounded-md h-[192px] bg-slate-200 w-full" >
