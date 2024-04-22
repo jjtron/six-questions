@@ -12,10 +12,10 @@ export default function Page() {
           </p>
           <div className={`${lusitana.className} md:text-3xl text-xl font-bold text-center w-full mb-4`}>Six Questions App</div>
           <div className={`${lusitana.className} text-xl text-black md:text-xl md:leading-normal md:px-28 px-6 text-justify`} >
-              <p className="mb-2">This app is inspired by the famous six questions that one should ask of one&apos;s self before writing about an event.</p>
-              <p className="mb-6">Anyone using this app is free to add content, as it is only for demonstration purposes, and it will probably not ever become
-                widely popular, since the only people likely to discover it even exists are those invited to sample it as an example of my
-                skill in creating a React app with full CRUD capability into a PostgreSQL database on it&apos;s backend.
+              <p className="mb-3">This app is inspired by the famous six questions that one should ask of one&apos;s self before writing about an event.</p>
+              <p className="mb-6">Anyone using this app is free to add content; it is only meant to demonstrate my skills
+                 in creating a front end React app, with Remote Server Componenets (RSC), CRUD capability, a backend PostgreSQL database,
+                 on a Linux internet web server, secured by an SSL certificate (https), and protected by state-of-the art User Authentication.
               </p>
           </div>
           <div className="flex flex-row items-center md:px-28 px-6">
