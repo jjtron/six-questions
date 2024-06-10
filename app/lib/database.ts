@@ -12,6 +12,8 @@ const client = new Client({
   });
   client.connect();
 
+  export const clientConnection = client;
+
   export async function getDbData(q: string) {
     try {
       const result: any = await client.query(q);

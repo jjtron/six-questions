@@ -1,45 +1,45 @@
-import { NextRequest, NextResponse } from 'next/server';
+'use server'
+
+import type { NextApiRequest, NextApiResponse } from 'next';
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { connect } from '@/app/dbconfig/dbconfige';
+import Cookies from 'cookies';
+import { clientConnection } from '@/app/lib/database';
+import { SignJWT } from "jose";
 
-const connection: any = connect();
+const secretKey = "secret";
+const key = new TextEncoder().encode(secretKey);
 
-export async function POST(request: NextRequest){
-try {
-
-    const reqBody = await request.json()
-    const {email, password} = reqBody;
-
-    const existingUser = await connection.query('SELECT * from public.users');
-    if(!existingUser){
-        return NextResponse.json({error: 'User does not exist'}, {status: 400})
-    }
-
-    const validPassword = await bcryptjs.compare(password, reqBody.password)
-    if(!validPassword){
-        return NextResponse.json({error: 'Invalid password'}, {status: 400})
-    }
-
-    const tokenData = {
-        id: existingUser.id,
-        username: existingUser.username,
-        email: existingUser.email
-    }
-
-    const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {expiresIn: '1d'});
-
-    const response = NextResponse.json({
-        message: 'Login successful',
-        success: true,
-    })
-    response.cookies.set('token', token, {
-    httpOnly: true,
-
-    })
-    return response;
-
-} catch (error: any) {
-    return NextResponse.json({error: error.message}, {status: 500})
+export async function encrypt(payload: any) {
+    return await new SignJWT(payload)
+      .setProtectedHeader({ alg: "HS256" })
+      .setIssuedAt()
+      .setExpirationTime("300 sec from now")
+      .sign(key);
 }
+
+export default async function POST(request: NextApiRequest, response: NextApiResponse){
+    try {
+        const reqBody = await request.body;
+        const {email, password} = reqBody;
+
+        const existingUser: any = await clientConnection.query(`SELECT * from public.users WHERE email='${email}'`);
+        if(existingUser.rowCount !== 1){
+            return response.status(400).send({error: 'User does not exist'});
+        }
+        const user: {id: string; name: string; email: string; password: string } = existingUser.rows[0];
+        
+        // Create the session
+        const expires = new Date(Date.now() + 300 * 1000);
+        const session = await encrypt({ user, expires });
+
+        // Save the session in a cookie
+        var cookies = new Cookies(request, response);
+        cookies.set("session", session, { expires, httpOnly: true });
+
+        return response.status(200).send({success: true});
+
+    } catch (error: any) {
+        return response.status(500).send({error: error, success: false});
+    }
 }

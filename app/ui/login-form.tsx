@@ -61,7 +61,7 @@ export default function LoginForm() {
             </div>
           </div>
         </div>
-        <LoginButton />
+        <button>Submit</button>
         <div
           className="flex h-8 items-end space-x-1"
           aria-live="polite"
