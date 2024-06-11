@@ -14,7 +14,7 @@ export async function encrypt(payload: any) {
     return await new SignJWT(payload)
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()
-      .setExpirationTime("300 sec from now")
+      .setExpirationTime("10 sec from now")
       .sign(key);
 }
 
@@ -25,21 +25,21 @@ export default async function POST(request: NextApiRequest, response: NextApiRes
 
         const existingUser: any = await clientConnection.query(`SELECT * from public.users WHERE email='${email}'`);
         if(existingUser.rowCount !== 1){
-            return response.status(400).send({error: 'User does not exist'});
+            return response.status(400).json({error: 'User does not exist'});
         }
         const user: {id: string; name: string; email: string; password: string } = existingUser.rows[0];
         
         // Create the session
-        const expires = new Date(Date.now() + 300 * 1000);
+        const expires = new Date(Date.now() + 10 * 1000);
         const session = await encrypt({ user, expires });
 
         // Save the session in a cookie
         var cookies = new Cookies(request, response);
         cookies.set("session", session, { expires, httpOnly: true });
 
-        return response.status(200).send({success: true});
+        return response.status(200).json({success: true});
 
-    } catch (error: any) {
-        return response.status(500).send({error: error, success: false});
+    } catch (e) {
+        return response.status(500);
     }
 }

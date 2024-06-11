@@ -16,32 +16,8 @@ import clsx from 'clsx';import {
 
 export default function Home() {
 
-  const handleClick = () => {
-    console.log('handleClick');
-    fetch('http://localhost:3002/api/user/signup/route', {
-      method: 'POST',
-      body: JSON.stringify({username: 'User10', password: '123456', email: 'zisterz@kewjfhirewfhi.com'}),
-      headers: {
-         'Content-type': 'application/json; charset=UTF-8',
-      },
-    });
-  }
-
-  const handleClick2 = () => {
-    console.log('handleClick');
-    fetch('http://localhost:3002/api/user/login/route', {
-      method: 'POST',
-      body: JSON.stringify({username: 'User10', password: '123456', email: 'zisterz@kewjfhirewfhi.com'}),
-      headers: {
-         'Content-type': 'application/json; charset=UTF-8',
-      },
-    });
-  }
-
   return (
     <main>
-      <button type="button" id="mybutton1" onClick={handleClick} >click me register</button>
-      <button type="button" id="mybutton2" onClick={handleClick2} >click me login</button>
 
       <div className="flex md:flex-col items-start max-[767px]:hidden">
       <div className={`${lusitana.className} text-2xl font-bold text-center w-full ml-[-80px]`}>Six Questions App</div>

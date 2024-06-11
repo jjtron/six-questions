@@ -7,11 +7,52 @@ import { Button } from '@/app/ui/loginButton';
 import { useFormState, useFormStatus } from 'react-dom';
 import { authenticate } from '@/app/lib/actions';
 import "@/app/globals.css";
+import { useRouter } from 'next/navigation'
  
 export default function LoginForm() {
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
- 
+  //const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+  const router = useRouter();
+  const handleClick = () => {
+    console.log('handleClick');
+    fetch('http://localhost:3002/api/user/signup/route', {
+      method: 'POST',
+      body: JSON.stringify({username: 'User10', password: '123456', email: 'zisterz@kewjfhirewfhi.com'}),
+      headers: {
+         'Content-type': 'application/json; charset=UTF-8',
+      },
+    });
+  }
+
+  const handleClick2 = () => {
+    console.log('handleClick');
+    fetch('http://localhost:3002/api/user/login/route', {
+      method: 'POST',
+      body: JSON.stringify({username: 'User10', password: '123456', email: 'zisterz@kewjfhirewfhi.com'}),
+      headers: {
+         'Content-type': 'application/json; charset=UTF-8',
+      },
+    }).then((response) => {
+      if (response.status === 200) {
+        router.push('/home');
+      } else if (response.status === 400) {
+        response.json().then((resp) => {
+          console.log(resp.error);
+        });
+      } else if (response.status === 500) {
+          console.log('Server error');
+      }
+    }).catch((e) => {
+      console.log(e);
+    });
+  }
   return (
+    <>
+      <div className="flex flex-col">
+        <button type="button" id="mybutton1" onClick={handleClick} >register</button>
+        <button type="button" id="mybutton2" onClick={handleClick2} >login</button>
+      </div>
+    </>
+    /*
     <form action={dispatch} className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
@@ -76,6 +117,7 @@ export default function LoginForm() {
         </div>
       </div>
     </form>
+    */
   );
 }
  
