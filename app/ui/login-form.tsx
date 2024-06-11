@@ -7,7 +7,9 @@ import { Button } from '@/app/ui/loginButton';
 import { useFormState, useFormStatus } from 'react-dom';
 import { authenticate } from '@/app/lib/actions';
 import "@/app/globals.css";
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import clsx from 'clsx';
+import React, { useState } from "react";
  
 export default function LoginForm() {
   //const [errorMessage, dispatch] = useFormState(authenticate, undefined);
@@ -23,8 +25,7 @@ export default function LoginForm() {
     });
   }
 
-  const handleClick2 = () => {
-    console.log('handleClick');
+  const handleLoginClick = () => {
     fetch('http://localhost:3002/api/user/login/route', {
       method: 'POST',
       body: JSON.stringify({username: 'User10', password: '123456', email: 'zisterz@kewjfhirewfhi.com'}),
@@ -47,13 +48,15 @@ export default function LoginForm() {
   }
   return (
     <>
+    {/*
       <div className="flex flex-col">
         <button type="button" id="mybutton1" onClick={handleClick} >register</button>
         <button type="button" id="mybutton2" onClick={handleClick2} >login</button>
       </div>
-    </>
-    /*
+    */}
+    {/*
     <form action={dispatch} className="space-y-3">
+    */}
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
           Please log in to continue.
@@ -102,7 +105,9 @@ export default function LoginForm() {
             </div>
           </div>
         </div>
-        <button>Submit</button>
+        <LoginButton handleClick={handleLoginClick} />
+
+        {/*
         <div
           className="flex h-8 items-end space-x-1"
           aria-live="polite"
@@ -115,18 +120,32 @@ export default function LoginForm() {
             </>
           )}
         </div>
+        */}
+
       </div>
+      </>
+    /*
     </form>
     */
   );
 }
  
-function LoginButton() {
-  const { pending } = useFormStatus();
- 
+function LoginButton({handleClick} : { handleClick: any } ) {
+  const [isDisabled, setIsDisabled] = useState(false);
+  const handleButtonClick = () => {
+    setIsDisabled(true);
+    handleClick();
+  }
   return (
-    <Button className="mt-4 w-32" aria-disabled={pending}>
+    <button
+      disabled={isDisabled}
+      onClick={handleButtonClick}
+      className="mt-4 w-32 flex h-10 items-center rounded-lg bg-blue-500 px-4 text-sm font-medium
+                text-white transition-colors hover:bg-blue-400 focus-visible:outline
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500
+                active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+    >
       Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
-    </Button>
+    </button>
   );
 }

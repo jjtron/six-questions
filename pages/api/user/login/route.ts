@@ -20,6 +20,9 @@ export async function encrypt(payload: any) {
 
 export default async function POST(request: NextApiRequest, response: NextApiResponse){
     try {
+        // simulate slow response
+        // await new Promise((resolve) => setTimeout(resolve, 2000));
+
         const reqBody = await request.body;
         const {email, password} = reqBody;
 
