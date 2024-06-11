@@ -1,8 +1,6 @@
 'use server'
 
 import type { NextApiRequest, NextApiResponse } from 'next';
-import bcryptjs from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import Cookies from 'cookies';
 import { clientConnection } from '@/app/lib/database';
 import { SignJWT } from "jose";
