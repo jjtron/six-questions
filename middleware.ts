@@ -6,17 +6,16 @@ const secretKey = "secret";
 const key = new TextEncoder().encode(secretKey);
 
 export async function middleware(request: NextRequest) {
-  console.log('RUNNING MIDDLEWARE');
+  //console.log('RUNNING MIDDLEWARE');
   const next = await updateSession(request);
-  //return next;
   
   if (typeof next === 'undefined') {
-    console.log('next is undefined');
+    //console.log('next is undefined');
     request.nextUrl.pathname = '/login';
     return NextResponse.redirect(request.nextUrl);
     //return NextResponse.next();
   } else {
-    return NextResponse.next();
+    return next;
   }
   
 }
@@ -25,7 +24,7 @@ async function encrypt(payload: any) {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime("10 sec from now")
+    .setExpirationTime("30 sec from now")
     .sign(key);
 }
 
@@ -38,11 +37,14 @@ async function decrypt(input: string): Promise<any> {
 
 export async function updateSession(request: NextRequest) {
   const session = request.cookies.get("session")?.value;
-  if (!session) { console.log('!session'); return; }
+  if (!session) {
+    //console.log('!session');
+    return;
+  }
 
   // Refresh the session so it doesn't expire
   const parsed = await decrypt(session);
-  parsed.expires = new Date(Date.now() + 10 * 1000);
+  parsed.expires = new Date(Date.now() + 30 * 1000);
   const res = NextResponse.next();
   res.cookies.set({
     name: "session",
@@ -50,6 +52,7 @@ export async function updateSession(request: NextRequest) {
     httpOnly: true,
     expires: parsed.expires,
   });
+  //console.log('session refreshed');
   return res;
 }
 
@@ -57,5 +60,5 @@ export async function updateSession(request: NextRequest) {
 export const config = {
   // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
   //matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
-  matcher: ['/home','/records/view/answers'],
+  matcher: ['/home','/records/view/answers','/records/view/people','/records/view/places','/records/view/event-times'],
 };
