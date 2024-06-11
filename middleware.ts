@@ -6,18 +6,13 @@ const secretKey = "secret";
 const key = new TextEncoder().encode(secretKey);
 
 export async function middleware(request: NextRequest) {
-  //console.log('RUNNING MIDDLEWARE');
   const next = await updateSession(request);
-  
   if (typeof next === 'undefined') {
-    //console.log('next is undefined');
     request.nextUrl.pathname = '/login';
     return NextResponse.redirect(request.nextUrl);
-    //return NextResponse.next();
   } else {
     return next;
   }
-  
 }
 
 async function encrypt(payload: any) {
@@ -38,7 +33,6 @@ async function decrypt(input: string): Promise<any> {
 export async function updateSession(request: NextRequest) {
   const session = request.cookies.get("session")?.value;
   if (!session) {
-    //console.log('!session');
     return;
   }
 
@@ -52,13 +46,15 @@ export async function updateSession(request: NextRequest) {
     httpOnly: true,
     expires: parsed.expires,
   });
-  //console.log('session refreshed');
+
   return res;
 }
-
 
 export const config = {
   // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
   //matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
-  matcher: ['/home','/records/view/answers','/records/view/people','/records/view/places','/records/view/event-times'],
+  matcher: ['/home','/records/view/answers','/records/view/people',
+            '/records/view/places','/records/view/event-times',
+            '/records/create/answer','/records/create/person',
+            '/records/create/place','/records/create/event-time'],
 };
