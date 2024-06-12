@@ -13,7 +13,7 @@ export default function LoginForm() {
 
   const handleClick = () => {
     console.log('handleClick');
-    fetch('http://localhost:3002/api/user/signup/route', {
+    fetch('/api/user/signup/route', {
       method: 'POST',
       body: JSON.stringify({username: 'User10', password: '123456', email: 'zisterz@kewjfhirewfhi.com'}),
       headers: {
@@ -25,7 +25,7 @@ export default function LoginForm() {
   const handleLoginClick = () => {
     setIsDisabled(true);
     setErrorReport({...errorReport, error: ''});
-    fetch('http://localhost:3002/api/user/login/route', {
+    fetch('/api/user/login/route', {
       method: 'POST',
       body: JSON.stringify({username: 'User10', password: '123456', email: 'zisterz@kewjfhirewfhi.com'}),
       headers: {
