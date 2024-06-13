@@ -2,20 +2,28 @@
  
 import { lusitana } from '@/app/ui/fonts';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
+import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 import "@/app/globals.css";
 import { useRouter } from 'next/navigation';
 import React, { useState } from "react";
 import { authenticate } from '@/app/lib/actions';
 import { useFormState, useFormStatus } from 'react-dom';
+import { redirect } from 'next/navigation';
  
 export default function LoginForm() {
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+  const initialState = { message: null, errors: {}, token: null };
+  const [state, dispatch] = useFormState(authenticate, initialState);
 
   /*
   const router = useRouter();
   */
-
+  if ( state.message === "success" && state.token !== null) {
+    console.log(state.token);
+    document.cookie = "name=oeschger; Secure";
+    redirect('/records/view/people');
+  }
   return (
+    <form action={dispatch} className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
           Please log in to continue.
@@ -67,7 +75,21 @@ export default function LoginForm() {
         <div className="flex flex-row mt-4 ">
           <LoginButton />
         </div>
+        <div
+          className="flex h-8 items-end space-x-1"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+        <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
+        {state.errors &&
+              Object.keys(state.errors).map((error: string) => (
+                <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+        ))}
+        </div>
       </div>
+    </form>
   );
 }
 

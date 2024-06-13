@@ -7,9 +7,47 @@ import { insertAnswerRecord, insertPlaceRecord,
          updateEventTimeRecord
        } from './database';
 //import { signIn } from '@/auth';
-import { AuthError } from 'next-auth';
 
+////////////////////// AUTHENTICATION /////////////////////
+import { AuthError } from 'next-auth';import Cookies from 'cookies';
+import { clientConnection } from '@/app/lib/database';
+import { SignJWT } from "jose";
 
+const secretKey = "secret";
+const key = new TextEncoder().encode(secretKey);
+export async function encrypt(payload: any) {
+  return await new SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime("10 sec from now")
+    .sign(key);
+}
+export async function authenticate(
+  prevState: { message: string | null; errors: {}; token: string | null; },
+  formData: FormData,
+) {
+  try {
+    const existingUser: any = await clientConnection.query(`SELECT * from public.users WHERE email='${formData.get('email')}'`);
+    if(existingUser.rowCount !== 1){
+      // failed to find user
+      return {
+        errors: [{ x: 'yep'}],
+        message: 'Missing Fields. Failed to Create Person.',
+        token: null
+      };
+    }
+    const user: {id: string; name: string; email: string; password: string } = existingUser.rows[0];
+    // simulate slow response
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
+    return { message: 'success', errors: {}, token: 'xyz' };
+  } catch (e) {
+    return {
+      errors: [{ x: 'yep'}],
+      message: 'Missing Fields. Failed to Create Person.',
+      token: null
+    };
+  }
+}
 //////////////////////EVENT-TIME FUNCTIONS/////////////////////
 export type CreateEventTimeState = {
   errors?: {
