@@ -27,6 +27,10 @@ export async function authenticate(
   formData: FormData,
 ) {
   try {
+    // simulate slow response
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    // find user and, if found, create his user object information
     const existingUser: any = await clientConnection.query(`SELECT * from public.users WHERE email='${formData.get('email')}'`);
     if(existingUser.rowCount !== 1){
       // failed to find user
@@ -37,9 +41,13 @@ export async function authenticate(
       };
     }
     const user: {id: string; name: string; email: string; password: string } = existingUser.rows[0];
-    // simulate slow response
-    // await new Promise((resolve) => setTimeout(resolve, 2000));
-    return { message: 'success', errors: {}, token: 'xyz' };
+
+    // Create the token (don't need expires date because
+    // SignJWT.setExpirationTime assigns it with the 
+    // following function: encrypt(payload: any))
+    const token = await encrypt({ user });
+
+    return { message: 'success', errors: {}, token: token, expires: null };
   } catch (e) {
     return {
       errors: [{ x: 'yep'}],

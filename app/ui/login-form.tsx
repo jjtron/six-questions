@@ -14,12 +14,8 @@ export default function LoginForm() {
   const initialState = { message: null, errors: {}, token: null };
   const [state, dispatch] = useFormState(authenticate, initialState);
 
-  /*
-  const router = useRouter();
-  */
-  if ( state.message === "success" && state.token !== null) {
-    console.log(state.token);
-    document.cookie = "name=oeschger; Secure";
+  if ( state.message === "success") {
+    document.cookie = `session=${state.token};`;
     redirect('/records/view/people');
   }
   return (
