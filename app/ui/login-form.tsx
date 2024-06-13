@@ -5,48 +5,16 @@ import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import "@/app/globals.css";
 import { useRouter } from 'next/navigation';
 import React, { useState } from "react";
+import { authenticate } from '@/app/lib/actions';
+import { useFormState, useFormStatus } from 'react-dom';
  
 export default function LoginForm() {
+  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+
+  /*
   const router = useRouter();
-  const [errorReport, setErrorReport] = useState({error: ''});
-  const [isDisabled, setIsDisabled] = useState(false);
+  */
 
-  const handleClick = () => {
-    console.log('handleClick');
-    fetch('/api/user/signup/route', {
-      method: 'POST',
-      body: JSON.stringify({username: 'User10', password: '123456', email: 'zisterz@kewjfhirewfhi.com'}),
-      headers: {
-         'Content-type': 'application/json; charset=UTF-8',
-      },
-    });
-  }
-
-  const handleLoginClick = () => {
-    setIsDisabled(true);
-    setErrorReport({...errorReport, error: ''});
-    fetch('/api/user/login/route', {
-      method: 'POST',
-      body: JSON.stringify({username: 'User10', password: '123456', email: 'zisterz@kewjfhirewfhi.com'}),
-      headers: {
-         'Content-type': 'application/json; charset=UTF-8',
-      },
-    }).then((response) => {
-      if (response.status === 200) {
-        router.push('/home');
-      } else if (response.status === 400) {
-        response.json().then((resp) => {
-          console.log(resp.error);
-          setIsDisabled(false);
-          setErrorReport({...errorReport, error: resp.error});
-        });
-      } else if (response.status === 500) {
-          console.log('Server error');
-      }
-    }).catch((e) => {
-      console.log(e);
-    });
-  }
   return (
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
@@ -97,19 +65,25 @@ export default function LoginForm() {
           </div>
         </div>
         <div className="flex flex-row mt-4 ">
-          <button
-            aria-disabled={isDisabled}
-            disabled={isDisabled}
-            onClick={handleLoginClick}
-            className="w-28 flex h-10 items-center rounded-lg bg-blue-500 px-4 text-sm font-medium
-                      text-white transition-colors hover:bg-blue-400 focus-visible:outline
-                      focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500
-                      active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
-          >
-            Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
-          </button>
-          <p className="pt-[6px] pl-4 text-red-700">{errorReport.error}</p>
+          <LoginButton />
         </div>
       </div>
+  );
+}
+
+function LoginButton() {
+  const { pending } = useFormStatus();
+ 
+  return (
+    <button
+      aria-disabled={pending}
+      disabled={pending}
+      className="w-28 flex h-10 items-center rounded-lg bg-blue-500 px-4 text-sm font-medium
+                text-white transition-colors hover:bg-blue-400 focus-visible:outline
+                focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500
+                active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+    >
+      Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
+    </button>
   );
 }
