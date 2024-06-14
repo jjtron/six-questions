@@ -5,7 +5,8 @@ const secretKey = "secret";
 const key = new TextEncoder().encode(secretKey);
 
 export async function middleware(request: NextRequest) {
-  const next = await updateSession(request);
+  const isBasePath = (request.nextUrl.pathname === '/') ? true : false;
+  const next = await updateSession(request, isBasePath);
   if (typeof next === 'undefined') {
     request.nextUrl.pathname = '/login';
     return NextResponse.redirect(request.nextUrl);
@@ -29,7 +30,7 @@ async function decrypt(input: string): Promise<any> {
   return payload;
 }
 
-export async function updateSession(request: NextRequest) {
+export async function updateSession(request: NextRequest, isBasePath: boolean) {
   const session = request.cookies.get("session")?.value;
   if (!session) {
     return;
@@ -37,7 +38,8 @@ export async function updateSession(request: NextRequest) {
 
   // Refresh the session so it doesn't expire
   const parsed = await decrypt(session);
-  parsed.expires = new Date(Date.now() + 30 * 1000);
+  const seconds = isBasePath ? 0 : 30;
+  parsed.expires = new Date(Date.now() + seconds * 1000);
   const res = NextResponse.next();
   res.cookies.set({
     name: "session",
@@ -52,7 +54,7 @@ export async function updateSession(request: NextRequest) {
 export const config = {
   // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
   //matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
-  matcher: ['/home','/records/view/answers','/records/view/people',
+  matcher: ['/','/home','/records/view/answers','/records/view/people',
             '/records/view/places','/records/view/event-times',
             '/records/create/answer','/records/create/person',
             '/records/create/place','/records/create/event-time'],

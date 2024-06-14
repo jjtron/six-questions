@@ -5,10 +5,7 @@ export default function SideNav() {
       <div>
         <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
         <form
-          action={async () => {
-            'use server';
-            //await signOut();
-          }}
+          action={'/'}
         >
           
           <button className="flex h-[48px] w-full grow items-center justify-center gap-2 rounded-md 
