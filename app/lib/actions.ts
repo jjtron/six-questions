@@ -6,10 +6,8 @@ import { insertAnswerRecord, insertPlaceRecord,
          updatePersonRecord, insertTimeRecord,
          updateEventTimeRecord
        } from './database';
-//import { signIn } from '@/auth';
 
 ////////////////////// AUTHENTICATION /////////////////////
-import { AuthError } from 'next-auth';import Cookies from 'cookies';
 import { clientConnection } from '@/app/lib/database';
 import { SignJWT } from "jose";
 

@@ -4,7 +4,6 @@ import { Button } from "@/app/ui/button";
 import clsx from 'clsx';
 import { Person, Place, EventTime, SixAnswers } from '@/app/lib/interfaces';
 import MultiSelectWho from './multi-select-who';
-import { useState } from 'react';
 
 export default function AnswerForm({
     currentPage,

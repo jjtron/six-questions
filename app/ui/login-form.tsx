@@ -4,7 +4,6 @@ import { lusitana } from '@/app/ui/fonts';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 import "@/app/globals.css";
-import { useRouter } from 'next/navigation';
 import React, { useState } from "react";
 import { authenticate } from '@/app/lib/actions';
 import { useFormState, useFormStatus } from 'react-dom';
