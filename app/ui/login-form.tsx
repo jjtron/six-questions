@@ -78,9 +78,9 @@ export default function LoginForm() {
         
         {state.errors && state.errors.msg !== '' &&
               Object.keys(state.errors).map((error: string) => (
-                <div className="flex flex-row">
+                <div key={error} className="flex flex-row">
                   <p><ExclamationCircleIcon className="h-5 mt-2 w-5 text-red-500" /></p>
-                  <p className="pl-2 leading-9 text-sm text-red-500" key={error}>{state.errors.msg}</p>
+                  <p className="pl-2 leading-9 text-sm text-red-500" >{state.errors.msg}</p>
                 </div>
         ))}
         </div>
