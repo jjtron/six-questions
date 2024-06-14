@@ -10,12 +10,12 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { redirect } from 'next/navigation';
  
 export default function LoginForm() {
-  const initialState = { message: null, errors: {}, token: null };
+  const initialState = { message: null, errors: { msg: '' }, token: null };
   const [state, dispatch] = useFormState(authenticate, initialState);
 
   if ( state.message === "success") {
     document.cookie = `session=${state.token};`;
-    redirect('/records/view/people');
+    redirect('/home');
   }
   return (
     <form action={dispatch} className="space-y-3">
@@ -75,12 +75,13 @@ export default function LoginForm() {
           aria-live="polite"
           aria-atomic="true"
         >
-        <ExclamationCircleIcon className="h-5 w-5 text-red-500" />
-        {state.errors &&
+        
+        {state.errors && state.errors.msg !== '' &&
               Object.keys(state.errors).map((error: string) => (
-                <p className="pl-2 leading-9 text-sm text-red-500" key={error}>
-                  {error}
-                </p>
+                <div className="flex flex-row">
+                  <p><ExclamationCircleIcon className="h-5 mt-2 w-5 text-red-500" /></p>
+                  <p className="pl-2 leading-9 text-sm text-red-500" key={error}>{state.errors.msg}</p>
+                </div>
         ))}
         </div>
       </div>

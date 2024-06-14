@@ -6,6 +6,7 @@ import { insertAnswerRecord, insertPlaceRecord,
          updatePersonRecord, insertTimeRecord,
          updateEventTimeRecord
        } from './database';
+import { redirect } from 'next/navigation'
 
 ////////////////////// AUTHENTICATION /////////////////////
 import { clientConnection } from '@/app/lib/database';
@@ -21,7 +22,7 @@ export async function encrypt(payload: any) {
     .sign(key);
 }
 export async function authenticate(
-  prevState: { message: string | null; errors: {}; token: string | null; },
+  prevState: { message: string | null; errors: { msg: string; }; token: string | null; },
   formData: FormData,
 ) {
   try {
@@ -33,7 +34,7 @@ export async function authenticate(
     if(existingUser.rowCount !== 1){
       // failed to find user
       return {
-        errors: [{ x: 'yep'}],
+        errors: {msg: 'Cannot find user in database'},
         message: 'Missing Fields. Failed to Create Person.',
         token: null
       };
@@ -45,10 +46,10 @@ export async function authenticate(
     // following function: encrypt(payload: any))
     const token = await encrypt({ user });
 
-    return { message: 'success', errors: {}, token: token, expires: null };
+    return { message: 'success', errors: { msg: ''}, token: token, expires: null };
   } catch (e) {
     return {
-      errors: [{ x: 'yep'}],
+      errors: { msg: 'Server error'},
       message: 'Missing Fields. Failed to Create Person.',
       token: null
     };
