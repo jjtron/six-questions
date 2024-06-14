@@ -33,22 +33,25 @@ async function decrypt(input: string): Promise<any> {
 export async function updateSession(request: NextRequest, isBasePath: boolean) {
   const session = request.cookies.get("session")?.value;
   if (!session) {
-    return;
+    if (isBasePath) {
+      return NextResponse.next();;
+    } else {
+      return;
+    }
+  } else {
+    // Refresh the session so it doesn't expire (if not isBasePath)
+    const parsed = await decrypt(session);
+    const seconds = isBasePath ? 0 : 30; // if isBasePath, then set it to be expired i.e., 0 * 1000 
+    parsed.expires = new Date(Date.now() + seconds * 1000);
+    const res = NextResponse.next();
+    res.cookies.set({
+      name: "session",
+      value: await encrypt(parsed),
+      httpOnly: true,
+      expires: parsed.expires,
+    });
+    return res;
   }
-
-  // Refresh the session so it doesn't expire
-  const parsed = await decrypt(session);
-  const seconds = isBasePath ? 0 : 30;
-  parsed.expires = new Date(Date.now() + seconds * 1000);
-  const res = NextResponse.next();
-  res.cookies.set({
-    name: "session",
-    value: await encrypt(parsed),
-    httpOnly: true,
-    expires: parsed.expires,
-  });
-
-  return res;
 }
 
 export const config = {
